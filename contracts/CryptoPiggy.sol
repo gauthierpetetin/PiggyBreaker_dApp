@@ -124,19 +124,26 @@ contract Piggies is Pausable {
     Piggy storage piggy = piggies[nbPiggies];
     uint winnerNumber = uint( keccak256(block.difficulty, now, piggy.contributions) ) % piggy.value;
     uint totalValue = piggy.value;
-    uint newBabyPiggy;
-    for (uint i = 0; i < piggy.contributions.length; i++) {
-      if( winnerNumber <= piggy.contributions[i] ) {
-        piggy.winner = piggy.contributors[i];
-        newBabyPiggy = 3 * piggy.value / 100;
-        totalValue -= newBabyPiggy;
-        pendingReturnValues[farmer] += newBabyPiggy;            //A new piggy is offered to the farmer to replace the broken one
-        pendingReturnValues[piggy.winner] += totalValue;       //The winner receives the reward
-        pendingReturnTimestamps[piggy.winner] = now;
-        piggy.open = false;
-        break;
+
+    if( piggy.contributors.length == 1) {                         // If only, one player, he can leave without playing the lottery
+      piggy.winner = piggy.contributors[0];
+    }
+    else {
+      for (uint i = 0; i < piggy.contributions.length; i++) {     // If more than one player, play the lottery
+        if( winnerNumber <= piggy.contributions[i] ) {
+          piggy.winner = piggy.contributors[i];
+          uint newBabyPiggy = 3 * piggy.value / 100;
+          totalValue -= newBabyPiggy;
+          pendingReturnValues[farmer] += newBabyPiggy;            //A new piggy is offered to the farmer to replace the broken one
+          break;
+        }
       }
     }
+
+    pendingReturnValues[piggy.winner] += totalValue;               //The winner receives the reward
+    pendingReturnTimestamps[piggy.winner] = now;
+    piggy.open = false;
+
     PiggyBroken(nbPiggies, totalValue, piggy.contributors, piggy.winner, now);
 
     createNewPiggy();
@@ -145,6 +152,7 @@ contract Piggies is Pausable {
   function withdraw(address _withDrawalAddress) public {
     require(pendingReturnValues[msg.sender]>0);
     _withDrawalAddress.transfer(pendingReturnValues[msg.sender]);
+    pendingReturnValues[msg.sender] = 0;
   }
 
   modifier contributed(address _player) {
