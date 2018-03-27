@@ -1,90 +1,210 @@
 <template>
-  <span>
-
-  <section>
-    <v-layout
-      column
-      wrap
-      class="my-5"
-      align-center
-    >
-      <v-flex xs12 sm4 class="my-3">
-        <div class="text-xs-center">
-          <h2 class="headline">What is CryptoIsland ?</h2>
-          <span class="subheading">
-            The CryptoIsland game requires 5 players and it can be split into 3 phases:
-          </span>
-        </div>
-      </v-flex>
-      <v-flex xs12>
-        <v-container grid-list-xl>
-          <v-layout row wrap>
-            <v-flex xs12 md4>
-              <v-card class="elevation-0 transparent">
-                <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center">Phase 1 – Join island</div>
-                </v-card-title>
-                <v-card-text>
-                  During this first phase, the island is recruiting pirates (players).<br />
-                  <br />
-                  2 things are required for a pirate to join the island :<br />
-                  <br />
-                  <ul>
-                    <li>Buy 100 pieces of wood (against ETH)</li>
-                    <li>Indicate the wood contribution (between 0 and 100) offered to the community to build a ship (or rafts) before the storm comes in phase 3 (this wood contribution will be kept secret until phase 2)</li>
-                  </ul>
-                  <br />
-                  <strong>Next phase:</strong> phase 1 is over only once 5 pirates joined the island.
-                </v-card-text>
-              </v-card>
+  <div>
+      <section>
+        <v-parallax class="parallax-background" height="600">
+          <v-layout
+            column
+            align-center
+            justify-center
+          >
+            <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">Current Piggy value: 0 ETH</h1>
+            <img src="/static/img/picto/big-piggy.png" alt="Vuetify.js" height="350">
+          </v-layout>
+          <v-layout row wrap align-top
+          class="white--text">
+            <v-flex md6 class="text-xs-right">
+              <v-btn
+                class="blue lighten-2 mt-5"
+                dark
+                large
+                href="/contribute"
+              >
+                Contribute
+              </v-btn>
             </v-flex>
-            <v-flex xs12 md4>
-              <v-card class="elevation-0 transparent">
-                <v-card-title primary-title class="layout justify-center">
-                  <div class="headline">Phase 2 – Build a ship</div>
-                </v-card-title>
-                <v-card-text>
-                  During this first phase, the pirates (players) reveal the wood contribution they decided to offer to the community in phase 1.<br />
-                  <br />
-                  The wood contributions are used to build a ship (or rafts) and escape the island when the storm comes :<br />
-                  <br />
-                  <ul>
-                    <li>250 pieces of wood are required for a ship.</li>
-                    <li>75 pieces of wood are required for a raft.</li>
-                  </ul>
-                  <br />
-                  <strong>Next phase:</strong> phase 2 is over once all pirates revealed their wood contributions OR once the maximum time
-                  limit is past.
-                </v-card-text>
-              </v-card>
-            </v-flex>
-            <v-flex xs12 md4>
-              <v-card class="elevation-0 transparent">
-
-                <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center">Phase 3 – Escape storm</div>
-                </v-card-title>
-                <v-card-text>
-                  During this phase, the storm has come and the pirates try to leave the island:<br />
-                  <br />
-                  <ul>
-                    <li>If the pirates built a ship (wood contributions >= 250): all pirates leave the island and survive.</li>
-                    <li>If they didn’t build a ship (wood contributions &lt; 250): the pirates build rafts instead (1 raft = 75 pieces of
-                  wood). A raft can support one single pirate. The most generous pirates take place on the available rafts, leave
-                  the island and survive. On top of that, the pirates are angry and punish the less generous pirate, all his
-                  belongings are offered to the most generous pirate as a reward.</li>
-                  </ul>
-                  <br />
-                  <strong>End of game:</strong> Once the storm is over, ship/rafts are sold and the recovered amount is shared equally among all
-                  survivors. The pirates go in a tavern and celebrate their survival with bottles of rhum (all pirates who made
-                  benefits spend 5% of their benefits).
-                </v-card-text>
-              </v-card>
+            <v-flex md6 class="text-xs-left">
+              <v-btn
+                class="grey  mt-5"
+                dark
+                large
+                href="/pre-made-themes"
+              >
+                Break the Piggy*
+              </v-btn>
+              <div class="remaining-time"><countdown date="2018-03-27 23:00:00"></countdown></div>
             </v-flex>
           </v-layout>
+        </v-parallax>
+      </section>
+
+      <section>
+        <v-layout
+          column
+          wrap
+          class="my-5"
+          align-center
+        >
+          <v-flex xs12 sm4 class="my-3">
+            <div class="text-xs-center">
+              <h2 class=" display-2">How does it work?</h2>
+            </div>
+          </v-flex>
+          <v-flex xs12>
+            <v-container grid-list-xl>
+              <v-layout row wrap>
+                <v-flex xs12 md4>
+                  <v-card class="elevation-0 transparent">
+                    <v-card-text class="text-xs-center">
+                      <img src="/static/img/picto/1-contribute.png" height="200">
+                    </v-card-text>
+                    <v-card-title primary-title class="layout justify-center">
+                      <div class="headline text-xs-center">1. You <strong>contribute</strong> with	Ethers</div>
+                    </v-card-title>
+                  </v-card>
+                </v-flex>
+                <v-flex xs12 md4>
+                  <v-card class="elevation-0 transparent">
+                    <v-card-text class="text-xs-center">
+                      <img src="/static/img/picto/2-break-piggy.png" height="200">
+                    </v-card-text>
+                    <v-card-title primary-title class="layout justify-center">
+                      <div class="headline">2. <strong>Any contributor</strong> can decide to break the Piggy</div>
+                    </v-card-title>
+                  </v-card>
+                </v-flex>
+                <v-flex xs12 md4>
+                  <v-card class="elevation-0 transparent">
+                    <v-card-text class="text-xs-center">
+                      <img src="/static/img/picto/3-random-winner.png" height="200">
+                    </v-card-text>
+                    <v-card-title primary-title class="layout justify-center">
+                      <div class="headline text-xs-center">3. A winner is <strong>chosen randomly</strong> between the contributors**</div>
+                    </v-card-title>
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-flex>
+        </v-layout>
+      </section>
+
+      <section>
+        <v-parallax  class="parallax-background" height="280">
+          <v-layout column align-center justify-center>
+            <div class="headline black--text mb-3 text-xs-center">**Your chances to win the lottery are directly proportional to the amount your contribution(s)</div>
+
+          </v-layout>
+        </v-parallax>
+      </section>
+
+      <section>
+        <v-container grid-list-xl>
+          <v-layout row wrap justify-center class="my-5">
+            <v-flex sm12 class="my-3">
+              <div class="text-xs-center">
+                <h2 class=" display-1">Examples</h2>
+              </div>
+            </v-flex>
+            <v-flex xs12 sm6>
+              <v-card class="elevation-0 transparent">
+                <v-container fluid grid-list-lg>
+                  <v-layout row>
+                    <v-flex xs4>
+                      <v-card-media
+                        src="/static/img/picto/big-piggy.png"
+                        height="125px"
+                        contain
+                      ></v-card-media>
+                    </v-flex>
+                    <v-flex xs8>
+                      <v-list class="transparent">
+                        <v-list-tile>
+                          <v-list-tile-content>
+                            <v-list-tile-title>Piggy value: 40 ETH</v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-list-tile-content>
+                            <v-list-tile-title>Your contribution: 20 ETH</v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-list-tile-content>
+                            <v-list-tile-title>Your chances to win the lottery: 50%</v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                      </v-list>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-flex>
+            <v-flex xs12 sm6>
+              <v-card class="elevation-0 transparent">
+                <v-container fluid grid-list-lg>
+                  <v-layout row>
+                    <v-flex xs4>
+                      <v-card-media
+                        src="/static/img/picto/big-piggy.png"
+                        height="125px"
+                        contain
+                      ></v-card-media>
+                    </v-flex>
+                    <v-flex xs8>
+                      <v-list class="transparent">
+                        <v-list-tile>
+                          <v-list-tile-content>
+                            <v-list-tile-title>Piggy value: 40 ETH</v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-list-tile-content>
+                            <v-list-tile-title>Your contribution: 0.4 ETH</v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                        <v-list-tile>
+                          <v-list-tile-content>
+                            <v-list-tile-title>Your chances to win the lottery: 1%</v-list-tile-title>
+                          </v-list-tile-content>
+                        </v-list-tile>
+                      </v-list>
+                    </v-flex>
+                  </v-layout>
+                </v-container>
+              </v-card>
+            </v-flex>
+
+
+          </v-layout>
         </v-container>
-      </v-flex>
-    </v-layout>
-  </section>
-</span>
+      </section>
+
+
+
+  </div>
 </template>
+
+
+
+<script>
+import Countdown from '@/components/Countdown/Countdown.vue'
+export default {
+  components: { Countdown }
+}
+</script>
+
+
+<style>
+.parallax-background {
+    background-image: url("/static/img/background/pattern-tile.svg");
+    background-repeat: repeat;
+    background-size: 400px 230px;
+}
+
+.remaining-time {
+  color: #a2a2a2;
+  font-weight: bold;
+  font-size: 16px;
+  margin-left: 15px;
+}
+</style>
