@@ -9,13 +9,8 @@
       {{ hours | two_digits }}
       Hours,
     </span>
-
-
-
-
       {{ minutes | two_digits }}
       Minutes,
-
       {{ seconds | two_digits }}
       Seconds
   </div>
@@ -26,27 +21,24 @@ export default {
   props: {
     date: null
   },
-
-filters: {
-  two_digits (value) {
-    if (value.toString().length <= 1) {
-      return '0' + value.toString()
+  filters: {
+    two_digits (value) {
+      if (value.toString().length <= 1) {
+        return '0' + value.toString()
+      }
+      return value.toString()
     }
-    return value.toString()
-  }
-},
-
+  },
   data () {
     return {
       now: Math.trunc((new Date()).getTime() / 1000),
       event: this.date
     }
   },
-
   computed: {
     calculatedDate () {
-      this.event = Math.trunc(Date.parse(this.event) / 1000)
-      return this.event
+      let timestamp = Math.trunc(Date.parse(this.event) / 1000)
+      return timestamp
     },
     seconds () {
       return (this.calculatedDate - this.now) % 60
@@ -61,7 +53,6 @@ filters: {
       return Math.trunc((this.calculatedDate - this.now) / 60 / 60 / 24)
     }
   },
-
   mounted () {
     window.setInterval(() => {
       this.now = Math.trunc((new Date()).getTime() / 1000)
@@ -70,7 +61,7 @@ filters: {
 }
 </script>
 
-<style>
+<style scoped>
 .block {
   float: left;
   margin: 20px;

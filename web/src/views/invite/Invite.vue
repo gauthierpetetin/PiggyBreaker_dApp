@@ -22,7 +22,7 @@
                       <img src="/static/img/picto/1-contribute.png" height="200">
                     </v-card-text>
                     <v-card-title primary-title class="layout justify-center">
-                      <div class="headline text-xs-center">1. You <strong>contribute</strong> with	Ethers</div>
+                      <div class="headline text-xs-center">1. You <strong>contribute</strong> with Ethers</div>
                     </v-card-title>
                   </v-card>
                 </v-flex>
