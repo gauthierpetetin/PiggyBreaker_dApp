@@ -8,4 +8,4 @@ const solc = require('solc');
 const cryptoPiggyPath = path.resolve(__dirname, 'contracts', 'CryptoPiggy.sol');
 const source = fs.readFileSync(cryptoPiggyPath, 'utf8');
 
-module.exports = solc.compile(source, 1).contracts[':CryptoPiggy'];
+module.exports = solc.compile(source, 1).contracts[':Farm'];

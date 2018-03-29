@@ -109,7 +109,7 @@ contract Piggies is Pausable {
   }
 
   modifier contributionIsHighEnough(uint contribution) {
-    require( contribution > rateCurrent ); _;
+    require( contribution >= rateCurrent ); _;
   }
 
   // Contstructor
