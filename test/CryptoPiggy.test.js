@@ -11,15 +11,18 @@ const web3 = new Web3(provider); // ganache will change depending on what networ
 
 const {interface, bytecode} = require('../compile');
 
-
 let accounts;
 let cryptoPiggy;
+let initial_nbPiggies = 0;
+let nbPiggies;
+let currentPiggy;
 beforeEach(async () => {
   // Get list of all accounts
   accounts = await web3.eth.getAccounts();
   // Use one of those accounts to deploy the contract
+
   cryptoPiggy = await new web3.eth.Contract(JSON.parse(interface))
-  .deploy({ data: bytecode, arguments: '0' })
+  .deploy({ data: bytecode, arguments: [initial_nbPiggies] })
   .send({ from: accounts[0], gas: '2500000' });
 
   cryptoPiggy.setProvider(provider);
@@ -29,17 +32,40 @@ describe('CryptoPiggy', () => {
   it('deploys a contract',() => {
     assert.ok(cryptoPiggy.options.address);
   });
-  // it('has a default message', async () => {
-  //   const message = await cryptoPiggy.methods.message().call();
-  //   assert.equal(message, 'Hi there!');
-  // });
-  // it('can change message', async () => {
-  //   await cryptoPiggy.methods.setMessage('bye').send({ from: accounts[0]
-  //   // Example of payable method
-  //   // await cryptoPiggy.methods.setMessage('bye').send({ from: accounts[0], value: web3.utils.toWei('0.01', 'ether') });
-  //   const message = await cryptoPiggy.methods.message().call();
-  //   assert.equal(message, 'bye');
-  // });
+  it('marks caller as the contract owner (farmer)', async() => {
+    const farmer = await cryptoPiggy.methods.farmer().call();
+    assert.equal(accounts[0], farmer);
+  });
+  it('creates first Piggy', async() => {
+    nbPiggies = await cryptoPiggy.methods.nbPiggies().call();
+    currentPiggy = await cryptoPiggy.methods.piggies(nbPiggies).call();
+    assert( (nbPiggies == (initial_nbPiggies + 1) ) && currentPiggy.open );
+  });
+  it('allows people to contribute money and mark them as contributors', async() => {
+    const rateCurrent = await cryptoPiggy.methods.rateCurrent().call();
+    const balance = await web3.eth.getBalance(accounts[1]);
+    const rateRandom = Math.random() * (balance - rateCurrent);
+    const randomContribution = (1*rateCurrent) + rateRandom ;
+    await cryptoPiggy.methods.contribute().send({
+      value: randomContribution,
+      from: accounts[1],
+      gas: '1000000'
+    });
+    let isContributor = await cryptoPiggy.methods.getContributionStatus(nbPiggies, accounts[1]).call();
+    let contribution = await cryptoPiggy.methods.getContributionAmount(nbPiggies, accounts[1]).call();
+    assert(isContributor && (contribution == randomContribution) );
+  });
+  it('allows people to contribute with the minimum contribution', async() => {
+    const rateCurrent = await cryptoPiggy.methods.rateCurrent().call();
+    await cryptoPiggy.methods.contribute().send({
+      value: rateCurrent,
+      from: accounts[2],
+      gas: '1000000'
+    });
+    let isContributor = await cryptoPiggy.methods.getContributionStatus(nbPiggies, accounts[2]).call();
+    let contribution = await cryptoPiggy.methods.getContributionAmount(nbPiggies, accounts[2]).call();
+    assert(isContributor && (contribution == rateCurrent) );
+  });
 });
 
 
