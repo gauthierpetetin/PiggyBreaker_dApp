@@ -82,7 +82,6 @@ contract Piggies is Pausable {
   uint public lastContributionFrequency = 0;
 
   mapping (uint => Piggy) public piggies;                     // All piggies
-
   mapping (address => uint) public pendingReturnValues;       // Earnings of game vistories
   mapping (address => uint) public pendingReturnDates;        // Timestamps of game victories
 
@@ -231,6 +230,21 @@ contract Piggies is Pausable {
 
   function setPercentage(uint _newPercentage) public restricted {
     percentage = _newPercentage;
+  }
+
+  function getContributionStatus(uint _piggyID, address _player) public view returns(bool) {
+    Piggy storage piggy = piggies[_piggyID];
+    return piggy.contributed[_player];
+  }
+
+  function getContributionAmount(uint _piggyID, address _player) public view returns(uint) {
+    Piggy storage piggy = piggies[_piggyID];
+    for(uint i = 0; i < piggy.contributions.length; i++) {
+      if( piggy.contributors[piggy.contributions[i]] == _player ) {
+        return piggy.contributions[i];
+      }
+    }
+    return 0;
   }
 
   function forgottenFundsRecovery(address _address) public restricted {
