@@ -2,12 +2,12 @@
   <div>
 
     <section>
-          <v-layout
-            column
-            wrap
-            class="my-5"
-            align-center
-          >
+      <v-layout
+        column
+        wrap
+        class="my-5"
+        align-center
+      >
         <v-flex md12 style="width: 100%">
           <v-container grid-list-xl>
             <v-layout row wrap>
