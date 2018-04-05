@@ -180,7 +180,7 @@
                       <v-card-text class="grey lighten-3">
                         The value of the minimum contribution to play CryptoPiggy is indicated below the "Contribute" button.<br />
                         <img src="/static/img/faq/7-contribute-minimum.png" /><br />
-                        The minimum contribution can ﻿﻿go up or down with time. It increases when the frequency of player contributions increases.
+                        The minimum contribution can go up or down with time.It increases when the frequency of player contributions increases.
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
@@ -290,9 +290,6 @@
 </template>
 
 <script>
-export default {
-
-}
 </script>
 
 <style scoped>

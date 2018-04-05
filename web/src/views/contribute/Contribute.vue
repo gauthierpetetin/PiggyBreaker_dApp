@@ -20,6 +20,7 @@
                 dark
                 large
                 slot="activator"
+                @click.native="contributeDialog()"
               >
                 Contribute
               </v-btn>
@@ -32,7 +33,7 @@
                     <v-layout wrap>
                       <v-flex xs12 sm6>
                         Your ETH contribution*<br />
-                        (minimum contribution: 0.01ETH)
+                        (minimum contribution: {{ rateLimit }} ETH)
                       </v-flex>
                       <v-flex xs12 sm2>
                         <v-text-field type="number" number
@@ -63,14 +64,15 @@
           </v-flex>
           <v-flex md6 class="text-xs-left">
             <v-btn
-              class="grey  mt-5"
+              class="mt-5"
               dark
               large
-              href="/pre-made-themes"
+              @click.native="breakPiggy()"
+              :class="[breakAvailable ? 'pink' : 'grey']"
             >
               Break the Piggy*
             </v-btn>
-            <div class="remaining-time"><countdown date="2018-03-30 23:00:00"></countdown></div>
+            <div class="remaining-time" v-if="breakAvailable == false"><countdown :date="lastContributionTime"></countdown></div>
           </v-flex>
         </v-layout>
       </v-parallax>
@@ -78,6 +80,7 @@
 
   </div>
 </template>
+
 <script>
 import Countdown from '@/components/Countdown/Countdown.vue'
 
@@ -94,11 +97,16 @@ export default {
   data () {
     return {
       dialog: false,
+      now: null,
+      lastContributionTime: 142,
+      breakAvailable: false,
+      activeBreakClass: 'red',
       contributeStatus: 'contributing',
       contribution: '',
       balance: 0,
       contractAddress: '0x2378575da1f3ffc60ae34279ab0386904cf477f7',
-      nodeUrl: 'wss://ropsten.eth.6120.eu/ws'
+      nodeUrl: 'wss://ropsten.eth.6120.eu/ws',
+      rateLimit: 0
     }
   },
   mounted () {
@@ -109,9 +117,12 @@ export default {
   },
   methods: {
     initialize () {
+      this.now = new Date()
+
       if (typeof window.web3 !== 'undefined') {
         web3js = new Web3(web3js.currentProvider)
         this.getBalance(this.contractAddress)
+        this.getRemainingTime()
       }
       // Get provider
       // web3.setProvider(this.nodeUrl)
@@ -131,11 +142,58 @@ export default {
           self.balance = balance
         })
     },
+    getRemainingTime () {
+      console.log('Get remaining time')
+
+      var abi = JSON.parse(contractAbi)
+      // Exec contract
+      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      console.log('start call get')
+      let self = this
+      contract.methods.nbPiggies().call().then(
+        function (nbPiggies) {
+          console.log('Result Piggies: ' + nbPiggies)
+          self.retreivedValue = nbPiggies
+
+          contract.methods.piggies(nbPiggies).call().then(
+            function (piggy) {
+              var lastContributionTime = new Date(piggy.lastContributionTime * 1000)
+              console.log('Result 1:', lastContributionTime.toISOString())
+              lastContributionTime.setMinutes(lastContributionTime.getMinutes() + 3)
+              console.log('Result 2:', lastContributionTime.toISOString())
+
+              self.lastContributionTime = self.lastContributionTime
+
+              // If time is ok
+              if ((new Date(self.now).getTime() > new Date(self.lastContributionTime).getTime())) {
+                self.breakAvailable = true
+              } else {
+                self.breakAvailable = false
+              }
+            })
+        })
+    },
+    contributeDialog () {
+      console.log('contributeDialog 2:')
+      var abi = JSON.parse(contractAbi)
+      // Exec contract
+      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      console.log('start call get')
+      let self = this
+      contract.methods.rateCurrent().call().then(
+        function (rateCurrent) {
+          contract.methods.rateNext().call().then(
+            function (rateNext) {
+              if (rateNext > rateCurrent) {
+                self.rateLimit = Units.convert(rateNext, 'wei', 'eth')
+              } else {
+                self.rateLimit = Units.convert(rateCurrent, 'wei', 'eth')
+              }
+            })
+        })
+    },
     contribute () {
       let self = this
-
-      // let web3Provider = web3.currentProvider
-      // console.log('existing web3: provider', typeof web3, web3.currentProvider)
 
       web3js.eth.getAccounts()
         .then(function (accounts) {
@@ -168,9 +226,6 @@ export default {
     breakPiggy () {
       let self = this
 
-      // let web3Provider = web3.currentProvider
-      // console.log('existing web3: provider', typeof web3, web3.currentProvider)
-
       web3js.eth.getAccounts()
         .then(function (accounts) {
           console.log(accounts)
@@ -183,7 +238,7 @@ export default {
 
           // Exec contract
           var contract = new web3js.eth.Contract(abi, self.contractAddress)
-          contract.methods.contribute().send({value: Units.convert(self.contribution, 'eth', 'wei'), from: defaultAccount})
+          contract.methods.breakPiggy().send({from: defaultAccount})
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
               self.contributeStatus = 'contributed'
@@ -203,7 +258,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .parallax-background {
     background-image: url("/static/img/background/pattern-tile.svg");
     background-repeat: repeat;
@@ -216,4 +271,9 @@ export default {
   font-size: 16px;
   margin-left: 15px;
 }
+
+.activeBreak {
+  background-color: #ff0000;
+}
+
 </style>

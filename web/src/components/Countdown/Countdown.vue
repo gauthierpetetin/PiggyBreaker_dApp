@@ -1,14 +1,6 @@
 <template>
   <div>
     *feature available in:
-    <span v-if="days">
-      {{ days | two_digits }}
-      Days,
-    </span>
-    <span v-if="days || hours">
-      {{ hours | two_digits }}
-      Hours,
-    </span>
       {{ minutes | two_digits }}
       Minutes,
       {{ seconds | two_digits }}

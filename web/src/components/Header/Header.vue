@@ -18,6 +18,7 @@
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn to="invite" flat>Invite</v-btn>
+      <v-btn to="piggies" flat>Last Piggies</v-btn>
       <v-btn to="about" flat>About</v-btn>
       <v-btn to="faq" flat>FAQ</v-btn>
     </v-toolbar-items>

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Homepage from '@/views/Homepage'
 
+import Piggies from '@/views/piggies/Piggies'
 import Invite from '@/views/invite/Invite'
 import FAQ from '@/views/faq/FAQ'
 import About from '@/views/about/About'
@@ -15,6 +16,11 @@ export default new Router({
       path: '/',
       name: 'Homepage',
       component: Homepage
+    },
+    {
+      path: '/piggies',
+      name: 'Piggies',
+      component: Piggies
     },
     {
       path: '/invite',
