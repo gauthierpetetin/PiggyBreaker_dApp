@@ -16,7 +16,8 @@
           <v-flex md6 class="text-xs-right">
             <v-dialog v-model="dialog" persistent max-width="800px">
               <v-btn
-                class="blue lighten-2 mt-5"
+                class=" lighten-2 mt-5"
+                style="background-color: #FFD700"
                 dark
                 large
                 slot="activator"
