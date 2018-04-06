@@ -118,7 +118,7 @@ export default {
   },
   methods: {
     initialize () {
-      this.now = new Date()
+      this.now = new Date(Date.UTC())
 
       if (typeof window.web3 !== 'undefined') {
         web3js = new Web3(web3js.currentProvider)
@@ -158,21 +158,29 @@ export default {
 
           contract.methods.piggies(nbPiggies).call().then(
             function (piggy) {
+
               var lastContributionTime = new Date(piggy.lastContributionTime * 1000)
-              console.log('Last :', lastContributionTime.toISOString())
-              lastContributionTime.setMinutes(lastContributionTime.getMinutes() + self.timeLimit)
-              console.log('Last + 3000:', lastContributionTime.toISOString())
-              console.log('Last + xx:', new Date())
+              console.log('lastContributionTime :', lastContributionTime.toISOString())
 
-              self.lastContributionTime = lastContributionTime
+              var lastContributionLimit = lastContributionTime
+              lastContributionLimit.setMinutes(lastContributionTime.getMinutes() + self.timeLimit)
+              console.log('lastContributionLimit :', lastContributionTime.toISOString())
 
-              // If time is ok
-              // if ((new Date(self.now).getTime() > new Date(self.lastContributionTime).getTime())) {
-              if ((new Date().getTime() > new Date(self.lastContributionTime).getTime())) {
+              var currentTime = new Date().getTime()
+              console.log('currentTime :', currentTime)
+
+              if ((currentTime > lastContributionTime.getTime())) {
                 self.breakAvailable = true
-              } else {
+                } else {
                 self.breakAvailable = false
               }
+
+
+              console.log('---------------------------------------------')
+              self.lastContributionTime = lastContributionTime
+
+              console.log('---------------------------------------------')
+
             })
         })
     },
