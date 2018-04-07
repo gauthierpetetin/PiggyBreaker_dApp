@@ -200,9 +200,9 @@ contract Piggies is Pausable {
       for (uint i = 0; i < piggy.contributions.length; i++) {     // If more than one player, play the lottery
         if( winnerNumber <= piggy.contributions[i] ) {
           piggy.winner = piggy.contributors[piggy.contributions[i]];
-          uint newBabyPiggy = 3 * piggy.value / 100;
-          totalValue -= newBabyPiggy;
-          pendingReturnValues[farmer] += newBabyPiggy;            //A new piggy is offered to the farmer to replace the broken one
+          uint piggyReparationFee = 375 * piggy.value / 10000;
+          totalValue -= piggyReparationFee;
+          pendingReturnValues[farmer] += piggyReparationFee;            //A new piggy is offered to the farmer to replace the broken one
           break;
         }
       }
