@@ -16,10 +16,11 @@
               <v-card class="elevation-0 transparent">
                 <v-layout row justify-space-around>
                   <v-flex sm3 text-md-center>
-                    <img src="/static/img/picto/big-piggy.png" width="80">
+                    <img v-if="piggy.open === false" src="/static/img/picto/broken-piggy.png" width="100">
+                    <img v-if="piggy.open === true" src="/static/img/picto/big-piggy.png" width="80">
                   </v-flex>
                   <v-flex sm9>
-                    Id: {{ piggy.id }}<br />
+                    #{{ piggy.id }}<br />
                     Value: {{ piggy.value }} ETH<br />
                     Open: {{ piggy.open }}<br />
                     Created at: {{ piggy.createdAt }}<br />
@@ -70,8 +71,8 @@ export default {
         function (nbPiggies) {
           self.retreivedValue = nbPiggies
 
-          for (let i = 0; i < nbPiggies; i++) {
-            contract.methods.piggies(nbPiggies).call().then(
+          for (let i = nbPiggies; i >= 1; i--) {
+            contract.methods.piggies(i).call().then(
               function (piggyItem) {
                 console.log('Get contract value', piggyItem.creationTime)
                 let createdAt = new Date(piggyItem.creationTime * 1000)

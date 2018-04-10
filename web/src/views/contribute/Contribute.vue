@@ -2,22 +2,23 @@
   <div>
 
     <section>
-      <v-parallax class="parallax-background" height="600">
+      <v-parallax class="parallax-background" height="900">
         <v-layout
           column
           align-center
           justify-center
         >
-          <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">Current Piggy value: {{ balance }} ETH</h1>
+          <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">Current Piggy value:<br /><strong>{{ balance }} ETH</strong></h1>
+          <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">Your contribution:<br /><strong>{{ contributionAmount }} ETH</strong></h1>
           <img src="/static/img/picto/big-piggy.png" alt="Vuetify.js" height="350">
         </v-layout>
         <v-layout row wrap
         class="white--text">
-          <v-flex md6 class="text-xs-right">
+          <v-flex md12 class="text-xs-center">
             <v-dialog v-model="dialog" persistent max-width="800px">
               <v-btn
-                class=" lighten-2 mt-5"
-                style="background-color: #FFD700"
+                class=" lighten-2 mt-2"
+                style="background-color: #FFD700;font-size: 42px;"
                 dark
                 large
                 slot="activator"
@@ -63,20 +64,107 @@
               </v-card>
             </v-dialog>
           </v-flex>
-          <v-flex md6 class="text-xs-left">
-            <v-btn
-              class="mt-5"
-              dark
-              large
-              @click.native="breakPiggy()"
-              :class="[breakAvailable ? 'pink' : 'grey']"
-            >
-              Break the Piggy*
-            </v-btn>
-            <div class="remaining-time" v-if="breakAvailable == false"><countdown :date="lastContributionTime"></countdown></div>
+          <v-flex md12 class="text-xs-center black--text" style="font-size:28px">
+            Minimum contribution: 0.01 ETH
+            <v-tooltip right>
+              <v-icon slot="activator">info_outline</v-icon>
+              <span>Tooltip</span>
+            </v-tooltip>
           </v-flex>
+
         </v-layout>
       </v-parallax>
+    </section>
+
+    <section>
+      <v-layout
+        column
+        wrap
+        class="my-5"
+        align-center
+      >
+        <v-flex xs12 sm4 class="my-3">
+          <div class="text-xs-center">
+            <h2 class=" display-2">How does it work?</h2>
+          </div>
+        </v-flex>
+        <v-flex xs12>
+          <v-container grid-list-xl>
+            <v-layout row wrap>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                <v-card-title primary-title class="layout justify-center">
+                  <div class="headline text-xs-center">1. You <strong>contribute</strong> with Ethers</div>
+                </v-card-title>
+                  <v-card-text class="text-xs-center">
+                    <img src="/static/img/picto/1-contribute.png" height="200">
+                  </v-card-text>
+                  <v-card-text class="text-xs-center">
+                    <v-btn
+                      class=" lighten-2 mt-5"
+                      style="background-color: #FFD700"
+                      dark
+                      large
+                      slot="activator"
+                      @click.native="contributeDialog()"
+                    >
+                      Contribute
+                    </v-btn>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                <v-card-title primary-title class="layout justify-center">
+                  <div class="headline">2. <strong>Any contributor</strong> can decide to break the Piggy</div>
+                </v-card-title>
+                  <v-card-text class="text-xs-center">
+                    <img src="/static/img/picto/2-break-piggy.png" height="200">
+                  </v-card-text>
+                  <v-card-text class="text-xs-center">
+                    <v-btn
+                      class="mt-5"
+                      dark
+                      large
+                      @click.native="breakPiggy()"
+                      :class="[breakAvailable ? 'pink' : 'grey']"
+                    >
+                      Break the Piggy*
+                    </v-btn>
+                    <div class="remaining-time" v-if="breakAvailable == false"><countdown :date="lastContributionTime"></countdown></div>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+              <v-flex xs12 md4>
+                <v-card class="elevation-0 transparent">
+                  <v-card-title primary-title class="layout justify-center">
+                    <div class="headline text-xs-center">3. A winner is <strong>chosen randomly</strong> between the contributors**</div>
+                  </v-card-title>
+                  <v-card-text class="text-xs-center">
+                    <img src="/static/img/picto/3-random-winner.png" height="200">
+                  </v-card-text>
+                  <v-card-text class="text-xs-center">
+                    <v-btn
+                      class="mt-5"
+                      dark
+                      large
+                      @click.native="breakPiggy()"
+                      :class="[breakAvailable ? 'grey' : 'grey']"
+                    >
+                      Withdraw
+                    </v-btn>
+                    <v-tooltip right>
+                      <v-icon slot="activator">info_outline</v-icon>
+                      <span>Tooltip</span>
+                    </v-tooltip>
+                    <div class="remaining-time" v-if="breakAvailable == false"><countdown :date="lastContributionTime"></countdown></div>
+                  </v-card-text>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
+        </v-flex>
+      </v-layout>
     </section>
 
   </div>
@@ -100,6 +188,7 @@ export default {
       dialog: false,
       now: null,
       lastContributionTime: 142,
+      contributionAmount: 0,
       breakAvailable: false,
       activeBreakClass: 'red',
       contributeStatus: 'contributing',
@@ -125,6 +214,7 @@ export default {
         web3js = new Web3(web3js.currentProvider)
         this.getBalance(this.contractAddress)
         this.getRemainingTime()
+        this.getContributionAmount()
       }
       // Get provider
       // web3.setProvider(this.nodeUrl)
@@ -182,6 +272,25 @@ export default {
 
               console.log('---------------------------------------------')
 
+            })
+        })
+    },
+    getContributionAmount () {
+      console.log('Get contribution amount')
+
+      var abi = JSON.parse(contractAbi)
+      // Exec contract
+      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      console.log('start call get')
+      let self = this
+      web3js.eth.getAccounts()
+        .then(function (accounts) {
+          console.log(accounts)
+          let defaultAccount = accounts[0]
+          contract.methods.getContributionAmount(2, defaultAccount).call().then(
+            function (amount) {
+              console.log('Result amount: ' + amount)
+              self.contributionAmount = Units.convert(amount, 'wei', 'eth')
             })
         })
     },
@@ -277,9 +386,9 @@ export default {
 
 <style scoped>
 .parallax-background {
-    background-image: url("/static/img/background/pattern-tile.svg");
-    background-repeat: repeat;
-    background-size: 400px 230px;
+  background-image: url("/static/img/background/background-piggies.jpg");
+  background-repeat: repeat;
+  background-size: 426px 201px;
 }
 
 .remaining-time {
