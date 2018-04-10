@@ -1,6 +1,7 @@
 //CryptoPiggy.test.js
 const assert = require('assert');
 const ganache = require('ganache-cli'); // Local test network
+const sinon = require('sinon');
 //Convention
 // - Capital letter for library
 // - Normal letter for an instance of the library
@@ -11,19 +12,21 @@ const web3 = new Web3(provider); // ganache will change depending on what networ
 
 const {interface, bytecode} = require('../compile');
 
+let clock;
 let accounts;
 let cryptoPiggy;
 let initial_nbPiggies = 0;
-let nbPiggies;
-let currentPiggy;
 beforeEach(async () => {
+  clock = sinon.useFakeTimers();
   // Get list of all accounts
   accounts = await web3.eth.getAccounts();
   // Use one of those accounts to deploy the contract
 
+
   cryptoPiggy = await new web3.eth.Contract(JSON.parse(interface))
   .deploy({ data: bytecode, arguments: [initial_nbPiggies] })
-  .send({ from: accounts[0], gas: '2500000' });
+  .send({ from: accounts[0], gas: '2500000' })
+  .done();
 
   cryptoPiggy.setProvider(provider);
 });
@@ -31,14 +34,16 @@ beforeEach(async () => {
 describe('CryptoPiggy', () => {
   it('deploys a contract',() => {
     assert.ok(cryptoPiggy.options.address);
+    done();
   });
   it('marks caller as the contract owner (farmer)', async() => {
-    const farmer = await cryptoPiggy.methods.farmer().call();
+    const farmer = await cryptoPiggy.methods.farmer().call().done();
     assert.equal(accounts[0], farmer);
+    done();
   });
   it('creates first Piggy', async() => {
-    nbPiggies = await cryptoPiggy.methods.nbPiggies().call();
-    currentPiggy = await cryptoPiggy.methods.piggies(nbPiggies).call();
+    const nbPiggies = await cryptoPiggy.methods.nbPiggies().call();
+    const currentPiggy = await cryptoPiggy.methods.piggies(nbPiggies).call();
     assert( (nbPiggies == (initial_nbPiggies + 1) ) && currentPiggy.open );
   });
   it('allows people to contribute money and mark them as contributors', async() => {
@@ -51,6 +56,7 @@ describe('CryptoPiggy', () => {
       from: accounts[1],
       gas: '1000000'
     });
+    const nbPiggies = await cryptoPiggy.methods.nbPiggies().call();
     let isContributor = await cryptoPiggy.methods.getContributionStatus(nbPiggies, accounts[1]).call();
     let contribution = await cryptoPiggy.methods.getContributionAmount(nbPiggies, accounts[1]).call();
     assert(isContributor && (contribution == randomContribution) );
@@ -62,12 +68,37 @@ describe('CryptoPiggy', () => {
       from: accounts[2],
       gas: '1000000'
     });
+    const nbPiggies = await cryptoPiggy.methods.nbPiggies().call();
     let isContributor = await cryptoPiggy.methods.getContributionStatus(nbPiggies, accounts[2]).call();
     let contribution = await cryptoPiggy.methods.getContributionAmount(nbPiggies, accounts[2]).call();
     assert(isContributor && (contribution == rateCurrent) );
   });
+  it('does not allow people to contribute with less than the minimum contribution', async() => {
+    const rateCurrent = await cryptoPiggy.methods.rateCurrent().call();
+    const smallContribution = ((1*rateCurrent) - 2);
+    try {
+      await cryptoPiggy.methods.contribute().send({
+        value: smallContribution,
+        from: accounts[0],
+        gas: '1000000'
+      });
+      assert(false);
+    } catch (err) {
+      assert(err);
+    }
+  });
+
+  it('allows contributors to break the piggy after 3 minutes', async() => {
+    const rateCurrent = await cryptoPiggy.methods.rateCurrent().call();
+    clock.tick(3*60);
+    assert(true);
+  });
+
 });
 
+afterEach(function () {
+    clock.restore();
+});
 
 /*********************Try catch demo*******************************************/
 // it('minimum amount of ether', async () => {
