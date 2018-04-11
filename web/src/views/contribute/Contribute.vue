@@ -81,7 +81,7 @@
         column
         wrap
         class="my-5"
-        align-center
+        
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
@@ -97,7 +97,7 @@
                   <div class="headline text-xs-center">1. You <strong>contribute</strong> with Ethers</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
-                    <img src="/static/img/picto/1-contribute.png" height="200">
+                    <img src="/static/img/picto/1-contribute.png" height="150">
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <v-btn
@@ -119,7 +119,7 @@
                   <div class="headline">2. <strong>Any contributor</strong> can decide to break the Piggy</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
-                    <img src="/static/img/picto/2-break-piggy.png" height="200">
+                    <img src="/static/img/picto/2-break-piggy.png" height="150">
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <v-btn
@@ -141,7 +141,7 @@
                     <div class="headline text-xs-center">3. A winner is <strong>chosen randomly</strong> between the contributors**</div>
                   </v-card-title>
                   <v-card-text class="text-xs-center">
-                    <img src="/static/img/picto/3-random-winner.png" height="200">
+                    <img src="/static/img/picto/3-random-winner.png" height="150">
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <v-btn

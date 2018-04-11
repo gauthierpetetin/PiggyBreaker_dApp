@@ -1,7 +1,10 @@
 <template>
   <v-toolbar class="white">
     <v-toolbar-title>
-      <router-link to="/" ><a class="nav-link"><img src="@/assets/logo/logo-crypto-piggy.png" height="50"></a></router-link>
+      <router-link to="/"  class="logo">
+        <a class="nav-link "><img src="/static/img/logo/logo-crypto-piggy.png" height="50">
+          <span style="">Piggy Breaker</span>
+        </a></router-link>
     </v-toolbar-title>
     <v-toolbar-items v-if="networkStatus == 'good'">
       <v-tooltip bottom>
@@ -58,6 +61,11 @@ export default {
 </script>
 
 <style scoped>
+
+.logo  {
+  text-decoration: none;
+  color: #000000;
+}
 
 .metamask-status {
   margin: 15px 0 0 0;
