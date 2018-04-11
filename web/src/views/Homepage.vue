@@ -7,7 +7,7 @@
     <section>
       <v-parallax  class="parallax-background" height="280">
         <v-layout column align-center justify-center>
-          <div class="headline black--text mb-3 text-xs-center">**Your chances to win the lottery are directly proportional to the amount your contribution(s)</div>
+          <div class="headline black--text mb-3 text-xs-center">** Your chances to win the lottery are directly proportional to the amount your contribution(s)</div>
 
         </v-layout>
       </v-parallax>

@@ -1,11 +1,11 @@
 <template>
-  <v-card>
+  <v-card class="member-card">
     <v-card-text>
-    <v-avatar
-        :tile="true"
-        :size="140"
-        class="grey lighten-4"
-      >
+      <v-avatar
+          :tile="true"
+          :size="140"
+          class="grey lighten-4"
+        >
         <img src="/static/img/picto/piggy.png" alt="avatar">
       </v-avatar>
     </v-card-text>
@@ -24,11 +24,17 @@
 <script>
 
 export default {
-  data () {
-    return {
-      props: ['member'],
-    }
-  }
+  props: {
+    member: null
+  },
 }
 
 </script>
+
+<style scoped>
+
+.member-card {
+  min-height: 270px !important;
+
+}
+</style>

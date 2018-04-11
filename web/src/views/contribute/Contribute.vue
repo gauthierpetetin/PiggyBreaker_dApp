@@ -81,7 +81,7 @@
         column
         wrap
         class="my-5"
-        
+
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
@@ -94,7 +94,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center">1. You <strong>contribute</strong> with Ethers</div>
+                  <div class="headline text-xs-center howitworks-title">1. You <strong>contribute</strong> with Ethers</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/1-contribute.png" height="150">
@@ -116,7 +116,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline">2. <strong>Any contributor</strong> can decide to break the Piggy</div>
+                  <div class="headline text-xs-center howitworks-title">2. <strong>Any contributor</strong> can decide to break the Piggy</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/2-break-piggy.png" height="150">
@@ -131,14 +131,14 @@
                     >
                       Break the Piggy*
                     </v-btn>
-                    <div class="remaining-time" v-if="breakAvailable == false"><countdown :date="lastContributionTime"></countdown></div>
+                    <div class="remaining-time" v-if="breakAvailable == false"><app-countdown :date="lastContributionTime"></app-countdown></div>
                   </v-card-text>
                 </v-card>
               </v-flex>
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center">3. A winner is <strong>chosen randomly</strong> between the contributors**</div>
+                    <div class="headline text-xs-center howitworks-title">3. A winner is <strong>chosen randomly</strong> between the contributors**</div>
                   </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/3-random-winner.png" height="150">
@@ -150,10 +150,11 @@
                       large
                       @click.native="withdrawPiggy()"
                       :class="[breakAvailable ? 'grey' : 'grey']"
+
                     >
                       Withdraw
                     </v-btn>
-                    <v-tooltip right>
+                    <v-tooltip right style="top: 20px;">
                       <v-icon slot="activator">info_outline</v-icon>
                       <span>Tooltip</span>
                     </v-tooltip>
@@ -196,14 +197,14 @@ export default {
       contractAddress: '0xd764d4d12f44c49ad3c0b0150668d6c42df44d76',
       nodeUrl: 'wss://ropsten.eth.6120.eu/ws',
       rateLimit: 0,
-      timeLimit: 3
+      timeLimit: 180
     }
   },
   mounted () {
     this.initialize()
   },
   components: {
-    Countdown
+    AppCountdown: Countdown
   },
   methods: {
     initialize () {
@@ -211,18 +212,10 @@ export default {
 
       if (typeof window.web3 !== 'undefined') {
         web3js = new Web3(web3js.currentProvider)
-
+        // Get piggy data
         this.getLastPiggy()
         this.getPiggyMinimumContribution()
-        //this.getBalance(this.contractAddress)
-        //this.getRemainingTime()
-        //this.getContributionAmount()
       }
-      // Get provider
-      // web3.setProvider(this.nodeUrl)
-      //
-      // console.log('Connected to node')
-      //
     },
     // Get last piggy
     getLastPiggy () {
@@ -249,22 +242,20 @@ export default {
 
     // Get piggy remaing time
     getPiggyRemainingTime (piggy) {
-      var lastContributionTime = new Date(piggy.lastContributionTime * 1000)
-      console.log('lastContributionTime :', lastContributionTime.toISOString())
+      // Get time limit
+      let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (this.timeLimit * 1000))
+      console.log('lastContributionTimeLimit :', lastContributionTimeLimit.toISOString())
 
-      // var lastContributionLimit = lastContributionTime
-      // lastContributionLimit.setMinutes(lastContributionTime.getMinutes() + self.timeLimit)
-      // console.log('lastContributionLimit :', lastContributionTime.toISOString())
-
+      // Get current time
       var currentTime = new Date().getTime()
-      console.log('currentTime :', currentTime)
 
-      if ((currentTime > lastContributionTime.getTime())) {
-        self.breakAvailable = true
+      // Check time diff
+      if ((currentTime > lastContributionTimeLimit.getTime())) {
+        this.breakAvailable = true
         } else {
-        self.breakAvailable = false
+        this.breakAvailable = false
       }
-      self.lastContributionTime = lastContributionTime
+      this.lastContributionTime = lastContributionTimeLimit
     },
 
     // Get piggy value
@@ -312,84 +303,7 @@ export default {
             })
         })
     },
-    /*
-    getBalance (address) {
-      console.log('Get contract value')
 
-      // Get balance
-      let self = this
-      web3js.eth.getBalance(address)
-        .then(function (balance) {
-          console.log('Get balance: ' + balance)
-          balance = Units.convert(balance, 'wei', 'eth')
-          self.balance = balance
-        })
-    },
-    */
-    /*
-    getRemainingTime () {
-      console.log('Get remaining time')
-
-      var abi = JSON.parse(contractAbi)
-      // Exec contract
-      var contract = new web3js.eth.Contract(abi, this.contractAddress)
-      console.log('start call get')
-      let self = this
-      contract.methods.nbPiggies().call().then(
-        function (nbPiggies) {
-          console.log('Result Piggies: ' + nbPiggies)
-          self.retreivedValue = nbPiggies
-
-          contract.methods.piggies(nbPiggies).call().then(
-            function (piggy) {
-
-              var lastContributionTime = new Date(piggy.lastContributionTime * 1000)
-              console.log('lastContributionTime :', lastContributionTime.toISOString())
-
-              var lastContributionLimit = lastContributionTime
-              lastContributionLimit.setMinutes(lastContributionTime.getMinutes() + self.timeLimit)
-              console.log('lastContributionLimit :', lastContributionTime.toISOString())
-
-              var currentTime = new Date().getTime()
-              console.log('currentTime :', currentTime)
-
-              if ((currentTime > lastContributionTime.getTime())) {
-                self.breakAvailable = true
-                } else {
-                self.breakAvailable = false
-              }
-
-
-              console.log('---------------------------------------------')
-              self.lastContributionTime = lastContributionTime
-
-              console.log('---------------------------------------------')
-
-            })
-        })
-    },
-    */
-    /*
-    getContributionAmount () {
-      console.log('Get contribution amount')
-
-      var abi = JSON.parse(contractAbi)
-      // Exec contract
-      var contract = new web3js.eth.Contract(abi, this.contractAddress)
-      console.log('start call get')
-      let self = this
-      web3js.eth.getAccounts()
-        .then(function (accounts) {
-          console.log(accounts)
-          let defaultAccount = accounts[0]
-          contract.methods.getContributionAmount(2, defaultAccount).call().then(
-            function (amount) {
-              console.log('Result amount: ' + amount)
-              self.contributionAmount = Units.convert(amount, 'wei', 'eth')
-            })
-        })
-    },
-    */
     // Show dialog
     contributeDialog () {
       console.log('contributeDialog 2:')
@@ -430,6 +344,7 @@ export default {
             })
         })
     },
+
     // Contribute to the piggy
     contribute () {
       let self = this
@@ -467,6 +382,7 @@ export default {
             })
         })
     },
+
     // Break the piggy
     breakPiggy () {
       let self = this
@@ -499,6 +415,8 @@ export default {
             })
         })
     },
+
+    // Check withdraw
     checkWithdraw () {
       let self = this
 
@@ -519,6 +437,7 @@ export default {
           })
         })
     },
+
     // Withdraw
     withdrawPiggy () {
       let self = this
@@ -566,6 +485,10 @@ export default {
 
 .activeBreak {
   background-color: #ff0000;
+}
+
+.howitworks-title {
+  min-height: 50px;
 }
 
 </style>

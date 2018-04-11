@@ -1,5 +1,7 @@
 <template>
   <div>
+
+
     <section>
       <v-layout
         column
@@ -10,7 +12,7 @@
         <v-flex md12 >
           <img src="/static/img/picto/piggy.png" alt="avatar" width="100">
         </v-flex>
-        <v-flex md12 style="width: 100%">
+        <v-flex md12>
           <v-container grid-list-xl>
             <v-layout row wrap>
               <v-flex md12>
@@ -39,45 +41,10 @@
             <v-layout row wrap>
               <template v-for="(member, index) in team">
                 <v-flex v-if="index === 0" md2  offset-xs1>
-                  <v-card>
-                    <v-card-text>
-                    <v-avatar
-                        :tile="true"
-                        :size="140"
-                        class="grey lighten-4"
-                      >
-                        <img src="/static/img/picto/piggy.png" alt="avatar">
-                      </v-avatar>
-                    </v-card-text>
-
-                    <v-card-title>
-                      <div>
-                        <span class="orange--text"><strong>{{ member.name }}</strong></span><br>
-                        <span>{{ member.role }}</span><br>
-                      </div>
-                    </v-card-title>
-                  </v-card>
+                  <app-member :member="member"></app-member>
                 </v-flex>
                 <v-flex v-else md2 >
-                  <v-card>
-                    <v-card-text>
-                    <v-avatar
-                        :tile="true"
-                        :size="140"
-                        class="grey lighten-4"
-                      >
-                        <img src="/static/img/picto/piggy.png" alt="avatar">
-                      </v-avatar>
-                    </v-card-text>
-
-                    <v-card-title>
-                      <div>
-                        <span class="orange--text"><strong>{{ member.name }}</strong></span><br>
-                        <span>{{ member.role }}</span><br>
-                      </div>
-                    </v-card-title>
-
-                  </v-card>
+                  <app-member :member="member"></app-member>
                 </v-flex>
             </template>
             </v-layout>

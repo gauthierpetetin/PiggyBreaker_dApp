@@ -1,10 +1,10 @@
 <template>
   <div>
-    *feature available in:
+    * feature available in:
       {{ minutes | two_digits }}
-      Minutes,
+      mins,
       {{ seconds | two_digits }}
-      Seconds
+      secs
   </div>
 </template>
 

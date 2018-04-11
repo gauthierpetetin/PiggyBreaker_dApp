@@ -2,8 +2,9 @@
   <v-toolbar class="white">
     <v-toolbar-title>
       <router-link to="/"  class="logo">
-        <a class="nav-link "><img src="/static/img/logo/logo-crypto-piggy.png" height="50">
-          <span style="">Piggy Breaker</span>
+        <a class="nav-link ">
+          <img src="/static/img/logo/logo-crypto-piggy.png" height="50">
+          <span>Piggy Breaker</span>
         </a></router-link>
     </v-toolbar-title>
     <v-toolbar-items v-if="networkStatus == 'good'">
@@ -64,6 +65,14 @@ export default {
 
 .logo  {
   text-decoration: none;
+
+}
+
+.logo img {
+  vertical-align:middle;
+}
+
+.logo span {
   color: #000000;
 }
 
