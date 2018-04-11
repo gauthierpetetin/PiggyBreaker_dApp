@@ -27,7 +27,7 @@
                 <v-layout row>
                   <v-flex xs4>
                     <v-card-media
-                      src="/static/img/picto/big-piggy.png"
+                      src="/static/img/picto/piggy.png"
                       height="125px"
                       contain
                     ></v-card-media>
@@ -61,7 +61,7 @@
                 <v-layout row>
                   <v-flex xs4>
                     <v-card-media
-                      src="/static/img/picto/big-piggy.png"
+                      src="/static/img/picto/piggy.png"
                       height="125px"
                       contain
                     ></v-card-media>

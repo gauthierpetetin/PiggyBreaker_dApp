@@ -157,7 +157,6 @@
                       <v-icon slot="activator">info_outline</v-icon>
                       <span>Tooltip</span>
                     </v-tooltip>
-                    <div class="remaining-time" v-if="breakAvailable == false"><countdown :date="lastContributionTime"></countdown></div>
                   </v-card-text>
                 </v-card>
               </v-flex>

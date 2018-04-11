@@ -12,19 +12,27 @@
             <v-flex md12>
               <h1 class="headline">Piggies List</h1>
             </v-flex>
-            <v-flex sm6 v-for="(piggy, index) in piggies" :key="index" style="background-color:#f6f6f6;padding: 5px;">
-              <v-card class="elevation-0 transparent">
-                <v-layout row justify-space-around>
-                  <v-flex sm3 text-md-center>
-                    <img v-if="piggy.open === false" src="/static/img/picto/broken-piggy.png" width="100">
-                    <img v-if="piggy.open === true" src="/static/img/picto/big-piggy.png" width="80">
+
+            <v-flex v-for="(piggy, index) in piggies" :key="index" md6 style="margin-bottom: 10px;">
+              <v-card>
+                <v-layout>
+                  <v-flex sm3>
+                    <v-card-text>
+                      <div>
+                        <img v-if="piggy.open === false" src="/static/img/picto/broken-piggy.png" width="100">
+                        <img v-if="piggy.open === true" src="/static/img/picto/piggy.png" width="100">
+                      </div>
+                    </v-card-text>
                   </v-flex>
                   <v-flex sm9>
-                    #{{ piggy.id }}<br />
-                    Value: {{ piggy.value }} ETH<br />
-                    Open: {{ piggy.open }}<br />
-                    Created at: {{ piggy.createdAt }}<br />
-                    Winner: {{ piggy.winner }}
+                    <v-card-title>
+                      <div>
+                        <span class="grey--text">#{{ piggy.id }}</span><br>
+                        <span>Value: {{ piggy.value }} ETH</span><br>
+                        <span>Winner: {{ piggy.winner }}</span>
+                        <span>Created at: {{ piggy.createdAt }}</span>
+                      </div>
+                    </v-card-title>
                   </v-flex>
                 </v-layout>
               </v-card>

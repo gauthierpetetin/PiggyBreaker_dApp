@@ -7,6 +7,9 @@
         class="my-5"
         align-center
       >
+        <v-flex md12 >
+          <img src="/static/img/picto/piggy.png" alt="avatar" width="100">
+        </v-flex>
         <v-flex md12 style="width: 100%">
           <v-container grid-list-xl>
             <v-layout row wrap>
@@ -32,6 +35,52 @@
                 </p>
               </v-flex>
             </v-layout>
+
+            <v-layout row wrap>
+              <template v-for="(member, index) in team">
+                <v-flex v-if="index === 0" md2  offset-xs1>
+                  <v-card>
+                    <v-card-text>
+                    <v-avatar
+                        :tile="true"
+                        :size="140"
+                        class="grey lighten-4"
+                      >
+                        <img src="/static/img/picto/piggy.png" alt="avatar">
+                      </v-avatar>
+                    </v-card-text>
+
+                    <v-card-title>
+                      <div>
+                        <span class="orange--text"><strong>{{ member.name }}</strong></span><br>
+                        <span>{{ member.role }}</span><br>
+                      </div>
+                    </v-card-title>
+                  </v-card>
+                </v-flex>
+                <v-flex v-else md2 >
+                  <v-card>
+                    <v-card-text>
+                    <v-avatar
+                        :tile="true"
+                        :size="140"
+                        class="grey lighten-4"
+                      >
+                        <img src="/static/img/picto/piggy.png" alt="avatar">
+                      </v-avatar>
+                    </v-card-text>
+
+                    <v-card-title>
+                      <div>
+                        <span class="orange--text"><strong>{{ member.name }}</strong></span><br>
+                        <span>{{ member.role }}</span><br>
+                      </div>
+                    </v-card-title>
+
+                  </v-card>
+                </v-flex>
+            </template>
+            </v-layout>
           </v-container>
         </v-flex>
       </v-layout>
@@ -41,8 +90,23 @@
 
 <script>
 
-export default {
+import Member from '@/views/about/Member'
 
+export default {
+  data () {
+    return {
+      team: [
+        { name: 'Gauthier Petetin', role: 'Product and Development' },
+        { name: 'Raphaël Pralat', role: 'Product and Development' },
+        { name: 'Pablo Valles', role: 'Marketing' },
+        { name: 'Sylvain Laurent', role: 'Development' },
+        { name: 'Matthis Pralat', role: 'Design' }
+      ]
+    }
+  },
+  components: {
+    appMember: Member
+  }
 }
 
 </script>
