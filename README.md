@@ -1,6 +1,14 @@
 # crypto-piggy
 
 > Contribute and get a chance to win the lottery
+## Deploy
+
+# install dependencies
+npm install
+
+docker build .
+
+docker run -p 8080:80 <image_id>
 
 ## Build Setup
 
