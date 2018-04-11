@@ -65,7 +65,7 @@
             </v-dialog>
           </v-flex>
           <v-flex md12 class="text-xs-center black--text" style="font-size:28px">
-            Minimum contribution: 0.01 ETH
+            Minimum contribution: {{ rateLimit }} ETH
             <v-tooltip right>
               <v-icon slot="activator">info_outline</v-icon>
               <span>Tooltip</span>
@@ -148,7 +148,7 @@
                       class="mt-5"
                       dark
                       large
-                      @click.native="breakPiggy()"
+                      @click.native="withdrawPiggy()"
                       :class="[breakAvailable ? 'grey' : 'grey']"
                     >
                       Withdraw
@@ -212,9 +212,12 @@ export default {
 
       if (typeof window.web3 !== 'undefined') {
         web3js = new Web3(web3js.currentProvider)
-        this.getBalance(this.contractAddress)
-        this.getRemainingTime()
-        this.getContributionAmount()
+
+        this.getLastPiggy()
+        this.getPiggyMinimumContribution()
+        //this.getBalance(this.contractAddress)
+        //this.getRemainingTime()
+        //this.getContributionAmount()
       }
       // Get provider
       // web3.setProvider(this.nodeUrl)
@@ -222,6 +225,95 @@ export default {
       // console.log('Connected to node')
       //
     },
+    // Get last piggy
+    getLastPiggy () {
+      console.log('Get last piggy')
+
+      var abi = JSON.parse(contractAbi)
+      // Exec contract
+      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      let self = this
+      contract.methods.nbPiggies().call().then(
+        function (nbPiggies) {
+          console.log('Result Piggies: ' + nbPiggies)
+          self.retreivedValue = nbPiggies
+          contract.methods.piggies(nbPiggies).call().then(
+            function (piggy) {
+              console.log(piggy)
+              //self.currentContribution =
+              self.getPiggyRemainingTime(piggy)
+              self.getPiggyValue(piggy)
+              self.getPlayerContributionAmount(nbPiggies)
+            })
+        })
+    },
+
+    // Get piggy remaing time
+    getPiggyRemainingTime (piggy) {
+      var lastContributionTime = new Date(piggy.lastContributionTime * 1000)
+      console.log('lastContributionTime :', lastContributionTime.toISOString())
+
+      // var lastContributionLimit = lastContributionTime
+      // lastContributionLimit.setMinutes(lastContributionTime.getMinutes() + self.timeLimit)
+      // console.log('lastContributionLimit :', lastContributionTime.toISOString())
+
+      var currentTime = new Date().getTime()
+      console.log('currentTime :', currentTime)
+
+      if ((currentTime > lastContributionTime.getTime())) {
+        self.breakAvailable = true
+        } else {
+        self.breakAvailable = false
+      }
+      self.lastContributionTime = lastContributionTime
+    },
+
+    // Get piggy value
+    getPiggyValue (piggy) {
+      console.log('Get balance: ' + piggy.value)
+      let balance = Units.convert(piggy.value, 'wei', 'eth')
+      this.balance = balance
+    },
+
+    // Get piggy minimum contribution
+    getPiggyMinimumContribution (piggy) {
+      var abi = JSON.parse(contractAbi)
+      // Exec contract
+      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      let self = this
+      contract.methods.rateCurrent().call().then(
+        function (rateCurrent) {
+          contract.methods.rateNext().call().then(
+            function (rateNext) {
+              if (rateNext > rateCurrent) {
+                self.rateLimit = Units.convert(rateNext, 'wei', 'eth')
+              } else {
+                self.rateLimit = Units.convert(rateCurrent, 'wei', 'eth')
+              }
+            })
+        })
+    },
+
+    // Get player contribution amount
+    getPlayerContributionAmount (piggyNb) {
+      console.log('Get contribution amount')
+
+      var abi = JSON.parse(contractAbi)
+      // Exec contract
+      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      let self = this
+      web3js.eth.getAccounts()
+        .then(function (accounts) {
+          console.log(accounts)
+          let defaultAccount = accounts[0]
+          contract.methods.getContributionAmount(piggyNb, defaultAccount).call().then(
+            function (amount) {
+              console.log('Result amount: ' + amount)
+              self.contributionAmount = Units.convert(amount, 'wei', 'eth')
+            })
+        })
+    },
+    /*
     getBalance (address) {
       console.log('Get contract value')
 
@@ -234,6 +326,8 @@ export default {
           self.balance = balance
         })
     },
+    */
+    /*
     getRemainingTime () {
       console.log('Get remaining time')
 
@@ -275,6 +369,8 @@ export default {
             })
         })
     },
+    */
+    /*
     getContributionAmount () {
       console.log('Get contribution amount')
 
@@ -294,6 +390,8 @@ export default {
             })
         })
     },
+    */
+    // Show dialog
     contributeDialog () {
       console.log('contributeDialog 2:')
       var abi = JSON.parse(contractAbi)
@@ -301,18 +399,39 @@ export default {
       var contract = new web3js.eth.Contract(abi, this.contractAddress)
       console.log('start call get')
       let self = this
-      contract.methods.rateCurrent().call().then(
-        function (rateCurrent) {
-          contract.methods.rateNext().call().then(
-            function (rateNext) {
-              if (rateNext > rateCurrent) {
-                self.rateLimit = Units.convert(rateNext, 'wei', 'eth')
-              } else {
-                self.rateLimit = Units.convert(rateCurrent, 'wei', 'eth')
-              }
+      contract.methods.rateLimit().call().then(
+        function (rateLimit) {
+          rateLimit = Units.convert(rateLimit, 'wei', 'eth')
+          contract.methods.rateCurrent().call().then(
+            function (rateCurrent) {
+              rateCurrent = Units.convert(rateCurrent, 'wei', 'eth')
+              contract.methods.rateNext().call().then(
+                function (rateNext) {
+                  rateNext = Units.convert(rateNext, 'wei', 'eth')
+                  let currentLimit = 0
+                  console.log('rateLimit===========>', rateLimit)
+                  console.log('rateCurrent===========>', rateCurrent)
+                  console.log('rateNext===========>', rateNext)
+                  // Check next
+                  if (rateNext > rateCurrent) {
+                    console.log('currentLimitIIIIIIIIIIIIIIIICI===========>', currentLimit)
+                    currentLimit = rateNext
+                  } else {
+                    currentLimit = rateCurrent
+                  }
+                  console.log('currentLimit===========>', currentLimit)
+                  // Check limit
+                  if (currentLimit < rateLimit) {
+                    currentLimit = rateLimit
+                  }
+                  console.log('===========>', currentLimit)
+                  self.rateLimit = Units.convert(currentLimit, 'wei', 'eth')
+
+                })
             })
         })
     },
+    // Contribute to the piggy
     contribute () {
       let self = this
 
@@ -349,6 +468,7 @@ export default {
             })
         })
     },
+    // Break the piggy
     breakPiggy () {
       let self = this
 
@@ -368,6 +488,53 @@ export default {
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
               self.contributeStatus = 'contributed'
+            })
+            .on('receipt', function (receipt) {
+              console.log('receipt:', receipt)
+            })
+            .on('confirmation', function (confirmationNumber, receipt) {
+              console.log('confirmation:', confirmationNumber, receipt)
+            })
+            .on('error', function (error) {
+              console.log('error:', error)
+            })
+        })
+    },
+    checkWithdraw () {
+      let self = this
+
+      web3js.eth.getAccounts()
+        .then(function (accounts) {
+          console.log(accounts)
+          let defaultAccount = accounts[0]
+
+          // Exec contract
+          var contract = new web3js.eth.Contract(abi, this.contractAddress)
+          console.log('start call get')
+          let self = this
+          contract.methods.pendingReturnValues(defaultAccount).call().then(
+            function (value) {
+              if (value > 0) {
+                // SHOW Withdraw
+              }
+          })
+        })
+    },
+    // Withdraw
+    withdrawPiggy () {
+      let self = this
+
+      web3js.eth.getAccounts()
+        .then(function (accounts) {
+          console.log(accounts)
+          let defaultAccount = accounts[0]
+          var abi = JSON.parse(contractAbi)
+
+          // Exec contract
+          var contract = new web3js.eth.Contract(abi, self.contractAddress)
+          contract.methods.withdraw(defaultAccount).send({from: defaultAccount})
+            .on('transactionHash', function (hash) {
+              console.log('transactionHash:', hash)
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)

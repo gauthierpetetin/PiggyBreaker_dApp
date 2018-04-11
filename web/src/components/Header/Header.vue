@@ -17,6 +17,10 @@
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <v-toolbar-items>
+      <div style="background-color: #F08080;margin:15px;padding: 5px 10px;color: #fff;">This version is temporarily on TESTNET</div>
+    </v-toolbar-items>
+    <v-spacer></v-spacer>
+    <v-toolbar-items>
       <v-btn to="invite" flat>Invite</v-btn>
       <v-btn to="piggies" flat>Piggies List</v-btn>
       <v-btn to="about" flat>About</v-btn>
