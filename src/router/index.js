@@ -6,6 +6,8 @@ import Piggies from '@/views/piggies/Piggies'
 import Invite from '@/views/invite/Invite'
 import FAQ from '@/views/faq/FAQ'
 import About from '@/views/about/About'
+import TermsOfUse from '@/views/informations/TermsOfUse'
+import PrivacyPolicy from '@/views/informations/PrivacyPolicy'
 
 Vue.use(Router)
 
@@ -36,6 +38,16 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About
+    },
+    {
+      path: '/terms-of-use',
+      name: 'terms-of-use',
+      component: TermsOfUse
+    },
+    {
+      path: '/privacy-policy',
+      name: 'privacy-policy',
+      component: PrivacyPolicy
     }
   ]
 })

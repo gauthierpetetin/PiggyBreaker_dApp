@@ -15,62 +15,15 @@
         <v-layout row wrap
         class="white--text">
           <v-flex md12 class="text-xs-center">
-            <v-dialog v-model="dialog" persistent max-width="800px">
-              <v-btn
-                class=" lighten-2 mt-2"
-                style="background-color: #FFD700;font-size: 42px;"
-                dark
-                large
-                slot="activator"
-                @click.native="contributeDialog()"
-              >
-                Contribute
-              </v-btn>
-              <v-card>
-                <v-card-title>
-                  <span class="headline">Contribute</span>
-                </v-card-title>
-                <v-card-text>
-                  <v-container grid-list-md v-if="contributeStatus === 'contributing'">
-                    <v-layout wrap>
-                      <v-flex xs12 sm6>
-                        Your ETH contribution*<br />
-                        (minimum contribution: {{ rateLimit }} ETH)
-                      </v-flex>
-                      <v-flex xs12 sm2>
-                        <v-text-field type="number" number
-                          v-model="contribution" required></v-text-field>
-                      </v-flex>
-                      <v-flex xs12 sm12>
-                        * Your chances to win the lottery are directly proportional to the amount your contribution(s)
-                      </v-flex>
-                      <v-flex xs12 sm12>
-                        <v-flex xs12 sm12>
-                          <v-btn block color="warning" dark @click.native="contribute()">Contribute</v-btn>
-                        </v-flex>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                  <v-container grid-list-md v-if="contributeStatus === 'contributed'">
-                    <v-layout wrap>
-                      <v-flex xs12 sm6>
-                        Well done!
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                </v-card-text>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
+            <!-- Dialog -->
+            <app-dialog button-large="true"></app-dialog>
+            <!-- /Dialog -->
           </v-flex>
           <v-flex md12 class="text-xs-center black--text" style="font-size:28px">
             Minimum contribution: {{ rateLimit }} ETH
             <v-tooltip right>
               <v-icon slot="activator">info_outline</v-icon>
-              <span>Tooltip</span>
+              <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
             </v-tooltip>
           </v-flex>
 
@@ -83,7 +36,6 @@
         column
         wrap
         class="my-5"
-
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
@@ -102,7 +54,9 @@
                     <img src="/static/img/picto/1-contribute.png" height="150">
                   </v-card-text>
                   <v-card-text class="text-xs-center">
+                    <!-- Dialog -->
                     <app-dialog></app-dialog>
+                    <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -124,6 +78,10 @@
                       >
                       Break the Piggy*
                     </v-btn>
+                    <v-tooltip right style="top: 5px;">
+                      <v-icon slot="activator">info_outline</v-icon>
+                      <span>You need to be a contributor to access this feature.<br/>You can’t break the Piggy if a contribution occurred in the last 3 minutes.</span>
+                    </v-tooltip>
                     <div class="remaining-time" v-if="breakAvailable == false"><app-countdown :date="lastContributionTime"></app-countdown></div>
                   </v-card-text>
                 </v-card>
@@ -131,7 +89,12 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center howitworks-title">3. A winner is <strong>chosen randomly</strong> between the contributors**</div>
+                    <div class="headline text-xs-center howitworks-title">3. A winner is <strong>chosen randomly</strong> between the contributors
+                        <v-tooltip right>
+                        <v-icon slot="activator">info_outline</v-icon>
+                        <span>The more you contribute, the more chances you have to win.<br/>Indeed, your chances to win the lottery are proportional to the total amount of your contributions.</span>
+                      </v-tooltip>
+                    </div>
                   </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/3-random-winner.png" height="150">
@@ -146,9 +109,9 @@
                       >
                       Withdraw
                     </v-btn>
-                    <v-tooltip right style="top: 20px;">
+                    <v-tooltip right style="top: 5px;">
                       <v-icon slot="activator">info_outline</v-icon>
-                      <span>Tooltip</span>
+                      <span>You have no ether (ETH) to withdraw for now.<br/> Contribute to increase your chances to win the next lottery.</span>
                     </v-tooltip>
                   </v-card-text>
                 </v-card>
@@ -226,7 +189,7 @@ export default {
           contract.methods.piggies(nbPiggies).call().then(
             function (piggy) {
               console.log(piggy)
-              //self.currentContribution =
+              // self.currentContribution =
               self.getPiggyRemainingTime(piggy)
               self.getPiggyValue(piggy)
               self.getPlayerContributionAmount(nbPiggies)
@@ -246,7 +209,7 @@ export default {
       // Check time diff
       if ((currentTime > lastContributionTimeLimit.getTime())) {
         this.breakAvailable = true
-        } else {
+      } else {
         this.breakAvailable = false
       }
       this.lastContributionTime = lastContributionTimeLimit
@@ -265,15 +228,31 @@ export default {
       // Exec contract
       var contract = new web3js.eth.Contract(abi, this.contractAddress)
       let self = this
-      contract.methods.rateCurrent().call().then(
-        function (rateCurrent) {
-          contract.methods.rateNext().call().then(
-            function (rateNext) {
-              if (rateNext > rateCurrent) {
-                self.rateLimit = Units.convert(rateNext, 'wei', 'eth')
-              } else {
-                self.rateLimit = Units.convert(rateCurrent, 'wei', 'eth')
-              }
+      contract.methods.rateLimit().call().then(
+        function (rateLimit) {
+          rateLimit = Units.convert(rateLimit, 'wei', 'eth')
+          contract.methods.rateCurrent().call().then(
+            function (rateCurrent) {
+              rateCurrent = Units.convert(rateCurrent, 'wei', 'eth')
+              contract.methods.rateNext().call().then(
+                function (rateNext) {
+                  rateNext = Units.convert(rateNext, 'wei', 'eth')
+                  let currentLimit = 0
+
+                  // Check next
+                  if (rateNext > rateCurrent) {
+                    currentLimit = rateNext
+                  } else {
+                    currentLimit = rateCurrent
+                  }
+
+                  // Check limit
+                  if (currentLimit < rateLimit) {
+                    currentLimit = rateLimit
+                  }
+
+                  self.rateLimit = currentLimit
+                })
             })
         })
     },
@@ -294,85 +273,6 @@ export default {
             function (amount) {
               console.log('Result amount: ' + amount)
               self.contributionAmount = Units.convert(amount, 'wei', 'eth')
-            })
-        })
-    },
-
-    // Show dialog
-    contributeDialog () {
-      console.log('contributeDialog 2:')
-      var abi = JSON.parse(contractAbi)
-      // Exec contract
-      var contract = new web3js.eth.Contract(abi, this.contractAddress)
-      console.log('start call get')
-      let self = this
-      contract.methods.rateLimit().call().then(
-        function (rateLimit) {
-          rateLimit = Units.convert(rateLimit, 'wei', 'eth')
-          contract.methods.rateCurrent().call().then(
-            function (rateCurrent) {
-              rateCurrent = Units.convert(rateCurrent, 'wei', 'eth')
-              contract.methods.rateNext().call().then(
-                function (rateNext) {
-                  rateNext = Units.convert(rateNext, 'wei', 'eth')
-                  let currentLimit = 0
-                  console.log('rateLimit===========>', rateLimit)
-                  console.log('rateCurrent===========>', rateCurrent)
-                  console.log('rateNext===========>', rateNext)
-                  // Check next
-                  if (rateNext > rateCurrent) {
-                    console.log('currentLimitIIIIIIIIIIIIIIIICI===========>', currentLimit)
-                    currentLimit = rateNext
-                  } else {
-                    currentLimit = rateCurrent
-                  }
-                  console.log('currentLimit===========>', currentLimit)
-                  // Check limit
-                  if (currentLimit < rateLimit) {
-                    currentLimit = rateLimit
-                  }
-                  console.log('===========>', currentLimit)
-                  self.rateLimit = Units.convert(currentLimit, 'wei', 'eth')
-
-                })
-            })
-        })
-    },
-
-    // Contribute to the piggy
-    contribute () {
-      let self = this
-
-      web3js.eth.getAccounts()
-        .then(function (accounts) {
-          console.log(accounts)
-          let defaultAccount = accounts[0]
-          var abi = JSON.parse(contractAbi)
-
-          console.log('Contract:', self.contractAddress)
-          console.log('contribution:', self.contribution)
-          console.log('default Account:', defaultAccount)
-
-          // Exec contract
-          var contract = new web3js.eth.Contract(abi, self.contractAddress)
-          contract.methods.contribute().send({value: Units.convert(self.contribution, 'eth', 'wei'), from: defaultAccount})
-            .on('transactionHash', function (hash) {
-              console.log('transactionHash:', hash)
-              self.contributeStatus = 'contributed'
-
-              // Change contribution date
-              let lastContributionTime = new Date()
-              lastContributionTime.setMinutes(lastContributionTime.getMinutes() + 3)
-              self.lastContributionTime = self.lastContributionTime
-            })
-            .on('receipt', function (receipt) {
-              console.log('receipt:', receipt)
-            })
-            .on('confirmation', function (confirmationNumber, receipt) {
-              console.log('confirmation:', confirmationNumber, receipt)
-            })
-            .on('error', function (error) {
-              console.log('error:', error)
             })
         })
     },
@@ -412,23 +312,23 @@ export default {
 
     // Check withdraw
     checkWithdraw () {
-      let self = this
-
       web3js.eth.getAccounts()
         .then(function (accounts) {
           console.log(accounts)
           let defaultAccount = accounts[0]
 
           // Exec contract
+          var abi = JSON.parse(contractAbi)
+
           var contract = new web3js.eth.Contract(abi, this.contractAddress)
           console.log('start call get')
-          let self = this
-          contract.methods.pendingReturnValues(defaultAccount).call().then(
-            function (value) {
+
+          contract.methods.pendingReturnValues(defaultAccount).call()
+            .then(function (value) {
               if (value > 0) {
                 // SHOW Withdraw
               }
-          })
+            })
         })
     },
 

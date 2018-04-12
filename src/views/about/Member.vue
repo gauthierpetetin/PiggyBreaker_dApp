@@ -20,13 +20,12 @@
   </v-card>
 </template>
 
-
 <script>
 
 export default {
   props: {
     member: null
-  },
+  }
 }
 
 </script>
@@ -35,6 +34,6 @@ export default {
 
 .member-card {
   min-height: 270px !important;
-
 }
+
 </style>

@@ -1,14 +1,15 @@
 <template>
   <div>
-
     <app-contribute></app-contribute>
-
-
     <section>
       <v-parallax  class="parallax-background" height="280">
         <v-layout column align-center justify-center>
-          <div class="headline black--text mb-3 text-xs-center">** Your chances to win the lottery are directly proportional to the amount your contribution(s)</div>
-
+          <v-flex xs12 sm4 class="my-3">
+            <div class="text-xs-center">
+              <h2 class="display-2 black--text">But what is it?</h2>
+            </div>
+          </v-flex>
+          <div class="headline black--text mb-3 text-xs-center">Piggy Breaker is a game built on blockchain technology.<br/>You can securely play with Ether to get a chance to break the piggy!</div>
         </v-layout>
       </v-parallax>
     </section>

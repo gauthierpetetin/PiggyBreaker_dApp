@@ -1,7 +1,5 @@
 <template>
   <div>
-
-
     <section>
       <v-layout
         column
@@ -40,10 +38,10 @@
 
             <v-layout row wrap>
               <template v-for="(member, index) in team">
-                <v-flex v-if="index === 0" md2  offset-xs1>
+                <v-flex v-if="index === 0" md2  offset-xs1 :key="index">
                   <app-member :member="member"></app-member>
                 </v-flex>
-                <v-flex v-else md2 >
+                <v-flex v-else md2 :key="index">
                   <app-member :member="member"></app-member>
                 </v-flex>
             </template>

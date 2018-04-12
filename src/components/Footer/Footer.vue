@@ -3,12 +3,12 @@
     <v-layout row wrap align-center>
       <v-flex xs6>
         <div class="black--text ml-3 text-xs-right">
-          <a class="black--text" to="/terms-of-use" target="_blank">Terms of use</a>
+          <router-link class="black--text" to="terms-of-use">Terms of use</router-link>
         </div>
       </v-flex>
       <v-flex xs6>
         <div class="black--text ml-3 text-xs-left">
-          <a class="black--text" to="/privacy-policy">Privacy policy</a>
+          <router-link class="black--text" to="privacy-policy">Privacy policy</router-link>
         </div>
       </v-flex>
     </v-layout>
