@@ -91,7 +91,8 @@ export default {
                   createdAt: createdAt,
                   winner: piggyItem.winner
                 }
-                self.piggies.push(piggy)
+                // self.piggies.push(piggy)
+                self.piggies.splice(nbPiggies - piggyItem.piggyID, 0, piggy)
                 console.log(piggy)
               }
             )

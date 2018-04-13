@@ -151,7 +151,7 @@
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">What is the prerequisite to play CryptoPiggies?</div>
+                    <div slot="header">What is the prerequisite to play Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
                         You need to have the Metamask plugin installed on your web browser. Your Metamask account needs to contain ether (ETH).<br />
