@@ -144,13 +144,14 @@ export default {
           let defaultAccount = accounts[0]
           var abi = JSON.parse(contractAbi)
 
+          let userContribution = self.contribution.replace(/,/g, '.')
+
           console.log('Contract:', self.contractAddress)
-          console.log('contribution:', self.contribution)
           console.log('default Account:', defaultAccount)
 
           // Exec contract
           var contract = new web3js.eth.Contract(abi, self.contractAddress)
-          contract.methods.contribute().send({value: Units.convert(self.contribution, 'eth', 'wei'), from: defaultAccount})
+          contract.methods.contribute().send({value: Units.convert(userContribution, 'eth', 'wei'), from: defaultAccount})
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
               self.contributeStatus = 'contributed'

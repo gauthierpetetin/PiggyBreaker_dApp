@@ -82,7 +82,7 @@
                       <v-icon slot="activator">info_outline</v-icon>
                       <span>You need to be a contributor to access this feature.<br/>You can’t break the Piggy if a contribution occurred in the last 3 minutes.</span>
                     </v-tooltip>
-                    <div class="remaining-time" v-if="breakAvailable == false"><app-countdown :date="lastContributionTime"></app-countdown></div>
+                    <div class="remaining-time" v-if="breakAvailable == false"><app-countdown v-if="lastContributionTime != null" :date="lastContributionTime"></app-countdown></div>
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -134,6 +134,7 @@ import Web3 from 'web3'
 import Units from 'ethereumjs-units'
 
 let contractAbi = `[{"constant":false,"inputs":[],"name":"breakPiggy","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"pendingReturnValues","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"rateNext","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"localContributionsCounter","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newFarmer","type":"address"}],"name":"transferFarmOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"lastContributionFrequency","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"pendingReturnDates","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"unpause","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_withDrawalAddress","type":"address"}],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_piggyID","type":"uint256"},{"name":"_player","type":"address"}],"name":"getContributionAmount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newPercentage","type":"uint256"}],"name":"setPercentage","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"rateLimit","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"newContractAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_v2Address","type":"address"}],"name":"setNewAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"pause","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"nbPiggies","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"rateCurrent","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"updatePeriod","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"piggies","outputs":[{"name":"piggyID","type":"uint256"},{"name":"value","type":"uint256"},{"name":"open","type":"bool"},{"name":"creationTime","type":"uint256"},{"name":"lastContributionTime","type":"uint256"},{"name":"winner","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"}],"name":"forgottenFundsRecovery","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"percentage","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"contribute","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"farmer","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newUpdatePeriod","type":"uint256"}],"name":"setUpdatePeriod","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_piggyID","type":"uint256"},{"name":"_player","type":"address"}],"name":"getContributionStatus","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"lastUpdateDate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_nbPiggies","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_piggyID","type":"uint256"}],"name":"PiggyCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_piggyID","type":"uint256"},{"indexed":false,"name":"_player","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"NewPiggyContribution","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_piggyID","type":"uint256"},{"indexed":false,"name":"_value","type":"uint256"},{"indexed":false,"name":"_winner","type":"address"},{"indexed":false,"name":"timestamp","type":"uint256"}],"name":"PiggyBroken","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_piggyID","type":"uint256"},{"indexed":false,"name":"_rateCurrent","type":"uint256"},{"indexed":false,"name":"rateNext","type":"uint256"}],"name":"UpdateRate","type":"event"},{"anonymous":false,"inputs":[],"name":"Pause","type":"event"},{"anonymous":false,"inputs":[],"name":"Unpause","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newContract","type":"address"}],"name":"ContractUpgrade","type":"event"}]`
+var abi = JSON.parse(contractAbi)
 
 // let web3 = new Web3()
 var web3js = window.web3
@@ -143,7 +144,7 @@ export default {
     return {
       dialog: false,
       now: null,
-      lastContributionTime: 142,
+      lastContributionTime: null,
       contributionAmount: 0,
       breakAvailable: false,
       activeBreakClass: 'red',
@@ -173,12 +174,14 @@ export default {
         this.getLastPiggy()
         this.getPiggyMinimumContribution()
       }
+
+      this.getEvents()
     },
+
     // Get last piggy
     getLastPiggy () {
       console.log('Get last piggy')
 
-      var abi = JSON.parse(contractAbi)
       // Exec contract
       var contract = new web3js.eth.Contract(abi, this.contractAddress)
       let self = this
@@ -197,21 +200,48 @@ export default {
         })
     },
 
+    // Get events
+    getEvents () {
+      // New web3
+      let web3ws = new Web3()
+      // Get provider
+      web3ws.setProvider(this.nodeUrl)
+      var contractWs = new web3ws.eth.Contract(abi, this.contractAddress)
+      let self = this
+      contractWs.events.NewPiggyContribution({},
+        { fromBlock: 'latest' },
+        function (error, nbPiggies, sender, value) {
+          if (error) {
+            console.log(error.stack)
+          }
+          console.log('Event:', nbPiggies, sender, value)
+          // Refresh piggy info
+          self.getLastPiggy()
+        })
+    },
+
+    convertDate(d) {
+      return d.getFullYear().toString()+"-"+((d.getMonth()+1).toString().length==2?(d.getMonth()+1).toString():"0"+(d.getMonth()+1).toString())+"-"+(d.getDate().toString().length==2?d.getDate().toString():"0"+d.getDate().toString())+" "+(d.getHours().toString().length==2?d.getHours().toString():"0"+d.getHours().toString())+":"+((parseInt(d.getMinutes()/5)*5).toString().length==2?(parseInt(d.getMinutes()/5)*5).toString():"0"+(parseInt(d.getMinutes()/5)*5).toString())+":00"
+    },
+
     // Get piggy remaing time
     getPiggyRemainingTime (piggy) {
       // Get time limit
       let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (this.timeLimit * 1000))
-      console.log('lastContributionTimeLimit :', lastContributionTimeLimit.toISOString())
+      // lastContributionTimeLimit = new Date(this.convertDate(lastContributionTimeLimit))
 
       // Get current time
-      var currentTime = new Date().getTime()
+      var currentTime = new Date()
 
-      // Check time diff
-      if ((currentTime > lastContributionTimeLimit.getTime())) {
+      if ((currentTime.getTime() > lastContributionTimeLimit.getTime())) {
+        console.log('Break true')
         this.breakAvailable = true
+        this.lastContributionTime = null
       } else {
+        console.log('Break false')
         this.breakAvailable = false
       }
+
       this.lastContributionTime = lastContributionTimeLimit
     },
 
@@ -224,7 +254,6 @@ export default {
 
     // Get piggy minimum contribution
     getPiggyMinimumContribution (piggy) {
-      var abi = JSON.parse(contractAbi)
       // Exec contract
       var contract = new web3js.eth.Contract(abi, this.contractAddress)
       let self = this
@@ -261,7 +290,6 @@ export default {
     getPlayerContributionAmount (piggyNb) {
       console.log('Get contribution amount')
 
-      var abi = JSON.parse(contractAbi)
       // Exec contract
       var contract = new web3js.eth.Contract(abi, this.contractAddress)
       let self = this
@@ -285,7 +313,6 @@ export default {
         .then(function (accounts) {
           console.log(accounts)
           let defaultAccount = accounts[0]
-          var abi = JSON.parse(contractAbi)
 
           console.log('Contract:', self.contractAddress)
           console.log('contribution:', self.contribution)
@@ -317,9 +344,6 @@ export default {
           console.log(accounts)
           let defaultAccount = accounts[0]
 
-          // Exec contract
-          var abi = JSON.parse(contractAbi)
-
           var contract = new web3js.eth.Contract(abi, this.contractAddress)
           console.log('start call get')
 
@@ -340,7 +364,6 @@ export default {
         .then(function (accounts) {
           console.log(accounts)
           let defaultAccount = accounts[0]
-          var abi = JSON.parse(contractAbi)
 
           // Exec contract
           var contract = new web3js.eth.Contract(abi, self.contractAddress)
