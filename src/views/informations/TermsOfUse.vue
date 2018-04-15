@@ -10,7 +10,7 @@
         <v-flex md12 style="width: 100%">
           <v-container grid-list-xl>
             <v-layout row wrap>
-              <v-flex md12>
+              <v-flex md10 offset-md1>
                 Piggy Breaker Terms of Use
                 Last Updated: December 28, 2017
 

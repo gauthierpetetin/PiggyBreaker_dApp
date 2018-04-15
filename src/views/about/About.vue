@@ -13,10 +13,10 @@
         <v-flex md12>
           <v-container grid-list-xl>
             <v-layout row wrap>
-              <v-flex md12>
+              <v-flex md10 offset-md1>
                 <h1 class="headline">About</h1>
               </v-flex>
-              <v-flex md12>
+              <v-flex md10 offset-md1>
                 <p>
                   Piggy Breaker is the simplest blockchain game ever seen:
                 </p>

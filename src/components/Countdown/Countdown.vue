@@ -30,6 +30,12 @@ export default {
   computed: {
     calculatedDate () {
       let timestamp = Math.trunc(Date.parse(this.event) / 1000)
+
+      // Check time
+      let timeDiff = timestamp - this.now
+      if (timeDiff <= 0) {
+        this.$emit('break', true)
+      }
       return timestamp
     },
     seconds () {

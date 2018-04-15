@@ -8,13 +8,13 @@
         class="my-5"
         align-center
       >
-        <v-flex md12 style="width: 100%">
+        <v-flex md10 style="width: 100%">
           <v-container grid-list-xl>
             <v-layout row wrap>
-              <v-flex md12>
+              <v-flex md10 offset-md1>
                 <h1 class="headline">FAQ</h1>
               </v-flex>
-              <v-flex md12>
+              <v-flex md10 offset-md1>
                 <h2>Getting started</h2>
                 <v-expansion-panel expand>
                   <v-expansion-panel-content>

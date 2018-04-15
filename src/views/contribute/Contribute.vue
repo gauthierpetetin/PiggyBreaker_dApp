@@ -82,7 +82,9 @@
                       <v-icon slot="activator">info_outline</v-icon>
                       <span>You need to be a contributor to access this feature.<br/>You can’t break the Piggy if a contribution occurred in the last 3 minutes.</span>
                     </v-tooltip>
-                    <div class="remaining-time" v-if="breakAvailable == false"><app-countdown v-if="lastContributionTime != null" :date="lastContributionTime"></app-countdown></div>
+                    <div class="remaining-time" v-if="breakAvailable == false">
+                      <app-countdown v-if="lastContributionTime != null" :date="lastContributionTime" @break="onBreakAvailableChild"></app-countdown>
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -105,7 +107,7 @@
                       dark
                       large
                       @click.native="withdrawPiggy()"
-                      :class="[breakAvailable ? 'grey' : 'grey']"
+                      :class="[withdrawAvailable ? 'blue' : 'grey']"
                       >
                       Withdraw
                     </v-btn>
@@ -113,6 +115,9 @@
                       <v-icon slot="activator">info_outline</v-icon>
                       <span>You have no ether (ETH) to withdraw for now.<br/> Contribute to increase your chances to win the next lottery.</span>
                     </v-tooltip>
+                    <div class="remaining-time">
+                      Your balance: {{ withdrawAmount }} Eth
+                    </div>
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -146,7 +151,9 @@ export default {
       now: null,
       lastContributionTime: null,
       contributionAmount: 0,
+      withdrawAmount: 0,
       breakAvailable: false,
+      withdrawAvailable: false,
       activeBreakClass: 'red',
       contributeStatus: 'contributing',
       contribution: '',
@@ -196,6 +203,7 @@ export default {
               self.getPiggyRemainingTime(piggy)
               self.getPiggyValue(piggy)
               self.getPlayerContributionAmount(nbPiggies)
+              self.getPlayerWithdrawAmount()
             })
         })
     },
@@ -208,13 +216,27 @@ export default {
       web3ws.setProvider(this.nodeUrl)
       var contractWs = new web3ws.eth.Contract(abi, this.contractAddress)
       let self = this
+
+      // New piggy contribution
       contractWs.events.NewPiggyContribution({},
         { fromBlock: 'latest' },
         function (error, nbPiggies, sender, value) {
           if (error) {
             console.log(error.stack)
           }
-          console.log('Event:', nbPiggies, sender, value)
+          console.log('NewPiggyContribution:', nbPiggies, sender, value)
+          // Refresh piggy info
+          self.getLastPiggy()
+        })
+
+      // Piggy created
+      contractWs.events.PiggyCreated({},
+        { fromBlock: 'latest' },
+        function (error, piggyID) {
+          if (error) {
+            console.log(error.stack)
+          }
+          console.log('PiggyCreated:', piggyID)
           // Refresh piggy info
           self.getLastPiggy()
         })
@@ -305,8 +327,32 @@ export default {
         })
     },
 
+    // Get player contribution amount
+    getPlayerWithdrawAmount () {
+      console.log('Get contribution amount')
+
+      // Exec contract
+      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      let self = this
+      web3js.eth.getAccounts()
+        .then(function (accounts) {
+          console.log(accounts)
+          let defaultAccount = accounts[0]
+          contract.methods.pendingReturnValues(defaultAccount).call().then(
+            function (amount) {
+              self.withdrawAmount = Units.convert(amount, 'wei', 'eth')
+              if (amount > 0) {
+                self.withdrawAvailable = true
+              }
+            })
+        })
+    },
+
     // Break the piggy
     breakPiggy () {
+      if (this.breakAvailable == false) {
+        return
+      }
       let self = this
 
       web3js.eth.getAccounts()
@@ -358,6 +404,9 @@ export default {
 
     // Withdraw
     withdrawPiggy () {
+      if (this.withdrawAvailable == false) {
+        return
+      }
       let self = this
 
       web3js.eth.getAccounts()
@@ -381,6 +430,11 @@ export default {
               console.log('error:', error)
             })
         })
+    },
+
+    // Break available
+    onBreakAvailableChild (value) {
+      this.breakAvailable = true
     }
   }
 }

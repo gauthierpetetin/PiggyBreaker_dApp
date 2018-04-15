@@ -6,7 +6,7 @@
 # install dependencies
 npm install
 
-docker build .
+docker build -t piggy:0.0.4 .
 
 docker run -p 8080:80 <image_id>
 

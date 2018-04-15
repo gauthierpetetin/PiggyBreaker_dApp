@@ -10,7 +10,7 @@
         <v-flex md12 style="width: 100%">
           <v-container grid-list-xl>
             <v-layout row wrap>
-              <v-flex md12>
+              <v-flex md10 offset-md1>
                 <h2>Last Updated: April 12, 2018</h2>
                 <p>
                 We at FidEver (“FidEver,” “we,” or “us”) believe that your privacy is a fundamental right. We have written this privacy policy (this “Policy”) to reflect our values, and to clearly describe what information we collect from you when you use our specially-developed smart contracts to contribute to a Piggy, break the Piggy, and withdraw your funds in case of victory, through a website (www.piggybreaker.com) that users can interact with (the “Site”), as well as how we protect and use that information. The smart contracts and the Site are collectively referred to in this Policy as the “App”. By using the App, you agree that we can collect, use, disclose, and process your information as described in this Policy. This Policy only applies to the App, and not to any other websites, products or services you may be able to access or link to via the App. We encourage you to read the privacy policies of any other websites you visit before providing your information to them.
