@@ -12,34 +12,51 @@ const web3 = new Web3(provider); // ganache will change depending on what networ
 
 const {interface, bytecode} = require('../compile');
 
-let clock;
+
+// ---------- Module to accelerate time -----------------------
+const jsonrpc = '2.0'
+const id = 0
+const send = async (method, params = []) => {
+  console.log("Current provider : ", web3.currentProvider);
+  console.log("Method : ", method);
+  console.log("Params : ", params);
+  await web3.currentProvider.send({ id, jsonrpc, method, params })
+}
+
+const timeTravel = async seconds => {
+  await send('evm_increaseTime', [seconds])
+  await send('evm_mine')
+}
+const SECONDS_IN_A_MINUTE = 60;
+// ---------- Module to accelerate time -----------------------
+
+
+// let clock;
 let accounts;
 let cryptoPiggy;
 let initial_nbPiggies = 0;
 beforeEach(async () => {
-  clock = sinon.useFakeTimers();
+  const now = Date.now();
+  // clock = sinon.useFakeTimers(now);
   // Get list of all accounts
   accounts = await web3.eth.getAccounts();
   // Use one of those accounts to deploy the contract
 
-
   cryptoPiggy = await new web3.eth.Contract(JSON.parse(interface))
   .deploy({ data: bytecode, arguments: [initial_nbPiggies] })
-  .send({ from: accounts[0], gas: '2500000' })
-  .done();
+  .send({ from: accounts[0], gas: '2500000' });
 
   cryptoPiggy.setProvider(provider);
 });
 
 describe('CryptoPiggy', () => {
+
   it('deploys a contract',() => {
     assert.ok(cryptoPiggy.options.address);
-    done();
   });
   it('marks caller as the contract owner (farmer)', async() => {
-    const farmer = await cryptoPiggy.methods.farmer().call().done();
+    const farmer = await cryptoPiggy.methods.farmer().call();
     assert.equal(accounts[0], farmer);
-    done();
   });
   it('creates first Piggy', async() => {
     const nbPiggies = await cryptoPiggy.methods.nbPiggies().call();
@@ -90,14 +107,15 @@ describe('CryptoPiggy', () => {
 
   it('allows contributors to break the piggy after 3 minutes', async() => {
     const rateCurrent = await cryptoPiggy.methods.rateCurrent().call();
-    clock.tick(3*60);
+    // clock.tick(3*60);
+    // await timeTravel(200);
     assert(true);
   });
 
 });
 
 afterEach(function () {
-    clock.restore();
+    // clock.restore();
 });
 
 /*********************Try catch demo*******************************************/

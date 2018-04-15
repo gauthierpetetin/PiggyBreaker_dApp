@@ -90,6 +90,7 @@ contract Piggies is Pausable {
   event NewPiggyContribution(uint _piggyID, address _player, uint _value);
   event PiggyBroken(uint _piggyID, uint _value, address _winner, uint timestamp);
   event UpdateRate(uint _piggyID, uint _rateCurrent, uint rateNext);
+  event Withdrawal(address _player, uint value);
 
   modifier contributed(address _player) {
     Piggy storage piggy = piggies[nbPiggies];
@@ -219,8 +220,15 @@ contract Piggies is Pausable {
 
   function withdraw(address _withDrawalAddress) public {
     require(pendingReturnValues[msg.sender]>0);
-    _withDrawalAddress.transfer(pendingReturnValues[msg.sender]);
+    uint withdrawalValue = pendingReturnValues[msg.sender];
+    _withDrawalAddress.transfer(withdrawalValue);
     pendingReturnValues[msg.sender] = 0;
+
+    Withdrawal(msg.sender, withdrawalValue);
+  }
+
+  function setRateLimit(uint _newRateLimit) public restricted {
+    rateLimit = _newRateLimit;
   }
 
   function setUpdatePeriod(uint _newUpdatePeriod) public restricted {
