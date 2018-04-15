@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="white">
+  <v-footer class="footer white">
     <v-layout row wrap align-center>
       <v-flex xs6>
         <div class="black--text ml-3 text-xs-right">
@@ -14,3 +14,17 @@
     </v-layout>
   </v-footer>
 </template>
+
+<style scoped>
+
+  .footer {
+    background-color: orange;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 100px;
+    width: 100%;
+    overflow:hidden;
+  }
+
+</style>

@@ -134,12 +134,11 @@
 import Countdown from '@/components/Countdown/Countdown.vue'
 import Dialog from '@/views/contribute/Dialog.vue'
 
+import ethereum from '@/mixins/ethereum'
+
 import Web3 from 'web3'
 // import Tx from 'ethereumjs-tx'
 import Units from 'ethereumjs-units'
-
-let contractAbi = `[{"constant":false,"inputs":[],"name":"breakPiggy","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"pendingReturnValues","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"rateNext","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"localContributionsCounter","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newFarmer","type":"address"}],"name":"transferFarmOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"lastContributionFrequency","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"pendingReturnDates","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"unpause","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_withDrawalAddress","type":"address"}],"name":"withdraw","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_piggyID","type":"uint256"},{"name":"_player","type":"address"}],"name":"getContributionAmount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"paused","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newPercentage","type":"uint256"}],"name":"setPercentage","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"rateLimit","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"newContractAddress","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_v2Address","type":"address"}],"name":"setNewAddress","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"pause","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"nbPiggies","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"rateCurrent","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"updatePeriod","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"piggies","outputs":[{"name":"piggyID","type":"uint256"},{"name":"value","type":"uint256"},{"name":"open","type":"bool"},{"name":"creationTime","type":"uint256"},{"name":"lastContributionTime","type":"uint256"},{"name":"winner","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_address","type":"address"}],"name":"forgottenFundsRecovery","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"percentage","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"contribute","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"farmer","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newUpdatePeriod","type":"uint256"}],"name":"setUpdatePeriod","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_piggyID","type":"uint256"},{"name":"_player","type":"address"}],"name":"getContributionStatus","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"lastUpdateDate","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_nbPiggies","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_piggyID","type":"uint256"}],"name":"PiggyCreated","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_piggyID","type":"uint256"},{"indexed":false,"name":"_player","type":"address"},{"indexed":false,"name":"_value","type":"uint256"}],"name":"NewPiggyContribution","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_piggyID","type":"uint256"},{"indexed":false,"name":"_value","type":"uint256"},{"indexed":false,"name":"_winner","type":"address"},{"indexed":false,"name":"timestamp","type":"uint256"}],"name":"PiggyBroken","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"_piggyID","type":"uint256"},{"indexed":false,"name":"_rateCurrent","type":"uint256"},{"indexed":false,"name":"rateNext","type":"uint256"}],"name":"UpdateRate","type":"event"},{"anonymous":false,"inputs":[],"name":"Pause","type":"event"},{"anonymous":false,"inputs":[],"name":"Unpause","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"newContract","type":"address"}],"name":"ContractUpgrade","type":"event"}]`
-var abi = JSON.parse(contractAbi)
 
 // let web3 = new Web3()
 var web3js = window.web3
@@ -158,12 +157,11 @@ export default {
       contributeStatus: 'contributing',
       contribution: '',
       balance: 0,
-      contractAddress: '0xd764d4d12f44c49ad3c0b0150668d6c42df44d76',
-      nodeUrl: 'wss://ropsten.eth.6120.eu/ws',
       rateLimit: 0,
       timeLimit: 180
     }
   },
+  mixins: [ethereum],
   mounted () {
     this.initialize()
   },
@@ -184,13 +182,12 @@ export default {
 
       this.getEvents()
     },
-
     // Get last piggy
     getLastPiggy () {
       console.log('Get last piggy')
 
       // Exec contract
-      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
       let self = this
       contract.methods.nbPiggies().call().then(
         function (nbPiggies) {
@@ -207,14 +204,13 @@ export default {
             })
         })
     },
-
     // Get events
     getEvents () {
       // New web3
       let web3ws = new Web3()
       // Get provider
       web3ws.setProvider(this.nodeUrl)
-      var contractWs = new web3ws.eth.Contract(abi, this.contractAddress)
+      var contractWs = new web3ws.eth.Contract(this.abi, this.contractAddress)
       let self = this
 
       // New piggy contribution
@@ -240,44 +236,61 @@ export default {
           // Refresh piggy info
           self.getLastPiggy()
         })
-    },
 
-    convertDate(d) {
-      return d.getFullYear().toString()+"-"+((d.getMonth()+1).toString().length==2?(d.getMonth()+1).toString():"0"+(d.getMonth()+1).toString())+"-"+(d.getDate().toString().length==2?d.getDate().toString():"0"+d.getDate().toString())+" "+(d.getHours().toString().length==2?d.getHours().toString():"0"+d.getHours().toString())+":"+((parseInt(d.getMinutes()/5)*5).toString().length==2?(parseInt(d.getMinutes()/5)*5).toString():"0"+(parseInt(d.getMinutes()/5)*5).toString())+":00"
+      // Piggy withdrawal
+      contractWs.events.Withdrawal({},
+        { fromBlock: 'latest' },
+        function (error, value) {
+          if (error) {
+            console.log(error.stack)
+          }
+          console.log('withdrawal:', value)
+          // Refresh withdrawal info
+          self.getPlayerWithdrawAmount()
+        })
     },
-
+    // Convert date
+    convertDate (d) {
+      return d.getFullYear().toString() + '-' +
+        ((d.getMonth() + 1).toString().length === 2 ? (d.getMonth() + 1).toString() : '0' +
+        (d.getMonth() + 1).toString()) + '-' + (d.getDate().toString().length === 2 ? d.getDate().toString() : '0' +
+        d.getDate().toString()) + ' ' + (d.getHours().toString().length === 2 ? d.getHours().toString() : '0' +
+        d.getHours().toString()) + ':' +
+        ((parseInt(d.getMinutes() / 5) * 5).toString().length === 2 ? (parseInt(d.getMinutes() / 5) * 5).toString() : '0' +
+        (parseInt(d.getMinutes() / 5) * 5).toString()) + ':00'
+    },
     // Get piggy remaing time
     getPiggyRemainingTime (piggy) {
-      // Get time limit
-      let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (this.timeLimit * 1000))
-      // lastContributionTimeLimit = new Date(this.convertDate(lastContributionTimeLimit))
-
-      // Get current time
-      var currentTime = new Date()
-
-      if ((currentTime.getTime() > lastContributionTimeLimit.getTime())) {
-        console.log('Break true')
-        this.breakAvailable = true
-        this.lastContributionTime = null
-      } else {
-        console.log('Break false')
+      if (parseInt(piggy.value) === 0) {
+        console.log('Break false value')
         this.breakAvailable = false
+      } else {
+        // Get time limit
+        let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (this.timeLimit * 1000))
+        // Get current time
+        var currentTime = new Date()
+
+        if ((currentTime.getTime() > lastContributionTimeLimit.getTime())) {
+          console.log('Break true')
+          this.breakAvailable = true
+          // this.lastContributionTime = null
+        } else {
+          console.log('Break false time')
+          this.breakAvailable = false
+        }
+        this.lastContributionTime = lastContributionTimeLimit
       }
-
-      this.lastContributionTime = lastContributionTimeLimit
     },
-
     // Get piggy value
     getPiggyValue (piggy) {
       console.log('Get balance: ' + piggy.value)
       let balance = Units.convert(piggy.value, 'wei', 'eth')
       this.balance = balance
     },
-
     // Get piggy minimum contribution
     getPiggyMinimumContribution (piggy) {
       // Exec contract
-      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
       let self = this
       contract.methods.rateLimit().call().then(
         function (rateLimit) {
@@ -307,13 +320,12 @@ export default {
             })
         })
     },
-
     // Get player contribution amount
     getPlayerContributionAmount (piggyNb) {
       console.log('Get contribution amount')
 
       // Exec contract
-      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
       let self = this
       web3js.eth.getAccounts()
         .then(function (accounts) {
@@ -326,13 +338,12 @@ export default {
             })
         })
     },
-
     // Get player contribution amount
     getPlayerWithdrawAmount () {
       console.log('Get contribution amount')
 
       // Exec contract
-      var contract = new web3js.eth.Contract(abi, this.contractAddress)
+      var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
       let self = this
       web3js.eth.getAccounts()
         .then(function (accounts) {
@@ -343,14 +354,15 @@ export default {
               self.withdrawAmount = Units.convert(amount, 'wei', 'eth')
               if (amount > 0) {
                 self.withdrawAvailable = true
+              } else {
+                self.withdrawAvailable = false
               }
             })
         })
     },
-
     // Break the piggy
     breakPiggy () {
-      if (this.breakAvailable == false) {
+      if (this.breakAvailable === false) {
         return
       }
       let self = this
@@ -365,7 +377,7 @@ export default {
           console.log('default Account:', defaultAccount)
 
           // Exec contract
-          var contract = new web3js.eth.Contract(abi, self.contractAddress)
+          var contract = new web3js.eth.Contract(self.abi, self.contractAddress)
           contract.methods.breakPiggy().send({from: defaultAccount})
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
@@ -382,15 +394,17 @@ export default {
             })
         })
     },
-
+    /*
     // Check withdraw
     checkWithdraw () {
+      let self = this
+
       web3js.eth.getAccounts()
         .then(function (accounts) {
           console.log(accounts)
           let defaultAccount = accounts[0]
 
-          var contract = new web3js.eth.Contract(abi, this.contractAddress)
+          var contract = new web3js.eth.Contract(self.abi, this.contractAddress)
           console.log('start call get')
 
           contract.methods.pendingReturnValues(defaultAccount).call()
@@ -401,10 +415,10 @@ export default {
             })
         })
     },
-
+    */
     // Withdraw
     withdrawPiggy () {
-      if (this.withdrawAvailable == false) {
+      if (this.withdrawAvailable === false) {
         return
       }
       let self = this
@@ -415,7 +429,7 @@ export default {
           let defaultAccount = accounts[0]
 
           // Exec contract
-          var contract = new web3js.eth.Contract(abi, self.contractAddress)
+          var contract = new web3js.eth.Contract(self.abi, self.contractAddress)
           contract.methods.withdraw(defaultAccount).send({from: defaultAccount})
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
@@ -425,22 +439,25 @@ export default {
             })
             .on('confirmation', function (confirmationNumber, receipt) {
               console.log('confirmation:', confirmationNumber, receipt)
+              self.getPlayerWithdrawAmount()
             })
             .on('error', function (error) {
               console.log('error:', error)
             })
         })
     },
-
     // Break available
     onBreakAvailableChild (value) {
-      this.breakAvailable = true
+      console.log('Break')
+      this.getLastPiggy()
+      // this.breakAvailable = true
     }
   }
 }
 </script>
 
 <style scoped>
+
 .parallax-background {
   background-image: url("/static/img/background/background-piggies.jpg");
   background-repeat: repeat;
