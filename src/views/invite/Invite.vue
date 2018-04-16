@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <section>
       <v-layout
         column
@@ -82,10 +81,8 @@ export default {
   watch: {
     email: function (val) {
       if (this.validEmail(val)) {
-        console.log('okok')
         this.emailValid = true
       } else {
-        console.log('nono')
         this.emailValid = false
       }
     }
@@ -141,7 +138,6 @@ export default {
 .email-form {
   background-color: #f2f2f2;
   border-radius: 25px;
-  /* border: 1px solid #73AD21; */
   padding: 20px;
 }
 
