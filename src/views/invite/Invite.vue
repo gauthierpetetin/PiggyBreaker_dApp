@@ -10,7 +10,6 @@
         <v-flex md12 >
           <img src="/static/img/picto/piggy-buddy.png" alt="avatar" width="200">
         </v-flex>
-
       </v-layout>
     </section>
 
@@ -111,7 +110,8 @@ export default {
           }
         }, function (response) {
           // error
-          console.log("error", response.body.status)
+          console.log('error', response.body.status)
+          self.dialogMessage = "An error happened, please retry later."
         })
     },
     validEmail (email) {
