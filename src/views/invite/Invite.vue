@@ -44,8 +44,8 @@
               <v-dialog v-model="dialogConfirm" max-width="500px">
                 <v-card>
                   <v-card-title>
-                    <span>An email have been sent to your friend!</span>
-                    <v-spacer></v-spacer>
+                    <span></span>
+                    <v-spacer>{{ dialogMessage }}</v-spacer>
                   </v-card-title>
                   <v-card-actions>
                     <v-btn color="primary" flat @click.stop="dialogConfirm=false">Close</v-btn>
@@ -75,7 +75,8 @@ export default {
         },
         v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
       ],
-      dialogConfirm: null
+      dialogConfirm: null,
+      dialogMessage: null
     }
   },
   watch: {
@@ -102,13 +103,18 @@ export default {
         email: this.email
       }
 
-      // let self = this
+      let self = this
       this.$http.post(this.apiUrl, JSON.stringify(data))
         .then(function (response) {
           // success
-          // self.email = ''
+          if (response.body.status == 'success') {
+            self.dialogMessage = "An email have been sent to your friend!"
+          } else if (response.body.status == 'error') {
+            self.dialogMessage = "An invitation have already been sent."
+          }
         }, function (response) {
           // error
+          console.log("error", response.body.status)
         })
     },
     validEmail (email) {
