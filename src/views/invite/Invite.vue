@@ -30,6 +30,7 @@
                 label="Email"
                 :rules="emailRules"
                 v-model="email"
+                @focus="$event.target.select()"
                 ></v-text-field>
             </v-flex>
             <v-flex xs12 sm12>
@@ -92,9 +93,6 @@ export default {
         return false
       }
 
-      console.log('invite', this.email)
-      this.dialogConfirm = !this.dialogConfirm
-      // this.inviteStatus = true
       let data = {
         email: this.email
       }
@@ -102,16 +100,18 @@ export default {
       let self = this
       this.$http.post(this.apiUrl, JSON.stringify(data))
         .then(function (response) {
+          self.dialogConfirm = !self.dialogConfirm
           // success
-          if (response.body.status == 'success') {
-            self.dialogMessage = "An email have been sent to your friend!"
-          } else if (response.body.status == 'error') {
-            self.dialogMessage = "An invitation have already been sent."
+          if (response.body.status === 'success') {
+            self.dialogMessage = 'An email have been sent to your friend!'
+          } else if (response.body.status === 'error') {
+            self.dialogMessage = 'An invitation have already been sent.'
           }
         }, function (response) {
+          self.dialogConfirm = !self.dialogConfirm
           // error
           console.log('error', response.body.status)
-          self.dialogMessage = "An error happened, please retry later."
+          self.dialogMessage = 'An error happened, please retry later.'
         })
     },
     validEmail (email) {

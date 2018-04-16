@@ -20,10 +20,12 @@
       </v-tooltip>
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <v-toolbar-items>
-      <div style="background-color: #F08080;margin:15px;padding: 5px 10px;color: #fff;">This version is temporarily on TESTNET</div>
-    </v-toolbar-items>
-    <v-spacer></v-spacer>
+    <template v-if="ethereumEnv == 'development'">
+      <v-toolbar-items>
+        <div style="background-color: #F08080;margin:15px;padding: 5px 10px;color: #fff;">This version is temporarily on TESTNET</div>
+      </v-toolbar-items>
+      <v-spacer></v-spacer>
+    </template>
     <v-toolbar-items>
       <v-btn to="invite" flat>Invite</v-btn>
       <v-btn to="piggies" flat>Piggies List</v-btn>
@@ -43,7 +45,8 @@
 export default {
   data () {
     return {
-      networkStatus: 'bad'
+      networkStatus: 'bad',
+      ethereumEnv: process.env.ETHEREUM_NODE_ENV
     }
   },
   mounted () {
