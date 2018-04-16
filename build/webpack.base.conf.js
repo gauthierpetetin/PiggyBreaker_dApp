@@ -87,6 +87,7 @@ module.exports = {
     fs: 'empty',
     net: 'empty',
     tls: 'empty',
+    dns: 'empty',
     child_process: 'empty'
   }
 }

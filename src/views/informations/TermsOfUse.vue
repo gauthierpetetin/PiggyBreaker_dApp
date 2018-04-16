@@ -11,6 +11,9 @@
           <v-container grid-list-xl>
             <v-layout row wrap>
               <v-flex md10 offset-md1>
+                <h1 class="headline">Terms of use</h1>
+              </v-flex>
+              <v-flex md10 offset-md1>
                 Piggy Breaker Terms of Use
                 Last Updated: December 28, 2017
 

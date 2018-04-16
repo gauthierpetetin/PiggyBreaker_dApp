@@ -9,14 +9,22 @@
           justify-center
         >
           <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">Current Piggy value:<br /><strong>{{ balance }} ETH</strong></h1>
-          <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">Your contribution:<br /><strong>{{ contributionAmount }} ETH</strong></h1>
-          <img src="/static/img/picto/big-piggy.png" alt="Vuetify.js" height="350">
+          <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">
+            Your contribution:<br />
+            <template v-if="loadingStatus">
+              <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60">
+            </template>
+            <template v-else>
+              <strong>{{ contributionAmount }} ETH</strong>
+            </template>
+          </h1>
+          <img src="/static/img/picto/big-piggy.png" alt="big piggy" height="350">
         </v-layout>
         <v-layout row wrap
         class="white--text">
           <v-flex md12 class="text-xs-center">
             <!-- Dialog -->
-            <app-dialog button-large="true"></app-dialog>
+            <app-dialog button-large="true" @contribute="onContributeChild"></app-dialog>
             <!-- /Dialog -->
           </v-flex>
           <v-flex md12 class="text-xs-center black--text" style="font-size:28px">
@@ -158,7 +166,8 @@ export default {
       contribution: '',
       balance: 0,
       rateLimit: 0,
-      timeLimit: 180
+      timeLimit: 180,
+      loadingStatus: true
     }
   },
   mixins: [ethereum],
@@ -185,6 +194,7 @@ export default {
     // Get last piggy
     getLastPiggy () {
       console.log('Get last piggy')
+      this.loadingStatus = false
 
       // Exec contract
       var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
@@ -449,7 +459,15 @@ export default {
     // Break available
     onBreakAvailableChild (value) {
       console.log('Break')
+      //this.lastContributionTime = false
       this.getLastPiggy()
+      // this.breakAvailable = true
+    },
+    // Contribute
+    onContributeChild (value) {
+        this.loadingStatus = true
+      //console.log('Break')
+      //this.getLastPiggy()
       // this.breakAvailable = true
     }
   }

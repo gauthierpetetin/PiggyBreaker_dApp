@@ -26,6 +26,11 @@
               <v-text-field type="number" number
                 v-model="contribution" required></v-text-field>
             </v-flex>
+            <v-flex v-if="contributionError" xs12 sm12>
+              <v-alert outline color="error" icon="warning" :value="true">
+                {{ contributionError }}
+              </v-alert>
+            </v-flex>
             <v-flex xs12 sm12>
               * Your chances to win the lottery are directly proportional to the amount your contribution(s)
             </v-flex>
@@ -66,7 +71,8 @@ export default {
       dialog: false,
       contributeStatus: 'contributing',
       rateLimitDialog: 0,
-      contribution: ''
+      contribution: '',
+      contributionError: ''
     }
   },
   mixins: [ethereum],
@@ -98,6 +104,7 @@ export default {
     // Show dialog
     contributeDialog () {
       console.log('contributeDialog 2:')
+      this.contributeStatus = 'contributing'
 
       // Exec contract
       var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
@@ -134,13 +141,22 @@ export default {
     // Contribute to the piggy
     contribute () {
       let self = this
+      let userContribution = self.contribution.replace(/,/g, '.')
 
+      // Check user contribution
+      if (userContribution === '') {
+        this.contributionError = 'You must enter a valid contribution'
+        return false
+      } else if (userContribution < this.rateLimitDialog) {
+        this.contributionError = 'Your contribution is under the limit (' + this.rateLimitDialog + ')'
+        return false
+      }
+
+      // Contribute
       web3js.eth.getAccounts()
         .then(function (accounts) {
           console.log(accounts)
           let defaultAccount = accounts[0]
-
-          let userContribution = self.contribution.replace(/,/g, '.')
 
           console.log('Contract:', self.contractAddress)
           console.log('default Account:', defaultAccount)
@@ -156,6 +172,9 @@ export default {
               let lastContributionTime = new Date()
               lastContributionTime.setMinutes(lastContributionTime.getMinutes() + 3)
               self.lastContributionTime = self.lastContributionTime
+              
+              // Send to parent
+              self.$emit('contribute', true)
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)
