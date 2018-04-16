@@ -6,9 +6,10 @@ let contractAbi = `[{"constant":false,"inputs":[],"name":"breakPiggy","outputs":
 export default {
   data () {
     return {
-      contractAddress: '0xd2488e5f638add5adc362d78530cbe4b76e2fe18',
+      // contractAddress: '0xd2488e5f638add5adc362d78530cbe4b76e2fe18',
+      contractAddress: process.env.ETHEREUM_CONTRACT,
       abi: JSON.parse(contractAbi),
-      nodeUrl: 'wss://ropsten.eth.6120.eu/ws'
+      nodeUrl: process.env.ETHEREUM_NODE_URL
     }
   },
   methods: {

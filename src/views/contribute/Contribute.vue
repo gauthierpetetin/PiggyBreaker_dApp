@@ -459,15 +459,15 @@ export default {
     // Break available
     onBreakAvailableChild (value) {
       console.log('Break')
-      //this.lastContributionTime = false
+      // this.lastContributionTime = false
       this.getLastPiggy()
       // this.breakAvailable = true
     },
     // Contribute
     onContributeChild (value) {
-        this.loadingStatus = true
-      //console.log('Break')
-      //this.getLastPiggy()
+      this.loadingStatus = true
+      // console.log('Break')
+      // this.getLastPiggy()
       // this.breakAvailable = true
     }
   }

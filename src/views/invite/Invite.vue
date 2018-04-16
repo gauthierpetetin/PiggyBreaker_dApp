@@ -27,12 +27,20 @@
         <v-layout column align-center justify-center>
           <div class="headline black--text mb-3 text-xs-center email-form">
             <v-flex xs12 sm12>
-              <v-text-field type="text" email style="width:300px;"
+              <v-text-field type="text" email
+                style="width:300px;"
                 label="Email"
-                v-model="email"></v-text-field>
+                :rules="emailRules"
+                v-model="email"
+                ></v-text-field>
             </v-flex>
             <v-flex xs12 sm12>
-              <v-btn block color="primary" dark @click.native="invite()">Invite friend per email</v-btn>
+              <v-btn
+                block
+                dark
+                :class="[emailValid ? 'primary' : 'grey']"
+                @click.native="invite()"
+                >Invite friend per email</v-btn>
               <v-dialog v-model="dialogConfirm" max-width="500px">
                 <v-card>
                   <v-card-title>
@@ -58,15 +66,54 @@
 export default {
   data () {
     return {
+      apiUrl: process.env.API_URL,
+      emailValid: false,
       email: null,
+      emailRules: [
+        v => {
+          return !!v || 'E-mail is required'
+        },
+        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+      ],
       dialogConfirm: null
+    }
+  },
+  watch: {
+    email: function (val) {
+      if (this.validEmail(val)) {
+        console.log('okok')
+        this.emailValid = true
+      } else {
+        console.log('nono')
+        this.emailValid = false
+      }
     }
   },
   methods: {
     invite () {
-      console.log('invite')
+      if (!this.emailValid) {
+        return false
+      }
+
+      console.log('invite', this.email)
       this.dialogConfirm = !this.dialogConfirm
       // this.inviteStatus = true
+      let data = {
+        email: this.email
+      }
+
+      // let self = this
+      this.$http.post(this.apiUrl, JSON.stringify(data))
+        .then(function (response) {
+          // success
+          // self.email = ''
+        }, function (response) {
+          // error
+        })
+    },
+    validEmail (email) {
+      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      return re.test(email)
     }
   }
 }

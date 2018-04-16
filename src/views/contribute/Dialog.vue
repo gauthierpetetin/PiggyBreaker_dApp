@@ -103,7 +103,7 @@ export default {
 
     // Show dialog
     contributeDialog () {
-      console.log('contributeDialog 2:')
+      console.log('contributeDialog:')
       this.contributeStatus = 'contributing'
 
       // Exec contract
@@ -151,7 +151,6 @@ export default {
         this.contributionError = 'Your contribution is under the limit (' + this.rateLimitDialog + ')'
         return false
       }
-
       // Contribute
       web3js.eth.getAccounts()
         .then(function (accounts) {
@@ -172,7 +171,6 @@ export default {
               let lastContributionTime = new Date()
               lastContributionTime.setMinutes(lastContributionTime.getMinutes() + 3)
               self.lastContributionTime = self.lastContributionTime
-              
               // Send to parent
               self.$emit('contribute', true)
             })
