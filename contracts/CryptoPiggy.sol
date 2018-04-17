@@ -249,7 +249,12 @@ contract Piggies is Pausable {
     Piggy storage piggy = piggies[_piggyID];
     for(uint i = 0; i < piggy.contributions.length; i++) {
       if( piggy.contributors[piggy.contributions[i]] == _player ) {
-        return piggy.contributions[i];
+        if(i==0) {
+          return piggy.contributions[i];
+        }
+        else {
+          return piggy.contributions[i] - piggy.contributions[i-1];
+        }
       }
     }
     return 0;

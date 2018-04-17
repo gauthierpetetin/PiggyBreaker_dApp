@@ -42,14 +42,16 @@
         <v-container grid-list-md v-if="contributeStatus === 'contributed'">
           <v-layout wrap>
             <v-flex xs12 sm6>
-              Well done!
+              Congratulations! Your contribution has been submitted successfully.<br />
+              <br />
+              It will require 50-60 seconds until it gets validated by the whole network.
             </v-flex>
           </v-layout>
         </v-container>
       </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+        <v-btn color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -142,6 +144,7 @@ export default {
     contribute () {
       let self = this
       let userContribution = self.contribution.replace(/,/g, '.')
+      userContribution = userContribution.replace(/^\./g, '0.')
 
       // Check user contribution
       if (userContribution === '') {

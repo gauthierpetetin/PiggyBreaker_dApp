@@ -12,7 +12,12 @@
           <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">
             Your contribution:<br />
             <template v-if="loadingStatus">
-              <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60">
+              <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" style="vertical-align: middle;margin-left:30px;">
+              <v-tooltip right>
+                <v-icon slot="activator">info_outline</v-icon>
+                <span>Your contribution has been submitted successfully. It will require
+                50-60 seconds until it gets validated by the whole network.</span>
+              </v-tooltip>
             </template>
             <template v-else>
               <strong>{{ contributionAmount }} ETH</strong>
@@ -56,7 +61,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title">1. You <strong>contribute</strong> with Ethers</div>
+                  <div class="headline text-xs-center howitworks-title">1. You <strong>contribute</strong> with Ethers.</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/1-contribute.png" height="150">
@@ -71,7 +76,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title">2. <strong>Any contributor</strong> can decide to break the Piggy</div>
+                  <div class="headline text-xs-center howitworks-title">2. <strong>Any contributor</strong> can decide to break the Piggy.</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/2-break-piggy.png" height="150">
@@ -84,7 +89,7 @@
                       @click.native="breakPiggy()"
                       :class="[breakAvailable ? 'pink' : 'grey']"
                       >
-                      Break the Piggy*
+                      Break the Piggy
                     </v-btn>
                     <v-tooltip right style="top: 5px;">
                       <v-icon slot="activator">info_outline</v-icon>
@@ -99,7 +104,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center howitworks-title">3. A winner is <strong>chosen randomly</strong> between the contributors
+                    <div class="headline text-xs-center howitworks-title">3. A winner is <strong>chosen randomly</strong> between the contributors.
                         <v-tooltip right>
                         <v-icon slot="activator">info_outline</v-icon>
                         <span>The more you contribute, the more chances you have to win.<br/>Indeed, your chances to win the lottery are proportional to the total amount of your contributions.</span>
@@ -207,7 +212,7 @@ export default {
             function (piggy) {
               console.log(piggy)
               // self.currentContribution =
-              self.getPiggyRemainingTime(piggy)
+              self.getPiggyBreakable(piggy)
               self.getPiggyValue(piggy)
               self.getPlayerContributionAmount(nbPiggies)
               self.getPlayerWithdrawAmount()
@@ -270,26 +275,40 @@ export default {
         (parseInt(d.getMinutes() / 5) * 5).toString()) + ':00'
     },
     // Get piggy remaing time
-    getPiggyRemainingTime (piggy) {
-      if (parseInt(piggy.value) === 0) {
-        console.log('Break false value')
-        this.breakAvailable = false
-      } else {
-        // Get time limit
-        let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (this.timeLimit * 1000))
-        // Get current time
-        var currentTime = new Date()
+    getPiggyBreakable (piggy) {
+      // Exec contract
+      var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
+      let self = this
 
-        if ((currentTime.getTime() > lastContributionTimeLimit.getTime())) {
-          console.log('Break true')
-          this.breakAvailable = true
-          // this.lastContributionTime = null
-        } else {
-          console.log('Break false time')
-          this.breakAvailable = false
-        }
-        this.lastContributionTime = lastContributionTimeLimit
-      }
+      // Get accounts
+      web3js.eth.getAccounts()
+        .then(function (accounts) {
+          console.log(accounts)
+          let defaultAccount = accounts[0]
+
+          // Get contribution status
+          contract.methods.getContributionStatus(piggy.piggyID, defaultAccount).call().then(
+            function (contributionStatus) {
+              if (contributionStatus) {
+                // Get time limit
+                let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (self.timeLimit * 1000))
+                // Get current time
+                var currentTime = new Date()
+
+                if ((currentTime.getTime() > lastContributionTimeLimit.getTime())) {
+                  console.log('Break true')
+                  self.breakAvailable = true
+                  // this.lastContributionTime = null
+                } else {
+                  console.log('Break false time')
+                  self.breakAvailable = false
+                }
+                self.lastContributionTime = lastContributionTimeLimit
+              } else {
+                self.breakAvailable = false
+              }
+            })
+        })
     },
     // Get piggy value
     getPiggyValue (piggy) {
