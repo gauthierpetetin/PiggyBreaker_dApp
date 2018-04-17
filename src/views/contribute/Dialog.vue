@@ -42,8 +42,7 @@
         <v-container grid-list-md v-if="contributeStatus === 'contributed'">
           <v-layout wrap>
             <v-flex xs12 sm6>
-              Congratulations!<br />
-              Your contribution has been submitted successfully.<br />
+              Congratulations! Your contribution has been submitted successfully.<br />
               <br />
               It will require 50-60 seconds until it gets validated by the whole network.
             </v-flex>

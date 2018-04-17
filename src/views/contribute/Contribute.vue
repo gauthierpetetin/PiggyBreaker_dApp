@@ -212,7 +212,7 @@ export default {
             function (piggy) {
               console.log(piggy)
               // self.currentContribution =
-              self.getPiggyRemainingTime(piggy)
+              self.getPiggyBreakable(piggy)
               self.getPiggyValue(piggy)
               self.getPlayerContributionAmount(nbPiggies)
               self.getPlayerWithdrawAmount()
@@ -275,26 +275,40 @@ export default {
         (parseInt(d.getMinutes() / 5) * 5).toString()) + ':00'
     },
     // Get piggy remaing time
-    getPiggyRemainingTime (piggy) {
-      if (parseInt(piggy.value) === 0) {
-        console.log('Break false value')
-        this.breakAvailable = false
-      } else {
-        // Get time limit
-        let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (this.timeLimit * 1000))
-        // Get current time
-        var currentTime = new Date()
+    getPiggyBreakable (piggy) {
+      // Exec contract
+      var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
+      let self = this
 
-        if ((currentTime.getTime() > lastContributionTimeLimit.getTime())) {
-          console.log('Break true')
-          this.breakAvailable = true
-          // this.lastContributionTime = null
-        } else {
-          console.log('Break false time')
-          this.breakAvailable = false
-        }
-        this.lastContributionTime = lastContributionTimeLimit
-      }
+      // Get accounts
+      web3js.eth.getAccounts()
+        .then(function (accounts) {
+          console.log(accounts)
+          let defaultAccount = accounts[0]
+
+          // Get contribution status
+          contract.methods.getContributionStatus(piggy.piggyID, defaultAccount).call().then(
+            function (contributionStatus) {
+              if (contributionStatus) {
+                // Get time limit
+                let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (self.timeLimit * 1000))
+                // Get current time
+                var currentTime = new Date()
+
+                if ((currentTime.getTime() > lastContributionTimeLimit.getTime())) {
+                  console.log('Break true')
+                  self.breakAvailable = true
+                  // this.lastContributionTime = null
+                } else {
+                  console.log('Break false time')
+                  self.breakAvailable = false
+                }
+                self.lastContributionTime = lastContributionTimeLimit
+              } else {
+                self.breakAvailable = false
+              }
+            })
+        })
     },
     // Get piggy value
     getPiggyValue (piggy) {
