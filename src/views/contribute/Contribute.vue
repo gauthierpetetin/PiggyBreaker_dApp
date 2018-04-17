@@ -11,7 +11,7 @@
           <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">Current Piggy value:<br /><strong>{{ balance }} ETH</strong></h1>
           <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">
             Your contribution:<br />
-            <template v-if="!loadingStatus">
+            <template v-if="loadingStatus">
               <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" style="vertical-align: middle;margin-left:30px;">
               <v-tooltip right>
                 <v-icon slot="activator">info_outline</v-icon>
