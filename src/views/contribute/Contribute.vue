@@ -89,7 +89,7 @@
                       @click.native="breakPiggy()"
                       :class="[breakAvailable ? 'pink' : 'grey']"
                       >
-                      Break the Piggy*
+                      Break the Piggy
                     </v-btn>
                     <v-tooltip right style="top: 5px;">
                       <v-icon slot="activator">info_outline</v-icon>
