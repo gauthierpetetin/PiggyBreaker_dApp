@@ -29,7 +29,7 @@
             <v-flex xs12 sm12>
               <v-text-field type="text" email
                 style="width:300px;"
-                label="Email"
+                label="Your friend’s email"
                 :rules="emailRules"
                 v-model="email"
                 ></v-text-field>

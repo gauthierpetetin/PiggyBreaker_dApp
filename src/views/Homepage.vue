@@ -71,17 +71,17 @@
                     <v-list class="transparent">
                       <v-list-tile>
                         <v-list-tile-content>
-                          <v-list-tile-title>Piggy value: 40 ETH</v-list-tile-title>
+                          <v-list-tile-title>Piggy value: 100 ETH</v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
                       <v-list-tile>
                         <v-list-tile-content>
-                          <v-list-tile-title>Your contribution: 0.4 ETH</v-list-tile-title>
+                          <v-list-tile-title>Your contribution: 25 ETH</v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
                       <v-list-tile>
                         <v-list-tile-content>
-                          <v-list-tile-title>Your chances to win the lottery: 1%</v-list-tile-title>
+                          <v-list-tile-title>Your chances to win the lottery: 25%</v-list-tile-title>
                         </v-list-tile-content>
                       </v-list-tile>
                     </v-list>
