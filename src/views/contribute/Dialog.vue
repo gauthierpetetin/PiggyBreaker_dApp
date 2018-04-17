@@ -142,7 +142,8 @@ export default {
     contribute () {
       let self = this
       let userContribution = self.contribution.replace(/,/g, '.')
-
+      userContribution = userContribution.replace(/^\./g, '0.')
+      
       // Check user contribution
       if (userContribution === '') {
         this.contributionError = 'You must enter a valid contribution'
