@@ -198,7 +198,7 @@ export default {
       // Loop to check Metamask status
       var accountInterval = setInterval(function() {
         self.getLastPiggy()
-      }, 2000)
+      }, 3000)
     },
     // Get last piggy
     getLastPiggy () {
