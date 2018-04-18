@@ -196,7 +196,7 @@ export default {
       this.getEvents()
       let self = this
       // Loop to check Metamask status
-      var accountInterval = setInterval(function() {
+      var accountInterval = setInterval(function () {
         self.getLastPiggy()
       }, 3000)
     },
@@ -291,9 +291,9 @@ export default {
           let defaultAccount = accounts[0]
 
           // Get contribution status
-          contract.methods.getContributionStatus(piggy.piggyID, defaultAccount).call().then(
-            function (contributionStatus) {
-              if (contributionStatus) {
+          contract.methods.getContributionAmount(piggy.piggyID, defaultAccount).call().then(
+            function (contributionAmount) {
+              if (contributionAmount > 0) {
                 // Get time limit
                 let lastContributionTimeLimit = new Date(piggy.lastContributionTime * 1000 + (self.timeLimit * 1000))
                 // Get current time
