@@ -60,6 +60,7 @@ contract Piggies is Pausable {
     bool open;
     uint creationTime;
     uint lastContributionTime;
+    uint brokenTime;
     uint[] contributions;
     address winner;
     mapping (address => bool) contributed;
@@ -76,6 +77,9 @@ contract Piggies is Pausable {
                                                               // Example :
                                                               //   - If the contribution frequency increases, the minimum contribution rate will increase by 100% every 15 minutes
                                                               //   - If the contribution frequency decreases, the minimum contribution rate will decrease by 50% every 15 minutes
+
+  uint public piggyProtectionTime = 3 * 60;                   // The Piggy is protected after each new contribution during piggyProtectionTime
+  uint public piggyProtectionLimit = 90 * 24 * 60 * 60;       // After the piggyProtectionLimit, the Piggy isn't protected anymore
 
   uint public localContributionsCounter = 0;
   uint public lastUpdateDate = now;
@@ -103,9 +107,7 @@ contract Piggies is Pausable {
 
   modifier noPlayerJoinedRecently() {
     Piggy storage piggy = piggies[nbPiggies];
-    uint threeMinutes = 3 * 60;
-    uint oneYear = 365 * 24 * 60 * 60;
-    require( (now > piggy.lastContributionTime + threeMinutes) || (now > piggy.creationTime + oneYear) ); _;
+    require( (now > piggy.lastContributionTime + piggyProtectionTime) || (now > piggy.creationTime + piggyProtectionLimit) ); _;
   }
 
   modifier contributionIsHighEnough(uint contribution) {
@@ -132,6 +134,7 @@ contract Piggies is Pausable {
       open: true,
       creationTime: now,
       lastContributionTime: now,
+      brokenTime: 0,
       contributions: _contributions,
       winner: _winner
     });
@@ -211,6 +214,7 @@ contract Piggies is Pausable {
 
     pendingReturnValues[piggy.winner] += totalValue;               //The winner receives the reward
     pendingReturnDates[piggy.winner] = now;
+    piggy.brokenTime = now;
     piggy.open = false;
 
     emit PiggyBroken(nbPiggies, totalValue, piggy.winner, now);
@@ -240,9 +244,12 @@ contract Piggies is Pausable {
     percentage = _newPercentage;
   }
 
-  function getContributionStatus(uint _piggyID, address _player) public view returns(bool) {
-    Piggy storage piggy = piggies[_piggyID];
-    return piggy.contributed[_player];
+  function setPiggyProtectionTime(uint _piggyProtectionTime) public restricted {
+    piggyProtectionTime = _piggyProtectionTime;
+  }
+
+  function setPiggyProtectionLimit(uint _piggyProtectionLimit) public restricted {
+    piggyProtectionLimit = _piggyProtectionLimit;
   }
 
   function getContributionAmount(uint _piggyID, address _player) public view returns(uint) {
