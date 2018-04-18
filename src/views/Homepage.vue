@@ -120,9 +120,11 @@ export default {
   created () {
     this.checkMetasmask()
     let self = this
+
+    // Loop to check Metamask status
     var accountInterval = setInterval(function() {
       self.checkMetasmask()
-    }, 1000)
+    }, 2000)
   },
   methods: {
     checkMetasmask () {
