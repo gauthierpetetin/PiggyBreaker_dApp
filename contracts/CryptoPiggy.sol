@@ -254,17 +254,18 @@ contract Piggies is Pausable {
 
   function getContributionAmount(uint _piggyID, address _player) public view returns(uint) {
     Piggy storage piggy = piggies[_piggyID];
+    uint contributionAmount = 0;
     for(uint i = 0; i < piggy.contributions.length; i++) {
       if( piggy.contributors[piggy.contributions[i]] == _player ) {
         if(i==0) {
-          return piggy.contributions[i];
+          contributionAmount += piggy.contributions[i];
         }
         else {
-          return piggy.contributions[i] - piggy.contributions[i-1];
+          contributionAmount += ( piggy.contributions[i] - piggy.contributions[i-1] );
         }
       }
     }
-    return 0;
+    return contributionAmount;
   }
 
   function forgottenFundsRecovery(address _address) public restricted {
