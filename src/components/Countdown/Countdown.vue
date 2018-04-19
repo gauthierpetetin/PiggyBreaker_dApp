@@ -35,7 +35,7 @@ export default {
       let timeDiff = timestamp - this.now
       if (timeDiff <= 0) {
         // Send to parent
-        this.$emit('break', true)
+        this.$emit('enablebreak', true)
       }
       return timestamp
     },

@@ -1,7 +1,8 @@
 <template>
   <div>
-    <app-contribute v-if="!locked"></app-contribute>
-    <app-locked v-if="locked" :lockstatus="lockStatus"></app-locked>
+    <!-- Contribute -->
+    <app-contribute></app-contribute>
+    <!-- /Contribute -->
     <section>
       <v-parallax  class="parallax-background" height="280">
         <v-layout column align-center justify-center>
@@ -100,74 +101,10 @@
 <script>
 
 import Contribute from '@/views/contribute/Contribute'
-import Locked from '@/views/contribute/Locked'
-
-import Web3 from 'web3'
-
-var web3js = window.web3
 
 export default {
-  data () {
-    return {
-      locked: false,
-      lockStatus: null
-    }
-  },
   components: {
-    appContribute: Contribute,
-    appLocked: Locked
-  },
-  created () {
-    this.checkMetasmask()
-    let self = this
-
-    // Loop to check Metamask status
-    var accountInterval = setInterval(function () {
-      self.checkMetasmask()
-    }, 3000)
-  },
-  methods: {
-    checkMetasmask () {
-      let self = this
-      if (typeof window.web3 !== 'undefined') {
-        web3js = new Web3(web3js.currentProvider)
-      }
-
-      // Check if installed
-      if (!web3js.currentProvider.isMetaMask) {
-        self.locked = true
-        this.lockStatus = 'not_installed'
-      }
-
-      // Get accounts
-      web3js.eth.getAccounts()
-        .then(function (accounts) {
-          if (accounts.length === 0) {
-            self.locked = true
-            self.lockStatus = 'locked'
-          } else {
-            // Check if on good network
-            web3js.eth.net.getId().then(
-              function (netId) {
-                if (netId === 1) {
-                  if (process.env.ETHEREUM_NODE_ENV === 'development') {
-                    self.locked = true
-                    self.lockStatus = 'wrong_network'
-                  } else {
-                    self.locked = false
-                  }
-                } else if (netId === 3) {
-                  if (process.env.ETHEREUM_NODE_ENV === 'production') {
-                    self.locked = true
-                    self.lockStatus = 'wrong_network'
-                  } else {
-                    self.locked = false
-                  }
-                }
-              })
-          }
-        })
-    }
+    appContribute: Contribute
   }
 }
 

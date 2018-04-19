@@ -45,14 +45,8 @@
 </template>
 
 <script>
-import Web3 from 'web3'
-// import Tx from 'ethereumjs-tx'
-import Units from 'ethereumjs-units'
 
-import ethereum from '@/mixins/ethereum'
-
-// let web3 = new Web3()
-var web3js = window.web3
+import piggy from '@/mixins/piggy'
 
 export default {
   data () {
@@ -60,43 +54,14 @@ export default {
       piggies: []
     }
   },
-  mixins: [ethereum],
+  mixins: [piggy],
   mounted () {
     this.initialize()
   },
   methods: {
     initialize () {
-      if (typeof window.web3 !== 'undefined') {
-        web3js = new Web3(web3js.currentProvider)
-      }
-
-      // Exec contract
-      var contract = new web3js.eth.Contract(this.abi, this.contractAddress)
-
-      let self = this
-      contract.methods.nbPiggies().call().then(
-        function (nbPiggies) {
-          self.retreivedValue = nbPiggies
-
-          for (let i = nbPiggies; i >= 1; i--) {
-            contract.methods.piggies(i).call().then(
-              function (piggyItem) {
-                console.log('Get contract value', piggyItem.creationTime)
-                let createdAt = new Date(piggyItem.creationTime * 1000)
-                var piggy = {
-                  id: piggyItem.piggyID,
-                  value: Units.convert(piggyItem.value, 'wei', 'eth'),
-                  open: piggyItem.open,
-                  createdAt: createdAt,
-                  winner: piggyItem.winner
-                }
-                // self.piggies.push(piggy)
-                self.piggies.splice(nbPiggies - piggyItem.piggyID, 0, piggy)
-                console.log(piggy)
-              }
-            )
-          }
-        })
+      this.dialWs()
+      this.getPiggiesList()
     }
   }
 }
