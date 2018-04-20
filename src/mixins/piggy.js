@@ -35,7 +35,7 @@ export default {
       },
 
       // UI
-      timeLimit: 180,
+      timeLimit: 210,
       lockStatus: null,
       contributionEnable: false,
       // breakEnable: false,
@@ -223,6 +223,13 @@ export default {
       self.dialJs()
 
       // Check if installed
+      if (typeof web3 === 'undefined') {
+        self.contributionEnable = false
+        self.lockStatus = 'not_installed'
+        return
+      }
+
+      // Check if installed
       if (!self.web3js.currentProvider.isMetaMask) {
         self.contributionEnable = false
         self.lockStatus = 'not_installed'
@@ -336,6 +343,10 @@ export default {
             self.piggy.nextContributionTime = new Date(piggy.lastContributionTime * 1000 + (self.timeLimit * 1000))
             // Get current time
             var currentTime = new Date()
+
+            console.log('nextContributionTime', self.piggy.nextContributionTime)
+            console.log('currentTime', currentTime)
+
             if ((currentTime.getTime() > self.piggy.nextContributionTime.getTime())) {
               console.log('Break true')
               self.player.breakEnable = true
@@ -415,12 +426,12 @@ export default {
       self.web3js.eth.getAccounts()
         .then(function (accounts) {
           console.log(accounts)
-          let currenttAccount = accounts[0]
+          let currentAccount = accounts[0]
 
           // Get contract
           var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
           // Break piggy
-          contract.methods.breakPiggy().send({from: currenttAccount})
+          contract.methods.breakPiggy().send({from: currentAccount})
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
               self.contributeStatus = 'contributed'

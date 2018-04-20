@@ -38,7 +38,7 @@
             <app-locked :lockstatus="lockStatus"></app-locked>
           </v-flex>
           <!-- /Player contribute -->
-          <v-flex md12 class="text-xs-center black--text" style="font-size:28px;margin: 20px 0 50px 0;">
+          <v-flex v-if="contributionEnable" md12 class="text-xs-center black--text" style="font-size:28px;margin: 20px 0 50px 0;">
             Minimum contribution: {{ piggy.minContribution }} ETH
             <v-tooltip right>
               <v-icon slot="activator">info_outline</v-icon>

@@ -57,7 +57,7 @@ export default {
       if (typeof web3 !== 'undefined') {
         this.networkStatus = 'good'
       } else {
-        console.log('No web3? You should consider trying MetaMask!')
+        console.log('Please install / unlock Metamask first. See below for more details.')
       }
     }
   }
