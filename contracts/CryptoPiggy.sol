@@ -268,6 +268,11 @@ contract Piggies is Pausable {
     return contributionAmount;
   }
 
+  function getNbContributions(uint _piggyID) public view returns(uint) {
+    Piggy storage piggy = piggies[_piggyID];
+    return piggy.contributions.length;
+  }
+
   function forgottenFundsRecovery(address _address) public restricted {
     uint oneYear = 365 * 24 * 60 * 60;
     require(now > pendingReturnDates[_address] + oneYear);
