@@ -5,7 +5,7 @@
       dark
       large
       @click.native="breakDialog()"
-      :class="[player.breakEnable ? 'blue' : 'grey']"
+      :class="[player.breakEnable ? 'pink' : 'grey']"
     >
       Break the Piggy
     </v-btn>

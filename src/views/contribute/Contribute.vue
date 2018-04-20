@@ -167,10 +167,10 @@ export default {
       this.catchEvents()
 
       // Loop to check Metamask status
-      // let self = this
-      // setInterval(function () {
-      //   self.checkMetasmask()
-      // }, 3000)
+      let self = this
+      setInterval(function () {
+        self.checkMetasmask()
+      }, 3000)
     },
     // Contribution
     onContributionChild (value) {

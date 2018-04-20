@@ -45,6 +45,14 @@ export default {
       withdrawLoadingStatus: false
     }
   },
+  watch: {
+    contributionEnable: function () {
+      if (this.contributionEnable === true) {
+        // Get Player data
+        this.getPlayerData()
+      }
+    }
+  },
   methods: {
     /*************
       WS
@@ -237,7 +245,7 @@ export default {
                   } else {
                     self.contributionEnable = true
                     // Get Player data
-                    self.getPlayerData()
+                    // self.getPlayerData()
                   }
                 } else if (netId === 3) {
                   if (process.env.ETHEREUM_NODE_ENV === 'production') {
@@ -246,7 +254,7 @@ export default {
                   } else {
                     self.contributionEnable = true
                     // Get Player data
-                    self.getPlayerData()
+                    // self.getPlayerData()
                   }
                 }
               })
