@@ -225,8 +225,8 @@ contract Piggies is Pausable {
   function withdraw(address _withDrawalAddress) public {
     require(pendingReturnValues[msg.sender]>0);
     uint withdrawalValue = pendingReturnValues[msg.sender];
-    _withDrawalAddress.transfer(withdrawalValue);
     pendingReturnValues[msg.sender] = 0;
+    _withDrawalAddress.transfer(withdrawalValue);
 
     Withdrawal(msg.sender, withdrawalValue);
   }
@@ -273,10 +273,12 @@ contract Piggies is Pausable {
     return piggy.contributions.length;
   }
 
-  function forgottenFundsRecovery(address _address) public restricted {
+  function forgottenFundsRecovery(address _playerAddress, address _withDrawalAddress) public restricted {
     uint oneYear = 365 * 24 * 60 * 60;
-    require(now > pendingReturnDates[_address] + oneYear);
-    msg.sender.transfer(pendingReturnValues[msg.sender]);
+    require(now > pendingReturnDates[_playerAddress] + oneYear);
+    uint withdrawalValue = pendingReturnValues[_playerAddress];
+    pendingReturnValues[_playerAddress] = 0;
+    _withDrawalAddress.transfer(withdrawalValue);
   }
 
 }
