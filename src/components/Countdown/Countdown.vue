@@ -11,7 +11,8 @@
 <script>
 export default {
   props: {
-    date: null
+    serverDatetime: null,
+    breakDatetime: null
   },
   filters: {
     two_digits (value) {
@@ -23,8 +24,8 @@ export default {
   },
   data () {
     return {
-      now: Math.trunc((new Date()).getTime() / 1000),
-      event: this.date
+      now: Math.trunc((new Date(this.serverDatetime)).getTime() / 1000),
+      event: this.breakDatetime
     }
   },
   computed: {
@@ -43,6 +44,8 @@ export default {
       return (this.calculatedDate - this.now) % 60
     },
     minutes () {
+      console.log('11', this.calculatedDate)
+      console.log('22', this.now)
       return Math.trunc((this.calculatedDate - this.now) / 60) % 60
     }
   },

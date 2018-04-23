@@ -8,7 +8,7 @@
           align-center
           justify-center
         >
-          <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 50px;">Current Piggy value:<br /><strong>{{ piggy.value }} ETH</strong></h1>
+          <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 50px;">Current Piggy value:<br /><strong>{{ currentGame.value }} ETH</strong></h1>
           <!-- Player contribution amount -->
           <section v-if="contributionEnable">
             <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">
@@ -39,7 +39,7 @@
           </v-flex>
           <!-- /Player contribute -->
           <v-flex v-if="contributionEnable" md12 class="text-xs-center black--text" style="font-size:28px;margin: 20px 0 50px 0;">
-            Minimum contribution: {{ piggy.minContribution }} ETH
+            Minimum contribution: {{ currentGame.minContribution }} ETH
             <v-tooltip right>
               <v-icon slot="activator">info_outline</v-icon>
               <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
@@ -73,7 +73,7 @@
                   </v-card-text>
                   <v-card-text v-if="contributionEnable" class="text-xs-center">
                     <!-- Dialog -->
-                    <app-dialog-contribute :piggy="piggy"></app-dialog-contribute>
+                    <app-dialog-contribute :game="currentGame"></app-dialog-contribute>
                     <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
@@ -96,7 +96,7 @@
                     </template>
                     <template v-else>
                       <!-- Dialog -->
-                      <app-dialog-break :piggy="piggy" :player="player" @break="onBreakChild"></app-dialog-break>
+                      <app-dialog-break :game="currentGame" :player="player" @break="onBreakChild"></app-dialog-break>
                       <!-- /Dialog -->
                     </template>
                   </v-card-text>
@@ -148,6 +148,7 @@ import DialogBreak from '@/views/contribute/DialogBreak.vue'
 import DialogWithdraw from '@/views/contribute/DialogWithdraw.vue'
 
 import piggyMixin from '@/mixins/piggy'
+import firestoreMixin from '@/mixins/firestore'
 
 export default {
   components: {
@@ -156,12 +157,21 @@ export default {
     AppDialogBreak: DialogBreak,
     AppDialogWithdraw: DialogWithdraw
   },
-  mixins: [piggyMixin],
+  mixins: [
+    piggyMixin,
+    firestoreMixin
+  ],
   mounted () {
     this.initialize()
   },
   methods: {
     initialize () {
+      // Check if metamask is enabled
+      this.checkMetasmask()
+
+      // Get current game
+      this.getCurrentGame()
+      /*
       this.getCurrentWSPiggy()
       this.checkMetasmask()
       this.catchEvents()
@@ -171,6 +181,7 @@ export default {
       setInterval(function () {
         self.checkMetasmask()
       }, 3000)
+      */
     },
     // Contribution
     onContributionChild (value) {

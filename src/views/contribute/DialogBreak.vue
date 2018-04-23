@@ -5,7 +5,7 @@
       dark
       large
       @click.native="breakDialog()"
-      :class="[player.breakEnable ? 'pink' : 'grey']"
+      :class="[game.breakable && player.breakEnable ? 'pink' : 'grey']"
     >
       Break the Piggy
     </v-btn>
@@ -14,7 +14,7 @@
       <span v-html="message"></span>
     </v-tooltip>
     <!-- Countdown -->
-    <app-countdown v-if="piggy.breakTimerEnable" class="remaining-time" :date="piggy.nextContributionTime" @enablebreak="onEnableBreakChild"></app-countdown>
+    <app-countdown class="remaining-time" :serverDatetime="1382086394000" :breakDatetime="1382086394000" @enablebreak="onEnableBreakChild"></app-countdown>
     <!-- /Countdown -->
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
@@ -53,7 +53,7 @@ export default {
   },
   props: {
     buttonLarge: true,
-    piggy: null,
+    game: null,
     player: null
   },
   computed: {
@@ -81,7 +81,7 @@ export default {
     // Break available
     onEnableBreakChild () {
       this.player.breakEnable = true
-      this.piggy.breakTimerEnable = false
+      this.game.breakTimerEnable = false
     }
   }
 }
