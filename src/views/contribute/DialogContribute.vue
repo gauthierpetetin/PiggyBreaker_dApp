@@ -62,7 +62,7 @@
 
 <script>
 
-import piggyMixin from '@/mixins/piggy'
+import ethereumMixin from '@/mixins/ethereum'
 
 export default {
   data () {
@@ -73,7 +73,7 @@ export default {
       // contribution: null
     }
   },
-  mixins: [piggyMixin],
+  mixins: [ethereumMixin],
   props: {
     buttonLarge: true
   },

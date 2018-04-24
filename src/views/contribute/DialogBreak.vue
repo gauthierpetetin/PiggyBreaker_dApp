@@ -5,7 +5,7 @@
       dark
       large
       @click.native="breakDialog()"
-      :class="[game.breakable && player.breakEnable ? 'pink' : 'grey']"
+      :class="[breakEnable ? 'pink' : 'grey']"
     >
       Break the Piggy
     </v-btn>
@@ -14,7 +14,7 @@
       <span v-html="message"></span>
     </v-tooltip>
     <!-- Countdown -->
-    <app-countdown class="remaining-time" :serverDatetime="1382086394000" :breakDatetime="1382086394000" @enablebreak="onEnableBreakChild"></app-countdown>
+    <app-countdown v-if="countdownEnabled" class="remaining-time" :serverTimestamp="game.serverTimestamp" :breakDatetime="game.breakableAt" @enablebreak="onEnableBreakChild"></app-countdown>
     <!-- /Countdown -->
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
@@ -23,7 +23,7 @@
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
-            <v-layout wrap>4
+            <v-layout wrap>
               <v-flex sm12>
                 <span v-html="message"></span>
               </v-flex>
@@ -43,18 +43,29 @@
 
 import Countdown from '@/components/Countdown/Countdown.vue'
 
+import firestoreMixin from '@/mixins/firestore'
+
 export default {
-  data () {
-    return {
-      dialog: false,
-      breakEnable: false,
-      message: 'You need to be a contributor to access this feature.<br/>You can’t break the Piggy if a contribution occurred in the last 3 minutes.'
-    }
-  },
+  mixins: [
+    firestoreMixin
+  ],
   props: {
     buttonLarge: true,
     game: null,
     player: null
+  },
+  data () {
+    return {
+      dialog: false,
+      breakEnable: false,
+      countdownEnabled: false,
+      message: 'You need to be a contributor to access this feature.<br/>You can’t break the Piggy if a contribution occurred in the last 3 minutes.'
+    }
+  },
+  watch: {
+    game: function (val) {
+      this.checkBreak()
+    }
   },
   computed: {
     classButton: function () {
@@ -63,13 +74,28 @@ export default {
       }
     }
   },
-  components: {
-    AppCountdown: Countdown
-  },
   mounted () {
-    // this.initialize()
+    this.checkBreak()
   },
   methods: {
+    // Check break
+    checkBreak () {
+      // Check button enable
+      if (this.game.breakable && this.player.breakEnable) {
+        this.breakEnable = true
+      }
+
+      console.log('this.game.breakable', this.game.breakable)
+      console.log('this.player.breakEnable', this.player.breakEnable)
+
+      // Check countdown enable
+      if (this.game.breakableAt > this.game.serverTimestamp) {
+        this.countdownEnabled = true
+        this.breakEnable = false
+      } else {
+        this.countdownEnabled = false
+      }
+    },
     // Show dialog
     breakDialog () {
       if (!this.player.breakEnable) {
@@ -80,9 +106,14 @@ export default {
     },
     // Break available
     onEnableBreakChild () {
-      this.player.breakEnable = true
-      this.game.breakTimerEnable = false
+      if (this.game.breakable && this.player.breakEnable) {
+        this.breakEnable = true
+      }
+      this.countdownEnabled = false
     }
+  },
+  components: {
+    AppCountdown: Countdown
   }
 }
 

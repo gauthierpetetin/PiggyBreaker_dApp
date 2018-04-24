@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-app light>
+    <v-app v-cloak light>
 
       <v-content>
         <app-header></app-header>
@@ -26,5 +26,7 @@ export default {
 </script>
 
 <style>
-
+  [v-cloak] {
+    display: none;
+  }
 </style>

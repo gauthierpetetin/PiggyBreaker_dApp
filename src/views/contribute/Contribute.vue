@@ -39,7 +39,7 @@
           </v-flex>
           <!-- /Player contribute -->
           <v-flex v-if="contributionEnable" md12 class="text-xs-center black--text" style="font-size:28px;margin: 20px 0 50px 0;">
-            Minimum contribution: {{ currentGame.minContribution }} ETH
+            Minimum contribution: <span>{{ currentGame.minContribution }} ETH</span>
             <v-tooltip right>
               <v-icon slot="activator">info_outline</v-icon>
               <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
@@ -96,7 +96,7 @@
                     </template>
                     <template v-else>
                       <!-- Dialog -->
-                      <app-dialog-break :game="currentGame" :player="player" @break="onBreakChild"></app-dialog-break>
+                      <app-dialog-break v-if="currentGame.id" :game="currentGame" :player="player" @break="onBreakChild"></app-dialog-break>
                       <!-- /Dialog -->
                     </template>
                   </v-card-text>
@@ -147,7 +147,7 @@ import DialogContribute from '@/views/contribute/DialogContribute.vue'
 import DialogBreak from '@/views/contribute/DialogBreak.vue'
 import DialogWithdraw from '@/views/contribute/DialogWithdraw.vue'
 
-import piggyMixin from '@/mixins/piggy'
+import ethereumMixin from '@/mixins/ethereum'
 import firestoreMixin from '@/mixins/firestore'
 
 export default {
@@ -158,7 +158,7 @@ export default {
     AppDialogWithdraw: DialogWithdraw
   },
   mixins: [
-    piggyMixin,
+    ethereumMixin,
     firestoreMixin
   ],
   mounted () {
@@ -171,11 +171,8 @@ export default {
 
       // Get current game
       this.getCurrentGame()
-      /*
-      this.getCurrentWSPiggy()
-      this.checkMetasmask()
-      this.catchEvents()
 
+      /*
       // Loop to check Metamask status
       let self = this
       setInterval(function () {
