@@ -82,10 +82,14 @@ export default {
     checkBreak () {
       // Check button enable
       if (this.game.breakable && this.player.breakEnable) {
+        console.log('Jaaaaaaa')
         this.breakEnable = true
       }
 
-      console.log('this.game.breakable', this.game.breakable)
+      console.log('this.game', this.game.breakable)
+      console.log('this.player.breakEnable', this.player.breakEnable)
+      console.log('this.game', this.game)
+      console.log('this.player', this.player)
       console.log('this.player.breakEnable', this.player.breakEnable)
 
       // Check countdown enable
