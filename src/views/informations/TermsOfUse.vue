@@ -147,7 +147,7 @@
                 </p>
                 <h2>14. Privacy Policy</h2>
                 <p>
-                  Our Privacy Policy describes the ways we collect, use, store and disclose your personal information, and is hereby incorporated by this reference into these Terms. You agree to the collection, use, storage, and disclosure of your data in accordance with our Privacy Policy
+                  Our <router-link class="black--text" to="privacy-policy">Privacy Policy</router-link> describes the ways we collect, use, store and disclose your personal information, and is hereby incorporated by this reference into these Terms. You agree to the collection, use, storage, and disclosure of your data in accordance with our <router-link class="black--text" to="privacy-policy">Privacy Policy</router-link>
                 </p>
                 <h2>15. Dispute Resolution; Arbitration</h2>
                 <p>

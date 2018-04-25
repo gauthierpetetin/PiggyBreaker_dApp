@@ -13,24 +13,28 @@
               <h1 class="headline">Piggies List</h1>
             </v-flex>
 
-            <v-flex v-for="(piggy, index) in piggies" :key="index" md6 style="margin-bottom: 10px;">
+            <v-flex v-for="(game, index) in games" :key="index" md6 style="margin-bottom: 10px;">
               <v-card>
                 <v-layout>
                   <v-flex sm3>
                     <v-card-text>
-                      <div>
-                        <img v-if="piggy.open === false" src="/static/img/picto/broken-piggy.png" width="100">
-                        <img v-if="piggy.open === true" src="/static/img/picto/piggy.png" width="100">
+                      <div class="text-md-center">
+                        <img v-if="game.open === false" src="/static/img/picto/broken-piggy.png" width="100">
+                        <img v-if="game.open === true" src="/static/img/picto/piggy.png" width="100">
+                        <h3>{{ game.value }} ETH</h3>
                       </div>
                     </v-card-text>
                   </v-flex>
                   <v-flex sm9>
                     <v-card-title>
                       <div>
-                        <span class="grey--text">#{{ piggy.id }}</span><br>
-                        <span>Value: {{ piggy.value }} ETH</span><br>
-                        <span>Winner: {{ piggy.winner }}</span>
-                        <span>Created at: {{ piggy.createdAt }}</span>
+                        <h1 class="grey--text">#{{ game.id }}</h1>
+                        <h3 v-if="game.open === false">Winner: {{ game.winner }}</h3>
+                        <br />
+                        <span><strong>{{ game.nbContributions }}</strong> contributions</span><br />
+                        <span>Created at: {{ game.createdAt }}</span><br />
+                        <span v-if="game.open">Last update: {{ game.updatedAt }}</span>
+                        <span v-else>Breaked at: {{ game.breakedAt }}</span>
                       </div>
                     </v-card-title>
                   </v-flex>
@@ -46,22 +50,26 @@
 
 <script>
 
-import piggy from '@/mixins/piggy'
+import firestoreMixin from '@/mixins/firestore'
+// import piggy from '@/mixins/piggy'
 
 export default {
   data () {
     return {
-      piggies: []
+      games: []
     }
   },
-  mixins: [piggy],
+  mixins: [
+    firestoreMixin
+  ],
+  // mixins: [piggy],
   mounted () {
     this.initialize()
   },
   methods: {
     initialize () {
-      this.dialWs()
-      this.getPiggiesList()
+      // this.dialWs()
+      this.getGamesList()
     }
   }
 }

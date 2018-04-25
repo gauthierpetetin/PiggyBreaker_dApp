@@ -1,6 +1,6 @@
 <template>
   <div>
-
+    <!-- Contribute -->
     <section>
       <v-parallax class="parallax-background">
         <v-layout
@@ -8,12 +8,12 @@
           align-center
           justify-center
         >
-          <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 50px;">Current Piggy value:<br /><strong>{{ piggy.value }} ETH</strong></h1>
+          <h1 class="black--text mb-2 display-2 text-xs-center current">Current Piggy value:<br /><strong>{{ game.value }} ETH</strong></h1>
           <!-- Player contribution amount -->
-          <section v-if="contributionEnable">
-            <h1 class="black--text mb-2 display-2 text-xs-center" style="margin-top: 20px;">
+          <section v-if="contribution.enable">
+            <h1 class="black--text mb-2 display-2 text-xs-center contribution">
               Your contribution:<br />
-              <template v-if="contributionLoadingStatus">
+              <template v-if="loading.contribution">
                 <v-tooltip right>
                   <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
                   <span>Your contribution has been submitted successfully.<br />It will require
@@ -28,27 +28,26 @@
           <!-- /Player contribution amount -->
           <img src="/static/img/picto/big-piggy.png" alt="big piggy" height="350">
         </v-layout>
-        <v-layout row wrap
-        class="white--text">
+        <v-layout v-if="contribution.enable" row wrap class="white--text">
           <!-- Player contribute -->
-          <v-flex v-if="contributionEnable" md12 class="text-xs-center">
-            <app-dialog-contribute button-large="true" :piggy="piggy" :player="player" @contribution="onContributionChild"></app-dialog-contribute>
-          </v-flex>
-          <v-flex v-else md12 class="text--center">
-            <app-locked :lockstatus="lockStatus"></app-locked>
+          <v-flex md12 class="text-xs-center">
+            <app-dialog-contribute button-large="true" :dialogGame="game" :playerAddress="player.address" @contribution="onContributionChild"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
-          <v-flex v-if="contributionEnable" md12 class="text-xs-center black--text" style="font-size:28px;margin: 20px 0 50px 0;">
-            Minimum contribution: {{ piggy.minContribution }} ETH
+          <v-flex md12 class="text-xs-center black--text minimum-contribution">
+            Minimum contribution: <span>{{ game.minContribution }} ETH</span>
             <v-tooltip right>
               <v-icon slot="activator">info_outline</v-icon>
               <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
             </v-tooltip>
           </v-flex>
         </v-layout>
+        <v-layout v-else row wrap class="white--text">
+          <app-locked :lockstatus="contribution.status"></app-locked>
+        </v-layout>
       </v-parallax>
     </section>
-
+    <!-- How does it work? -->
     <section>
       <v-layout
         column
@@ -71,9 +70,9 @@
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/1-contribute.png" height="150">
                   </v-card-text>
-                  <v-card-text v-if="contributionEnable" class="text-xs-center">
+                  <v-card-text class="text-xs-center">
                     <!-- Dialog -->
-                    <app-dialog-contribute :piggy="piggy"></app-dialog-contribute>
+                    <app-dialog-contribute :dialogGame="game" :playerAddress="player.address"></app-dialog-contribute>
                     <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
@@ -86,17 +85,19 @@
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/2-break-piggy.png" height="150">
                   </v-card-text>
-                  <v-card-text v-if="contributionEnable" class="text-xs-center">
-                    <template v-if="breakLoadingStatus">
-                      <v-tooltip right>
-                        <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
-                        <span>Your transaction has been submitted successfully.<br />It will require
-                        50-60 seconds until it gets validated by the whole network.</span>
-                      </v-tooltip>
-                    </template>
-                    <template v-else>
+                  <v-card-text class="text-xs-center">
+                    <template>
                       <!-- Dialog -->
-                      <app-dialog-break :piggy="piggy" :player="player" @break="onBreakChild"></app-dialog-break>
+                      <template v-if="loading.break">
+                        <v-tooltip right>
+                          <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
+                          <span>Your transaction has been submitted successfully.<br />It will require
+                          50-60 seconds until it gets validated by the whole network.</span>
+                        </v-tooltip>
+                      </template>
+                      <template v-else>
+                        <app-dialog-break :dialogGame="game" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
+                      </template>
                       <!-- /Dialog -->
                     </template>
                   </v-card-text>
@@ -115,8 +116,9 @@
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/3-random-winner.png" height="150">
                   </v-card-text>
-                  <v-card-text  v-if="contributionEnable" class="text-xs-center">
-                    <template v-if="withdrawLoadingStatus">
+                  <v-card-text class="text-xs-center">
+                    <!-- Dialog -->
+                    <template v-if="loading.withdraw">
                       <v-tooltip right>
                         <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
                         <span>Your transaction has been submitted successfully.<br />It will require
@@ -124,10 +126,9 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <!-- Dialog -->
-                      <app-dialog-withdraw :player="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
-                      <!-- /Dialog -->
+                      <app-dialog-withdraw :dialogPlayer="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
                     </template>
+                    <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
               </v-flex>
@@ -136,53 +137,62 @@
         </v-flex>
       </v-layout>
     </section>
-
   </div>
 </template>
 
 <script>
-// import Countdown from '@/components/Countdown/Countdown.vue'
-import Locked from '@/views/contribute/Locked'
+
+import firestoreMixin from '@/mixins/firestore'
+import ethereumMixin from '@/mixins/ethereum'
+
 import DialogContribute from '@/views/contribute/DialogContribute.vue'
 import DialogBreak from '@/views/contribute/DialogBreak.vue'
 import DialogWithdraw from '@/views/contribute/DialogWithdraw.vue'
-
-import piggyMixin from '@/mixins/piggy'
+import Locked from '@/views/contribute/Locked'
 
 export default {
+  mixins: [
+    firestoreMixin,
+    ethereumMixin
+  ],
   components: {
-    appLocked: Locked,
     AppDialogContribute: DialogContribute,
     AppDialogBreak: DialogBreak,
-    AppDialogWithdraw: DialogWithdraw
+    AppDialogWithdraw: DialogWithdraw,
+    AppLocked: Locked
   },
-  mixins: [piggyMixin],
+  data () {
+    return {
+      loading: {
+        contribution: false,
+        break: false,
+        withdraw: false
+      }
+    }
+  },
   mounted () {
-    this.initialize()
+    // Check if metamask is enabled
+    this.loopMetamask()
+    // this.checkMetamask()
+    // Get current game
+    this.getCurrentGame()
+    // Get current game
+    // this.getPlayer()
   },
   methods: {
-    initialize () {
-      this.getCurrentWSPiggy()
-      this.checkMetasmask()
-      this.catchEvents()
-
-      // Loop to check Metamask status
-      let self = this
-      setInterval(function () {
-        self.checkMetasmask()
-      }, 3000)
-    },
     // Contribution
     onContributionChild (value) {
-      this.contributionLoadingStatus = true
+      this.loading.contribution = true
     },
     // Break
     onBreakChild () {
-      this.breakPiggy()
+      this.player.breakEnable = false
+      this.loading.break = true
     },
-    // Withdraw)
+    // Withdraw
     onWithdrawChild () {
-      this.withdrawPiggy()
+      this.player.withdrawEnable = false
+      this.loading.withdraw = true
     }
   }
 }
@@ -197,6 +207,14 @@ export default {
   height: auto !important;
 }
 
+.parallax-background .current {
+  margin-top: 50px;
+}
+
+.parallax-background .contribution {
+  margin-top: 20px;
+}
+
 .remaining-time {
   color: #a2a2a2;
   font-weight: bold;
@@ -209,7 +227,11 @@ export default {
 }
 
 .howitworks-title {
-  min-height: 65px;
+  min-height: 95px;
+}
+
+.minimum-contribution {
+  font-size:28px;margin: 20px 0 50px 0;
 }
 
 </style>

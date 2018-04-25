@@ -20,19 +20,32 @@
         <v-card-text>
           <v-container grid-list-md v-if="contributionStatus === 'contributing'">
             <v-layout wrap>
+              <!-- Ether contribution -->
               <v-flex xs12 sm6>
                 Your ETH contribution*<br />
-                (minimum contribution: {{ piggy.minContribution }} ETH)
+                (minimum contribution: {{ dialogGame.minContribution }} ETH)
               </v-flex>
               <v-flex xs12 sm2>
                 <v-text-field type="number" number
-                  v-model="player.currentContribution" required></v-text-field>
+                  v-model="player.contributionValue" required></v-text-field>
               </v-flex>
               <v-flex v-if="contributionError" xs12 sm12>
                 <v-alert outline color="error" icon="warning" :value="true">
                   {{ contributionError }}
                 </v-alert>
               </v-flex>
+              <!-- Email -->
+              <v-flex xs12 sm6>
+                Your email address (optional*)
+              </v-flex>
+              <v-flex xs12 sm4>
+                <v-text-field type="text" email
+                  v-model="player.email"></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm12>
+                <i>*By entering your email, you will be informed in case of victory.</i>
+              </v-flex>
+
               <v-flex xs12 sm12>
                 * Your chances to win the lottery are directly proportional to the amount your contribution(s)
               </v-flex>
@@ -53,7 +66,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
+          <v-btn v-if="contributionStatus === 'contributing'" color="blue darken-1" flat @click.native="dialog = false">Cancel</v-btn>
+          <v-btn v-if="contributionStatus === 'contributed'" color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -62,20 +76,26 @@
 
 <script>
 
-import piggyMixin from '@/mixins/piggy'
+import firestoreMixin from '@/mixins/firestore'
+import ethereumMixin from '@/mixins/ethereum'
 
 export default {
+  mixins: [
+    firestoreMixin,
+    ethereumMixin
+  ],
+  props: {
+    buttonLarge: true,
+    dialogGame: null,
+    playerAddress: null
+  },
   data () {
     return {
       dialog: false,
       contributionStatus: 'contributing',
-      contributionError: false
-      // contribution: null
+      contributionError: false,
+      emailError: false
     }
-  },
-  mixins: [piggyMixin],
-  props: {
-    buttonLarge: true
   },
   computed: {
     classButton: function () {
@@ -84,14 +104,17 @@ export default {
       }
     }
   },
+  watch: {
+    playerAddress: function (val) {
+      // Get player email
+      this.getPlayerEmail(val)
+    }
+  },
   methods: {
     // Show dialog
     contributeDialog () {
       this.dialog = true
       this.contributionStatus = 'contributing'
-      // Dial node
-      this.dialWs()
-      this.getPiggyMinimumContribution()
     }
   }
 }

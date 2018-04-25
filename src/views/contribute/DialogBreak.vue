@@ -5,7 +5,7 @@
       dark
       large
       @click.native="breakDialog()"
-      :class="[player.breakEnable ? 'pink' : 'grey']"
+      :class="[breakEnable ? 'pink' : 'grey']"
     >
       Break the Piggy
     </v-btn>
@@ -14,7 +14,7 @@
       <span v-html="message"></span>
     </v-tooltip>
     <!-- Countdown -->
-    <app-countdown v-if="piggy.breakTimerEnable" class="remaining-time" :date="piggy.nextContributionTime" @enablebreak="onEnableBreakChild"></app-countdown>
+    <app-countdown v-if="countdownEnabled" :serverTimestamp="dialogGame.serverTimestamp" :breakDatetime="dialogGame.breakableAt" @enablebreak="onEnableBreakChild"></app-countdown>
     <!-- /Countdown -->
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
@@ -23,7 +23,7 @@
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
-            <v-layout wrap>4
+            <v-layout wrap>
               <v-flex sm12>
                 <span v-html="message"></span>
               </v-flex>
@@ -41,47 +41,72 @@
 
 <script>
 
+import ethereumMixin from '@/mixins/ethereum'
 import Countdown from '@/components/Countdown/Countdown.vue'
 
 export default {
+  mixins: [
+    ethereumMixin
+  ],
+  components: {
+    AppCountdown: Countdown
+  },
+  props: {
+    buttonLarge: true,
+    dialogGame: null,
+    playerBreakEnable: false
+  },
   data () {
     return {
       dialog: false,
       breakEnable: false,
+      countdownEnabled: false,
       message: 'You need to be a contributor to access this feature.<br/>You can’t break the Piggy if a contribution occurred in the last 3 minutes.'
     }
   },
-  props: {
-    buttonLarge: true,
-    piggy: null,
-    player: null
-  },
-  computed: {
-    classButton: function () {
-      return {
-        'contribute-button': this.buttonLarge
-      }
+  watch: {
+    game: function (val) {
+      this.checkBreak()
+    },
+    playerBreakEnable: function (val) {
+      this.checkBreak()
     }
-  },
-  components: {
-    AppCountdown: Countdown
-  },
-  mounted () {
-    // this.initialize()
   },
   methods: {
     // Show dialog
     breakDialog () {
-      if (!this.player.breakEnable) {
+      if (!this.breakEnable) {
         this.dialog = true
       } else {
-        this.$emit('break', true)
+        // this.$emit('break', true)
+        this.breakPiggy()
+      }
+    },
+    // Check break
+    checkBreak () {
+      // If is breakable
+      if (this.playerBreakEnable && this.dialogGame.serverTimestamp && this.dialogGame.breakableAt) {
+        // If time ok
+        if (this.dialogGame.serverTimestamp > this.dialogGame.breakableAt) {
+          this.breakEnable = true
+          this.countdownEnabled = false
+        } else {
+          this.breakEnable = false
+          this.countdownEnabled = true
+        }
+      } else {
+        // Not breakable
+        this.breakEnable = false
+        this.countdownEnabled = false
       }
     },
     // Break available
     onEnableBreakChild () {
-      this.player.breakEnable = true
-      this.piggy.breakTimerEnable = false
+      // If is breakable
+      if (this.playerBreakEnable) {
+        this.breakEnable = true
+        this.countdownEnabled = false
+      }
     }
   }
 }
@@ -89,9 +114,5 @@ export default {
 </script>
 
 <style scoped>
-
-.contribute-button {
-  font-size: 42px;
-}
 
 </style>

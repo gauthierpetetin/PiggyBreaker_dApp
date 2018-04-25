@@ -49,5 +49,8 @@ export default new Router({
       name: 'privacy-policy',
       component: PrivacyPolicy
     }
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
