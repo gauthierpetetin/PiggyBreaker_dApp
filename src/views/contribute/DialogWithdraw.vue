@@ -14,7 +14,7 @@
       <v-icon slot="activator">info_outline</v-icon>
       <span v-html="message"></span>
     </v-tooltip>
-    <div class="remaining-time">
+    <div>
       Your balance: {{ player.withdrawBalance }} Eth
     </div>
     <v-dialog v-model="dialog" persistent max-width="800px">
@@ -46,20 +46,12 @@ export default {
   data () {
     return {
       dialog: false,
-      withdrawEnable: false,
       message: 'The more you contribute, the more chances you have to win.<br/>Indeed, your chances to win the lottery are proportional to the total amount of your contributions.'
     }
   },
   props: {
     buttonLarge: true,
     player: null
-  },
-  computed: {
-    classButton: function () {
-      return {
-        'contribute-button': this.buttonLarge
-      }
-    }
   },
   methods: {
     // Show dialog
@@ -76,9 +68,5 @@ export default {
 </script>
 
 <style scoped>
-
-.contribute-button {
-  font-size: 42px;
-}
 
 </style>

@@ -14,7 +14,7 @@
       <span v-html="message"></span>
     </v-tooltip>
     <!-- Countdown -->
-    <app-countdown v-if="countdownEnabled" class="remaining-time" :serverTimestamp="game.serverTimestamp" :breakDatetime="game.breakableAt" @enablebreak="onEnableBreakChild"></app-countdown>
+    <app-countdown v-if="countdownEnabled" :serverTimestamp="game.serverTimestamp" :breakDatetime="game.breakableAt" @enablebreak="onEnableBreakChild"></app-countdown>
     <!-- /Countdown -->
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
@@ -43,16 +43,14 @@
 
 import Countdown from '@/components/Countdown/Countdown.vue'
 
-import firestoreMixin from '@/mixins/firestore'
-
 export default {
-  mixins: [
-    firestoreMixin
-  ],
+  components: {
+    AppCountdown: Countdown
+  },
   props: {
     buttonLarge: true,
     game: null,
-    player: null
+    playerBreakEnable: false
   },
   data () {
     return {
@@ -65,68 +63,51 @@ export default {
   watch: {
     game: function (val) {
       this.checkBreak()
+    },
+    playerBreakEnable: function (val) {
+      this.checkBreak()
     }
-  },
-  computed: {
-    classButton: function () {
-      return {
-        'contribute-button': this.buttonLarge
-      }
-    }
-  },
-  mounted () {
-    this.checkBreak()
   },
   methods: {
-    // Check break
-    checkBreak () {
-      // Check button enable
-      if (this.game.breakable && this.player.breakEnable) {
-        console.log('Jaaaaaaa')
-        this.breakEnable = true
-      }
-
-      console.log('this.game', this.game.breakable)
-      console.log('this.player.breakEnable', this.player.breakEnable)
-      console.log('this.game', this.game)
-      console.log('this.player', this.player)
-      console.log('this.player.breakEnable', this.player.breakEnable)
-
-      // Check countdown enable
-      if (this.game.breakableAt > this.game.serverTimestamp) {
-        this.countdownEnabled = true
-        this.breakEnable = false
-      } else {
-        this.countdownEnabled = false
-      }
-    },
     // Show dialog
     breakDialog () {
-      if (!this.player.breakEnable) {
+      if (!this.breakEnable) {
         this.dialog = true
       } else {
         this.$emit('break', true)
       }
     },
+    // Check break
+    checkBreak () {
+      // If is breakable
+      if (this.playerBreakEnable && this.game.serverTimestamp && this.game.breakableAt) {
+        // If time ok
+        if (this.game.serverTimestamp > this.game.breakableAt) {
+          this.breakEnable = true
+          this.countdownEnabled = false
+        } else {
+          this.breakEnable = false
+          this.countdownEnabled = true
+        }
+      } else {
+        // Not breakable
+        this.breakEnable = false
+        this.countdownEnabled = false
+      }
+    },
     // Break available
     onEnableBreakChild () {
-      if (this.game.breakable && this.player.breakEnable) {
+      // If is breakable
+      if (this.playerBreakEnable) {
         this.breakEnable = true
+        this.countdownEnabled = false
       }
-      this.countdownEnabled = false
     }
-  },
-  components: {
-    AppCountdown: Countdown
   }
 }
 
 </script>
 
 <style scoped>
-
-.contribute-button {
-  font-size: 42px;
-}
 
 </style>

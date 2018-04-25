@@ -22,11 +22,11 @@
             <v-layout wrap>
               <v-flex xs12 sm6>
                 Your ETH contribution*<br />
-                (minimum contribution: {{ piggy.minContribution }} ETH)
+                (minimum contribution: {{ game.minContribution }} ETH)
               </v-flex>
               <v-flex xs12 sm2>
                 <v-text-field type="number" number
-                  v-model="player.currentContribution" required></v-text-field>
+                  v-model="player.contributionValue" required></v-text-field>
               </v-flex>
               <v-flex v-if="contributionError" xs12 sm12>
                 <v-alert outline color="error" icon="warning" :value="true">
@@ -53,7 +53,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
+          <v-btn v-if="contributionStatus === 'contributing'" color="blue darken-1" flat @click.native="dialog = false">Cancel</v-btn>
+          <v-btn v-if="contributionStatus === 'contributed'" color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -65,17 +66,17 @@
 import ethereumMixin from '@/mixins/ethereum'
 
 export default {
+  mixins: [ethereumMixin],
+  props: {
+    buttonLarge: true,
+    game: null
+  },
   data () {
     return {
       dialog: false,
       contributionStatus: 'contributing',
       contributionError: false
-      // contribution: null
     }
-  },
-  mixins: [ethereumMixin],
-  props: {
-    buttonLarge: true
   },
   computed: {
     classButton: function () {
@@ -89,9 +90,6 @@ export default {
     contributeDialog () {
       this.dialog = true
       this.contributionStatus = 'contributing'
-      // Dial node
-      this.dialWs()
-      this.getPiggyMinimumContribution()
     }
   }
 }

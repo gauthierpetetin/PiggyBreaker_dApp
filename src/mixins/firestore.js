@@ -12,7 +12,7 @@ require('firebase/firestore')
 export default {
   data () {
     return {
-      currentGame: {
+      game: {
         id: null,
         value: 0,
         nbContributions: 0,
@@ -25,16 +25,6 @@ export default {
     }
   },
   methods: {
-    // Get server timestamp
-    getServerTimestamp () {
-      let self = this
-      firebase.database().ref('/.info/serverTimeOffset').on('value', function (offset) {
-        var offsetVal = offset.val() || 0
-        var serverTime = Date.now() + offsetVal
-        // return serverTime
-        self.serverTimestamp = serverTime / 1000
-      })
-    },
     // Get current game
     getCurrentGame () {
       let self = this
@@ -54,16 +44,17 @@ export default {
             }
 
             // Set game data
-            self.currentGame = {
+            self.game = {
               id: gameItem.data().id,
               value: gameItem.data().value,
               nbContributions: gameItem.data().nb_contributions,
               minContribution: gameItem.data().min_contribution,
               breakable: breakable,
               breakableAt: breakableAt,
-              serverTimestamp: serverTime / 1000
+              serverTimestamp: Math.round(serverTime / 1000)
             }
-            console.log('currentGame', self.currentGame)
+
+            self.getPlayer()
           })
         })
     },
