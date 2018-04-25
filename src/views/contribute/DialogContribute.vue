@@ -20,6 +20,7 @@
         <v-card-text>
           <v-container grid-list-md v-if="contributionStatus === 'contributing'">
             <v-layout wrap>
+              <!-- Ether contribution -->
               <v-flex xs12 sm6>
                 Your ETH contribution*<br />
                 (minimum contribution: {{ game.minContribution }} ETH)
@@ -33,6 +34,18 @@
                   {{ contributionError }}
                 </v-alert>
               </v-flex>
+              <!-- Email -->
+              <v-flex xs12 sm6>
+                Your email address (optional*)
+              </v-flex>
+              <v-flex xs12 sm4>
+                <v-text-field type="text" email
+                  v-model="player.email" required></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm12>
+                <i>*By entering your email, you will be informed in case of victory.</i>
+              </v-flex>
+
               <v-flex xs12 sm12>
                 * Your chances to win the lottery are directly proportional to the amount your contribution(s)
               </v-flex>
@@ -75,7 +88,8 @@ export default {
     return {
       dialog: false,
       contributionStatus: 'contributing',
-      contributionError: false
+      contributionError: false,
+      emailError: false
     }
   },
   computed: {

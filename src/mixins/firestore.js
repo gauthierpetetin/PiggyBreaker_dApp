@@ -31,6 +31,11 @@ export default {
       // Get current game
       db.collection('game').doc('current')
         .onSnapshot(function (gameItem) {
+          // Reset contribution
+          self.loading.contribution = false
+          self.loading.break = false
+          self.loading.withdraw = false
+
           // Get current time
           firebase.database().ref('/.info/serverTimeOffset').on('value', function (offset) {
             var offsetVal = offset.val() || 0

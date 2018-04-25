@@ -230,6 +230,8 @@ export default {
     // Break the piggy
     breakPiggy () {
       let self = this
+      // Dial node
+      self.dialJs()
       // Get accounts
       self.web3js.eth.getAccounts()
         .then(function (accounts) {
@@ -243,7 +245,8 @@ export default {
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
               self.contributeStatus = 'contributed'
-              self.breakLoadingStatus = true
+              // self.loading.break = true
+              this.$emit('break', true)
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)
@@ -259,6 +262,8 @@ export default {
     // Withdraw
     withdrawPiggy () {
       let self = this
+      // Dial node
+      self.dialJs()
       // Get accounts
       self.web3js.eth.getAccounts()
         .then(function (accounts) {
@@ -270,7 +275,8 @@ export default {
           contract.methods.withdraw(currentAddress).send({from: currentAddress})
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
-              self.withdrawLoadingStatus = true
+              // self.loading.withdraw = true
+              this.$emit('withdraw', true)
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)

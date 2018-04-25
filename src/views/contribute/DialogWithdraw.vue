@@ -59,7 +59,8 @@ export default {
       if (!this.player.withdrawEnable) {
         this.dialog = true
       } else {
-        this.$emit('withdraw', true)
+        // this.$emit('withdraw', true)
+        this.withdrawPiggy()
       }
     }
   }

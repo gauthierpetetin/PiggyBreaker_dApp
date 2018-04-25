@@ -13,7 +13,16 @@
           <section v-if="contribution.enable">
             <h1 class="black--text mb-2 display-2 text-xs-center contribution">
               Your contribution:<br />
-              <strong>{{ player.contributionBalance }} ETH</strong>
+              <template v-if="loading.contribution">
+                <v-tooltip right>
+                  <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
+                  <span>Your contribution has been submitted successfully.<br />It will require
+                  50-60 seconds until it gets validated by the whole network.</span>
+                </v-tooltip>
+              </template>
+              <template v-else>
+                <strong>{{ player.contributionBalance }} ETH</strong>
+              </template>
             </h1>
           </section>
           <!-- /Player contribution amount -->
@@ -22,7 +31,7 @@
         <v-layout v-if="contribution.enable" row wrap class="white--text">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
-            <app-dialog-contribute button-large="true" :game="game"></app-dialog-contribute>
+            <app-dialog-contribute button-large="true" :game="game" @contribution="onContributionChild"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
           <v-flex md12 class="text-xs-center black--text minimum-contribution">
@@ -79,7 +88,16 @@
                   <v-card-text class="text-xs-center">
                     <template>
                       <!-- Dialog -->
-                      <app-dialog-break :game="game" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
+                      <template v-if="loading.break">
+                        <v-tooltip right>
+                          <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
+                          <span>Your transaction has been submitted successfully.<br />It will require
+                          50-60 seconds until it gets validated by the whole network.</span>
+                        </v-tooltip>
+                      </template>
+                      <template v-else>
+                        <app-dialog-break :game="game" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
+                      </template>
                       <!-- /Dialog -->
                     </template>
                   </v-card-text>
@@ -100,7 +118,16 @@
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <!-- Dialog -->
-                    <app-dialog-withdraw :player="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
+                    <template v-if="loading.withdraw">
+                      <v-tooltip right>
+                        <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
+                        <span>Your transaction has been submitted successfully.<br />It will require
+                        50-60 seconds until it gets validated by the whole network.</span>
+                      </v-tooltip>
+                    </template>
+                    <template v-else>
+                      <app-dialog-withdraw :player="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
+                    </template>
                     <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
@@ -134,6 +161,15 @@ export default {
     AppDialogWithdraw: DialogWithdraw,
     AppLocked: Locked
   },
+  data () {
+    return {
+      loading: {
+        contribution: false,
+        break: false,
+        withdraw: false
+      }
+    }
+  },
   mounted () {
     // Check if metamask is enabled
     this.loopMetamask()
@@ -144,13 +180,17 @@ export default {
     // this.getPlayer()
   },
   methods: {
+    // Contribution
+    onContributionChild (value) {
+      this.loading.contribution = true
+    },
     // Break
     onBreakChild () {
-      this.breakPiggy()
+      this.loading.break = true
     },
     // Withdraw)
     onWithdrawChild () {
-      this.withdrawPiggy()
+      this.loading.withdraw = true
     }
   }
 }

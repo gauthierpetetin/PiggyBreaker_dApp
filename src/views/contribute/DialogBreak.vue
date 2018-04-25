@@ -41,9 +41,13 @@
 
 <script>
 
+import ethereumMixin from '@/mixins/ethereum'
 import Countdown from '@/components/Countdown/Countdown.vue'
 
 export default {
+  mixins: [
+    ethereumMixin
+  ],
   components: {
     AppCountdown: Countdown
   },
@@ -74,7 +78,8 @@ export default {
       if (!this.breakEnable) {
         this.dialog = true
       } else {
-        this.$emit('break', true)
+        // this.$emit('break', true)
+        this.breakPiggy()
       }
     },
     // Check break
