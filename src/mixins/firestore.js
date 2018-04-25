@@ -90,6 +90,20 @@ export default {
             self.games.push(game)
           })
         })
+    },
+    // Get player email
+    getPlayerEmail (address) {
+      let self = this
+      var docRef = db.collection('players').doc(address)
+      docRef.get().then(function (playerItem) {
+        if (playerItem.exists) {
+          self.player.email = playerItem.data().email
+        } else {
+          // No player email
+        }
+      }).catch(function (error) {
+        console.log('Error getting player:', error)
+      })
     }
   }
 }

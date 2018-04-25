@@ -31,7 +31,7 @@
         <v-layout v-if="contribution.enable" row wrap class="white--text">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
-            <app-dialog-contribute button-large="true" :game="game" @contribution="onContributionChild"></app-dialog-contribute>
+            <app-dialog-contribute button-large="true" :dialogGame="game" :playerAddress="player.address" @contribution="onContributionChild"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
           <v-flex md12 class="text-xs-center black--text minimum-contribution">
@@ -72,7 +72,7 @@
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <!-- Dialog -->
-                    <app-dialog-contribute :game="game"></app-dialog-contribute>
+                    <app-dialog-contribute :dialogGame="game" :playerAddress="player.address"></app-dialog-contribute>
                     <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
@@ -96,7 +96,7 @@
                         </v-tooltip>
                       </template>
                       <template v-else>
-                        <app-dialog-break :game="game" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
+                        <app-dialog-break :dialogGame="game" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
                       </template>
                       <!-- /Dialog -->
                     </template>
@@ -126,7 +126,7 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-withdraw :player="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
+                      <app-dialog-withdraw :dialogPlayer="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>
@@ -186,10 +186,12 @@ export default {
     },
     // Break
     onBreakChild () {
+      this.player.breakEnable = false
       this.loading.break = true
     },
-    // Withdraw)
+    // Withdraw
     onWithdrawChild () {
+      this.player.withdrawEnable = false
       this.loading.withdraw = true
     }
   }
@@ -225,7 +227,7 @@ export default {
 }
 
 .howitworks-title {
-  min-height: 65px;
+  min-height: 95px;
 }
 
 .minimum-contribution {

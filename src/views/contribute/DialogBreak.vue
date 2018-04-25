@@ -14,7 +14,7 @@
       <span v-html="message"></span>
     </v-tooltip>
     <!-- Countdown -->
-    <app-countdown v-if="countdownEnabled" :serverTimestamp="game.serverTimestamp" :breakDatetime="game.breakableAt" @enablebreak="onEnableBreakChild"></app-countdown>
+    <app-countdown v-if="countdownEnabled" :serverTimestamp="dialogGame.serverTimestamp" :breakDatetime="dialogGame.breakableAt" @enablebreak="onEnableBreakChild"></app-countdown>
     <!-- /Countdown -->
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
@@ -53,7 +53,7 @@ export default {
   },
   props: {
     buttonLarge: true,
-    game: null,
+    dialogGame: null,
     playerBreakEnable: false
   },
   data () {
@@ -85,9 +85,9 @@ export default {
     // Check break
     checkBreak () {
       // If is breakable
-      if (this.playerBreakEnable && this.game.serverTimestamp && this.game.breakableAt) {
+      if (this.playerBreakEnable && this.dialogGame.serverTimestamp && this.dialogGame.breakableAt) {
         // If time ok
-        if (this.game.serverTimestamp > this.game.breakableAt) {
+        if (this.dialogGame.serverTimestamp > this.dialogGame.breakableAt) {
           this.breakEnable = true
           this.countdownEnabled = false
         } else {

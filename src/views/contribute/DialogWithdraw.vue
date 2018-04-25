@@ -6,7 +6,7 @@
       large
       slot="activator"
       @click.native="withdrawDialog()"
-      :class="[player.withdrawEnable ? 'blue' : 'grey']"
+      :class="[dialogPlayer.withdrawEnable ? 'blue' : 'grey']"
     >
       Withdraw
     </v-btn>
@@ -15,7 +15,7 @@
       <span v-html="message"></span>
     </v-tooltip>
     <div>
-      Your balance: {{ player.withdrawBalance }} Eth
+      Your balance: {{ dialogPlayer.withdrawBalance }} Eth
     </div>
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
@@ -42,7 +42,12 @@
 
 <script>
 
+import ethereumMixin from '@/mixins/ethereum'
+
 export default {
+  mixins: [
+    ethereumMixin
+  ],
   data () {
     return {
       dialog: false,
@@ -51,12 +56,12 @@ export default {
   },
   props: {
     buttonLarge: true,
-    player: null
+    dialogPlayer: null
   },
   methods: {
     // Show dialog
     withdrawDialog () {
-      if (!this.player.withdrawEnable) {
+      if (!this.dialogPlayer.withdrawEnable) {
         this.dialog = true
       } else {
         // this.$emit('withdraw', true)

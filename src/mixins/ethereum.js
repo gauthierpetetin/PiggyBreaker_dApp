@@ -19,6 +19,7 @@ export default {
       // Player
       player: {
         address: null,
+        email: null,
         contributionValue: null,
         contributionBalance: 0,
         withdrawBalance: 0,
@@ -229,6 +230,7 @@ export default {
     },
     // Break the piggy
     breakPiggy () {
+      console.log('Break!')
       let self = this
       // Dial node
       self.dialJs()
@@ -246,7 +248,7 @@ export default {
               console.log('transactionHash:', hash)
               self.contributeStatus = 'contributed'
               // self.loading.break = true
-              this.$emit('break', true)
+              self.$emit('break', true)
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)
@@ -261,6 +263,7 @@ export default {
     },
     // Withdraw
     withdrawPiggy () {
+      console.log('Withdraw!')
       let self = this
       // Dial node
       self.dialJs()
@@ -276,7 +279,7 @@ export default {
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
               // self.loading.withdraw = true
-              this.$emit('withdraw', true)
+              self.$emit('withdraw', true)
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)

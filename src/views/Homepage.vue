@@ -8,14 +8,24 @@
         <v-layout column align-center justify-center>
           <v-flex xs12 sm4 class="my-3">
             <div class="text-xs-center">
-              <h2 class="display-2 black--text">But what is it?</h2>
+              <h2 class="display-2 black--text">But what makes Piggy Breaker so special?</h2>
             </div>
           </v-flex>
-          <div class="headline black--text mb-3 text-xs-center">Piggy Breaker is a game built on blockchain technology.<br/>You can securely play with Ether to get a chance to break the piggy!</div>
+          <div class="headline black--text mb-3 text-xs-center">
+            <p>
+              Piggy Breaker is the most simple game built on blockchain technology.
+            </p>
+            <p>
+              Blockchain is the technology that makes things like Bitcoin possible. It offers total security "by design", which ensures the piggy content and your contribution(s) cannot be replicated, taken away, or destroyed.
+            </p>
+            <p>
+              Thus you can securely play with Ether and get a chance to win the lottery!
+            </p>
+          </div>
         </v-layout>
       </v-parallax>
     </section>
-
+    <!-- Example -->
     <section>
       <v-container grid-list-xl>
         <v-layout row wrap justify-center class="my-5">

@@ -23,7 +23,7 @@
               <!-- Ether contribution -->
               <v-flex xs12 sm6>
                 Your ETH contribution*<br />
-                (minimum contribution: {{ game.minContribution }} ETH)
+                (minimum contribution: {{ dialogGame.minContribution }} ETH)
               </v-flex>
               <v-flex xs12 sm2>
                 <v-text-field type="number" number
@@ -40,7 +40,7 @@
               </v-flex>
               <v-flex xs12 sm4>
                 <v-text-field type="text" email
-                  v-model="player.email" required></v-text-field>
+                  v-model="player.email"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12>
                 <i>*By entering your email, you will be informed in case of victory.</i>
@@ -76,13 +76,18 @@
 
 <script>
 
+import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
 
 export default {
-  mixins: [ethereumMixin],
+  mixins: [
+    firestoreMixin,
+    ethereumMixin
+  ],
   props: {
     buttonLarge: true,
-    game: null
+    dialogGame: null,
+    playerAddress: null
   },
   data () {
     return {
@@ -97,6 +102,12 @@ export default {
       return {
         'contribute-button': this.buttonLarge
       }
+    }
+  },
+  watch: {
+    playerAddress: function (val) {
+      // Get player email
+      this.getPlayerEmail(val)
     }
   },
   methods: {

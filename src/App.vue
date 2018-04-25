@@ -29,4 +29,13 @@ export default {
   [v-cloak] {
     display: none;
   }
+
+  @font-face {
+    font-family: gothamRounded;
+    src: url('./assets/fonts/gotham-rounded/GothamRounded-Medium.otf');
+  }
+
+  #app {
+    font-family: gothamRounded;
+  }
 </style>
