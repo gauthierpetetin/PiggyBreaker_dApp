@@ -93,16 +93,21 @@ export default {
     },
     // Get player email
     getPlayerEmail (address) {
-      let self = this
-      var docRef = db.collection('players').doc(address)
-      docRef.get().then(function (playerItem) {
-        if (playerItem.exists) {
-          self.player.email = playerItem.data().email
-        } else {
-          // No player email
+      // Return a new promise.
+      return new Promise(function (resolve, reject) {
+        if (address) {
+          var docRef = db.collection('players').doc(address)
+          docRef.get().then(function (playerItem) {
+            if (playerItem.exists) {
+              resolve(playerItem.data().email)
+            } else {
+              // No player email
+              reject(Error('No player email'))
+            }
+          }).catch(function (error) {
+            reject(Error('Error getting player:'))
+          })
         }
-      }).catch(function (error) {
-        console.log('Error getting player:', error)
       })
     }
   }

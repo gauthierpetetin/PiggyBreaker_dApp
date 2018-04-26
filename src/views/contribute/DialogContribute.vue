@@ -94,7 +94,8 @@ export default {
       dialog: false,
       contributionStatus: 'contributing',
       contributionError: false,
-      emailError: false
+      emailError: false,
+      playerEmail: null
     }
   },
   computed: {
@@ -104,11 +105,14 @@ export default {
       }
     }
   },
-  watch: {
-    playerAddress: function (val) {
-      // Get player email
-      this.getPlayerEmail(val)
-    }
+  mounted () {
+    let self = this
+    // Get player email
+    this.getPlayerEmail(this.playerAddress).then(function (response) {
+      self.player.email = response
+    }, function (error) {
+      console.error('Error getting email', error)
+    })
   },
   methods: {
     // Show dialog
