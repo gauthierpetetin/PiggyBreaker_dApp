@@ -61,6 +61,7 @@ contract Piggies is Pausable {
     uint creationTime;
     uint lastContributionTime;
     uint brokenTime;
+    uint brokenBlockNumber;
     uint[] contributions;
     address winner;
     mapping (address => bool) contributed;
@@ -92,8 +93,9 @@ contract Piggies is Pausable {
 
   event PiggyCreated(uint _piggyID);
   event NewPiggyContribution(uint _piggyID, address _player, uint _value);
-  event PiggyBroken(uint _piggyID, uint _value, address _winner, uint timestamp);
   event UpdateRate(uint _piggyID, uint _rateCurrent, uint rateNext);
+  event PiggyBroken(uint _piggyID, uint _value, uint timestamp);
+  event WinnerRevealed(uint _piggyID, address _winner, uint _value);
   event Withdrawal(address _player, uint value);
 
   modifier contributed(address _player) {
@@ -110,14 +112,23 @@ contract Piggies is Pausable {
     require( (now > piggy.lastContributionTime + piggyProtectionTime) || (now > piggy.creationTime + piggyProtectionLimit) ); _;
   }
 
-  modifier contributionIsHighEnough(uint contribution) {
-    require( contribution >= rateCurrent ); _;
+  modifier contributionIsHighEnough(uint _contribution) {
+    require( _contribution >= rateCurrent ); _;
   }
 
-  // Contstructor
-  function Piggies(uint _nbPiggies) public {
+  modifier piggyWinnerIsUnknown(uint _piggyID) {
+    Piggy storage piggy = piggies[_piggyID];
+    require( (!piggy.open) && (piggy.winner==address(0)) ); _;
+  }
 
-    nbPiggies = _nbPiggies;
+  modifier blockNumberIsValid(uint _currentBlockNumber) {
+    Piggy storage piggy = piggies[nbPiggies];
+    require( piggy.brokenBlockNumber < _currentBlockNumber ); _;
+  }
+
+
+  // Contstructor
+  function Piggies() public {
     createNewPiggy();
   }
 
@@ -135,6 +146,7 @@ contract Piggies is Pausable {
       creationTime: now,
       lastContributionTime: now,
       brokenTime: 0,
+      brokenBlockNumber: 0,
       contributions: _contributions,
       winner: _winner
     });
@@ -147,6 +159,12 @@ contract Piggies is Pausable {
   {
     Piggy storage piggy = piggies[nbPiggies];
     require(piggy.open);
+
+    // If this is the first contribution, the previous winner needs to be revealed
+    if(nbPiggies > 1 && (piggy.value == 0) ) {
+      revealPreviousWinner(nbPiggies - 1);
+    }
+
     piggy.value += msg.value;
 
     piggy.contributions.push(piggy.value);
@@ -194,7 +212,21 @@ contract Piggies is Pausable {
     contributed(msg.sender)
   {
     Piggy storage piggy = piggies[nbPiggies];
-    uint winnerNumber = uint( keccak256(block.difficulty, now, piggy.contributions) ) % piggy.value;
+    piggy.brokenTime = now;
+    piggy.brokenBlockNumber = block.number;
+    piggy.open = false;
+
+    emit PiggyBroken(nbPiggies, piggy.value, now);
+
+    createNewPiggy();
+  }
+
+  function revealPreviousWinner(uint _piggyID) private
+    piggyWinnerIsUnknown(_piggyID)
+    blockNumberIsValid(block.number)
+  {
+    Piggy storage piggy = piggies[_piggyID];
+    uint winnerNumber = uint( keccak256(block.blockhash(piggy.brokenBlockNumber+1)) ) % piggy.value;
     uint totalValue = piggy.value;
 
     if( piggy.contributions.length == 1) {                         // If only, one player, he can leave without playing the lottery
@@ -214,12 +246,8 @@ contract Piggies is Pausable {
 
     pendingReturnValues[piggy.winner] += totalValue;               //The winner receives the reward
     pendingReturnDates[piggy.winner] = now;
-    piggy.brokenTime = now;
-    piggy.open = false;
 
-    emit PiggyBroken(nbPiggies, totalValue, piggy.winner, now);
-
-    createNewPiggy();
+    emit WinnerRevealed(_piggyID, piggy.winner, piggy.value);
   }
 
   function withdraw(address _withDrawalAddress) public {
