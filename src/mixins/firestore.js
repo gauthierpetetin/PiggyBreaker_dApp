@@ -20,6 +20,15 @@ export default {
         breakable: false,
         breakableAt: null
       },
+      playerSettings: {
+        address: null,
+        email: null,
+        login: null,
+        game_over: null,
+        new_game: null,
+        victory: null,
+        withdraw_alert: null
+      },
       // currentGame: null,
       serverTimestamp: null
     }
@@ -96,7 +105,7 @@ export default {
       // Return a new promise.
       return new Promise(function (resolve, reject) {
         if (address) {
-          var docRef = db.collection('players').doc(address)
+          var docRef = db.collection('players_accounts').doc(address)
           docRef.get().then(function (playerItem) {
             if (playerItem.exists) {
               resolve(playerItem.data().email)
@@ -104,8 +113,47 @@ export default {
               // No player email
               reject(Error('No player email'))
             }
-          }).catch(function (error) {
-            reject(Error('Error getting player:'))
+          // }).catch(function (error) {
+          //   reject(Error('Error getting player:'))
+          })
+        }
+      })
+    },
+    // Get player infos
+    getPlayerInfo (address) {
+      // Return a new promise.
+      return new Promise(function (resolve, reject) {
+        if (address) {
+          var docRef = db.collection('players_accounts').doc(address)
+          docRef.get().then(function (playerAccountItem) {
+            if (playerAccountItem.exists) {
+              let playerEmail = playerAccountItem.data().email
+              // Get infos
+              var docRef = db.collection('players_emails').doc(playerEmail)
+              docRef.get().then(function (playerEmailItem) {
+                if (playerEmailItem.exists) {
+                  // Set game data
+                  let playerInfos = {
+                    address: address,
+                    email: playerEmailItem.data().email,
+                    login: playerEmailItem.data().login,
+                    game_over: playerEmailItem.data().game_over,
+                    new_game: playerEmailItem.data().new_game,
+                    victory: playerEmailItem.data().victory,
+                    withdraw_alert: playerEmailItem.data().withdraw_alert
+                  }
+                  // Resolte data
+                  resolve(playerInfos)
+                } else {
+                  reject(Error('No player'))
+                }
+              })
+            } else {
+              // No player email
+              reject(Error('No player email'))
+            }
+          // }).catch(function (error) {
+          //   reject(Error('Error getting player:'))
           })
         }
       })

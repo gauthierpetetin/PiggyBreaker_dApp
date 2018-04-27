@@ -35,7 +35,7 @@
                 </p>
               </v-flex>
             </v-layout>
-
+            <!--
             <v-layout row wrap>
               <template v-for="(member, index) in team">
                 <v-flex v-if="index === 0" md2  offset-xs1 :key="index">
@@ -44,8 +44,9 @@
                 <v-flex v-else md2 :key="index">
                   <app-member :member="member"></app-member>
                 </v-flex>
-            </template>
+              </template>
             </v-layout>
+            -->
           </v-container>
         </v-flex>
       </v-layout>

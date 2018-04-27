@@ -7,7 +7,7 @@
           column
           align-center
           justify-center
-        >
+          >
           <h1 class="black--text mb-2 display-2 text-xs-center current">Current Piggy value:<br /><strong>{{ game.value }} ETH</strong></h1>
           <!-- Player contribution amount -->
           <section v-if="contribution.enable">

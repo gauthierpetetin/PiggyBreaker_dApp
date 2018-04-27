@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Homepage from '@/views/Homepage'
 
 import Piggies from '@/views/piggies/Piggies'
+import Settings from '@/views/settings/Settings'
 import Invite from '@/views/invite/Invite'
 import FAQ from '@/views/faq/FAQ'
 import About from '@/views/about/About'
@@ -23,6 +24,11 @@ export default new Router({
       path: '/piggies',
       name: 'Piggies',
       component: Piggies
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings
     },
     {
       path: '/invite',
