@@ -92,11 +92,11 @@ contract Piggies is Pausable {
 
 
   event PiggyCreated(uint _piggyID);
-  event NewPiggyContribution(uint _piggyID, address _player, uint _value);
-  event UpdateRate(uint _piggyID, uint _rateCurrent, uint rateNext);
-  event PiggyBroken(uint _piggyID, uint _value, uint timestamp);
+  event NewPiggyContribution(uint _piggyID, address _player, uint _value, uint _nbContribution);
+  event UpdateRate(uint _piggyID, uint _rateCurrent, uint _rateNext);
+  event PiggyBroken(uint _piggyID, uint _value, uint timestamp, uint _nbContribution);
   event WinnerRevealed(uint _piggyID, address _winner, uint _value);
-  event Withdrawal(address _player, uint value);
+  event Withdrawal(address _player, uint _value);
 
   modifier contributed(address _player) {
     Piggy storage piggy = piggies[nbPiggies];
@@ -175,7 +175,7 @@ contract Piggies is Pausable {
     localContributionsCounter++;
     updateRate();
 
-    emit NewPiggyContribution(nbPiggies, msg.sender, msg.value);
+    emit NewPiggyContribution(nbPiggies, msg.sender, msg.value, getNbContributions(nbPiggies));
   }
 
   function updateRate() private {
@@ -216,7 +216,7 @@ contract Piggies is Pausable {
     piggy.brokenBlockNumber = block.number;
     piggy.open = false;
 
-    emit PiggyBroken(nbPiggies, piggy.value, now);
+    emit PiggyBroken(nbPiggies, piggy.value, now, getNbContributions(nbPiggies));
 
     createNewPiggy();
   }
