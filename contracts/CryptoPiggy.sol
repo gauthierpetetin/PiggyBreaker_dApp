@@ -260,7 +260,14 @@ contract Piggies is Pausable {
     blockNumberIsValid(block.number)
   {
     Piggy storage piggy = piggies[_piggyID];
-    uint256 winnerNumber = uint256( keccak256(blockhash(piggy.brokenBlockNumber.add(1))) ) % piggy.value;
+
+    // We need to ensure the element used to define the winner could not be predicted at the time the Piggy was broken (at block #piggy.brokenBlockNumber)
+    uint256 nonPredictableBlockNumber = piggy.brokenBlockNumber.add(1);
+    uint256 distance = block.number - nonPredictableBlockNumber;
+    if( distance > 255 ) {    // Since blockhash() returns 0 if the block is older than 256 blocks, we make sure nonPredictableBlockNumber is not older than 256 blocks.
+      nonPredictableBlockNumber = block.number.sub( distance % 255 );
+    }
+    uint256 winnerNumber = uint256( keccak256(blockhash(nonPredictableBlockNumber)) ) % piggy.value;
     uint256 totalValue = piggy.value;
 
     if( piggy.contributions.length == 1) {                                      // If only, one player, he can leave without playing the lottery
