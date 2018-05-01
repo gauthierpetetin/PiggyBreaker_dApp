@@ -1,10 +1,44 @@
 pragma solidity ^0.4.21;
 
+
+/**
+* @title SafeMath
+* @dev Math operations with safety checks that throw on error
+*/
+library SafeMath {
+  function mul(uint256 a, uint256 b) internal constant returns (uint256) {
+    uint256 c = a * b;
+    assert(a == 0 || c / a == b);
+    return c;
+  }
+
+  function div(uint256 a, uint256 b) internal constant returns (uint256) {
+    // assert(b > 0); // Solidity automatically throws when dividing by 0
+    uint256 c = a / b;
+    // assert(a == b * c + a % b); // There is no case in which this doesn't hold
+    return c;
+  }
+
+  function sub(uint256 a, uint256 b) internal constant returns (uint256) {
+    assert(b <= a);
+    return a - b;
+  }
+
+  function add(uint256 a, uint256 b) internal constant returns (uint256) {
+    uint256 c = a + b;
+    assert(c >= a);
+    return c;
+  }
+}
+
+
 contract Farm {
+
+  using SafeMath for uint256;
 
   address public farmer;
 
-  function Farm() public {
+  constructor() public {
     farmer = msg.sender;
   }
 
@@ -55,48 +89,48 @@ contract Pausable is Farm {
 contract Piggies is Pausable {
 
   struct Piggy {
-    uint piggyID;
-    uint value;
+    uint256 piggyID;
+    uint256 value;
     bool open;
-    uint creationTime;
-    uint lastContributionTime;
-    uint brokenTime;
-    uint brokenBlockNumber;
-    uint[] contributions;
+    uint256 creationTime;
+    uint256 lastContributionTime;
+    uint256 brokenTime;
+    uint256 brokenBlockNumber;
+    uint256[] contributions;
     address winner;
     mapping (address => bool) contributed;
-    mapping (uint => address) contributors;
+    mapping (uint256 => address) contributors;
   }
 
-  uint public nbPiggies = 0;
-  uint public rateLimit = 10000000000000000;                  // E.g. 0.01 ether
-  uint public rateCurrent = rateLimit;
-  uint public rateNext = rateLimit;
+  uint256 public nbPiggies = 0;
+  uint256 public rateLimit = 10000000000000000;               // E.g. 0.01 ether
+  uint256 public rateCurrent = rateLimit;
+  uint256 public rateNext = rateLimit;
 
-  uint public updatePeriod = 15 * 60;                         // Every 15 minutes, the minimum contribution rate is updated
-  uint public percentage = 100;                               // The growth percentage of the minimum contribution rate is 100%
+  uint256 public updatePeriod = 15 * 60;                      // Every 15 minutes, the minimum contribution rate is updated
+  uint256 public percentage = 100;                            // The growth percentage of the minimum contribution rate is 100%
                                                               // Example :
                                                               //   - If the contribution frequency increases, the minimum contribution rate will increase by 100% every 15 minutes
                                                               //   - If the contribution frequency decreases, the minimum contribution rate will decrease by 50% every 15 minutes
 
-  uint public piggyProtectionTime = 3 * 60;                   // The Piggy is protected after each new contribution during piggyProtectionTime
-  uint public piggyProtectionLimit = 90 * 24 * 60 * 60;       // After the piggyProtectionLimit, the Piggy isn't protected anymore
+  uint256 public piggyProtectionTime = 3 * 60;                // The Piggy is protected after each new contribution during piggyProtectionTime
+  uint256 public piggyProtectionLimit = 90 * 24 * 60 * 60;    // After the piggyProtectionLimit, the Piggy isn't protected anymore
 
-  uint public localContributionsCounter = 0;
-  uint public lastUpdateDate = now;
-  uint public lastContributionFrequency = 0;
+  uint256 public localContributionsCounter = 0;
+  uint256 public lastUpdateDate = now;
+  uint256 public lastContributionFrequency = 0;
 
-  mapping (uint => Piggy) public piggies;                     // All piggies
-  mapping (address => uint) public pendingReturnValues;       // Earnings of game vistories
-  mapping (address => uint) public pendingReturnDates;        // Timestamps of game victories
+  mapping (uint256 => Piggy) public piggies;                  // All piggies
+  mapping (address => uint256) public pendingReturnValues;    // Earnings of game vistories
+  mapping (address => uint256) public pendingReturnDates;     // Timestamps of game victories
 
 
-  event PiggyCreated(uint _piggyID);
-  event NewPiggyContribution(uint _piggyID, address _player, uint _value, uint _nbContribution);
-  event UpdateRate(uint _piggyID, uint _rateCurrent, uint _rateNext);
-  event PiggyBroken(uint _piggyID, uint _value, uint timestamp, uint _nbContribution);
-  event WinnerRevealed(uint _piggyID, address _winner, uint _value);
-  event Withdrawal(address _player, uint _value);
+  event PiggyCreated(uint256 _piggyID);
+  event NewPiggyContribution(uint256 _piggyID, address _player, uint256 _value, uint256 _nbContribution);
+  event UpdateRate(uint256 _piggyID, uint256 _rateCurrent, uint256 _rateNext);
+  event PiggyBroken(uint256 _piggyID, uint256 _value, uint256 timestamp, uint256 _nbContribution);
+  event WinnerRevealed(uint256 _piggyID, address _winner, uint256 _value);
+  event Withdrawal(address _player, uint256 _value);
 
   modifier contributed(address _player) {
     Piggy storage piggy = piggies[nbPiggies];
@@ -109,34 +143,34 @@ contract Piggies is Pausable {
 
   modifier noPlayerJoinedRecently() {
     Piggy storage piggy = piggies[nbPiggies];
-    require( (now > piggy.lastContributionTime + piggyProtectionTime) || (now > piggy.creationTime + piggyProtectionLimit) ); _;
+    require( (now > piggy.lastContributionTime.add(piggyProtectionTime) ) || (now > piggy.creationTime.add(piggyProtectionLimit) ) ); _;
   }
 
-  modifier contributionIsHighEnough(uint _contribution) {
+  modifier contributionIsHighEnough(uint256 _contribution) {
     require( _contribution >= rateCurrent ); _;
   }
 
-  modifier piggyWinnerIsUnknown(uint _piggyID) {
+  modifier piggyWinnerIsUnknown(uint256 _piggyID) {
     Piggy storage piggy = piggies[_piggyID];
     require( (!piggy.open) && (piggy.winner==address(0)) ); _;
   }
 
-  modifier blockNumberIsValid(uint _currentBlockNumber) {
+  modifier blockNumberIsValid(uint256 _currentBlockNumber) {
     Piggy storage piggy = piggies[nbPiggies];
     require( piggy.brokenBlockNumber < _currentBlockNumber ); _;
   }
 
-
   // Contstructor
-  function Piggies() public {
+  constructor() public {
     createNewPiggy();
   }
 
   function createNewPiggy() private {
     require(!piggies[nbPiggies].open);
 
-    uint _piggyID = ++nbPiggies;
-    uint[] memory _contributions;
+    nbPiggies = nbPiggies.add(1);
+    uint256 _piggyID = nbPiggies;
+    uint256[] memory _contributions;
     address _winner;
 
     piggies[_piggyID] = Piggy({
@@ -162,24 +196,24 @@ contract Piggies is Pausable {
 
     // If this is the first contribution, the previous winner needs to be revealed
     if(nbPiggies > 1 && (piggy.value == 0) ) {
-      revealPreviousWinner(nbPiggies - 1);
+      revealPreviousWinner(nbPiggies.sub(1));
     }
 
-    piggy.value += msg.value;
+    piggy.value = piggy.value.add(msg.value);
 
     piggy.contributions.push(piggy.value);
     piggy.contributed[msg.sender] = true;
     piggy.contributors[piggy.value] = msg.sender;
     piggy.lastContributionTime = now;
 
-    localContributionsCounter++;
+    localContributionsCounter = localContributionsCounter.add(1);
     updateRate();
 
     emit NewPiggyContribution(nbPiggies, msg.sender, msg.value, getNbContributions(nbPiggies));
   }
 
   function updateRate() private {
-    uint timeSinceLastUpdate = now - lastUpdateDate;
+    uint256 timeSinceLastUpdate = now.sub(lastUpdateDate);
     if ( timeSinceLastUpdate > updatePeriod) {
       if (rateNext >= rateLimit) {
         rateCurrent = rateNext;
@@ -189,13 +223,13 @@ contract Piggies is Pausable {
         rateNext = rateLimit;
       }
 
-      uint decimals = 1000000000;
-      uint currentContributionFrequency = decimals * localContributionsCounter / timeSinceLastUpdate;
+      uint256 decimals = 1000000000;
+      uint256 currentContributionFrequency = localContributionsCounter.mul(decimals).div(timeSinceLastUpdate);
       if(currentContributionFrequency >= lastContributionFrequency) {
-        rateNext = rateCurrent * ( 100 + percentage ) / 100;
+        rateNext = rateCurrent.mul( percentage.add(100) ).div(100);
       }
       else {
-        rateNext = rateCurrent * 100 / ( 100 + percentage );
+        rateNext = rateCurrent.mul(100).div( percentage.add(100) );
       }
 
       localContributionsCounter = 0;
@@ -221,30 +255,30 @@ contract Piggies is Pausable {
     createNewPiggy();
   }
 
-  function revealPreviousWinner(uint _piggyID) private
+  function revealPreviousWinner(uint256 _piggyID) private
     piggyWinnerIsUnknown(_piggyID)
     blockNumberIsValid(block.number)
   {
     Piggy storage piggy = piggies[_piggyID];
-    uint winnerNumber = uint( keccak256(block.blockhash(piggy.brokenBlockNumber+1)) ) % piggy.value;
-    uint totalValue = piggy.value;
+    uint256 winnerNumber = uint256( keccak256(blockhash(piggy.brokenBlockNumber.add(1))) ) % piggy.value;
+    uint256 totalValue = piggy.value;
 
-    if( piggy.contributions.length == 1) {                         // If only, one player, he can leave without playing the lottery
+    if( piggy.contributions.length == 1) {                                      // If only, one player, he can leave without playing the lottery
       piggy.winner = piggy.contributors[piggy.contributions[0]];
     }
     else {
-      for (uint i = 0; i < piggy.contributions.length; i++) {     // If more than one player, play the lottery
+      for (uint256 i = 0; i < piggy.contributions.length; i = i.add(1)) {       // If more than one player, play the lottery
         if( winnerNumber <= piggy.contributions[i] ) {
           piggy.winner = piggy.contributors[piggy.contributions[i]];
-          uint piggyReparationFee = 375 * piggy.value / 10000;
-          totalValue -= piggyReparationFee;
-          pendingReturnValues[farmer] += piggyReparationFee;            //A new piggy is offered to the farmer to replace the broken one
+          uint256 piggyReparationFee = piggy.value.mul(375).div(10000);
+          totalValue = totalValue.sub(piggyReparationFee);
+          pendingReturnValues[farmer] = pendingReturnValues[farmer].add(piggyReparationFee);//A new piggy is offered to the farmer to replace the broken one
           break;
         }
       }
     }
 
-    pendingReturnValues[piggy.winner] += totalValue;               //The winner receives the reward
+    pendingReturnValues[piggy.winner] = pendingReturnValues[piggy.winner].add(totalValue);//The winner receives the reward
     pendingReturnDates[piggy.winner] = now;
 
     emit WinnerRevealed(_piggyID, piggy.winner, piggy.value);
@@ -252,59 +286,59 @@ contract Piggies is Pausable {
 
   function withdraw(address _withDrawalAddress) public {
     require(pendingReturnValues[msg.sender]>0);
-    uint withdrawalValue = pendingReturnValues[msg.sender];
+    uint256 withdrawalValue = pendingReturnValues[msg.sender];
     pendingReturnValues[msg.sender] = 0;
     _withDrawalAddress.transfer(withdrawalValue);
 
-    Withdrawal(msg.sender, withdrawalValue);
+    emit Withdrawal(msg.sender, withdrawalValue);
   }
 
-  function setRateLimit(uint _newRateLimit) public restricted {
+  function setRateLimit(uint256 _newRateLimit) public restricted {
     rateLimit = _newRateLimit;
   }
 
-  function setUpdatePeriod(uint _newUpdatePeriod) public restricted {
+  function setUpdatePeriod(uint256 _newUpdatePeriod) public restricted {
     require(_newUpdatePeriod > 60);
     updatePeriod = _newUpdatePeriod;
   }
 
-  function setPercentage(uint _newPercentage) public restricted {
+  function setPercentage(uint256 _newPercentage) public restricted {
     percentage = _newPercentage;
   }
 
-  function setPiggyProtectionTime(uint _piggyProtectionTime) public restricted {
+  function setPiggyProtectionTime(uint256 _piggyProtectionTime) public restricted {
     piggyProtectionTime = _piggyProtectionTime;
   }
 
-  function setPiggyProtectionLimit(uint _piggyProtectionLimit) public restricted {
+  function setPiggyProtectionLimit(uint256 _piggyProtectionLimit) public restricted {
     piggyProtectionLimit = _piggyProtectionLimit;
   }
 
-  function getContributionAmount(uint _piggyID, address _player) public view returns(uint) {
+  function getContributionAmount(uint256 _piggyID, address _player) public view returns(uint256) {
     Piggy storage piggy = piggies[_piggyID];
-    uint contributionAmount = 0;
-    for(uint i = 0; i < piggy.contributions.length; i++) {
+    uint256 contributionAmount = 0;
+    for(uint256 i = 0; i < piggy.contributions.length; i = i.add(1)) {
       if( piggy.contributors[piggy.contributions[i]] == _player ) {
         if(i==0) {
-          contributionAmount += piggy.contributions[i];
+          contributionAmount = contributionAmount.add(piggy.contributions[i]);
         }
         else {
-          contributionAmount += ( piggy.contributions[i] - piggy.contributions[i-1] );
+          contributionAmount = contributionAmount.add( piggy.contributions[i].sub(piggy.contributions[i.sub(1)]) );
         }
       }
     }
     return contributionAmount;
   }
 
-  function getNbContributions(uint _piggyID) public view returns(uint) {
+  function getNbContributions(uint256 _piggyID) public view returns(uint256) {
     Piggy storage piggy = piggies[_piggyID];
     return piggy.contributions.length;
   }
 
   function forgottenFundsRecovery(address _playerAddress, address _withDrawalAddress) public restricted {
-    uint oneYear = 365 * 24 * 60 * 60;
-    require(now > pendingReturnDates[_playerAddress] + oneYear);
-    uint withdrawalValue = pendingReturnValues[_playerAddress];
+    uint256 oneYear = 365 * 24 * 60 * 60;
+    require(now > oneYear.add(pendingReturnDates[_playerAddress]) );
+    uint256 withdrawalValue = pendingReturnValues[_playerAddress];
     pendingReturnValues[_playerAddress] = 0;
     _withDrawalAddress.transfer(withdrawalValue);
   }
