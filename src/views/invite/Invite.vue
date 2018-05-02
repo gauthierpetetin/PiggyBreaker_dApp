@@ -98,7 +98,7 @@ export default {
       }
 
       let self = this
-      this.$http.post(this.apiUrl, JSON.stringify(data))
+      this.$http.post(this.apiUrl + '/invite/email', JSON.stringify(data))
         .then(function (response) {
           self.dialogConfirm = !self.dialogConfirm
           // success

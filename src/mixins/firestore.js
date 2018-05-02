@@ -25,9 +25,9 @@ export default {
         address: null,
         email: null,
         login: null,
-        game_over: null,
-        new_game: null,
-        victory: null,
+        notify_start: null,
+        notify_stop: null,
+        notify_victory: null,
         withdraw_alert: null
       },
       // currentGame: null,
@@ -133,27 +133,17 @@ export default {
           var docRef = db.collection('players_accounts').doc(address)
           docRef.get().then(function (playerAccountItem) {
             if (playerAccountItem.exists) {
-              let playerEmail = playerAccountItem.data().email
-              // Get infos
-              var docRef = db.collection('players_emails').doc(playerEmail)
-              docRef.get().then(function (playerEmailItem) {
-                if (playerEmailItem.exists) {
-                  // Set game data
-                  let playerInfos = {
-                    address: address,
-                    email: playerEmailItem.data().email,
-                    login: playerEmailItem.data().login,
-                    game_over: playerEmailItem.data().game_over,
-                    new_game: playerEmailItem.data().new_game,
-                    victory: playerEmailItem.data().victory,
-                    withdraw_alert: playerEmailItem.data().withdraw_alert
-                  }
-                  // Resolte data
-                  resolve(playerInfos)
-                } else {
-                  reject(Error('No player'))
-                }
-              })
+              // Set game data
+              let playerInfos = {
+                address: address,
+                email: playerAccountItem.data().email,
+                login: playerAccountItem.data().login,
+                notify_start: playerAccountItem.data().notify_start,
+                notify_stop: playerAccountItem.data().notify_stop,
+                notify_victory: playerAccountItem.data().notify_victory
+              }
+              // Resolte data
+              resolve(playerInfos)
             } else {
               // No player email
               reject(Error('No player email'))

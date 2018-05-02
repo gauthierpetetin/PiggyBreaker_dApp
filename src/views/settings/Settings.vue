@@ -63,15 +63,15 @@
                 <v-form v-model="valid" ref="form" lazy-validation>
                   <v-checkbox
                     label="I want to be informed in case of victory."
-                    v-model="playerSettings.victory" @click="submitNotifications()"
+                    v-model="playerSettings.notify_victory"
                   ></v-checkbox>
                   <v-checkbox
                     label="I want to be informed when the game I played is over."
-                    v-model="playerSettings.game_over" @click="submitNotifications()"
+                    v-model="playerSettings.notify_stop"
                   ></v-checkbox>
                   <v-checkbox
                     label="I want to be informed when a new game starts."
-                    v-model="playerSettings.new_game" @click="submitNotifications()"
+                    v-model="playerSettings.notify_start"
                   ></v-checkbox>
                 </v-form>
               </v-flex>
@@ -93,7 +93,8 @@ export default {
   ],
   data () {
     return {
-      apiUrl: process.env.API_URL,
+      // apiUrl: process.env.API_URL,
+      apiUrl: 'http://localhost:8081/api',
       valid: true,
       // player: {
       //   email: ''
@@ -120,55 +121,50 @@ export default {
     let self = this
     // Get player info
     this.getPlayerInfo('0xb5747835141b46f7C472393B31F8F5A57F74A44f').then(function (response) {
-      console.log('coucou', response)
       self.playerSettings = response
     })
   },
+  watch: {
+    'playerSettings.notify_start': function (val) {
+      this.updateSettings()
+    },
+    'playerSettings.notify_stop': function (val) {
+      this.updateSettings()
+    },
+    'playerSettings.notify_victory': function (val) {
+      this.updateSettings()
+    }
+  },
   methods: {
-    // Change login
+    // Submit login
     submitLogin () {
-      // Call webservice
-      let data = {login: this.playerSettings.login}
-      console.log('Data', data)
-      this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
-        .then(function (response) {
-          this.editField.login = false
-        }, function (response) {
-          // error
-          this.editField.login = false
-          console.log('error', response.body.status)
-        })
+      this.editField.login = false
+      this.updateSettings()
     },
-    // Change Email
+    // Submit email
     submitEmail () {
-      if (!this.playerSettings.email) {
-        return false
-      }
-      // Call webservice
-      let data = {login: this.playerSettings.email}
-      console.log('Data', data)
-      this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
-        .then(function (response) {
-          this.editField.email = false
-        }, function (response) {
-          // error
-          this.editField.email = false
-          console.log('error', response.body.status)
-        })
+      this.editField.email = false
+      this.updateSettings()
     },
-    // Submit notifications
-    submitNotifications () {
+    // Update settings
+    updateSettings () {
       // Call API
       let data = {
-        victory: this.playerSettings.victory,
-        game_over: this.playerSettings.game_over,
-        new_game: this.playerSettings.new_game
+        address: this.playerSettings.address,
+        email: this.playerSettings.email,
+        login: this.playerSettings.login,
+        notify_start: this.playerSettings.notify_start,
+        notify_stop: this.playerSettings.notify_stop,
+        notify_victory: this.playerSettings.notify_victory
       }
+      console.log(data)
+
       this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
         .then(function (response) {
           this.editField.email = false
         }, function (response) {
           // error
+          console.log('error', response)
           console.log('error', response.body.status)
         })
     },
