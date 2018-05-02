@@ -35,7 +35,6 @@
                 </p>
               </v-flex>
             </v-layout>
-            <!--
             <v-layout row wrap>
               <template v-for="(member, index) in team">
                 <v-flex v-if="index === 0" md2  offset-xs1 :key="index">
@@ -46,7 +45,6 @@
                 </v-flex>
               </template>
             </v-layout>
-            -->
           </v-container>
         </v-flex>
       </v-layout>
@@ -62,11 +60,11 @@ export default {
   data () {
     return {
       team: [
-        { name: 'Gauthier Petetin', role: 'Product and Development' },
-        { name: 'Raphaël Pralat', role: 'Product and Development' },
-        { name: 'Pablo Valles', role: 'Marketing' },
-        { name: 'Sylvain Laurent', role: 'Development' },
-        { name: 'Matthis Pralat', role: 'Design' }
+        { name: 'Pig G', role: 'Product and Development' },
+        { name: 'Pig R', role: 'Product and Development' },
+        { name: 'Pig P', role: 'Marketing' },
+        { name: 'Pig S', role: 'Development' },
+        { name: 'Pig M', role: 'Design' }
       ]
     }
   },

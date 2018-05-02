@@ -34,7 +34,7 @@
                         <span><strong>{{ game.nbContributions }}</strong> contributions</span><br />
                         <span>Created at: {{ game.createdAt }}</span><br />
                         <span v-if="game.open">Last update: {{ game.updatedAt }}</span>
-                        <span v-else>Broken at: {{ game.breakedAt }}</span>
+                        <span v-else>Broken at: {{ game.brokenAt }}</span>
                       </div>
                     </v-card-title>
                   </v-flex>

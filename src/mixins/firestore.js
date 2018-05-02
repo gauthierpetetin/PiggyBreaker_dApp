@@ -1,5 +1,6 @@
 import db from '@/components/firebaseInit'
 import firebase from 'firebase'
+import moment from 'moment'
 
 const settings = {
   timestampsInSnapshots: true
@@ -82,8 +83,13 @@ export default {
             // Get broken at datetime
             let brokenAt = null
             if (gameItem.data().broken_at) {
-              brokenAt = gameItem.data().broken_at.seconds
+              brokenAt = moment.unix(gameItem.data().broken_at.seconds).format('MM/DD/YYYY hh:mm')
             }
+
+            // Format dates
+            let createdAt = moment.unix(gameItem.data().created_at.seconds).format('MM/DD/YYYY hh:mm')
+            let updatedAt = moment.unix(gameItem.data().updated_at.seconds).format('MM/DD/YYYY hh:mm')
+
             // Set game data
             let game = {
               id: gameItem.data().id,
@@ -91,8 +97,8 @@ export default {
               nbContributions: gameItem.data().nb_contributions,
               open: gameItem.data().open,
               winner: gameItem.data().winner,
-              createdAt: gameItem.data().created_at.seconds,
-              updatedAt: gameItem.data().updated_at.seconds,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
               brokenAt: brokenAt
             }
             // Add to array

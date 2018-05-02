@@ -4,7 +4,7 @@
     <app-contribute></app-contribute>
     <!-- /Contribute -->
     <section>
-      <v-parallax  class="parallax-background" height="280">
+      <v-parallax  class="parallax-background" height="480">
         <v-layout column align-center justify-center>
           <v-flex xs12 sm4 class="my-3">
             <div class="text-xs-center">
@@ -21,6 +21,7 @@
             <p>
               Thus you can securely play with Ether and get a chance to win the lottery!
             </p>
+            <img src="/static/img/picto/piggy-chained.png" alt="big piggy" height="100">
           </div>
         </v-layout>
       </v-parallax>

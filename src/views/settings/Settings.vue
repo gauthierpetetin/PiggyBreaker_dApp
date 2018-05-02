@@ -5,24 +5,22 @@
         <v-container grid-list-xl class="player-infos">
           <v-layout align-center>
             <v-flex md4 class="text-xs-center">
-              <img src="/static/img/picto/broken-piggy.png" width="100">
+              <img src="/static/img/picto/piggy-eye.png" width="160">
             </v-flex>
             <v-flex md8 class="black--text">
-              <p>
-                <!-- Display -->
-                <h2 v-show="!editField.login" style="float: left;">{{ this.playerSettings.login }}</h2>
-                <v-btn v-show="!editField.login" small flat fab style="bottom: 10px;" @click="editField.login = true">
-                  <v-icon>edit</v-icon>
-                </v-btn>
-                <!-- Submit -->
-                <v-text-field v-model="playerSettings.login" v-show="editField.login" type="text" :rules="loginRules" class="field-value form-control" single-line></v-text-field>
-                <v-btn v-show="editField.login" small flat fab  @click="submitLogin()">
-                  <v-icon>check_circle</v-icon>
-                </v-btn>
-                <v-btn v-show="editField.login" small flat fab  @click="editField.login = false">
-                  <v-icon>cancel</v-icon>
-                </v-btn>
-              </p>
+              <!-- Display -->
+              <h2 v-show="!editField.login" style="float: left;">{{ this.playerSettings.login }}</h2>
+              <v-btn v-show="!editField.login" small flat fab style="bottom: 10px;" @click="editField.login = true">
+                <v-icon>edit</v-icon>
+              </v-btn>
+              <!-- Submit -->
+              <v-text-field v-model="playerSettings.login" v-show="editField.login" type="text" :rules="loginRules" class="field-value form-control" single-line></v-text-field>
+              <v-btn v-show="editField.login" small flat fab  @click="submitLogin()">
+                <v-icon>check_circle</v-icon>
+              </v-btn>
+              <v-btn v-show="editField.login" small flat fab  @click="editField.login = false">
+                <v-icon>cancel</v-icon>
+              </v-btn>
               <p>
                 {{ this.playerSettings.address }}
               </p>
@@ -160,14 +158,12 @@ export default {
     },
     // Submit notifications
     submitNotifications () {
-      console.log('WTTTTHHHHHF')
-      // Call webservice
+      // Call API
       let data = {
         victory: this.playerSettings.victory,
         game_over: this.playerSettings.game_over,
         new_game: this.playerSettings.new_game
       }
-      console.log('Data', data)
       this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
         .then(function (response) {
           this.editField.email = false

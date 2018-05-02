@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify'
 import App from './App'
 import router from './router'
-import VueAnalytics from 'vue-analytics'
+// import VueAnalytics from 'vue-analytics'
 import VueResource from 'vue-resource'
 
 import('../node_modules/vuetify/dist/vuetify.min.css')
@@ -13,9 +13,10 @@ Vue.config.productionTip = false
 
 Vue.use(VueResource)
 Vue.use(Vuetify)
-Vue.use(VueAnalytics, {
-  id: 'UA-117489719-1'
-})
+// Vue.use(VueAnalytics, {
+//   id: 'UA-117489719-1',
+//   router
+// })
 
 /* eslint-disable no-new */
 new Vue({
