@@ -86,10 +86,12 @@
 <script>
 
 import firestoreMixin from '@/mixins/firestore'
+import ethereumMixin from '@/mixins/ethereum'
 
 export default {
   mixins: [
-    firestoreMixin
+    firestoreMixin,
+    ethereumMixin
   ],
   data () {
     return {
@@ -120,8 +122,16 @@ export default {
   mounted () {
     let self = this
     // Get player info
+    /*
     this.getPlayerInfo('0xb5747835141b46f7C472393B31F8F5A57F74A44f').then(function (response) {
       self.playerSettings = response
+    })
+    */
+    this.getPlayerAddress().then(function (response) {
+      let address = response
+      self.getPlayerInfo(address).then(function (response) {
+        self.playerSettings = response
+      })
     })
   },
   watch: {

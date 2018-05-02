@@ -61,7 +61,7 @@
               </v-flex>
               <v-flex xs12 sm4>
                 <v-text-field type="text" email :rules="emailRules"
-                  v-model="player.email"></v-text-field>
+                  v-model="playerEmail"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12>
                 <v-btn block color="warning" dark @click.native="registerPlayer()">Register</v-btn>
@@ -124,22 +124,23 @@ export default {
       }
     }
   },
-  mounted () {
-    let self = this
-    // Get player email
-    this.getPlayerEmail(this.playerAddress).then(function (response) {
-      self.player.email = response
-    }, function (error) {
-      if (error) {
-        console.log('Address not registered')
-      }
-    })
-  },
   methods: {
     // Show dialog
     contributeDialog () {
+      let self = this
       this.dialog = true
-      this.contributionStatus = 'contributing'
+      // this.contributionStatus = 'contributing'
+      this.contributionStatus = 'contributed'
+
+      // Get player email
+      this.getPlayerEmail(this.playerAddress).then(function (response) {
+        // self.player.email = response
+        self.playerEmail = response
+      }, function (error) {
+        if (error) {
+          console.log('Address not registered')
+        }
+      })
     },
     // Register player
     registerPlayer () {

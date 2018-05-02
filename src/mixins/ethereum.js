@@ -102,6 +102,21 @@ export default {
           }
         })
     },
+    // Get player email
+    getPlayerAddress () {
+      let self = this
+      // Dial node
+      self.dialJs()
+      // Return a new promise.
+      return new Promise(function (resolve, reject) {
+        // Get accounts
+        self.web3js.eth.getAccounts()
+          .then(function (accounts) {
+            console.log(accounts[0])
+            resolve(accounts[0])
+          })
+      })
+    },
     // Get player
     getPlayer () {
       let self = this
