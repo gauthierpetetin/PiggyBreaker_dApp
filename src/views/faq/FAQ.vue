@@ -22,7 +22,7 @@
                 <v-expansion-panel expand>
 
                   <v-expansion-panel-content>
-                    <div slot="header">What is CryptoPiggy?</div>
+                    <div slot="header">What is Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
                         CryptoPiggy is a game centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.<br />
