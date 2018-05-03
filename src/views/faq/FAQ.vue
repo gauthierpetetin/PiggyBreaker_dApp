@@ -18,21 +18,22 @@
                 <!-- Getting Started -->
                 <app-getting-started></app-getting-started>
                 <!-- /Getting Started -->
-                <h2>Understanding CryptoPiggy</h2>
+                <h2>Understanding Piggy Breaker</h2>
                 <v-expansion-panel expand>
 
                   <v-expansion-panel-content>
-                    <div slot="header">What is CryptoPiggy?</div>
+                    <div slot="header">What is Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
-                        CryptoPiggy is a game centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.<br />
+                        Piggy Breaker is a game centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.<br />
+                        Someday the Piggy bank will break and make one of the players rich...<br />
                         <img src="/static/img/faq/2-three-pigs.png" />
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">Who can play CryptoPiggy?</div>
+                    <div slot="header">Who can play Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
                         Anyone.
@@ -41,7 +42,7 @@
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">Why do I need to play CryptoPiggy?</div>
+                    <div slot="header">Why do I need to play Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
                         The value of ether (ETH) contained in the Piggy is indicated in the middle of the homepage.<br />
@@ -85,7 +86,7 @@
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">How do I play CryptoPiggy?</div>
+                    <div slot="header">How do I play Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
                         Just press the big yellow “Contribute” button, indicate the amount of your contribution and click “Confirm”.<br />
@@ -98,10 +99,10 @@
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">What is the minimum amount to play CryptoPiggy?</div>
+                    <div slot="header">What is the minimum amount to play Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
-                        The value of the minimum contribution to play CryptoPiggy is indicated below the "Contribute" button.<br />
+                        The value of the minimum contribution to play Piggy Breaker is indicated below the "Contribute" button.<br />
                         <img src="/static/img/faq/7-contribute-minimum.png" /><br />
                         The minimum contribution can go up or down with time.It increases when the frequency of player contributions increases.
                       </v-card-text>
@@ -134,19 +135,19 @@
                 <v-expansion-panel expand>
 
                   <v-expansion-panel-content>
-                    <div slot="header">Why is it so complicated to get started with CryptoPiggy?</div>
+                    <div slot="header">Why is it so complicated to get started with Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
-                        CryptoPiggy is built on blockchain technology, which is relatively new stuff. It’s safe and secure, but it’s going to be a little complicated until the rest of the world catches up.
+                        Piggy Breaker is built on blockchain technology, which is relatively new stuff. It’s safe and secure, but it’s going to be a little complicated until the rest of the world catches up.
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">What’s ether (ETH)? Why do I need it to play CryptoPiggy?</div>
+                    <div slot="header">What’s ether (ETH)? Why do I need it to play Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
-                        Ether powers the Ethereum network, which is what CryptoPiggy is built on. Ether acts like any other currency; the value fluctuates with the market.<br />
+                        Ether powers the Ethereum network, which is what Piggy Breaker is built on. Ether acts like any other currency; the value fluctuates with the market.<br />
                         You need to convert your currency (e.g. USD, CAD, GBP, etc.) into ether to pay for things on our network.
                       </v-card-text>
                     </v-card>
@@ -156,7 +157,7 @@
                     <div slot="header">What is 'gas'?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
-                        'Gas' is a shorthand used to describe the cost of powering a transaction or contract in Ethereum, which is the blockchain network that CryptoPiggy is built on.<br />
+                        'Gas' is a shorthand used to describe the cost of powering a transaction or contract in Ethereum, which is the blockchain network that Piggy Breaker is built on.<br />
                         <br />
                         Because blockchain is decentralized, every transaction is distributed through multiple computers, not a central server. This ensures each transaction—is secure and one-of-a-kind. However, it also takes more computational power, which is covered by the cost of gas. Ethereum typically communicates this cost in gwei (1 million gwei = 1 ether/ETH). You can get a more detailed explanation here.
                       </v-card-text>
@@ -164,7 +165,7 @@
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">Can I use a Credit Card to play CryptoPiggy?</div>
+                    <div slot="header">Can I use a Credit Card to play Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
                         Not directly; the technology simply isn’t there yet. As soon as it is, we plan to support it.<br />
@@ -174,17 +175,17 @@
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">Can I play CryptoPiggy with my phone?</div>
+                    <div slot="header">Can I play Piggy Breaker with my phone?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
-                        Not yet. CryptoPiggy relies on technologies that simply don’t function on mobile devices, like MetaMask.<br />
+                        Not yet. Piggy Breaker relies on technologies that simply don’t function on mobile devices, like MetaMask.<br />
                         We are developing a mobile app, but you will need a laptop, desktop, or tablet browser to complete transactions for the foreseeable future.
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">How are you making money with CryptoPiggy?</div>
+                    <div slot="header">How are you making money with Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
                         We take 3.75% of the Piggy value when the Piggy is broken. Note that we are working hard to make your game as easy as possible to use and to prepare you a mobile version.
@@ -193,11 +194,11 @@
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header">How do I reach the CryptoPiggy team regarding a project, partnership, or investment opportunity?</div>
+                    <div slot="header">How do I reach the Piggy Breaker team regarding a project, partnership, or investment opportunity?</div>
                     <v-card>
                       <v-card-text class="grey lighten-3">
-                        CryptoPiggy was developed by Valanter, a blockchain startup. Give us the details here and we’ll be in touch.<br />
-                        If none of the above has been helpful, please contact us with the details of your issue at contact@CryptoPiggy.co. Please include any relevant tx hashes, links, and Piggy IDs so we can support you as quickly as possible.
+                        Give us the details here and we’ll be in touch.<br />
+                        If none of the above has been helpful, please contact us with the details of your issue at contact@piggybreaker.com. Please include any relevant tx hashes, links, and Piggy IDs so we can support you as quickly as possible.
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
