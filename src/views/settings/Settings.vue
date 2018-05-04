@@ -9,6 +9,7 @@
             </v-flex>
             <v-flex md8 class="black--text">
               <!-- Display -->
+              <span v-if="this.playerSettings.login == ''" v-show="!editField.login"><i>Enter your login</i></span>
               <h2 v-show="!editField.login" style="float: left;">{{ this.playerSettings.login }}</h2>
               <v-btn v-show="!editField.login" small flat fab style="bottom: 10px;" @click="editField.login = true">
                 <v-icon>edit</v-icon>
@@ -25,14 +26,17 @@
                 {{ this.playerSettings.address }}
               </p>
               <p>
+
                 <!-- Display -->
+                <span v-if="this.playerSettings.email == ''" v-show="!editField.email"><i>Enter your email</i></span>
                 <span v-show="!editField.email">{{ this.playerSettings.email }}</span>
                 <v-btn v-show="!editField.email" small flat fab @click="editField.email = true">
                   <v-icon>edit</v-icon>
                 </v-btn>
                 <!-- Submit -->
-                <v-text-field v-model="playerSettings.email" v-show="editField.email" type="email" :rules="emailRules" class="field-value form-control"></v-text-field>
-
+                <v-text-field v-model="playerSettings.email" v-show="editField.email"
+                type="email"
+                :rules="emailRules" class="field-value form-control"></v-text-field>
                 <v-btn v-show="editField.email" small flat fab @click="submitEmail()">
                   <v-icon>check_circle</v-icon>
                 </v-btn>
@@ -86,15 +90,16 @@
 <script>
 
 import firestoreMixin from '@/mixins/firestore'
+import ethereumMixin from '@/mixins/ethereum'
 
 export default {
   mixins: [
-    firestoreMixin
+    firestoreMixin,
+    ethereumMixin
   ],
   data () {
     return {
-      // apiUrl: process.env.API_URL,
-      apiUrl: 'http://localhost:8081/api',
+      apiUrl: process.env.API_URL,
       valid: true,
       // player: {
       //   email: ''
@@ -120,8 +125,16 @@ export default {
   mounted () {
     let self = this
     // Get player info
+    /*
     this.getPlayerInfo('0xb5747835141b46f7C472393B31F8F5A57F74A44f').then(function (response) {
       self.playerSettings = response
+    })
+    */
+    this.getPlayerAddress().then(function (response) {
+      let address = response
+      self.getPlayerInfo(address).then(function (response) {
+        self.playerSettings = response
+      })
     })
   },
   watch: {

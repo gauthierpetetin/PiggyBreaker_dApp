@@ -109,6 +109,7 @@ export default {
     // Get player email
     getPlayerEmail (address) {
       // Return a new promise.
+      console.log('getPlayerEmail===')
       return new Promise(function (resolve, reject) {
         if (address) {
           var docRef = db.collection('players_accounts').doc(address)
@@ -146,7 +147,18 @@ export default {
               resolve(playerInfos)
             } else {
               // No player email
-              reject(Error('No player email'))
+              // reject(Error('No player email'))
+              // Set game data
+              let playerInfos = {
+                address: address,
+                email: null,
+                login: null,
+                notify_start: true,
+                notify_stop: true,
+                notify_victory: true
+              }
+              // Resolte data
+              resolve(playerInfos)
             }
           // }).catch(function (error) {
           //   reject(Error('Error getting player:'))

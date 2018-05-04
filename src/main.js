@@ -7,6 +7,7 @@ import App from './App'
 import router from './router'
 // import VueAnalytics from 'vue-analytics'
 import VueResource from 'vue-resource'
+import { store } from './store/store'
 
 import('../node_modules/vuetify/dist/vuetify.min.css')
 
@@ -23,6 +24,7 @@ Vue.use(Vuetify)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
