@@ -1,7 +1,7 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  API_URL: '"http://localhost:8081/api"',
+  API_URL: '"http://fidever.io:8080/api"',
   ETHEREUM_NODE_ENV: '"development"',
   ETHEREUM_NODE_URL: '"wss://ropsten.eth.6120.eu/ws"',
   ETHEREUM_CONTRACT: '"0x70f2499ad14107eb37536ef4d079a2252ba732a3"',

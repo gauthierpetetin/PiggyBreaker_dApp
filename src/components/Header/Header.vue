@@ -31,7 +31,7 @@
       <v-btn to="piggies" flat>Past piggies</v-btn>
       <v-btn to="about" flat>About</v-btn>
       <v-btn to="faq" flat>FAQ</v-btn>
-      <v-btn to="settings" flat>Settings</v-btn>
+      <v-btn to="settings" v-if="metamaskEnabled" flat>Settings</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -48,6 +48,11 @@ export default {
     return {
       networkStatus: 'bad',
       ethereumEnv: process.env.ETHEREUM_NODE_ENV
+    }
+  },
+  computed: {
+    metamaskEnabled () {
+      return this.$store.state.metamaskEnabled
     }
   },
   mounted () {

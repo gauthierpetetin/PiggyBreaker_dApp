@@ -63,6 +63,7 @@ export default {
       if (typeof web3 === 'undefined') {
         self.contribution.enable = false
         self.contribution.status = 'not_installed'
+        self.$store.state.metamaskEnabled = false
         return
       }
 
@@ -70,6 +71,7 @@ export default {
       if (!self.web3js.currentProvider.isMetaMask) {
         self.contribution.enable = false
         self.contribution.status = 'not_installed'
+        self.$store.state.metamaskEnabled = false
         return
       }
 
@@ -79,6 +81,7 @@ export default {
           if (accounts.length === 0) {
             self.contribution.enable = false
             self.contribution.status = 'locked'
+            self.$store.state.metamaskEnabled = false
           } else {
             // Check if on good network
             self.web3js.eth.net.getId().then(
@@ -87,15 +90,19 @@ export default {
                   if (process.env.ETHEREUM_NODE_ENV === 'development') {
                     self.contribution.enable = false
                     self.contribution.status = 'wrong_network'
+                    self.$store.state.metamaskEnabled = false
                   } else {
                     self.contribution.enable = true
+                    self.$store.state.metamaskEnabled = true
                   }
                 } else if (netId === 3) {
                   if (process.env.ETHEREUM_NODE_ENV === 'production') {
                     self.contribution.enable = false
                     self.contribution.status = 'wrong_network'
+                    self.$store.state.metamaskEnabled = false
                   } else {
                     self.contribution.enable = true
+                    self.$store.state.metamaskEnabled = true
                   }
                 }
               })
