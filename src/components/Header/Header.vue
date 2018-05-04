@@ -1,15 +1,15 @@
 <template>
-  <v-toolbar class="white">
-    <v-toolbar-title>
+  <v-toolbar class="pink">
+    <v-toolbar-title style="min-width: 250px">
       <router-link to="/"  class="logo">
-        <a class="nav-link ">
+        <a class="nav-link" >
           <img src="/static/img/logo/logo-crypto-piggy.png" height="50">
           <span>Piggy Breaker</span>
         </a></router-link>
     </v-toolbar-title>
     <v-toolbar-items v-if="networkStatus == 'good'">
       <v-tooltip bottom>
-        <v-btn flat slot="activator" class="metamask-status"><img src="/static/img/icon/circle-green.png"> Network good</v-btn>
+        <v-btn flat slot="activator" class="metamask-status white--text"><img src="/static/img/icon/circle-green.png"> Network good</v-btn>
         <span>Network is good</span>
       </v-tooltip>
     </v-toolbar-items>
@@ -22,16 +22,16 @@
     <v-spacer></v-spacer>
     <template v-if="ethereumEnv == 'development'">
       <v-toolbar-items>
-        <div style="background-color: #F08080;margin:15px;padding: 5px 10px;color: #fff;">This version is temporarily on TESTNET</div>
+        <div style="background-color: #F08080;margin:15px;padding: 5px 10px;color: #ffffff;">This version is temporarily on TESTNET</div>
       </v-toolbar-items>
       <v-spacer></v-spacer>
     </template>
     <v-toolbar-items>
-      <v-btn to="invite" flat>Invite</v-btn>
-      <v-btn to="piggies" flat>Past piggies</v-btn>
-      <v-btn to="about" flat>About</v-btn>
-      <v-btn to="faq" flat>FAQ</v-btn>
-      <v-btn to="settings" flat>Settings</v-btn>
+      <v-btn class="white--text" to="invite" flat>Invite</v-btn>
+      <v-btn class="white--text" to="piggies" flat>Past piggies</v-btn>
+      <v-btn class="white--text" to="about" flat>About</v-btn>
+      <v-btn class="white--text" to="faq" flat>FAQ</v-btn>
+      <v-btn class="white--text" to="settings" flat>Settings</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -77,7 +77,7 @@ export default {
 }
 
 .logo span {
-  color: #000000;
+  color: #ffffff;
 }
 
 .metamask-status {
@@ -88,5 +88,6 @@ export default {
 .metamask-status img {
   margin: 0 5px 2px 0;
 }
+
 
 </style>

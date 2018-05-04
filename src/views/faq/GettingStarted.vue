@@ -5,7 +5,7 @@
     <h2>Getting started</h2>
     <v-expansion-panel expand>
       <v-expansion-panel-content>
-        <div slot="header">What do I need to play CryptoPiggy?</div>
+        <div slot="header">What do I need to play Piggy Breaker?</div>
         <v-card>
           <v-card-text class="grey lighten-3">
             Here’s what you need to get started:

@@ -2,17 +2,18 @@
   <div>
     <!-- Contribute -->
     <section>
-      <v-parallax class="parallax-background">
+      <!-- <v-parallax class="parallax-background"> -->
         <v-layout
           column
           align-center
           justify-center
+          style="background-color: white"
           >
-          <h1 class="black--text mb-2 display-2 text-xs-center current">Current Piggy value:<br /><strong>{{ game.value }} ETH</strong></h1>
+          <h1 class="grey-text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Current Piggy value: <strong>{{ game.value }} ETH</strong></h1>
           <!-- Player contribution amount -->
-          <section v-if="contribution.enable">
-            <h1 class="black--text mb-2 display-2 text-xs-center contribution">
-              Your contribution:<br />
+          <section v-if="contribution.enable" style="margin-top: 15px">
+            <h1 class="grey-text mb-2 display-2 text-xs-center contribution">
+              Your contribution:
               <template v-if="loading.contribution">
                 <v-tooltip right>
                   <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
@@ -26,15 +27,15 @@
             </h1>
           </section>
           <!-- /Player contribution amount -->
-          <img src="/static/img/picto/big-piggy.png" alt="big piggy" height="350">
+          <img src="/static/img/picto/big-piggy.png" alt="big piggy" height="350" style="margin-top: 15px">
         </v-layout>
-        <v-layout v-if="contribution.enable" row wrap class="white--text">
+        <v-layout v-if="contribution.enable" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
             <app-dialog-contribute button-large="true" :dialogGame="game" :playerAddress="player.address" @contribution="onContributionChild"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
-          <v-flex md12 class="text-xs-center black--text minimum-contribution">
+          <v-flex md12 class="text-xs-center grey-text minimum-contribution">
             Minimum contribution: <span>{{ game.minContribution }} ETH</span>
             <v-tooltip right>
               <v-icon slot="activator">info_outline</v-icon>
@@ -45,18 +46,43 @@
         <v-layout v-else row wrap class="white--text">
           <app-locked :lockstatus="contribution.status"></app-locked>
         </v-layout>
+      <!-- </v-parallax> -->
+    </section>
+    <!-- What is Piggy Breaker -->
+    <section>
+      <v-parallax  class="parallax-background" height="450">
+        <v-layout column align-center justify-center>
+          <div style="width: 80%; height: 340px; padding: 1% 5%; background-color: white">
+          <v-flex class="my-3">
+            <div class="text-xs-center">
+              <h4 class="display-1 grey-text small-text">What is Piggy Breaker?</h4>
+            </div>
+          </v-flex>
+          <div class="headline mb-3 text-xs-center title">
+            <p>
+              CryptoPiggy is a game centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.
+            </p>
+            <img src="/static/img/picto/piggy-growth.png" alt="piggy growth" height="100">
+            <p><br>
+              Someday the Piggy bank will break and make one of the players rich...
+            </p>
+          </div>
+        </div>
+        </v-layout>
       </v-parallax>
     </section>
+
     <!-- How does it work? -->
-    <section>
+    <section style="background-color: white">
       <v-layout
         column
         wrap
         class="my-5"
+        style="margin: 0 0 !important;"
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
-            <h2 class=" display-2">How does it work?</h2>
+            <h2 class="display-1 grey-text" style="margin-top: 25px">How does it work?</h2>
           </div>
         </v-flex>
         <v-flex xs12>
@@ -65,7 +91,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title">1. You <strong>contribute</strong> with Ethers.</div>
+                  <div class="headline text-xs-center howitworks-title grey-text title">1. You contribute with Ethers.</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/1-contribute.png" height="150">
@@ -80,7 +106,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title">2. <strong>Any contributor</strong> can decide to break the Piggy.</div>
+                  <div class="headline text-xs-center howitworks-title grey-text title">2. Any contributor can decide to break the Piggy.</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/2-break-piggy.png" height="150">
@@ -106,7 +132,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center howitworks-title">3. A winner is <strong>chosen randomly</strong> between the contributors.
+                    <div class="headline text-xs-center howitworks-title grey-text title">3. A winner is chosen randomly between the contributors.
                         <v-tooltip right>
                         <v-icon slot="activator">info_outline</v-icon>
                         <span></span>
@@ -201,10 +227,9 @@ export default {
 <style scoped>
 
 .parallax-background {
-  background-image: url("/static/img/background/background-piggies.jpg");
+  background-image: url("/static/img/background/background-piggies2.jpg");
   background-repeat: repeat;
   background-size: 426px 201px;
-  height: auto !important;
 }
 
 .parallax-background .current {
@@ -227,7 +252,7 @@ export default {
 }
 
 .howitworks-title {
-  min-height: 95px;
+  min-height: 45px;
 }
 
 .minimum-contribution {
