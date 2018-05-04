@@ -40,10 +40,10 @@
         </v-flex>
       </v-container>
       <v-container v-if="lockstatus == 'wrong_network'" grid-list-xl>
-        <v-flex md12 class="text-xs-center black--text" style="font-size:28px">
-          <h2 class=" display-2">Your metamask is not on the good network</h2>
+        <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px">
+          <h2 class=" display-2 grey-text">Your metamask is not on the right network</h2>
           <br />
-          Simply open MetaMask and change your network.
+          Simply open MetaMask and update the network.
         </v-flex>
 
         <v-flex md12 class="text-xs-center">

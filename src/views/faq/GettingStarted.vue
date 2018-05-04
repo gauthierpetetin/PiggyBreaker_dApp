@@ -2,12 +2,12 @@
 
   <section>
 
-    <h2>Getting started</h2>
+    <h2 class="grey-text headline">Getting started</h2>
     <v-expansion-panel expand>
       <v-expansion-panel-content>
-        <div slot="header">What do I need to play Piggy Breaker?</div>
+        <div slot="header" class="grey-text subheading">What do I need to play Piggy Breaker?</div>
         <v-card>
-          <v-card-text class="grey lighten-3">
+          <v-card-text class="white grey--text">
             Here’s what you need to get started:
             <ul>
               <li>A computer or laptop running the desktop version of Chrome or Firefox</li>
@@ -19,9 +19,9 @@
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header">Installing MetaMask, your digital wallet</div>
+        <div slot="header" class="grey-text subheading">Installing MetaMask, your digital wallet</div>
         <v-card>
-          <v-card-text class="grey lighten-3">
+          <v-card-text class="white grey--text">
             To use CryptoPiggy, you will need to install MetaMask, a digital wallet. You will need to put money in it to make your first purchase.
             <br />
             <strong>Note:</strong> A digital wallet like MetaMask acts like a bank account—treat it with respect and make sure you don’t forget your password or the seed words.
@@ -32,27 +32,27 @@
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header">Why is MetaMask locked?</div>
+        <div slot="header" class="grey-text subheading">Why is MetaMask locked?</div>
         <v-card>
-          <v-card-text class="grey lighten-3">
+          <v-card-text class="white grey--text">
             Occasionally the CryptoPiggy homepage displays a lock screen. This happens because MetaMask automatically locks your account after a certain period of time. To unlock simply click on the MetaMask extension and type in your password.
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header">Reinstalling MetaMask</div>
+        <div slot="header" class="grey-text subheading">Reinstalling MetaMask</div>
         <v-card>
-          <v-card-text class="grey lighten-3">
+          <v-card-text class="white grey--text">
             Some users need to uninstall and reinstall MetaMask because they’ve experienced a bug. If you kept your seed words, this is very easy! Just delete the extension, reinstall it, and import your twelve seed words. Then your account information will automatically display again on the CryptoPiggy website.
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header">Getting Ether, your digital currency</div>
+        <div slot="header" class="grey-text subheading">Getting Ether, your digital currency</div>
         <v-card>
-          <v-card-text class="grey lighten-3">
+          <v-card-text class="white grey--text">
             <p>
               <strong>For U.S. citizens only:</strong> you can buy ether (ETH) in MetaMask. ETH is a digital currency that enables our game to run.
             </p>
@@ -66,9 +66,9 @@
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header">How to send ETH to MetaMask</div>
+        <div slot="header" class="grey-text subheading">How to send ETH to MetaMask</div>
         <v-card>
-          <v-card-text class="grey lighten-3">
+          <v-card-text class="white grey--text">
             <p>
               <strong>For U.S. citizens only:</strong> you are able to purchase ETH directly from the MetaMask wallet using the Coinbase widget. This is more convenient and doesn’t require you to create two accounts.
             </p>
@@ -92,4 +92,6 @@
 h2 {
   margin: 20px 0 10px 0;
 }
+
+
 </style>

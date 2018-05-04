@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="footer pink">
+  <v-footer style="background-color: #404040">
     <v-layout row wrap align-center>
       <v-flex xs6>
         <div class="black--text ml-3 text-xs-right">

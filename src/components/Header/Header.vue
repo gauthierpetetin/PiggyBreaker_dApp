@@ -1,15 +1,15 @@
 <template>
-  <v-toolbar class="pink">
+  <v-toolbar style="background-color: #F2F2F2">
     <v-toolbar-title style="min-width: 250px">
       <router-link to="/"  class="logo">
         <a class="nav-link" >
           <img src="/static/img/logo/logo-crypto-piggy.png" height="50">
-          <span>Piggy Breaker</span>
+          <span class="grey-text">Piggy Breaker</span>
         </a></router-link>
     </v-toolbar-title>
     <v-toolbar-items v-if="networkStatus == 'good'">
       <v-tooltip bottom>
-        <v-btn flat slot="activator" class="metamask-status white--text"><img src="/static/img/icon/circle-green.png"> Network good</v-btn>
+        <v-btn flat slot="activator" class="metamask-status grey-text"><img src="/static/img/icon/circle-green.png"> Network good</v-btn>
         <span>Network is good</span>
       </v-tooltip>
     </v-toolbar-items>
@@ -22,16 +22,16 @@
     <v-spacer></v-spacer>
     <template v-if="ethereumEnv == 'development'">
       <v-toolbar-items>
-        <div style="background-color: #F08080;margin:15px;padding: 5px 10px;color: #ffffff;">This version is temporarily on TESTNET</div>
+        <div class="white--text" style="background-color: #F08080;margin:15px;padding: 5px 10px;">This version is temporarily on TESTNET</div>
       </v-toolbar-items>
       <v-spacer></v-spacer>
     </template>
     <v-toolbar-items>
-      <v-btn class="white--text" to="invite" flat>Invite</v-btn>
-      <v-btn class="white--text" to="piggies" flat>Past piggies</v-btn>
-      <v-btn class="white--text" to="about" flat>About</v-btn>
-      <v-btn class="white--text" to="faq" flat>FAQ</v-btn>
-      <v-btn class="white--text" to="settings" flat>Settings</v-btn>
+      <v-btn class="grey-text" to="invite" flat>Invite</v-btn>
+      <v-btn class="grey-text" to="piggies" flat>Past piggies</v-btn>
+      <v-btn class="grey-text-text" to="about" flat>About</v-btn>
+      <v-btn class="grey-text" to="faq" flat>FAQ</v-btn>
+      <v-btn class="grey-text" to="settings" flat>Settings</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -74,10 +74,6 @@ export default {
 
 .logo img {
   vertical-align:middle;
-}
-
-.logo span {
-  color: #ffffff;
 }
 
 .metamask-status {
