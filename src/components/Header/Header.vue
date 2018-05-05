@@ -27,19 +27,11 @@
       <v-spacer></v-spacer>
     </template>
     <v-toolbar-items>
-<<<<<<< HEAD
       <v-btn class="grey-text" to="invite" flat>Invite</v-btn>
       <v-btn class="grey-text" to="piggies" flat>Past piggies</v-btn>
-      <v-btn class="grey-text-text" to="about" flat>About</v-btn>
+      <v-btn class="grey-text" to="about" flat>About</v-btn>
       <v-btn class="grey-text" to="faq" flat>FAQ</v-btn>
       <v-btn class="grey-text" to="settings" flat>Settings</v-btn>
-=======
-      <v-btn to="invite" flat>Invite</v-btn>
-      <v-btn to="piggies" flat>Past piggies</v-btn>
-      <v-btn to="about" flat>About</v-btn>
-      <v-btn to="faq" flat>FAQ</v-btn>
-      <v-btn to="settings" v-if="metamaskEnabled" flat>Settings</v-btn>
->>>>>>> 55944ea438e77b6def3e8da3a34c41c7037c2dc4
     </v-toolbar-items>
   </v-toolbar>
 </template>

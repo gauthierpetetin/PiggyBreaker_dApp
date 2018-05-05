@@ -17,8 +17,8 @@
               <template v-if="loading.contribution">
                 <v-tooltip right>
                   <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
-                  <span>Your contribution has been submitted successfully.<br />It will require
-                  50-60 seconds until it gets validated by the whole network.</span>
+                  <span>Your contribution has been submitted successfully.<br />
+                  It will require 50-60 seconds until it gets validated by the whole network.</span>
                 </v-tooltip>
               </template>
               <template v-else>

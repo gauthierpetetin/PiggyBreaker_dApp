@@ -2,6 +2,7 @@
 import Web3 from 'web3'
 import Units from 'ethereumjs-units'
 
+
 // var abi =
 export default {
   data () {
@@ -213,7 +214,7 @@ export default {
         self.contributionError = 'You must enter a valid contribution'
         return false
       } else if (playerContribution < self.game.minContribution) {
-        self.contributionError = 'Your contribution is under the limit (' + self.game.minContribution + ')'
+        self.contributionError = 'Your contribution beyond the limit (' + self.game.minContribution + ')'
         return false
       }
 
@@ -232,15 +233,15 @@ export default {
           contract.methods.contribute().send({value: Units.convert(playerContribution, 'eth', 'wei'), from: currentAddress})
             .on('transactionHash', function (hash) {
               console.log('as contributed', hash)
+
+              // Alert DialogContribute.vue (self is DialogContribute.vue)
               self.contributionStatus = 'contributed'
 
-              // Send to parent
+              // Alert HomePage.vue (the event is catched by HomePage.vue)
               self.$emit('contribution', true)
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)
-              // self.getCurrentWSPiggy()
-              // self.getPlayerData()
             })
             .on('confirmation', function (confirmationNumber, receipt) {
               // console.log('confirmation:', confirmationNumber, receipt)

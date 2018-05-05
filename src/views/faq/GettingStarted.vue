@@ -5,70 +5,75 @@
     <h2 class="grey-text headline">Getting started</h2>
     <v-expansion-panel expand>
       <v-expansion-panel-content>
-        <div slot="header" class="grey-text subheading">What do I need to play Piggy Breaker?</div>
+        <div slot="header" class="grey-text subheading padTitle">What do I need to play Piggy Breaker?</div>
         <v-card>
-          <v-card-text class="white grey--text">
+          <v-card-text class="white grey--text pad">
             Here’s what you need to get started:
             <ul>
-              <li>A computer or laptop running the desktop version of Chrome or Firefox</li>
-              <li>MetaMask, a digital wallet used specifically with web apps</li>
-              <li>Ether, a form of digital payment that powers Crypto Piggy</li>
+              <li class="padli">A computer or laptop running the desktop version of Chrome or Firefox</li>
+              <li class="padli">MetaMask, a digital wallet used specifically with web apps</li>
+              <li class="padli">Ether, a form of digital payment that powers Piggy Breaker</li>
             </ul>
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header" class="grey-text subheading">Installing MetaMask, your digital wallet</div>
+        <div slot="header" class="grey-text subheading padTitle">Installing MetaMask, your digital wallet</div>
         <v-card>
-          <v-card-text class="white grey--text">
-            To use CryptoPiggy, you will need to install MetaMask, a digital wallet. You will need to put money in it to make your first purchase.
+          <v-card-text class="white grey--text pad" style="position: relative">
+            To use Piggy Breaker, you will need to install MetaMask, a digital wallet. You will need to put money in it to make your first purchase.
             <br />
             <strong>Note:</strong> A digital wallet like MetaMask acts like a bank account—treat it with respect and make sure you don’t forget your password or the seed words.
-
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/tfETpi-9ORs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <br />
+            <br />
+            <iframe class="center" width="560" height="315" src="https://www.youtube.com/embed/tfETpi-9ORs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header" class="grey-text subheading">Why is MetaMask locked?</div>
+        <div slot="header" class="grey-text subheading padTitle">Why is MetaMask locked?</div>
         <v-card>
-          <v-card-text class="white grey--text">
-            Occasionally the CryptoPiggy homepage displays a lock screen. This happens because MetaMask automatically locks your account after a certain period of time. To unlock simply click on the MetaMask extension and type in your password.
+          <v-card-text class="white grey--text pad">
+            Occasionally the Piggy Breaker homepage displays a lock screen. This happens because MetaMask automatically locks your account after a certain period of time. To unlock simply click on the MetaMask extension and type in your password.
+            <br />
+            <br />
+            <img  style="max-width: 100%" src="/static/img/faq/0-metamask-locked.png" />
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header" class="grey-text subheading">Reinstalling MetaMask</div>
+        <div slot="header" class="grey-text subheading padTitle">Reinstalling MetaMask</div>
         <v-card>
-          <v-card-text class="white grey--text">
-            Some users need to uninstall and reinstall MetaMask because they’ve experienced a bug. If you kept your seed words, this is very easy! Just delete the extension, reinstall it, and import your twelve seed words. Then your account information will automatically display again on the CryptoPiggy website.
+          <v-card-text class="white grey--text pad">
+            Some users need to uninstall and reinstall MetaMask because they’ve experienced a bug. If you kept your seed words, this is very easy! Just delete the extension, reinstall it, and import your twelve seed words. Then your account information will automatically display again on the Piggy Breaker website.
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header" class="grey-text subheading">Getting Ether, your digital currency</div>
+        <div slot="header" class="grey-text subheading padTitle">Getting Ether, your digital currency</div>
         <v-card>
-          <v-card-text class="white grey--text">
+          <v-card-text class="white grey--text pad">
             <p>
               <strong>For U.S. citizens only:</strong> you can buy ether (ETH) in MetaMask. ETH is a digital currency that enables our game to run.
             </p>
-            <img src="/static/img/faq/1-metamask.png" />
+            <img style="max-width: 100%" src="/static/img/faq/1-metamask.png" />
+            <br /><br />
             <p>
-              <strong>For everyone else:</strong> you will need to purchase ETH from <a href="https://blockgeeks.com/guides/best-cryptocurrency-exchanges" target="_blank">an exchange</a>, and then transfer the ETH from your exchange wallet to your MetaMask wallet. Unfortunately, you cannot play CryptoPiggy with only an exchange account.<br />
-              You cannot use USD/CAD to play CryptoPiggy—currencies need to be converted into ETH first.
+              <strong>For everyone else:</strong> you will need to purchase ETH from <a href="https://blockgeeks.com/guides/best-cryptocurrency-exchanges" target="_blank">an exchange</a>, and then transfer the ETH from your exchange wallet to your MetaMask wallet. Unfortunately, you cannot play Piggy Breaker with only an exchange account.<br />
+              You cannot use USD/CAD to play Piggy Breaker — currencies need to be converted into ETH first.
             </p>
           </v-card-text>
         </v-card>
       </v-expansion-panel-content>
 
       <v-expansion-panel-content>
-        <div slot="header" class="grey-text subheading">How to send ETH to MetaMask</div>
+        <div slot="header" class="grey-text subheading padTitle">How to send ETH to MetaMask</div>
         <v-card>
-          <v-card-text class="white grey--text">
+          <v-card-text class="white grey--text pad">
             <p>
               <strong>For U.S. citizens only:</strong> you are able to purchase ETH directly from the MetaMask wallet using the Coinbase widget. This is more convenient and doesn’t require you to create two accounts.
             </p>
@@ -89,9 +94,21 @@
 </script>
 
 <style scoped>
-h2 {
-  margin: 20px 0 10px 0;
-}
+  h2 {
+    margin: 20px 0 10px 0;
+  }
 
+  .padTitle {
+    padding: 10px 10px;
+  }
+
+  .pad {
+    padding: 25px 30px;
+    padding-top: 10px;
+  }
+
+  .padli {
+    margin-left: 25px;
+  }
 
 </style>
