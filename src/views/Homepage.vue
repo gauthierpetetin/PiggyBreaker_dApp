@@ -125,7 +125,7 @@ export default {
 
 <style>
 .parallax-background {
-  background-image: url('/static/img/background/background-piggies2.jpg');
+  background-image: url('/static/img/background/background-piggies3.png');
   background-repeat: repeat;
   background-size: 426px 201px;
 }

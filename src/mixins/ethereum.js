@@ -2,7 +2,6 @@
 import Web3 from 'web3'
 import Units from 'ethereumjs-units'
 
-
 // var abi =
 export default {
   data () {
@@ -13,7 +12,7 @@ export default {
       // Metamask
       web3js: window.web3,
       // Game
-      currentGame: {
+      ethGame: {
         id: null,
         value: null
       },
@@ -31,7 +30,8 @@ export default {
       contribution: {
         enable: false,
         status: null
-      }
+      },
+      metamaskErrorDialog: false
     }
   },
   methods: {
@@ -95,6 +95,7 @@ export default {
                   } else {
                     self.contribution.enable = true
                     self.$store.state.metamaskEnabled = true
+                    self.checkPlayer(accounts[0])
                   }
                 } else if (netId === 3) {
                   if (process.env.ETHEREUM_NODE_ENV === 'production') {
@@ -104,11 +105,17 @@ export default {
                   } else {
                     self.contribution.enable = true
                     self.$store.state.metamaskEnabled = true
+                    self.checkPlayer(accounts[0])
                   }
                 }
               })
           }
         })
+    },
+    checkPlayer (newAddress) {
+      if (newAddress !== this.player.address) {
+        this.getPlayer()
+      }
     },
     // Get player email
     getPlayerAddress () {
@@ -138,11 +145,11 @@ export default {
       contract.methods.nbPiggies().call().then(
         function (piggyId) {
           contract.methods.piggies(piggyId).call().then(
-            function (currentGame) {
+            function (ethGame) {
               // Set game id
-              self.currentGame.id = currentGame.piggyID
+              self.ethGame.id = ethGame.piggyID
               // Set piggy value
-              self.currentGame.value = Units.convert(currentGame.value, 'wei', 'eth')
+              self.ethGame.value = Units.convert(ethGame.value, 'wei', 'eth')
               // Get accounts
               self.web3js.eth.getAccounts()
                 .then(function (accounts) {
@@ -150,31 +157,31 @@ export default {
                   self.player.address = accounts[0]
                   console.log(self.player)
                   // Get player data
-                  self.getPlayerContributionBalance(self.currentGame, self.player.address)
-                  self.getPlayerBreakEnable(self.currentGame, self.player.address)
+                  self.getPlayerContributionBalance(self.ethGame, self.player.address)
+                  self.getPlayerBreakEnable(self.ethGame, self.player.address)
                   self.getPlayerWithdrawEnable(self.player.address)
                 })
             })
         })
     },
     // Get player contribution amount
-    getPlayerContributionBalance (currentGame, playerAddress) {
+    getPlayerContributionBalance (ethGame, playerAddress) {
       let self = this
       // Get contract
       var contract = new self.web3js.eth.Contract(this.abi, this.contractAddress)
       // Get contribution amount
-      contract.methods.getContributionAmount(currentGame.id, playerAddress).call().then(
+      contract.methods.getContributionAmount(ethGame.id, playerAddress).call().then(
         function (amount) {
           self.player.contributionBalance = Units.convert(amount, 'wei', 'eth')
         })
     },
     //  Get player break allowance
-    getPlayerBreakEnable (currentGame, currentAccount) {
+    getPlayerBreakEnable (ethGame, currentAccount) {
       let self = this
       // Get contract
       var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
       // Get contribution status
-      contract.methods.getContributionAmount(currentGame.id, currentAccount).call().then(
+      contract.methods.getContributionAmount(ethGame.id, currentAccount).call().then(
         function (contributionAmount) {
           if (contributionAmount > 0) {
             self.player.breakEnable = true
@@ -314,6 +321,9 @@ export default {
               console.log('error:', error)
             })
         })
+    },
+    closeMetamaskErrorDialog () {
+      this.metamaskErrorDialog = false
     }
   }
 }

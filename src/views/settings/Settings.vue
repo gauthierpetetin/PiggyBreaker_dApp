@@ -66,14 +66,17 @@
               <v-flex md10 offset-md1>
                 <v-form v-model="valid" ref="form" lazy-validation>
                   <v-checkbox
+                    color="info"
                     label="I want to be informed in case of victory."
                     v-model="playerSettings.notify_victory"
                   ></v-checkbox>
                   <v-checkbox
+                    color="info"
                     label="I want to be informed when the game I played is over."
                     v-model="playerSettings.notify_stop"
                   ></v-checkbox>
                   <v-checkbox
+                    color="info"
                     label="I want to be informed when a new game starts."
                     v-model="playerSettings.notify_start"
                   ></v-checkbox>

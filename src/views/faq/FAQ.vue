@@ -25,7 +25,8 @@
                     <div slot="header" class="grey-text subheading padTitle">What is Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="white grey--text pad">
-                        Piggy Breaker is a game centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.<br />
+                        Piggy Breaker is the next biggest lottery in the world!<br /><br />
+                        The game is centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.<br />
                         Someday the Piggy bank will break and make one of the players rich...<br /><br />
                         <img style="max-width: 100%" src="/static/img/faq/2-three-pigs.png" />
                       </v-card-text>
@@ -118,9 +119,9 @@
                     <div slot="header" class="grey-text subheading padTitle">How do I break the Piggy?</div>
                     <v-card>
                       <v-card-text class="white grey--text pad">
-                        Press the big “Break the Piggy” button. This will open the Metamask plugin. Confirm the transaction and that’s it.<br />
-                        <img src="/static/img/faq/8-break-button.png" /><br />
-                        You need to be a contributor to access this feature. You can’t break the Piggy. You can’t break the Piggy if a contribution occured in the last minutes.
+                        Press the big “Break the Piggy” button. This will open the Metamask plugin. Confirm the transaction and that’s it.<br /><br />
+                        <img style="max-width: 100%" src="/static/img/faq/8-break-button.png" /><br /><br />
+                        You need to be a contributor to access this feature. Furthermore, the Piggy can't be broken if a contribution occured within the last 3 minutes.
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
@@ -130,6 +131,15 @@
                     <v-card>
                       <v-card-text class="white grey--text pad">
                         A Piggy reparation fee is paid to the programmer at the end of the game. The broken Piggy is replaced by a new empty Piggy.
+                      </v-card-text>
+                    </v-card>
+                  </v-expansion-panel-content>
+
+                  <v-expansion-panel-content>
+                    <div slot="header" class="grey-text subheading padTitle">How do I know who won the lottery?</div>
+                    <v-card>
+                      <v-card-text class="white grey--text pad">
+                        The winner is kept secret for a short time once the Piggy gets broken. Due to security reasons we can't detail here, the winner becomes public once the next lottery is not empty anymore (e.g. when the next lottery contains at least one contribution).
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>
@@ -193,7 +203,7 @@
                     <div slot="header" class="grey-text subheading padTitle">How are you making money with Piggy Breaker?</div>
                     <v-card>
                       <v-card-text class="white grey--text pad">
-                        We take 3.75% of the Piggy value when the Piggy is broken. Note that we are working hard to make your game as easy as possible to use and to prepare you a mobile version.
+                        We take 3.75% of the Piggy value when the Piggy gets broken. Note that we are working hard to make your game as easy as possible to use and to prepare you a mobile version.
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>

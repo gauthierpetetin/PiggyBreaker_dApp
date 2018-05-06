@@ -1,19 +1,18 @@
 <template>
   <div>
+     <!-- contribution.enable -->
     <v-btn
       class="mt-3"
-      :class="classButton"
-      style="background-color: #FFD700;"
+      :class="[playEnable ? 'warning' : 'grey', sizeButton]"
+      style="margin-bottom: 50px"
       dark
       large
       slot="activator"
       @click.native="contributeDialog()"
     >
-      Contribute
+      <span v-if="positiveContribution">Contribute more</span>
+      <span v-else>Contribute</span>
     </v-btn>
-
-
-
 
     <v-dialog v-model="dialog" persistent max-width="800px">
 
@@ -27,8 +26,12 @@
             <v-layout wrap>
               <!-- Ether contribution -->
               <v-flex xs12 sm6>
-                <span class="title grey-text">Your ETH contribution*:</span><br />
+                <span class="headline grey-text">Your ETH contribution*:</span><br />
                 <span class="caption" style="color: grey">Minimum contribution: {{ dialogGame.minContribution }} ETH</span>
+                <v-tooltip right>
+                  <v-icon small slot="activator" color="grey">info_outline</v-icon>
+                  <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
+                </v-tooltip>
               </v-flex>
               <v-flex xs12 sm2>
                 <v-text-field type="number" number
@@ -92,6 +95,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <app-metamask-error :errorDialog="metamaskErrorDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskErrorDialog"></app-metamask-error>
+
   </div>
 </template>
 
@@ -99,7 +105,7 @@
 
 import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
-
+import MetamaskError from '@/views/error/MetamaskError.vue'
 
 export default {
   mixins: [
@@ -108,8 +114,14 @@ export default {
   ],
   props: {
     buttonLarge: true,
+    playEnable: true,
+    lockstatus: null,
     dialogGame: null,
-    playerAddress: null
+    playerAddress: null,
+    playerContribution: null
+  },
+  components: {
+    AppMetamaskError: MetamaskError
   },
   data () {
     return {
@@ -129,33 +141,41 @@ export default {
     }
   },
   computed: {
-    classButton: function () {
+    sizeButton: function () {
       return {
-        'contribute-button': this.buttonLarge
+        'big-contribute-button': this.buttonLarge
+      }
+    },
+    positiveContribution: function () {
+      console.log('Positive contribution ? ', this.playerContribution)
+      if (this.playerContribution > 0) {
+        return true
+      } else {
+        return false
       }
     }
   },
   methods: {
     // Show dialog
     contributeDialog () {
-      this.dialog = true //command to show dialog
-      // this.contributionStatus = 'contributing'
-      // this.contributionStatus = 'contributed'
-      // this.registerStatus = 'unregistered'
-      // this.registerStatus = 'registered'
+      if (this.playEnable) {
+        this.dialog = true // command to show dialog
 
-      // Get player email
-      let self = this
-      this.getPlayerEmail(this.playerAddress).then(function (response) {
-        console.log('Address registered: ', response)
-        self.playerEmail = response
-        self.registerStatus = 'registered'
-      }, function (error) {
-        if (error) {
-          console.log('Address not registered')
-          self.registerStatus = 'unregistered'
-        }
-      })
+        // Get player email
+        let self = this
+        this.getPlayerEmail(this.playerAddress).then(function (response) {
+          console.log('Address registered: ', response)
+          self.playerEmail = response
+          self.registerStatus = 'registered'
+        }, function (error) {
+          if (error) {
+            console.log('Address not registered')
+            self.registerStatus = 'unregistered'
+          }
+        })
+      } else {
+        this.metamaskErrorDialog = true // command to show error dialog
+      }
     },
     // Register player
     registerPlayer () {
@@ -187,8 +207,15 @@ export default {
 
 <style scoped>
 
-.contribute-button {
-  font-size: 42px;
+.big-contribute-button {
+  font-size: 36px;
+  height: 75px;
+  width: 40%;
+}
+
+.disabled-contribute-button {
+  background-color: grey !important;
+  height: 250px !important;
 }
 
 </style>

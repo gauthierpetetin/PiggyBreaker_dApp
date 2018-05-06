@@ -14,19 +14,19 @@
       <v-icon slot="activator">info_outline</v-icon>
       <span v-html="message"></span>
     </v-tooltip>
-    <div>
+    <div class="grey--text">
       Your balance: {{ dialogPlayer.withdrawBalance }} Eth
     </div>
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
-          <span class="headline">Withdraw</span>
+          <span class="headline grey-text">Withdraw</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex sm12>
-                <span v-html="message"></span>
+                <span class="grey--text" v-html="message"></span>
               </v-flex>
             </v-layout>
           </v-container>
@@ -37,12 +37,15 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <app-metamask-error :errorDialog="metamaskErrorDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskErrorDialog"></app-metamask-error>
   </div>
 </template>
 
 <script>
 
 import ethereumMixin from '@/mixins/ethereum'
+import MetamaskError from '@/views/error/MetamaskError.vue'
 
 export default {
   mixins: [
@@ -56,18 +59,27 @@ export default {
   },
   props: {
     buttonLarge: true,
-    dialogPlayer: null
+    dialogPlayer: null,
+    playEnable: true,
+    lockstatus: null
   },
   methods: {
     // Show dialog
     withdrawDialog () {
-      if (!this.dialogPlayer.withdrawEnable) {
-        this.dialog = true
+      if (this.playEnable) {
+        if (!this.dialogPlayer.withdrawEnable) {
+          this.dialog = true
+        } else {
+          // this.$emit('withdraw', true)
+          this.withdrawPiggy()
+        }
       } else {
-        // this.$emit('withdraw', true)
-        this.withdrawPiggy()
+        this.metamaskErrorDialog = true // command to show error dialog
       }
     }
+  },
+  components: {
+    AppMetamaskError: MetamaskError
   }
 }
 

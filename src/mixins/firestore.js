@@ -13,13 +13,33 @@ require('firebase/firestore')
 export default {
   data () {
     return {
-      game: {
+      currentGame: {
         id: null,
         value: 0,
         nbContributions: 0,
         minContribution: 0,
-        breakable: false,
-        breakableAt: null
+        open: false,
+        winner: null,
+        createdAt: null,
+        updatedAt: null,
+        brokenAt: null,
+        breakable: null,
+        breakableAt: null,
+        serverTimestamp: null
+      },
+      previousGame: {
+        id: null,
+        value: 0,
+        nbContributions: 0,
+        minContribution: 0,
+        open: false,
+        winner: null,
+        createdAt: null,
+        updatedAt: null,
+        brokenAt: null,
+        breakable: null,
+        breakableAt: null,
+        serverTimestamp: null
       },
       playerSettings: {
         address: null,
@@ -30,16 +50,15 @@ export default {
         notify_victory: null,
         withdraw_alert: null
       },
-      // currentGame: null,
       serverTimestamp: null
     }
   },
   methods: {
     // Get current game
-    getCurrentGame () {
+    getGame (gameType) {
       let self = this
       // Get current game
-      db.collection('game').doc('current')
+      db.collection('game').doc(gameType)
         .onSnapshot(function (gameItem) {
           // Reset contribution
           self.loading.contribution = false
@@ -51,24 +70,55 @@ export default {
             var offsetVal = offset.val() || 0
             var serverTime = Date.now() + offsetVal
 
+            // Format dates
+            let createdAt = null
+            if (gameItem.data().created_at) {
+              createdAt = moment.unix(gameItem.data().created_at.seconds).format('MM/DD/YYYY hh:mm')
+            }
+            let updatedAt = null
+            if (gameItem.data().updated_at) {
+              updatedAt = moment.unix(gameItem.data().updated_at.seconds).format('MM/DD/YYYY hh:mm')
+            }
+
+            // Get broken at datetime
+            let brokenAt = null
+            if (gameItem.data().broken_at) {
+              brokenAt = moment.unix(gameItem.data().broken_at.seconds).format('MM/DD/YYYY hh:mm')
+            }
+
             // Check breakable
-            var breakableAt = gameItem.data().breakable_at.seconds
+            var breakableAt = null
             var breakable = false
-            if (serverTime > breakableAt) {
-              breakable = true
+            if (gameItem.data().breakable_at) {
+              breakableAt = gameItem.data().breakable_at.seconds
+              if (serverTime > breakableAt) {
+                breakable = true
+              }
             }
 
             // Set game data
-            self.game = {
+            let gameVar = {
               id: gameItem.data().id,
               value: gameItem.data().value,
               nbContributions: gameItem.data().nb_contributions,
               minContribution: gameItem.data().min_contribution,
+              open: gameItem.data().open,
+              winner: gameItem.data().winner,
+              createdAt: createdAt,
+              updatedAt: updatedAt,
+              brokenAt: brokenAt,
               breakable: breakable,
               breakableAt: breakableAt,
               serverTimestamp: Math.round(serverTime / 1000)
             }
 
+            if (gameType === 'current') {
+              self.currentGame = gameVar
+            } else if (gameType === 'previous') {
+              self.previousGame = gameVar
+            } else {
+              console.log('Invalid gameType: ', gameType)
+            }
             self.getPlayer()
           })
         })
@@ -80,29 +130,30 @@ export default {
       db.collection('games').orderBy('id', 'desc').limit(11).get()
         .then(function (querySnapshot) {
           querySnapshot.forEach((gameItem) => {
+            console.log('ADAPTXXX: ', self.adaptGame(gameItem))
             // Get broken at datetime
-            let brokenAt = null
-            if (gameItem.data().broken_at) {
-              brokenAt = moment.unix(gameItem.data().broken_at.seconds).format('MM/DD/YYYY hh:mm')
-            }
-
-            // Format dates
-            let createdAt = moment.unix(gameItem.data().created_at.seconds).format('MM/DD/YYYY hh:mm')
-            let updatedAt = moment.unix(gameItem.data().updated_at.seconds).format('MM/DD/YYYY hh:mm')
-
-            // Set game data
-            let game = {
-              id: gameItem.data().id,
-              value: gameItem.data().value,
-              nbContributions: gameItem.data().nb_contributions,
-              open: gameItem.data().open,
-              winner: gameItem.data().winner,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              brokenAt: brokenAt
-            }
+            // let brokenAt = null
+            // if (gameItem.data().broken_at) {
+            //   brokenAt = moment.unix(gameItem.data().broken_at.seconds).format('MM/DD/YYYY hh:mm')
+            // }
+            //
+            // // Format dates
+            // let createdAt = moment.unix(gameItem.data().created_at.seconds).format('MM/DD/YYYY hh:mm')
+            // let updatedAt = moment.unix(gameItem.data().updated_at.seconds).format('MM/DD/YYYY hh:mm')
+            //
+            // // Set game data
+            // let game = {
+            //   id: gameItem.data().id,
+            //   value: gameItem.data().value,
+            //   nbContributions: gameItem.data().nb_contributions,
+            //   open: gameItem.data().open,
+            //   winner: gameItem.data().winner,
+            //   createdAt: createdAt,
+            //   updatedAt: updatedAt,
+            //   brokenAt: brokenAt
+            // }
             // Add to array
-            self.games.push(game)
+            self.games.push(self.adaptGame(gameItem))
           })
         })
     },

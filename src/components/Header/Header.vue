@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar style="background-color: #F2F2F2">
+  <v-toolbar style="background-color: #ffffff">
     <v-toolbar-title style="min-width: 250px">
       <router-link to="/"  class="logo">
         <a class="nav-link" >
@@ -22,13 +22,13 @@
     <v-spacer></v-spacer>
     <template v-if="ethereumEnv == 'development'">
       <v-toolbar-items>
-        <div class="white--text" style="background-color: #F08080;margin:15px;padding: 5px 10px;">This version is temporarily on TESTNET</div>
+        <div class="white--text" style="background-color: #F08080;margin:15px;padding: 5px 10px;">Beta version (Ropsten)</div>
       </v-toolbar-items>
       <v-spacer></v-spacer>
     </template>
     <v-toolbar-items>
       <v-btn class="grey-text" to="invite" flat>Invite</v-btn>
-      <v-btn class="grey-text" to="piggies" flat>Past piggies</v-btn>
+      <v-btn class="grey-text" to="piggies" flat>History</v-btn>
       <v-btn class="grey-text" to="about" flat>About</v-btn>
       <v-btn class="grey-text" to="faq" flat>FAQ</v-btn>
       <v-btn class="grey-text" to="settings" flat>Settings</v-btn>
@@ -74,7 +74,6 @@ export default {
 
 .logo  {
   text-decoration: none;
-
 }
 
 .logo img {
@@ -89,6 +88,5 @@ export default {
 .metamask-status img {
   margin: 0 5px 2px 0;
 }
-
 
 </style>

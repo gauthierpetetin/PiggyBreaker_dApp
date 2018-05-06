@@ -2,17 +2,21 @@
     <v-layout row wrap
     class="white--text">
       <v-container v-if="lockstatus == 'not_installed'" grid-list-xl>
-        <v-flex md12 class="text-xs-center black--text" style="font-size:28px">
-          <h2 class=" display-2">Wanna play?</h2>
+        <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
+          <h2 class="display-2 grey-text" style="margin-top: 35px">Wanna play?</h2>
           <br />
           You’ll need a place to store your ether (ETH) in a secure wallet like Metamask. This will also act as your login to the game (no extra password needed).
         </v-flex>
-        <v-flex md12 class="text-xs-center black--text" style="font-size:28px">
+        <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
+          <img src="/static/img/picto/metamask.png" alt="no metamask" style="max-width: 150px; margin-top: 20px; margin-bottom: 10px">
+        </v-flex>
+        <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
           <v-btn
             class="mt-3"
-            style="background-color: #FF00FF;"
+            style="background-color: #2196f3; margin-bottom: 100px"
             dark
             large
+            href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
           >
             Install Metamask
           </v-btn>
@@ -24,15 +28,14 @@
         </v-flex>
       </v-container>
       <v-container v-if="lockstatus == 'locked'" grid-list-xl>
-        <v-flex md12 class="text-xs-center black--text" style="font-size:28px">
-          <h2 class=" display-2">Your metamask is locked</h2>
-          <br />
+        <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
+          <h2 class="grey-text display-2">Your metamask is locked</h2>
+          <v-flex md12 class="text-xs-center">
+            <img src="/static/img/picto/piggy-bank-cage.png" alt="piggy locked" style="margin: 20px 0; max-width: 200px">
+          </v-flex>
           Simply open MetaMask and follow the instruction to unlock it.
         </v-flex>
 
-        <v-flex md12 class="text-xs-center">
-        <img src="/static/img/picto/piggy-bank-cage.jpg" alt="piggy locked">
-        </v-flex>
         <v-flex md12 class="text-xs-center black--text">
           <!-- Getting Started -->
           <app-getting-started></app-getting-started>
@@ -40,15 +43,14 @@
         </v-flex>
       </v-container>
       <v-container v-if="lockstatus == 'wrong_network'" grid-list-xl>
-        <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px">
+        <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
           <h2 class=" display-2 grey-text">Your metamask is not on the right network</h2>
-          <br />
+          <v-flex md12 class="text-xs-center" style="margin-top: 15px">
+            <img src="/static/img/picto/piggy-lost.png" alt="piggy locked" width="200">
+          </v-flex>
           Simply open MetaMask and update the network.
         </v-flex>
 
-        <v-flex md12 class="text-xs-center">
-        <img src="/static/img/picto/piggy-lost.png" alt="piggy locked" width="200">
-        </v-flex>
         <v-flex md12 class="text-xs-center black--text">
           <!-- Getting Started -->
           <app-getting-started></app-getting-started>

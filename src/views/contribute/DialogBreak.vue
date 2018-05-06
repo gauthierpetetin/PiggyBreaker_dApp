@@ -19,13 +19,13 @@
     <v-dialog v-model="dialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
-          <span class="headline">Break the Piggy</span>
+          <span class="headline grey-text">Break the Piggy</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex sm12>
-                <span v-html="message"></span>
+                <span class="grey--text" v-html="message"></span>
               </v-flex>
             </v-layout>
           </v-container>
@@ -36,12 +36,15 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <app-metamask-error :errorDialog="metamaskErrorDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskErrorDialog"></app-metamask-error>
   </div>
 </template>
 
 <script>
 
 import ethereumMixin from '@/mixins/ethereum'
+import MetamaskError from '@/views/error/MetamaskError.vue'
 import Countdown from '@/components/Countdown/Countdown.vue'
 
 export default {
@@ -49,19 +52,22 @@ export default {
     ethereumMixin
   ],
   components: {
+    AppMetamaskError: MetamaskError,
     AppCountdown: Countdown
   },
   props: {
     buttonLarge: true,
     dialogGame: null,
-    playerBreakEnable: false
+    playerBreakEnable: false,
+    playEnable: true,
+    lockstatus: null
   },
   data () {
     return {
       dialog: false,
       breakEnable: false,
       countdownEnabled: false,
-      message: 'You need to be a contributor to access this feature.<br/>You can’t break the Piggy if a contribution occurred in the last 3 minutes.'
+      message: "You need to be a contributor to access this feature.<br/>Protection rule: the Piggy can't be broken if a contribution occured within the last 3 minutes."
     }
   },
   watch: {
@@ -75,11 +81,15 @@ export default {
   methods: {
     // Show dialog
     breakDialog () {
-      if (!this.breakEnable) {
-        this.dialog = true
+      if (this.playEnable) {
+        if (!this.breakEnable) {
+          this.dialog = true
+        } else {
+          // this.$emit('break', true)
+          this.breakPiggy()
+        }
       } else {
-        // this.$emit('break', true)
-        this.breakPiggy()
+        this.metamaskErrorDialog = true // command to show error dialog
       }
     },
     // Check break
