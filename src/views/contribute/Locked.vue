@@ -1,7 +1,7 @@
 <template>
     <v-layout row wrap
     class="white--text">
-      <v-container v-if="lockstatus == 'not_installed'" grid-list-xl>
+      <v-container v-if="lockstatus === 'not_installed'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
           <h2 class="display-2 grey-text" style="margin-top: 35px">Wanna play?</h2>
           <br />
@@ -27,7 +27,7 @@
           <!-- /Getting Started -->
         </v-flex>
       </v-container>
-      <v-container v-if="lockstatus == 'locked'" grid-list-xl>
+      <v-container v-if="lockstatus === 'locked'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
           <h2 class="grey-text display-2">Your metamask is locked</h2>
           <v-flex md12 class="text-xs-center">
@@ -42,7 +42,7 @@
           <!-- /Getting Started -->
         </v-flex>
       </v-container>
-      <v-container v-if="lockstatus == 'wrong_network'" grid-list-xl>
+      <v-container v-if="lockstatus === 'wrong_network'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
           <h2 class=" display-2 grey-text">Your metamask is not on the right network</h2>
           <v-flex md12 class="text-xs-center" style="margin-top: 15px">

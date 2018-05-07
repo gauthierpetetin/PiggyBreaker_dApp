@@ -46,7 +46,7 @@
                 <span style="color: grey">*Your chances to win the lottery are directly proportional to the amount your contribution(s).</span>
               </v-flex>
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="contributePiggy()">Contribute</v-btn>
+                <v-btn block color="warning" dark @click.native="contributePiggy(dialogGame.minContribution)">Contribute</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -79,13 +79,6 @@
               </v-flex>
             </v-layout>
           </v-container>
-          <!-- <v-container grid-list-md v-if="contributionStatus === 'registered'">
-            <v-layout wrap>
-              <v-flex xs12 sm6>
-                All right, you will be notified
-              </v-flex>
-            </v-layout>
-          </v-container> -->
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

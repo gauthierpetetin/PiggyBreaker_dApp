@@ -140,33 +140,38 @@ export default {
     getEthPlayerData () {
       let self = this
 
-      // Dial node
-      self.dialJs()
+      if (self.web3js) {
+        // Dial node
+        self.dialJs()
 
-      // Get contract
-      var contract = new self.web3js.eth.Contract(this.abi, this.contractAddress)
-      // Get current Piggy
-      contract.methods.nbPiggies().call().then(
-        function (piggyId) {
-          contract.methods.piggies(piggyId).call().then(
-            function (ethGame) {
-              // Set game id
-              self.ethGame.id = ethGame.piggyID
-              // Set piggy value
-              self.ethGame.value = Units.convert(ethGame.value, 'wei', 'eth')
-              // Get accounts
-              self.web3js.eth.getAccounts()
-                .then(function (accounts) {
-                  console.log(accounts)
-                  self.player.address = accounts[0]
-                  console.log(self.player)
-                  // Get player data
-                  self.getPlayerContributionBalance(self.ethGame, self.player.address)
-                  self.getPlayerBreakEnable(self.ethGame, self.player.address)
-                  self.getPlayerWithdrawEnable(self.player.address)
-                })
-            })
-        })
+        // Get contract
+        var contract = new self.web3js.eth.Contract(this.abi, this.contractAddress)
+
+        // Get current Piggy
+        contract.methods.nbPiggies().call().then(
+          function (piggyId) {
+            // console.log('PIGGGGGGY: ', piggyId)
+            contract.methods.piggies(piggyId).call().then(
+              function (ethGame) {
+                // console.log('ETHGAAAME: ', ethGame)
+                // Set game id
+                self.ethGame.id = ethGame.piggyID
+                // Set piggy value
+                self.ethGame.value = Units.convert(ethGame.value, 'wei', 'eth')
+                // Get accounts
+                self.web3js.eth.getAccounts()
+                  .then(function (accounts) {
+                    console.log(accounts)
+                    self.player.address = accounts[0]
+                    console.log(self.player)
+                    // Get player data
+                    self.getPlayerContributionBalance(self.ethGame, self.player.address)
+                    self.getPlayerBreakEnable(self.ethGame, self.player.address)
+                    self.getPlayerWithdrawEnable(self.player.address)
+                  })
+              })
+          })
+      }
     },
     // Get player contribution amount
     getPlayerContributionBalance (ethGame, playerAddress) {
@@ -211,7 +216,7 @@ export default {
       Contribution
     *************/
     // Contribute to the piggy
-    contributePiggy () {
+    contributePiggy (minContribution) {
       let self = this
 
       // Get contribution
@@ -224,8 +229,8 @@ export default {
       if (playerContribution === '') {
         self.contributionError = 'You must enter a valid contribution'
         return false
-      } else if (playerContribution < self.game.minContribution) {
-        self.contributionError = 'Your contribution beyond the limit (' + self.game.minContribution + ')'
+      } else if (playerContribution < minContribution) {
+        self.contributionError = 'Your contribution beyond the limit (' + minContribution + ')'
         return false
       }
 

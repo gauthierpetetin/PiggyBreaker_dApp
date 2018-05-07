@@ -4,6 +4,8 @@
 
     <h2 v-if="titleRequired" class="grey-text headline">Getting started</h2>
 
+    <!-- <v-expansion-panel-content @input="saveId('1')">
+    <div @mouseover="onOver" @mouseleave="onLeave"> -->
     <v-expansion-panel expand>
       <v-expansion-panel-content>
         <div slot="header" class="grey-text subheading padTitle">What do I need to play Piggy Breaker?</div>
@@ -96,17 +98,14 @@
         <h2 class="grey-text display-2" style="margin: 0 0 !important">Still confused?</h2>
       </v-flex>
       <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin: 0 0 !important">
-        <!-- <v-btn
+        <v-btn
           class="mt-3 warning"
           dark
           large
-          to="FAQ"
+          to="/FAQ"
         >
           View full FAQ
-        </v-btn> -->
-        <router-link to="/"  class="logo">
-          View full FAQ
-        </router-link>
+        </v-btn>
       </v-flex>
     </div>
   </section>
@@ -114,18 +113,42 @@
 </template>
 
 <script>
-// import { Router } from '/router/index.js';
 
 export default {
-
+  // data () {
+  //   return {
+  //     ids: {}
+  //   }
+  // },
   props: {
     titleRequired: false
   },
   methods: {
-    goToFAQ: {
-      // router.push({ path: `/src/views/faq` })
-    }
+    // onOver: function (e) {
+    //   var hoverElement = e.target;
+    //   console.log('hoverElement', hoverElement)
+    //   hoverElement.childNode['det'].className = 'grey-text subheading padTitle'
+    // },
+    // onLeave: function (e) {
+    //   var leftElement = e.target;
+    //   leftElement.childNode['det'].className = 'grey--text subheading padTitle'
+    // },
+    // saveId(id) {
+    //   if (this.ids[id]) {
+    //     this.ids[id] = false
+    //   } else {
+    //     this.ids[id] = true
+    //   }
+    // }
   }
+  // computed: {
+  //   questionStyle() {
+  //     let questionColor = onHover ? '#404040' : 'grey'
+  //     return {
+  //       color: questionColor
+  //     }
+  //   }
+  // }
 }
 </script>
 
