@@ -54,11 +54,11 @@ export default {
     errorMessage: function () {
       let errM = 'Unknown error, please contact support.'
       if (this.lockstatus === 'not_installed') {
-        errM = 'Please install Metamask to play Piggy Breaker.'
+        errM = 'Please install Metamask to play Piggy Breaker!'
       } else if (this.lockstatus === 'locked') {
-        errM = 'Please unlock your Metamask to play Piggy Breaker.'
+        errM = 'Please unlock your Metamask to play Piggy Breaker!'
       } else if (this.lockstatus === 'wrong_network') {
-        errM = 'Please open Metamask and update the network to play Piggy Breaker.'
+        errM = 'Please open Metamask and update the network to play Piggy Breaker!'
       }
       return errM
     }

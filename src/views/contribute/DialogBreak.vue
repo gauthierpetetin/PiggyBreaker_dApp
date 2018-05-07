@@ -4,19 +4,19 @@
       class="mt-3"
       dark
       large
-      @click.native="breakDialog()"
+      @click.native="breakAction()"
       :class="[breakEnable ? 'pink' : 'grey']"
     >
       Break the Piggy
     </v-btn>
     <v-tooltip right style="top: 5px;">
       <v-icon slot="activator">info_outline</v-icon>
-      <span v-html="message"></span>
+      <span v-html="infoMessage"></span>
     </v-tooltip>
     <!-- Countdown -->
     <app-countdown v-if="countdownEnabled" :serverTimestamp="dialogGame.serverTimestamp" :breakDatetime="dialogGame.breakableAt" @enablebreak="onEnableBreakChild"></app-countdown>
     <!-- /Countdown -->
-    <v-dialog v-model="dialog" persistent max-width="800px">
+    <v-dialog v-model="breakDialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
           <span class="headline grey-text">Break the Piggy</span>
@@ -25,14 +25,14 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex sm12>
-                <span class="grey--text" v-html="message"></span>
+                <span class="grey--text" v-html="dialogMessage"></span>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="breakDialog = false">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -64,10 +64,19 @@ export default {
   },
   data () {
     return {
-      dialog: false,
+      breakDialog: false,
       breakEnable: false,
       countdownEnabled: false,
-      message: "You need to be a contributor to access this feature.<br/>Protection rule: the Piggy can't be broken if a contribution occured within the last 3 minutes."
+      infoMessage: "You need to be a contributor to access this feature.<br/>Furthermore, the Piggy can't be broken if a contribution occured within the last 3 minutes."
+    }
+  },
+  computed: {
+    dialogMessage: function () {
+      if (this.playerBreakEnable) {
+        return "Sorry, the Piggy can't be broken if a contribution occured within the last 3 minutes ;)"
+      } else {
+        return 'Sorry, you need to contribute to the lottery first, to get access to this feature ;)'
+      }
     }
   },
   watch: {
@@ -80,12 +89,11 @@ export default {
   },
   methods: {
     // Show dialog
-    breakDialog () {
+    breakAction () {
       if (this.playEnable) {
         if (!this.breakEnable) {
-          this.dialog = true
+          this.breakDialog = true
         } else {
-          // this.$emit('break', true)
           this.breakPiggy()
         }
       } else {

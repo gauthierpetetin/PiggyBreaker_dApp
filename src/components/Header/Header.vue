@@ -4,7 +4,7 @@
       <router-link to="/"  class="logo">
         <a class="nav-link" >
           <img src="/static/img/logo/logo-crypto-piggy.png" height="50">
-          <span class="grey-text">Piggy Breaker</span>
+          <span style="color: #2196f3">Piggy Breaker</span>
         </a></router-link>
     </v-toolbar-title>
     <v-toolbar-items v-if="networkStatus == 'good'">
@@ -16,7 +16,7 @@
     <v-toolbar-items v-else-if="networkStatus == 'bad'">
       <v-tooltip bottom>
         <v-btn flat slot="activator" class="metamask-status"><img src="/static/img/icon/circle-red.png"> Network bad</v-btn>
-        <span>No web3? You should consider trying MetaMask!</span>
+        <span>No web3? You should consider trying Metamask!</span>
       </v-tooltip>
     </v-toolbar-items>
     <v-spacer></v-spacer>

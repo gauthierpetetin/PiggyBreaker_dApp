@@ -16,7 +16,7 @@
               </v-flex>
               <v-flex md10 offset-md1>
                 <!-- Getting Started -->
-                <app-getting-started></app-getting-started>
+                <app-getting-started titleRequired="true"></app-getting-started>
                 <!-- /Getting Started -->
                 <h2 class="grey-text headline">Understanding Piggy Breaker</h2>
                 <v-expansion-panel expand>

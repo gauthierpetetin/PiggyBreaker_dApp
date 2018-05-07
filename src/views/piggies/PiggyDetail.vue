@@ -5,23 +5,31 @@
         <v-flex sm3>
           <v-card-text>
             <div class="text-md-center">
-              <img v-if="detailGame.open === false" src="/static/img/picto/broken-piggy.png" width="100">
               <img v-if="detailGame.open === true" src="/static/img/picto/piggy.png" width="100">
-              <h3 class="pink--text">{{ detailGame.value }} ETH</h3>
+              <img v-else src="/static/img/picto/broken-piggy.png" width="100">
+              <h1 class="pink--text">{{ detailGame.value }} ETH</h1>
+              <v-progress-linear :value="percentage" height="4" color="pink" background-color="transparent"></v-progress-linear>
             </div>
           </v-card-text>
         </v-flex>
         <v-flex sm9>
           <v-card-title>
             <div style="width: 90%">
-              <h1 class="grey--text">#{{ detailGame.id }}</h1>
-              <h3 v-if="detailGame.open === false">Winner: {{ detailGame.winner }}</h3>
+              <span class="grey--text headline">Piggy #{{ detailGame.id }}</span><br /><br />
+              <h1 v-if="detailGame.open === true" class="blue--text title">Game still on-going..</h1>
+              <h1 v-if="(detailGame.open === false) && detailGame.winner" class="warning--text title"><strong>Winner</strong>: {{ detailGame.winner }}</h1>
+              <h1 v-if="(detailGame.open === false) && (!detailGame.winner)" class="warning--text title">
+                <strong>Winner</strong>:
+                <v-tooltip right>
+                  <v-icon slot="activator" class="warning--text">fas fa-crosshairs fa-pulse</v-icon>
+                  <span>The winner becomes public once the current lottery is not empty anymore<br />(e.g. when the current lottery contains at least one contribution).</span>
+                </v-tooltip>
+              </h1>
               <br />
               <span><strong>{{ detailGame.nbContributions }}</strong> contributions</span><br />
               <span class="grey--text">Created at: {{ detailGame.createdAt }}</span><br />
-              <span v-if="detailGame.open" class="grey--text">Last update: {{ detailGame.updatedAt }}</span>
+              <span v-if="detailGame.open" class="grey--text">Last contribution: {{ detailGame.updatedAt }}</span>
               <span v-else class="grey--text">Broken at: {{ detailGame.brokenAt }}</span>
-              <v-progress-linear :value="75" height="2" color="pink" background-color="transparent"></v-progress-linear>
             </div>
           </v-card-title>
         </v-flex>
@@ -34,7 +42,17 @@
 
 export default {
   props: {
-    detailGame: null
+    detailGame: null,
+    maxValue: null
+  },
+  computed: {
+    percentage: function () {
+      if (!isNaN(this.maxValue) && (this.maxValue !== 0)) {
+        return Math.max(100 * this.detailGame.value / this.maxValue, 3)
+      } else {
+        return 1
+      }
+    }
   },
   data () {
     return {

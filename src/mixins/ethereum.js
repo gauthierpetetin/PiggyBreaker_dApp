@@ -107,6 +107,10 @@ export default {
                     self.$store.state.metamaskEnabled = true
                     self.checkPlayer(accounts[0])
                   }
+                } else {
+                  self.contribution.enable = false
+                  self.contribution.status = 'wrong_network'
+                  self.$store.state.metamaskEnabled = false
                 }
               })
           }
@@ -114,7 +118,7 @@ export default {
     },
     checkPlayer (newAddress) {
       if (newAddress !== this.player.address) {
-        this.getPlayer()
+        this.getEthPlayerData()
       }
     },
     // Get player email
@@ -133,7 +137,7 @@ export default {
       })
     },
     // Get player
-    getPlayer () {
+    getEthPlayerData () {
       let self = this
 
       // Dial node

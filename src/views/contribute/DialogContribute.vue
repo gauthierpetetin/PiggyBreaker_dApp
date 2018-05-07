@@ -8,7 +8,7 @@
       dark
       large
       slot="activator"
-      @click.native="contributeDialog()"
+      @click.native="contributeAction()"
     >
       <span v-if="positiveContribution">Contribute more</span>
       <span v-else>Contribute</span>
@@ -157,7 +157,7 @@ export default {
   },
   methods: {
     // Show dialog
-    contributeDialog () {
+    contributeAction () {
       if (this.playEnable) {
         this.dialog = true // command to show dialog
 

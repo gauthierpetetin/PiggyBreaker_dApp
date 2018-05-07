@@ -5,19 +5,19 @@
       dark
       large
       slot="activator"
-      @click.native="withdrawDialog()"
+      @click.native="withdrawAction()"
       :class="[dialogPlayer.withdrawEnable ? 'blue' : 'grey']"
     >
       Withdraw
     </v-btn>
     <v-tooltip right style="top: 5px;">
       <v-icon slot="activator">info_outline</v-icon>
-      <span v-html="message"></span>
+      <span v-html="infoMessage"></span>
     </v-tooltip>
     <div class="grey--text">
       Your balance: {{ dialogPlayer.withdrawBalance }} Eth
     </div>
-    <v-dialog v-model="dialog" persistent max-width="800px">
+    <v-dialog v-model="withdrawDialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
           <span class="headline grey-text">Withdraw</span>
@@ -26,14 +26,14 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex sm12>
-                <span class="grey--text" v-html="message"></span>
+                <span class="grey--text" v-html="dialogMessage"></span>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
+          <v-btn color="blue darken-1" flat @click.native="withdrawDialog = false">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -53,8 +53,9 @@ export default {
   ],
   data () {
     return {
-      dialog: false,
-      message: 'The more you contribute, the more chances you have to win.<br/>Indeed, your chances to win the lottery are proportional to the total amount of your contributions.'
+      withdrawDialog: false,
+      dialogMessage: "You have no funds to withdraw for now.<br />Press 'Contribute' to get a chance to win the next lottery ;)",
+      infoMessage: 'The more you contribute, the more chances you have to win.<br/>Indeed, your chances to win the lottery are proportional to the total amount of your contributions.'
     }
   },
   props: {
@@ -65,10 +66,10 @@ export default {
   },
   methods: {
     // Show dialog
-    withdrawDialog () {
+    withdrawAction () {
       if (this.playEnable) {
         if (!this.dialogPlayer.withdrawEnable) {
-          this.dialog = true
+          this.withdrawDialog = true
         } else {
           // this.$emit('withdraw', true)
           this.withdrawPiggy()

@@ -35,7 +35,7 @@
         <v-layout v-if="contribution.enable" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
-            <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="ethGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" @contribution="onContributionChild"></app-dialog-contribute>
+            <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" @contribution="onContributionChild"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
           <!-- <v-flex md12 class="text-xs-center grey--text minimum-contribution">
@@ -102,7 +102,7 @@
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <!-- Dialog -->
-                    <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="ethGame" :playerAddress="player.address" :playerContribution="player.contributionBalance"></app-dialog-contribute>
+                    <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance"></app-dialog-contribute>
                     <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
@@ -126,7 +126,7 @@
                         </v-tooltip>
                       </template>
                       <template v-else>
-                        <app-dialog-break :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="ethGame" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
+                        <app-dialog-break :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
                       </template>
                       <!-- /Dialog -->
                     </template>
@@ -137,7 +137,7 @@
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline text-xs-center howitworks-title grey-text title">3. A winner is chosen randomly between the contributors.
-                        <v-tooltip right>
+                      <v-tooltip right>
                         <v-icon slot="activator">info_outline</v-icon>
                         <span></span>
                       </v-tooltip>
@@ -219,8 +219,10 @@ export default {
     this.loopMetamask()
     // this.checkMetamask()
 
-    // Get current game
+    // Get current game on firestore
     this.getGame('current')
+    // Get current game on ethereum
+    // this.getEthPlayerData()
   },
   methods: {
     // Contribution
