@@ -9,7 +9,6 @@
           justify-center
           style="background-color: white"
           >
-          <!-- <h1 class="grey--text mb-2 headline text-xs-center current" style="margin-top: 35px">Piggy Breaker is the next biggest lottery in the world!</h1> -->
           <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong>{{ currentGame.value }} ETH</strong></h1>
           <img src="/static/img/picto/big-piggy.png" alt="big piggy" height="350" style="margin-top: 15px">
           <!-- Player contribution amount -->
@@ -63,7 +62,7 @@
           </v-flex>
           <div class="headline mb-3 text-xs-center title">
             <p>
-              <span class="pink--text">Piggy Breaker is the next biggest lottery in the world!</span><br />
+              <span class="pink--text">Piggy Breaker is the next world lottery!</span><br />
               The game is centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.
             </p>
             <img src="/static/img/picto/piggy-growth.png" alt="piggy growth" height="100">

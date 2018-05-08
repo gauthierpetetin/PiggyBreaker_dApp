@@ -32,7 +32,7 @@
     <section style="background-color: white">
       <v-container grid-list-xl style="padding: 0 0; padding-bottom: 60px">
         <v-layout row wrap justify-center class="my-5" style="margin: 10px 0 !important;">
-          <v-flex sm12 class="my-3">
+          <v-flex sm12 class="my-3" style="margin-bottom: 0 !important">
             <div class="text-xs-center">
               <h4 class="display-1 grey-text">Examples</h4>
             </div>
@@ -41,32 +41,20 @@
             <v-card class="elevation-0 transparent">
               <v-container fluid grid-list-lg>
                 <v-layout row>
-                  <v-flex xs4>
-                    <v-card-media
-                      src="/static/img/picto/piggy.png"
-                      height="125px"
-                      contain
-                    ></v-card-media>
+
+                  <v-flex xs12 class="text-md-center">
+                    <img src="/static/img/picto/piggy.png" width="100">
+                    <h1 class="pink--text">Piggy value: 40 ETH</h1>
+                    <br />
+                    <h1 class="mb-2 subheading text-xs-center contribution">
+                      <span class="grey--text">Your contribution:</span>
+                      <span class="grey--text">20 ETH</span>
+                      <v-progress-linear :value="50" height="20" color="grey"></v-progress-linear>
+                      <br />
+                      <span class="title blue--text">Your chances to win the lottery: 50%</span>
+                    </h1>
                   </v-flex>
-                  <v-flex xs8>
-                    <v-list class="transparent">
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title class="grey-text">Piggy value: 40 ETH</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title class="grey-text">Your contribution: 20 ETH</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title class="grey-text">Your chances to win the lottery: 50%</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                  </v-flex>
+
                 </v-layout>
               </v-container>
             </v-card>
@@ -75,32 +63,20 @@
             <v-card class="elevation-0 transparent">
               <v-container fluid grid-list-lg>
                 <v-layout row>
-                  <v-flex xs4>
-                    <v-card-media
-                      src="/static/img/picto/piggy.png"
-                      height="125px"
-                      contain
-                    ></v-card-media>
+
+                  <v-flex xs12 class="text-md-center">
+                    <img src="/static/img/picto/piggy.png" width="100">
+                    <h1 class="pink--text">Piggy value: 100 ETH</h1>
+                    <br />
+                    <h1 class="mb-2 subheading text-xs-center contribution">
+                      <span class="grey--text">Your contribution:</span>
+                      <span class="grey--text">25 ETH</span>
+                      <v-progress-linear :value="25" height="20" color="grey"></v-progress-linear>
+                      <br />
+                      <span class="title blue--text">Your chances to win the lottery: 25%</span>
+                    </h1>
                   </v-flex>
-                  <v-flex xs8>
-                    <v-list class="transparent">
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title class="grey-text">Piggy value: 100 ETH</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title class="grey-text">Your contribution: 25 ETH</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                      <v-list-tile>
-                        <v-list-tile-content>
-                          <v-list-tile-title class="grey-text">Your chances to win the lottery: 25%</v-list-tile-title>
-                        </v-list-tile-content>
-                      </v-list-tile>
-                    </v-list>
-                  </v-flex>
+
                 </v-layout>
               </v-container>
             </v-card>
