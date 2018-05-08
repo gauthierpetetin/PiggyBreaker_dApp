@@ -1,92 +1,100 @@
 <template>
   <div>
     <section>
-      <v-parallax class="parallax-background">
-        <v-container grid-list-xl class="player-infos">
-          <v-layout align-center>
-            <v-flex md4 class="text-xs-center">
-              <img src="/static/img/picto/piggy-eye.png" width="160">
-            </v-flex>
-            <v-flex md8 class="black--text">
-              <!-- Display -->
-              <span v-if="this.playerSettings.login == ''" v-show="!editField.login"><i>Enter your login</i></span>
-              <h2 v-show="!editField.login" style="float: left;">{{ this.playerSettings.login }}</h2>
-              <v-btn v-show="!editField.login" small flat fab style="bottom: 10px;" @click="editField.login = true">
-                <v-icon>edit</v-icon>
-              </v-btn>
-              <!-- Submit -->
-              <v-text-field v-model="playerSettings.login" v-show="editField.login" type="text" :rules="loginRules" class="field-value form-control" single-line></v-text-field>
-              <v-btn v-show="editField.login" small flat fab  @click="submitLogin()">
-                <v-icon>check_circle</v-icon>
-              </v-btn>
-              <v-btn v-show="editField.login" small flat fab  @click="editField.login = false">
-                <v-icon>cancel</v-icon>
-              </v-btn>
-              <p>
-                {{ this.playerSettings.address }}
-              </p>
-              <p>
+      <v-layout align-center style="background-color: white; padding-top: 70px; padding-bottom: 70px">
+        <v-flex md4 class="text-xs-center">
+          <img src="/static/img/picto/piggy-eye.png" width="160">
+        </v-flex>
+        <v-flex md8 class="grey--text" style="margin-top: 20px">
+          <!-- Display -->
+          <span v-if="this.playerSettings.login == ''" v-show="!editField.login"><i>Enter your login</i></span>
+          <span v-show="!editField.login" class="display-1 pink--text" style="float: left;">{{ this.playerSettings.login }}</span>
+          <v-btn v-show="!editField.login" small flat fab style="bottom: 10px;" @click="editField.login = true">
+            <v-icon>edit</v-icon>
+          </v-btn>
+          <!-- Submit -->
+          <v-text-field v-model="playerSettings.login" v-show="editField.login" type="text" :rules="loginRules" class="field-value form-control" single-line></v-text-field>
+          <v-btn v-show="editField.login" small flat fab  @click="submitLogin()">
+            <v-icon>check_circle</v-icon>
+          </v-btn>
+          <v-btn v-show="editField.login" small flat fab  @click="editField.login = false">
+            <v-icon>cancel</v-icon>
+          </v-btn>
+          <p>
+            {{ this.playerSettings.address }}
+          </p>
+          <p>
 
-                <!-- Display -->
-                <span v-if="this.playerSettings.email == ''" v-show="!editField.email"><i>Enter your email</i></span>
-                <span v-show="!editField.email">{{ this.playerSettings.email }}</span>
-                <v-btn v-show="!editField.email" small flat fab @click="editField.email = true">
-                  <v-icon>edit</v-icon>
-                </v-btn>
-                <!-- Submit -->
-                <v-text-field v-model="playerSettings.email" v-show="editField.email"
-                type="email"
-                :rules="emailRules" class="field-value form-control"></v-text-field>
-                <v-btn v-show="editField.email" small flat fab @click="submitEmail()">
-                  <v-icon>check_circle</v-icon>
-                </v-btn>
-                <v-btn v-show="editField.email" small flat fab @click="editField.email = false">
-                  <v-icon>cancel</v-icon>
-                </v-btn>
-              </p>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-parallax>
-    </section>
-
-    <section>
-      <v-layout
-        column
-        wrap
-        class="my-5"
-        align-center
-      >
-        <v-flex md10 style="width: 100%">
-          <v-container grid-list-xl>
-            <v-layout row wrap>
-              <v-flex md10 offset-md1>
-                <h1 class="headline">Settings</h1>
-              </v-flex>
-              <v-flex md10 offset-md1>
-                <v-form v-model="valid" ref="form" lazy-validation>
-                  <v-checkbox
-                    color="info"
-                    label="I want to be informed in case of victory."
-                    v-model="playerSettings.notify_victory"
-                  ></v-checkbox>
-                  <v-checkbox
-                    color="info"
-                    label="I want to be informed when the game I played is over."
-                    v-model="playerSettings.notify_stop"
-                  ></v-checkbox>
-                  <v-checkbox
-                    color="info"
-                    label="I want to be informed when a new game starts."
-                    v-model="playerSettings.notify_start"
-                  ></v-checkbox>
-                </v-form>
-              </v-flex>
-            </v-layout>
-          </v-container>
+            <!-- Display -->
+            <span v-if="this.playerSettings.email == ''" v-show="!editField.email"><i>Enter your email</i></span>
+            <span v-show="!editField.email" class="title">{{ this.playerSettings.email }}</span>
+            <v-btn v-show="!editField.email" small flat fab @click="editField.email = true">
+              <v-icon>edit</v-icon>
+            </v-btn>
+            <!-- Submit -->
+            <v-text-field v-model="playerSettings.email" v-show="editField.email"
+            type="email"
+            :rules="emailRules" class="field-value form-control"></v-text-field>
+            <v-btn v-show="editField.email" small flat fab @click="submitEmail()">
+              <v-icon>check_circle</v-icon>
+            </v-btn>
+            <v-btn v-show="editField.email" small flat fab @click="editField.email = false">
+              <v-icon>cancel</v-icon>
+            </v-btn>
+          </p>
         </v-flex>
       </v-layout>
     </section>
+
+    <section>
+      <v-parallax class="parallax-background" height="480">
+        <v-layout column align-center justify-center style="padding-bottom: 25px;">
+
+          <div style="width: 80%; padding: 1% 2%; background-color: white;">
+            <v-flex class="my-3">
+              <div class="text-xs-center">
+                <h4 class="display-1 small-text blue--text">Email infos</h4>
+              </div>
+            </v-flex>
+            <v-flex class="my-3">
+              <div class="text-xs-center grey--text title">
+                <p>
+                  You can be informed about important Piggy Breaker events<br /> by subscribing the following features:
+                </p>
+              </div>
+            </v-flex>
+
+            <v-flex md10>
+              <v-container grid-list-xl>
+                <v-layout row wrap>
+                  <v-flex md10 offset-md1>
+                    <v-form v-model="valid" ref="form" lazy-validation>
+                      <v-checkbox
+                      color="info"
+                      label="I want to be informed in case of victory."
+                      v-model="playerSettings.notify_victory"
+                      ></v-checkbox>
+                      <v-checkbox
+                      color="info"
+                      label="I want to be informed when the game I played is over."
+                      v-model="playerSettings.notify_stop"
+                      ></v-checkbox>
+                      <v-checkbox
+                      color="info"
+                      label="I want to be informed when a new game starts."
+                      v-model="playerSettings.notify_start"
+                      ></v-checkbox>
+                    </v-form>
+                  </v-flex>
+                </v-layout>
+              </v-container>
+            </v-flex>
+
+          </div>
+        </v-layout>
+      </v-parallax>
+    </section>
+
   </div>
 </template>
 
@@ -196,11 +204,9 @@ export default {
 <style scoped>
 
 .parallax-background {
-  background-image: url("/static/img/background/background-piggies.jpg");
+  background-image: url("/static/img/background/background-piggies3.png");
   background-repeat: repeat;
   background-size: 426px 201px;
-  height: auto !important;
-  color: #000;
 }
 
 .player-infos {
@@ -208,7 +214,6 @@ export default {
 }
 
 .field-value {
-
   /* background-color: #ffffff; */
   //border-radius: 25px;
   //padding: 5px 10px;

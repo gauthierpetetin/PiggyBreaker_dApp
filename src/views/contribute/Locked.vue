@@ -44,11 +44,11 @@
       </v-container>
       <v-container v-if="lockstatus === 'wrong_network'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
-          <h2 class=" display-2 grey-text">Your metamask is not on the right network</h2>
-          <v-flex md12 class="text-xs-center" style="margin-top: 15px">
-            <img src="/static/img/picto/piggy-lost.png" alt="piggy locked" width="200">
+          <h2 class=" display-2 grey-text" style="margin-bottom: 25px">Sorry, you're on the wrong network</h2>
+          <span class="grey--text" style="margin-bottom: 15px">Simply open MetaMask and switch over to the</span> Main Ethereum Network.
+          <v-flex md12 class="text-xs-center" style="margin-top: 25px;">
+            <img src="/static/img/picto/main-network.png" alt="piggy locked" width="300">
           </v-flex>
-          Simply open MetaMask and update the network.
         </v-flex>
 
         <v-flex md12 class="text-xs-center black--text">

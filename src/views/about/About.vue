@@ -11,7 +11,7 @@
           <img src="/static/img/picto/piggy.png" alt="avatar" width="100">
         </v-flex> -->
         <v-flex md12>
-          <v-container grid-list-xl>
+          <v-container grid-list-xl class="player-infos">
             <v-layout row wrap>
               <v-flex md10 offset-md1>
                 <h1 class="display-1 grey-text">About</h1>

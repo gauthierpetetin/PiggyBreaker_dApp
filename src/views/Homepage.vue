@@ -7,24 +7,24 @@
       <v-parallax  class="parallax-background" height="480">
         <v-layout column align-center justify-center>
           <div style="width: 80%; height: 380px; padding: 1% 5%; background-color: white">
-          <v-flex class="my-3">
-            <div class="text-xs-center">
-              <h4 class="display-1 grey-text blue-text">But what makes Piggy Breaker so special?</h4>
+            <v-flex class="my-3">
+              <div class="text-xs-center">
+                <h4 class="display-1 grey-text blue-text">But what makes Piggy Breaker so special?</h4>
+              </div>
+            </v-flex>
+            <div class="headline mb-3 text-xs-center title">
+              <p>
+                Piggy Breaker is the most simple game built on blockchain technology.
+              </p>
+              <p>
+                Blockchain is the technology that makes things like Bitcoin possible. It offers total security "by design", which ensures the piggy content and your contribution(s) cannot be replicated, taken away, or destroyed.
+              </p>
+              <img src="/static/img/picto/piggy-chained.png" alt="big piggy" height="100">
+              <p><br>
+                Thus you can securely play with Ether and get a chance to win the lottery!
+              </p>
             </div>
-          </v-flex>
-          <div class="headline mb-3 text-xs-center title">
-            <p>
-              Piggy Breaker is the most simple game built on blockchain technology.
-            </p>
-            <p>
-              Blockchain is the technology that makes things like Bitcoin possible. It offers total security "by design", which ensures the piggy content and your contribution(s) cannot be replicated, taken away, or destroyed.
-            </p>
-            <img src="/static/img/picto/piggy-chained.png" alt="big piggy" height="100">
-            <p><br>
-              Thus you can securely play with Ether and get a chance to win the lottery!
-            </p>
           </div>
-        </div>
         </v-layout>
       </v-parallax>
     </section>
@@ -138,7 +138,7 @@ export default {
 }
 
 .grey-text {
-  color: #404040
+  color: #404040 !important
 }
 
 .blue-text {

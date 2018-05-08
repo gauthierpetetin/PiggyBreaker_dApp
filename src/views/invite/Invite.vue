@@ -1,57 +1,64 @@
 <template>
   <div>
     <section>
-      <v-layout
-        column
-        wrap
-        class="my-5"
-        align-center
-      >
-        <v-flex md12 >
-          <img src="/static/img/picto/piggy-buddy.png" alt="avatar" width="200">
+      <v-layout column wrap align-center style="background-color: white; padding-bottom: 40px">
+        <v-flex md12>
+          <img src="/static/img/picto/piggy-buddy.png" alt="avatar" width="400">
         </v-flex>
       </v-layout>
     </section>
 
     <section>
       <v-parallax class="parallax-background">
-        <v-layout column align-center justify-center>
-          <div class="headline black--text mb-3 text-xs-center">
-            <v-flex xs12 sm12>
-              <h2 class=" display-2">Invite your  friends to play Piggy Breaker!</h2>
+        <v-layout column align-center justify-center style="padding-bottom: 25px;">
+          <div style="width: 80%; height: 340px; padding: 1% 2%; background-color: white">
+            <v-flex class="my-3">
+              <div class="text-xs-center">
+                <h4 class="display-1 blue--text small-text">Invite your  friends to play Piggy Breaker!</h4>
+              </div>
             </v-flex>
-          </div>
-        </v-layout>
-        <v-layout column align-center justify-center>
-          <div class="headline black--text mb-3 text-xs-center email-form">
-            <v-flex xs12 sm12>
-              <v-text-field type="text" email
-                style="width:300px;"
-                label="Your friend’s email"
-                :rules="emailRules"
-                v-model="email"
-                @focus="$event.target.select()"
-                ></v-text-field>
+            <v-flex class="my-3">
+              <div class="text-xs-center grey--text title">
+                <p>
+                  You enjoy Piggy Breaker? Your friends could enjoy it too.<br />
+                  Give them a chance to win the lottery by inviting them on Piggy Breker.
+                </p>
+              </div>
             </v-flex>
-            <v-flex xs12 sm12>
-              <v-btn
-                block
-                dark
-                :class="[emailValid ? 'primary' : 'grey']"
-                @click.native="invite()"
-                >Invite friend per email</v-btn>
-              <v-dialog v-model="dialogConfirm" max-width="500px">
-                <v-card>
-                  <v-card-title>
-                    <span></span>
-                    <v-spacer>{{ dialogMessage }}</v-spacer>
-                  </v-card-title>
-                  <v-card-actions>
-                    <v-btn color="primary" flat @click.stop="dialogConfirm=false">Close</v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
+
+            <v-flex column align-center justify-center class="my-3">
+              <v-card class="elevation-0 transparent" style="margin: auto; width: 60%; margin-top: 30px;">
+
+                <v-flex xs12 sm12>
+                  <v-text-field type="text" email
+                  label="Your friend’s email"
+                  :rules="emailRules"
+                  v-model="email"
+                  @focus="$event.target.select()"
+                  ></v-text-field>
+                </v-flex>
+
+                <v-flex xs12 sm12>
+                  <v-btn block dark :class="[emailValid ? 'blue' : 'grey']" @click.native="invite()">Invite friend per email</v-btn>
+                  <v-dialog v-model="dialogConfirm" max-width="500px">
+                    <v-card>
+                      <v-card-title>
+                        <v-spacer>
+                          {{ dialogMessage }}
+                        </v-spacer>
+                      </v-card-title>
+                      <v-card-actions>
+                        <v-btn color="primary" flat @click.stop="dialogConfirm=false">
+                          Close
+                        </v-btn>
+                      </v-card-actions>
+                    </v-card>
+                  </v-dialog>
+                </v-flex>
+
+              </v-card>
             </v-flex>
+
           </div>
         </v-layout>
       </v-parallax>
@@ -126,7 +133,7 @@ export default {
 <style scoped>
 
 .parallax-background {
-  background-image: url("/static/img/background/background-piggies.jpg");
+  background-image: url("/static/img/background/background-piggies3.png");
   background-repeat: repeat;
   background-size: 426px 201px;
 }
@@ -137,7 +144,7 @@ export default {
 
 .email-form {
   background-color: #f2f2f2;
-  border-radius: 25px;
+  border-radius: 15px;
   padding: 20px;
 }
 

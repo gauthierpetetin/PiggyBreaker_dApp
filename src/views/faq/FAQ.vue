@@ -193,7 +193,7 @@
                     <div slot="header" class="grey-text subheading padTitle">Can I play Piggy Breaker with my phone?</div>
                     <v-card>
                       <v-card-text class="white grey--text pad">
-                        Not yet. Piggy Breaker relies on technologies that simply don’t function on mobile devices, like MetaMask.<br />
+                        Not yet. Piggy Breaker relies on technologies that simply don’t function on mobile devices, like Metamask.<br />
                         We are developing a mobile app, but you will need a laptop, desktop, or tablet browser to complete transactions for the foreseeable future.
                       </v-card-text>
                     </v-card>
