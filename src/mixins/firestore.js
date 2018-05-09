@@ -23,9 +23,9 @@ export default {
         createdAt: null,
         updatedAt: null,
         brokenAt: null,
-        breakable: null,
+        breakable: null, //<--
         breakableAt: null,
-        serverTimestamp: null
+        serverTimestamp: null //<--
       },
       previousGame: {
         id: null,

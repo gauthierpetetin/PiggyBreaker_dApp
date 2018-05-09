@@ -76,7 +76,7 @@
                       <span class="title blue--text">Your chances to win the lottery: 25%</span>
                     </h1>
                   </v-flex>
-
+                  
                 </v-layout>
               </v-container>
             </v-card>
