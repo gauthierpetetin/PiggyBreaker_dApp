@@ -52,20 +52,20 @@
     </section>
     <!-- What is Piggy Breaker -->
     <section>
-      <v-parallax  class="parallax-background" height="450">
+      <v-parallax  class="parallax-background" height="550">
         <v-layout column align-center justify-center>
-          <div style="width: 80%; height: 340px; padding: 1% 2%; background-color: white">
+          <div style="width: 80%; height: 400px; padding: 1% 2%; background-color: white">
           <v-flex class="my-3">
             <div class="text-xs-center">
-              <h4 class="display-1 grey-text small-text">What is Piggy Breaker?</h4>
+              <h4 class="display-1 pink--text small-text" style="padding: 10px 0">Piggy Breaker is the next world lottery!</h4>
             </div>
           </v-flex>
           <div class="headline mb-3 text-xs-center title">
             <p>
-              <span class="pink--text">Piggy Breaker is the next world lottery!</span><br />
+              <!-- <span class="pink--text">Piggy Breaker is the next world lottery!</span><br /> -->
               The game is centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.
             </p>
-            <img src="/static/img/picto/piggy-growth.png" alt="piggy growth" height="100">
+            <img src="/static/img/picto/piggy-growth.png" alt="piggy growth" height="120" style="margin-top: 15px; margin-bottom: 15px">
             <p><br>
               Someday the Piggy bank will break and make one of the players rich...
             </p>
@@ -136,10 +136,10 @@
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
                     <div class="headline text-xs-center howitworks-title grey-text title">3. A winner is chosen randomly between the contributors.
-                      <v-tooltip right>
+                      <!-- <v-tooltip right>
                         <v-icon slot="activator">info_outline</v-icon>
                         <span></span>
-                      </v-tooltip>
+                      </v-tooltip> -->
                     </div>
                   </v-card-title>
                   <v-card-text class="text-xs-center">

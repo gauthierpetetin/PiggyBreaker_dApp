@@ -9,7 +9,7 @@
           <div style="width: 80%; height: 380px; padding: 1% 5%; background-color: white">
             <v-flex class="my-3">
               <div class="text-xs-center">
-                <h4 class="display-1 grey-text blue-text">But what makes Piggy Breaker so special?</h4>
+                <h4 class="display-1 blue-text">But what makes Piggy Breaker so special?</h4>
               </div>
             </v-flex>
             <div class="headline mb-3 text-xs-center title">
@@ -76,7 +76,7 @@
                       <span class="title blue--text">Your chances to win the lottery: 25%</span>
                     </h1>
                   </v-flex>
-                  
+
                 </v-layout>
               </v-container>
             </v-card>

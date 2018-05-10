@@ -1,6 +1,14 @@
 <template>
   <div>
 
+    <!-- <section>
+      <v-layout column wrap align-center style="background-color: white; padding-bottom: 40px">
+        <v-flex md12>
+          <img src="/static/img/picto/piggy-lost2.png" alt="avatar" width="200" style="margin-top: 30px">
+        </v-flex>
+      </v-layout>
+    </section> -->
+
     <section>
       <v-layout
         column
@@ -12,7 +20,7 @@
           <v-container grid-list-xl>
             <v-layout row wrap>
               <v-flex md10 offset-md1>
-                <h1 class="display-1 grey-text">FAQ</h1>
+                <h1 class="display-1 grey-text">FAQs</h1>
               </v-flex>
               <v-flex md10 offset-md1>
                 <!-- Getting Started -->

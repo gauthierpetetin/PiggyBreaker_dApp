@@ -45,9 +45,9 @@
       <v-container v-if="lockstatus === 'wrong_network'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
           <h2 class=" display-2 grey-text" style="margin-bottom: 25px">Sorry, you're on the wrong network</h2>
-          <span class="grey--text" style="margin-bottom: 15px">Simply open MetaMask and switch over to the</span> Main Ethereum Network.
+          <span class="grey--text" style="margin-bottom: 15px">Simply open MetaMask and switch over to the</span> {{ networkMessage }}.
           <v-flex md12 class="text-xs-center" style="margin-top: 25px;">
-            <img src="/static/img/picto/main-network.png" alt="piggy locked" width="300">
+            <img :src="networkImage" alt="piggy locked" width="300">
           </v-flex>
         </v-flex>
 
@@ -72,6 +72,28 @@ export default {
   },
   components: {
     appGettingStarted: GettingStarted
+  },
+  mounted() {
+    //do something after mounting vue instance
+    console.log('Hello Gauthier, this is the env: ', process.env.NODE_ENV)
+    console.log('Hello Gauthier, this is the network: ', process.env.ETHEREUM_NODE_ENV)
+    console.log('Hello Gauthier, this is the API_URL: ', process.env.API_URL)
+  },
+  computed: {
+    networkMessage () {
+      if (process.env.ETHEREUM_NODE_ENV === 'development') {
+        return 'Ropsten Test Network'
+      } else {
+        return 'Main Ethereum Network'
+      }
+    },
+    networkImage () {
+      if (process.env.ETHEREUM_NODE_ENV === 'development') {
+        return '/static/img/picto/network-ropsten.png'
+      } else {
+        return '/static/img/picto/network-main.png'
+      }
+    }
   }
 }
 
