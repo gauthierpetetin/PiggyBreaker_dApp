@@ -9,12 +9,12 @@
     </section>
 
     <section>
-      <v-parallax class="parallax-background">
+      <v-parallax class="parallax-background" height="550">
         <v-layout column align-center justify-center style="padding-bottom: 25px;">
-          <div style="width: 80%; height: 340px; padding: 1% 2%; background-color: white">
+          <div style="width: 80%; height: 400px; padding: 2% 2%; background-color: white">
             <v-flex class="my-3">
               <div class="text-xs-center">
-                <h4 class="display-1 blue--text small-text">Invite your  friends to play Piggy Breaker!</h4>
+                <h4 class="display-1 blue--text small-text" style="padding: 1% 0">Invite your  friends to play Piggy Breaker!</h4>
               </div>
             </v-flex>
             <v-flex class="my-3">
@@ -29,7 +29,7 @@
             <v-flex column align-center justify-center class="my-3">
               <v-card class="elevation-0 transparent" style="margin: auto; width: 60%; margin-top: 30px;">
 
-                <v-flex xs12 sm12>
+                <v-flex xs12 sm12 style="padding: 2% 0">
                   <v-text-field type="text" email
                   label="Your friend’s email"
                   :rules="emailRules"
@@ -133,7 +133,7 @@ export default {
 <style scoped>
 
 .parallax-background {
-  background-image: url("/static/img/background/background-piggies3.png");
+  background-image: url("/static/img/background/background-piggies50.png");
   background-repeat: repeat;
   background-size: 426px 201px;
 }

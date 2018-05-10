@@ -147,7 +147,7 @@
                     <div slot="header" class="grey-text subheading padTitle">How do I know who won the lottery?</div>
                     <v-card>
                       <v-card-text class="white grey--text pad">
-                        The winner is kept secret for a short time once the Piggy gets broken. Due to security reasons we can't detail here, the winner becomes public once the next lottery is not empty anymore (e.g. when the next lottery contains at least one contribution).
+                        The winner is kept secret for a short time once the Piggy gets broken. Due to security reasons we can't detail here, the winner becomes public once the next lottery has really started e.g. once the next lottery contains at least one contribution.
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>

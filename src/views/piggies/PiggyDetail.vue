@@ -5,8 +5,8 @@
         <v-flex sm3>
           <v-card-text>
             <div class="text-md-center">
-              <img v-if="detailGame.open === true" src="/static/img/picto/piggy.png" width="100">
-              <img v-else src="/static/img/picto/broken-piggy.png" width="100">
+              <img v-if="detailGame.open === true" src="/static/img/picto/piggy.png" width="100" max-height="100">
+              <img v-else src="/static/img/picto/broken-piggy.png" width="100" max-height="100">
               <h1 class="pink--text">{{ detailGame.value }} ETH</h1>
               <v-progress-linear :value="percentage" height="4" color="pink" background-color="transparent"></v-progress-linear>
             </div>
@@ -22,7 +22,7 @@
                 <strong>Winner</strong>:
                 <v-tooltip right>
                   <v-icon slot="activator" class="warning--text">fas fa-crosshairs fa-pulse</v-icon>
-                  <span>The winner becomes public once the current lottery is not empty anymore<br />(e.g. when the current lottery contains at least one contribution).</span>
+                  <span>The previous winner becomes public once the next lottery has started,<br />e.g. once Piggy#{{ detailGame.id + 1 }} contains at least one contribution.</span>
                 </v-tooltip>
               </h1>
               <br />

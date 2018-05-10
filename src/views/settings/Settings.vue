@@ -47,10 +47,10 @@
     </section>
 
     <section>
-      <v-parallax class="parallax-background" height="480">
+      <v-parallax class="parallax-background" height="550">
         <v-layout column align-center justify-center style="padding-bottom: 25px;">
 
-          <div style="width: 80%; padding: 1% 2%; background-color: white;">
+          <div style="width: 80%; height: 400px; padding: 2% 2%; background-color: white;">
             <v-flex class="my-3">
               <div class="text-xs-center">
                 <h4 class="display-1 small-text blue--text">Email infos</h4>
@@ -64,7 +64,7 @@
               </div>
             </v-flex>
 
-            <v-flex md10>
+            <v-flex md10 style="padding: 2% 0">
               <v-container grid-list-xl>
                 <v-layout row wrap>
                   <v-flex md10 offset-md1>
@@ -204,7 +204,7 @@ export default {
 <style scoped>
 
 .parallax-background {
-  background-image: url("/static/img/background/background-piggies3.png");
+  background-image: url("/static/img/background/background-piggies50.png");
   background-repeat: repeat;
   background-size: 426px 201px;
 }

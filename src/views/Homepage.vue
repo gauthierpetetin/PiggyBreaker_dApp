@@ -4,9 +4,9 @@
     <app-contribute></app-contribute>
     <!-- /Contribute -->
     <section>
-      <v-parallax  class="parallax-background" height="480">
-        <v-layout column align-center justify-center>
-          <div style="width: 80%; height: 380px; padding: 1% 5%; background-color: white">
+      <v-parallax  class="parallax-background" height="550">
+        <v-layout column align-center justify-center class="full-opacity">
+          <div style="width: 80%; height: 400px; padding: 1% 5%; background-color: white">
             <v-flex class="my-3">
               <div class="text-xs-center">
                 <h4 class="display-1 blue-text">But what makes Piggy Breaker so special?</h4>
@@ -30,8 +30,8 @@
     </section>
     <!-- Example -->
     <section style="background-color: white">
-      <v-container grid-list-xl style="padding: 0 0; padding-bottom: 60px">
-        <v-layout row wrap justify-center class="my-5" style="margin: 10px 0 !important;">
+      <v-container grid-list-xl>
+        <v-layout row wrap justify-center class="my-5" style="margin-top: 0px !important;">
           <v-flex sm12 class="my-3" style="margin-bottom: 0 !important">
             <div class="text-xs-center">
               <h4 class="display-1 grey-text">Examples</h4>
@@ -101,10 +101,11 @@ export default {
 
 <style>
 .parallax-background {
-  background-image: url('/static/img/background/background-piggies3.png');
+  background-image: url('/static/img/background/background-piggies50.png');
   background-repeat: repeat;
   background-size: 426px 201px;
 }
+
 
 .remaining-time {
   color: #a2a2a2;
