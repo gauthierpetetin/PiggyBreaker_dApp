@@ -75,9 +75,6 @@ export default {
   },
   mounted() {
     //do something after mounting vue instance
-    console.log('Hello Gauthier, this is the env: ', process.env.NODE_ENV)
-    console.log('Hello Gauthier, this is the network: ', process.env.ETHEREUM_NODE_ENV)
-    console.log('Hello Gauthier, this is the API_URL: ', process.env.API_URL)
   },
   computed: {
     networkMessage () {
