@@ -12,7 +12,7 @@
           <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong>{{ currentGame.value }} ETH</strong></h1>
           <v-tooltip right>
             <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 15px" slot="activator">
-            <span> {{ piggyMessage1 }} <br /> {{ piggyMessage2 }}</span>
+            <span>{{piggyMessage1}}<br />{{ piggyMessage2 }}</span>
           </v-tooltip>
           <!-- Player contribution amount -->
           <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
@@ -227,23 +227,23 @@ export default {
     },
     piggyImage: function () {
       if (this.player.contributionBalance > 0) {
-        return "/static/img/picto/big-piggy-happy.png"
+        return '/static/img/picto/big-piggy-happy.png'
       } else {
-        return "/static/img/picto/big-piggy.png"
+        return '/static/img/picto/big-piggy.png'
       }
     },
     piggyMessage1: function () {
       if (this.player.contributionBalance > 0) {
-        return "Billy is happy since you contributed."
+        return 'Billy is happy since you contributed.'
       } else {
-        return "Billy is sad.."
+        return 'Billy is sad..'
       }
     },
     piggyMessage2: function () {
       if (this.player.contributionBalance > 0) {
-        return "Contribute more to get more chances to win the lottery!"
+        return 'Contribute more to get more chances to win the lottery!'
       } else {
-        return "Contribute to make him happy ;)"
+        return 'Contribute to make him happy ;)'
       }
     }
   },

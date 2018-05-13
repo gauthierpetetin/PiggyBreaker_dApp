@@ -73,8 +73,8 @@ export default {
   components: {
     appGettingStarted: GettingStarted
   },
-  mounted() {
-    //do something after mounting vue instance
+  mounted () {
+    // do something after mounting vue instance
   },
   computed: {
     networkMessage () {
