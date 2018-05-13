@@ -90,11 +90,11 @@ export default {
   data () {
     return {
       team: [
-        { name: 'Pig G', role: 'Product and Development' },
-        { name: 'Pig R', role: 'Product and Development' },
-        { name: 'Pig P', role: 'Marketing' },
-        { name: 'Pig S', role: 'Development' },
-        { name: 'Pig M', role: 'Design' }
+        { name: 'Piggy G', role: 'Product and Development', img: '/static/img/team/piggy_g.png' },
+        { name: 'Piggy R', role: 'Product and Development', img: '/static/img/team/piggy_r.png' },
+        { name: 'Piggy P', role: 'Marketing', img: '/static/img/team/piggy_p.png' },
+        { name: 'Piggy S', role: 'Development', img: '/static/img/team/piggy_s.png' },
+        { name: 'Piggy M', role: 'Design', img: '/static/img/team/piggy_m.png' }
       ]
     }
   },

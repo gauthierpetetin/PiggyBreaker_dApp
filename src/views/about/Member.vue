@@ -6,7 +6,9 @@
           :size="140"
           class="grey lighten-4"
         >
-        <img src="/static/img/picto/piggy.png" alt="avatar">
+          <!-- <div> -->
+            <img :src="member.img" alt="avatar" style="overflow: hidden">
+          <!-- </div> -->
       </v-avatar>
     </v-card-text>
 
