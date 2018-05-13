@@ -1,6 +1,7 @@
 import db from '@/components/firebaseInit'
 import firebase from 'firebase'
 import moment from 'moment'
+import Units from 'ethereumjs-units'
 
 const settings = {
   timestampsInSnapshots: true
@@ -131,7 +132,7 @@ export default {
       // Set game data
       return {
         id: gameItem.data().id,
-        value: piggyValue,
+        value: Units.convert(piggyValue, 'wei', 'eth'),
         nbContributions: gameItem.data().nb_contributions,
         minContribution: gameItem.data().min_contribution,
         open: gameItem.data().open,
