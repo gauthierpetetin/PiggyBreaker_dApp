@@ -1,37 +1,37 @@
 <template>
-  <v-toolbar class="white">
-    <v-toolbar-title>
+  <v-toolbar style="background-color: white;">
+    <v-toolbar-title style="min-width: 250px">
       <router-link to="/"  class="logo">
-        <a class="nav-link ">
+        <a class="nav-link" >
           <img src="/static/img/logo/logo-crypto-piggy.png" height="50">
-          <span>Piggy Breaker</span>
+          <span style="color: #2196f3">Piggy Breaker</span>
         </a></router-link>
     </v-toolbar-title>
     <v-toolbar-items v-if="networkStatus == 'good'">
       <v-tooltip bottom>
-        <v-btn flat slot="activator" class="metamask-status"><img src="/static/img/icon/circle-green.png"> Network good</v-btn>
+        <v-btn flat slot="activator" class="metamask-status grey-text"><img src="/static/img/icon/circle-green.png"> Network good</v-btn>
         <span>Network is good</span>
       </v-tooltip>
     </v-toolbar-items>
     <v-toolbar-items v-else-if="networkStatus == 'bad'">
       <v-tooltip bottom>
         <v-btn flat slot="activator" class="metamask-status"><img src="/static/img/icon/circle-red.png"> Network bad</v-btn>
-        <span>No web3? You should consider trying MetaMask!</span>
+        <span>No web3? You should consider trying Metamask!</span>
       </v-tooltip>
     </v-toolbar-items>
     <v-spacer></v-spacer>
-    <template v-if="ethereumEnv == 'development'">
+    <div v-if="ethereumEnv == 'development'">
       <v-toolbar-items>
-        <div style="background-color: #F08080;margin:15px;padding: 5px 10px;color: #fff;">This version is temporarily on TESTNET</div>
+        <div class="white--text" style="background-color: #E91E63;margin:15px;padding: 5px 10px;">Beta version (Ropsten)</div>
       </v-toolbar-items>
       <v-spacer></v-spacer>
-    </template>
+    </div>
     <v-toolbar-items>
-      <v-btn to="invite" flat>Invite</v-btn>
-      <v-btn to="piggies" flat>Past piggies</v-btn>
-      <v-btn to="about" flat>About</v-btn>
-      <v-btn to="faq" flat>FAQ</v-btn>
-      <v-btn to="settings" v-if="metamaskEnabled" flat>Settings</v-btn>
+      <v-btn class="grey-text" to="invite" flat>Invite</v-btn>
+      <v-btn class="grey-text" to="piggies" flat>History</v-btn>
+      <v-btn class="grey-text" to="settings" flat>Settings</v-btn>
+      <v-btn class="grey-text" to="faq" flat>FAQ</v-btn>
+      <v-btn class="grey-text" to="about" flat>About</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -74,15 +74,10 @@ export default {
 
 .logo  {
   text-decoration: none;
-
 }
 
 .logo img {
   vertical-align:middle;
-}
-
-.logo span {
-  color: #000000;
 }
 
 .metamask-status {

@@ -2,61 +2,90 @@
   <div>
     <!-- Contribute -->
     <section>
-      <v-parallax class="parallax-background">
+      <!-- <v-parallax class="parallax-background"> -->
         <v-layout
           column
           align-center
           justify-center
+          style="background-color: white"
           >
-          <h1 class="black--text mb-2 display-2 text-xs-center current">Current Piggy value:<br /><strong>{{ game.value }} ETH</strong></h1>
+          <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong>{{ currentGame.value }} ETH</strong></h1>
+          <img src="/static/img/picto/big-piggy.png" alt="big piggy" height="350" style="margin-top: 15px">
           <!-- Player contribution amount -->
-          <section v-if="contribution.enable">
-            <h1 class="black--text mb-2 display-2 text-xs-center contribution">
-              Your contribution:<br />
+          <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
+            <h1 class="mb-2 headline text-xs-center contribution">
+              <span class="grey--text">Your current contribution:</span>
               <template v-if="loading.contribution">
                 <v-tooltip right>
                   <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
-                  <span>Your contribution has been submitted successfully.<br />It will require
-                  50-60 seconds until it gets validated by the whole network.</span>
+                  <span>Your contribution has been submitted successfully.<br />
+                  It will require 50-60 seconds until it gets validated by the whole network.</span>
                 </v-tooltip>
               </template>
               <template v-else>
-                <strong>{{ player.contributionBalance }} ETH</strong>
+                <span class="grey--text">{{ player.contributionBalance }} ETH</span>
+                <v-progress-linear :value="percentage" height="20" color="grey"></v-progress-linear>
               </template>
             </h1>
           </section>
           <!-- /Player contribution amount -->
-          <img src="/static/img/picto/big-piggy.png" alt="big piggy" height="350">
+
         </v-layout>
-        <v-layout v-if="contribution.enable" row wrap class="white--text">
+        <v-layout v-if="contribution.enable" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
-            <app-dialog-contribute button-large="true" :dialogGame="game" :playerAddress="player.address" @contribution="onContributionChild"></app-dialog-contribute>
+            <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" @contribution="onContributionChild"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
-          <v-flex md12 class="text-xs-center black--text minimum-contribution">
-            Minimum contribution: <span>{{ game.minContribution }} ETH</span>
+          <!-- <v-flex md12 class="text-xs-center grey--text minimum-contribution">
+            Min contribution: <span>{{ ethGame.minContribution }} ETH</span>
             <v-tooltip right>
-              <v-icon slot="activator">info_outline</v-icon>
+              <v-icon slot="activator" color="grey">info_outline</v-icon>
               <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
             </v-tooltip>
-          </v-flex>
+          </v-flex> -->
         </v-layout>
         <v-layout v-else row wrap class="white--text">
           <app-locked :lockstatus="contribution.status"></app-locked>
         </v-layout>
+      <!-- </v-parallax> -->
+    </section>
+    <!-- What is Piggy Breaker -->
+    <section>
+      <v-parallax  class="parallax-background" height="550">
+        <v-layout column align-center justify-center>
+          <div style="width: 80%; height: 400px; padding: 1% 2%; background-color: white">
+          <v-flex class="my-3">
+            <div class="text-xs-center">
+              <h4 class="display-1 pink--text small-text" style="padding: 10px 0">Piggy Breaker is the next world lottery!</h4>
+            </div>
+          </v-flex>
+          <div class="headline mb-3 text-xs-center title">
+            <p>
+              <!-- <span class="pink--text">Piggy Breaker is the next world lottery!</span><br /> -->
+              The game is centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.
+            </p>
+            <img src="/static/img/picto/piggy-growth.png" alt="piggy growth" height="120" style="margin-top: 15px; margin-bottom: 15px">
+            <p><br>
+              Someday the Piggy bank will break and make one of the players rich...
+            </p>
+          </div>
+        </div>
+        </v-layout>
       </v-parallax>
     </section>
+
     <!-- How does it work? -->
-    <section>
+    <section style="background-color: white">
       <v-layout
         column
         wrap
         class="my-5"
+        style="margin: 0 0 !important;"
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
-            <h2 class=" display-2">How does it work?</h2>
+            <h2 class="display-1 grey-text" style="margin-top: 25px">How does it work?</h2>
           </div>
         </v-flex>
         <v-flex xs12>
@@ -65,14 +94,14 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title">1. You <strong>contribute</strong> with Ethers.</div>
+                  <div class="headline text-xs-center howitworks-title grey-text title">1. You contribute with Ethers.</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/1-contribute.png" height="150">
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <!-- Dialog -->
-                    <app-dialog-contribute :dialogGame="game" :playerAddress="player.address"></app-dialog-contribute>
+                    <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance"></app-dialog-contribute>
                     <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
@@ -80,7 +109,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title">2. <strong>Any contributor</strong> can decide to break the Piggy.</div>
+                  <div class="headline text-xs-center howitworks-title grey-text title">2. Any contributor can decide to break the Piggy.</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/2-break-piggy.png" height="150">
@@ -96,7 +125,7 @@
                         </v-tooltip>
                       </template>
                       <template v-else>
-                        <app-dialog-break :dialogGame="game" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
+                        <app-dialog-break :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
                       </template>
                       <!-- /Dialog -->
                     </template>
@@ -106,11 +135,11 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center howitworks-title">3. A winner is <strong>chosen randomly</strong> between the contributors.
-                        <v-tooltip right>
+                    <div class="headline text-xs-center howitworks-title grey-text title">3. A winner is chosen randomly between the contributors.
+                      <!-- <v-tooltip right>
                         <v-icon slot="activator">info_outline</v-icon>
                         <span></span>
-                      </v-tooltip>
+                      </v-tooltip> -->
                     </div>
                   </v-card-title>
                   <v-card-text class="text-xs-center">
@@ -126,7 +155,7 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-withdraw :dialogPlayer="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
+                      <app-dialog-withdraw :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogPlayer="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>
@@ -170,14 +199,29 @@ export default {
       }
     }
   },
+  computed: {
+    percentage: function () {
+      let res
+      let min = 0.5
+      // console.log("COMPUTED: ", this.ethGame)
+      if (!isNaN(this.player.contributionBalance) && !isNaN(this.currentGame.value) && (this.currentGame.value !== 0)) {
+        res = Math.max(100 * this.player.contributionBalance / this.currentGame.value, min)
+      } else {
+        res = min
+      }
+
+      return res
+    }
+  },
   mounted () {
     // Check if metamask is enabled
     this.loopMetamask()
     // this.checkMetamask()
-    // Get current game
-    this.getCurrentGame()
-    // Get current game
-    // this.getPlayer()
+
+    // Get current game on firestore
+    this.getGame('current')
+    // Get current game on ethereum
+    // this.getEthPlayerData()
   },
   methods: {
     // Contribution
@@ -200,12 +244,11 @@ export default {
 
 <style scoped>
 
-.parallax-background {
-  background-image: url("/static/img/background/background-piggies.jpg");
+/* .parallax-background {
+  background-image: url("/static/img/background/background-piggies3.png");
   background-repeat: repeat;
   background-size: 426px 201px;
-  height: auto !important;
-}
+} */
 
 .parallax-background .current {
   margin-top: 50px;
@@ -227,11 +270,15 @@ export default {
 }
 
 .howitworks-title {
-  min-height: 95px;
+  min-height: 45px;
 }
 
 .minimum-contribution {
-  font-size:28px;margin: 20px 0 50px 0;
+  font-size:18px;margin: 20px 0 50px 0;
+}
+
+.warning-text {
+  color: #FDC10A
 }
 
 </style>

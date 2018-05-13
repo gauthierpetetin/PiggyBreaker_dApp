@@ -13,13 +13,33 @@ require('firebase/firestore')
 export default {
   data () {
     return {
-      game: {
+      currentGame: {
         id: null,
         value: 0,
         nbContributions: 0,
         minContribution: 0,
-        breakable: false,
-        breakableAt: null
+        open: false,
+        winner: null,
+        createdAt: null,
+        updatedAt: null,
+        brokenAt: null,
+        breakable: null,
+        breakableAt: null,
+        serverTimestamp: null
+      },
+      previousGame: {
+        id: null,
+        value: 0,
+        nbContributions: 0,
+        minContribution: 0,
+        open: false,
+        winner: null,
+        createdAt: null,
+        updatedAt: null,
+        brokenAt: null,
+        breakable: null,
+        breakableAt: null,
+        serverTimestamp: null
       },
       playerSettings: {
         address: null,
@@ -30,46 +50,37 @@ export default {
         notify_victory: null,
         withdraw_alert: null
       },
-      // currentGame: null,
-      serverTimestamp: null
+      serverTimestamp: null,
+      biggestPiggyValue: 0
     }
   },
   methods: {
     // Get current game
-    getCurrentGame () {
+    getGame (gameType) {
       let self = this
       // Get current game
-      db.collection('game').doc('current')
+      db.collection('game').doc(gameType)
         .onSnapshot(function (gameItem) {
           // Reset contribution
-          self.loading.contribution = false
-          self.loading.break = false
-          self.loading.withdraw = false
+          // self.loading.contribution = false
+          // self.loading.break = false
+          // self.loading.withdraw = false
 
           // Get current time
           firebase.database().ref('/.info/serverTimeOffset').on('value', function (offset) {
             var offsetVal = offset.val() || 0
             var serverTime = Date.now() + offsetVal
 
-            // Check breakable
-            var breakableAt = gameItem.data().breakable_at.seconds
-            var breakable = false
-            if (serverTime > breakableAt) {
-              breakable = true
-            }
+            // console.log('GameVar: ', self.prepareGame(gameItem))
 
-            // Set game data
-            self.game = {
-              id: gameItem.data().id,
-              value: gameItem.data().value,
-              nbContributions: gameItem.data().nb_contributions,
-              minContribution: gameItem.data().min_contribution,
-              breakable: breakable,
-              breakableAt: breakableAt,
-              serverTimestamp: Math.round(serverTime / 1000)
+            if (gameType === 'current') {
+              self.currentGame = self.prepareGame(gameItem, serverTime)
+            } else if (gameType === 'previous') {
+              self.previousGame = self.prepareGame(gameItem, serverTime)
+            } else {
+              console.log('Invalid gameType: ', gameType)
             }
-
-            self.getPlayer()
+            self.getEthPlayerData()
           })
         })
     },
@@ -80,31 +91,58 @@ export default {
       db.collection('games').orderBy('id', 'desc').limit(11).get()
         .then(function (querySnapshot) {
           querySnapshot.forEach((gameItem) => {
-            // Get broken at datetime
-            let brokenAt = null
-            if (gameItem.data().broken_at) {
-              brokenAt = moment.unix(gameItem.data().broken_at.seconds).format('MM/DD/YYYY hh:mm')
-            }
-
-            // Format dates
-            let createdAt = moment.unix(gameItem.data().created_at.seconds).format('MM/DD/YYYY hh:mm')
-            let updatedAt = moment.unix(gameItem.data().updated_at.seconds).format('MM/DD/YYYY hh:mm')
-
-            // Set game data
-            let game = {
-              id: gameItem.data().id,
-              value: gameItem.data().value,
-              nbContributions: gameItem.data().nb_contributions,
-              open: gameItem.data().open,
-              winner: gameItem.data().winner,
-              createdAt: createdAt,
-              updatedAt: updatedAt,
-              brokenAt: brokenAt
-            }
-            // Add to array
-            self.games.push(game)
+            self.games.push(self.prepareGame(gameItem))
           })
         })
+    },
+    prepareGame (gameItem, serverTime) {
+      // Format dates
+      let createdAt = null
+      if (gameItem.data().created_at) {
+        createdAt = moment.unix(gameItem.data().created_at.seconds).format('MM/DD/YYYY hh:mm')
+      }
+      let updatedAt = null
+      if (gameItem.data().updated_at) {
+        updatedAt = moment.unix(gameItem.data().updated_at.seconds).format('MM/DD/YYYY hh:mm')
+      }
+
+      // Get broken at datetime
+      let brokenAt = null
+      if (gameItem.data().broken_at) {
+        brokenAt = moment.unix(gameItem.data().broken_at.seconds).format('MM/DD/YYYY hh:mm')
+      }
+
+      // Check breakable
+      var breakableAt = null
+      var breakable = false
+      if (gameItem.data().breakable_at) {
+        breakableAt = gameItem.data().breakable_at.seconds
+        if (serverTime > breakableAt) {
+          breakable = true
+        }
+      }
+
+      // Collect Piggy value
+      let piggyValue = gameItem.data().value
+      if (piggyValue > this.biggestPiggyValue) {
+        this.biggestPiggyValue = piggyValue
+      }
+
+      // Set game data
+      return {
+        id: gameItem.data().id,
+        value: piggyValue,
+        nbContributions: gameItem.data().nb_contributions,
+        minContribution: gameItem.data().min_contribution,
+        open: gameItem.data().open,
+        winner: gameItem.data().winner,
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+        brokenAt: brokenAt,
+        breakable: breakable,
+        breakableAt: breakableAt,
+        serverTimestamp: Math.round(serverTime / 1000)
+      }
     },
     // Get player email
     getPlayerEmail (address) {

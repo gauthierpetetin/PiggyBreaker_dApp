@@ -10,36 +10,24 @@
         <v-container grid-list-md >
           <v-layout row wrap>
             <v-flex md12>
-              <h1 class="headline">Piggies List</h1>
+              <h1 class="headline grey-text titles">Current Piggy</h1>
+              <app-piggy-detail :detailGame="currentGame" :maxValue="biggestPiggyValue" class="boxes"></app-piggy-detail>
             </v-flex>
+          </v-layout>
 
-            <v-flex v-for="(game, index) in games" :key="index" md6 style="margin-bottom: 10px;">
-              <v-card>
-                <v-layout>
-                  <v-flex sm3>
-                    <v-card-text>
-                      <div class="text-md-center">
-                        <img v-if="game.open === false" src="/static/img/picto/broken-piggy.png" width="100">
-                        <img v-if="game.open === true" src="/static/img/picto/piggy.png" width="100">
-                        <h3>{{ game.value }} ETH</h3>
-                      </div>
-                    </v-card-text>
-                  </v-flex>
-                  <v-flex sm9>
-                    <v-card-title>
-                      <div>
-                        <h1 class="grey--text">#{{ game.id }}</h1>
-                        <h3 v-if="game.open === false">Winner: {{ game.winner }}</h3>
-                        <br />
-                        <span><strong>{{ game.nbContributions }}</strong> contributions</span><br />
-                        <span>Created at: {{ game.createdAt }}</span><br />
-                        <span v-if="game.open">Last update: {{ game.updatedAt }}</span>
-                        <span v-else>Broken at: {{ game.brokenAt }}</span>
-                      </div>
-                    </v-card-title>
-                  </v-flex>
-                </v-layout>
-              </v-card>
+          <v-layout row wrap>
+            <v-flex md12>
+              <h1 class="headline grey-text titles">Previous Piggy</h1>
+              <app-piggy-detail :detailGame="previousGame" :maxValue="biggestPiggyValue" class="boxes"></app-piggy-detail>
+            </v-flex>
+          </v-layout>
+
+          <v-layout row wrap>
+            <v-flex md12>
+              <h1 class="headline grey-text titles">Past Piggies</h1>
+            </v-flex>
+            <v-flex v-for="(game, index) in games" :key="index" md12 style="margin-bottom: 10px;">
+              <app-piggy-detail :detailGame="game" :maxValue="biggestPiggyValue" class="boxes"></app-piggy-detail>
             </v-flex>
           </v-layout>
         </v-container>
@@ -51,9 +39,13 @@
 <script>
 
 import firestoreMixin from '@/mixins/firestore'
+import PiggyDetail from '@/views/piggies/PiggyDetail.vue'
 // import piggy from '@/mixins/piggy'
 
 export default {
+  components: {
+    AppPiggyDetail: PiggyDetail
+  },
   data () {
     return {
       games: []
@@ -68,7 +60,8 @@ export default {
   },
   methods: {
     initialize () {
-      // this.dialWs()
+      this.getGame('current')
+      this.getGame('previous')
       this.getGamesList()
     }
   }
@@ -77,5 +70,13 @@ export default {
 </script>
 
 <style scoped>
+
+  .titles {
+    margin-bottom: 15px
+  }
+
+  .boxes {
+    margin-bottom: 25px
+  }
 
 </style>

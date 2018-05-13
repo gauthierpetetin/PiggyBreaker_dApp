@@ -1,29 +1,37 @@
 <template>
   <div>
+     <!-- contribution.enable -->
     <v-btn
       class="mt-3"
-      :class="classButton"
-      style="background-color: #FFD700;"
+      :class="[playEnable ? 'warning' : 'grey', sizeButton]"
+      style="margin-bottom: 50px"
       dark
       large
       slot="activator"
-      @click.native="contributeDialog()"
+      @click.native="contributeAction()"
     >
-      Contribute
+      <span v-if="positiveContribution">Contribute more</span>
+      <span v-else>Contribute</span>
     </v-btn>
+
     <v-dialog v-model="dialog" persistent max-width="800px">
 
       <v-card>
         <v-card-title>
-          <span class="headline">Contribute</span>
+          <span v-if="contributionStatus === 'contributing'" class="headline grey-text">Contribute</span>
+          <span v-if="contributionStatus === 'contributed'" class="headline grey-text">Transation submitted successfully!</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md v-if="contributionStatus === 'contributing'">
             <v-layout wrap>
               <!-- Ether contribution -->
               <v-flex xs12 sm6>
-                Your ETH contribution*<br />
-                (minimum contribution: {{ dialogGame.minContribution }} ETH)
+                <span class="headline grey-text">Your ETH contribution*:</span><br />
+                <span class="caption" style="color: grey">Minimum contribution: {{ dialogGame.minContribution }} ETH</span>
+                <v-tooltip right>
+                  <v-icon small slot="activator" color="grey">info_outline</v-icon>
+                  <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
+                </v-tooltip>
               </v-flex>
               <v-flex xs12 sm2>
                 <v-text-field type="number" number
@@ -34,44 +42,40 @@
                   {{ contributionError }}
                 </v-alert>
               </v-flex>
-              <v-flex xs12 sm12>
-                * Your chances to win the lottery are directly proportional to the amount your contribution(s)
+              <v-flex xs12 sm12 class="caption">
+                <span style="color: grey">*Your chances to win the lottery are directly proportional to the amount your contribution(s).</span>
               </v-flex>
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="contributePiggy()">Contribute</v-btn>
+                <v-btn block color="warning" dark @click.native="contributePiggy(dialogGame.minContribution)">Contribute</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
           <v-container grid-list-md v-if="contributionStatus === 'contributed'">
             <v-layout wrap>
-              <v-flex xs12 sm12>
-                Congratulations! Your contribution has been submitted successfully.<br />
+              <v-flex xs12 sm12 class="grey--text">
+                Congratulations! Your contribution has been submitted successfully. It will require 50-60 seconds until it gets validated by the whole network.<br />
                 <br />
-                It will require 50-60 seconds until it gets validated by the whole network.
               </v-flex>
+            </v-layout>
+            <v-layout wrap v-if="registerStatus === 'unregistered' ">
               <!-- Email -->
-              <v-flex xs12 sm12>
-                <h3>Optional</h3>
+              <v-flex xs12 sm12 class="title grey-text">
+                Your email (optional):
               </v-flex>
-              <v-flex xs12 sm12>
-                Enter your email to get informed in case of victory.
-              </v-flex>
-              <v-flex xs12 sm6>
-                Your email address
+              <v-flex xs12 sm12 class="grey--text">
+                Let us inform you per email in case of victory.
               </v-flex>
               <v-flex xs12 sm4>
                 <v-text-field type="text" email :rules="emailRules"
                   v-model="playerEmail"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="registerPlayer()">Register</v-btn>
+                <v-btn block color="warning" dark @click.native="registerPlayer()">Register email</v-btn>
               </v-flex>
             </v-layout>
-          </v-container>
-          <v-container grid-list-md v-if="contributionStatus === 'registered'">
-            <v-layout wrap>
-              <v-flex xs12 sm6>
-                All right, you will be notified
+            <v-layout wrap v-if="registerStatus === 'registered' ">
+              <v-flex xs12 sm12 class="grey--text">
+                You will be informed per email in case of victory.
               </v-flex>
             </v-layout>
           </v-container>
@@ -79,10 +83,14 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn v-if="contributionStatus === 'contributing'" color="blue darken-1" flat @click.native="dialog = false">Cancel</v-btn>
-          <v-btn v-if="contributionStatus === 'contributed' || contributionStatus === 'registered'" color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
+          <v-btn v-if="contributionStatus === 'contributed' && registerStatus === 'unregistered'" color="blue darken-1" flat @click.native="dialog = false">Skip</v-btn>
+          <v-btn v-if="contributionStatus === 'contributed' && registerStatus === 'registered'" color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <app-metamask-error :errorDialog="metamaskErrorDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskErrorDialog"></app-metamask-error>
+
   </div>
 </template>
 
@@ -90,6 +98,7 @@
 
 import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
+import MetamaskError from '@/views/error/MetamaskError.vue'
 
 export default {
   mixins: [
@@ -98,14 +107,21 @@ export default {
   ],
   props: {
     buttonLarge: true,
+    playEnable: true,
+    lockstatus: null,
     dialogGame: null,
-    playerAddress: null
+    playerAddress: null,
+    playerContribution: null
+  },
+  components: {
+    AppMetamaskError: MetamaskError
   },
   data () {
     return {
       apiUrl: process.env.API_URL,
       dialog: false,
       contributionStatus: 'contributing',
+      registerStatus: 'unregistered',
       contributionError: false,
       emailError: false,
       playerEmail: null,
@@ -118,29 +134,41 @@ export default {
     }
   },
   computed: {
-    classButton: function () {
+    sizeButton: function () {
       return {
-        'contribute-button': this.buttonLarge
+        'big-contribute-button': this.buttonLarge
+      }
+    },
+    positiveContribution: function () {
+      console.log('Positive contribution ? ', this.playerContribution)
+      if (this.playerContribution > 0) {
+        return true
+      } else {
+        return false
       }
     }
   },
   methods: {
     // Show dialog
-    contributeDialog () {
-      let self = this
-      this.dialog = true
-      // this.contributionStatus = 'contributing'
-      this.contributionStatus = 'contributed'
+    contributeAction () {
+      if (this.playEnable) {
+        this.dialog = true // command to show dialog
 
-      // Get player email
-      this.getPlayerEmail(this.playerAddress).then(function (response) {
-        // self.player.email = response
-        self.playerEmail = response
-      }, function (error) {
-        if (error) {
-          console.log('Address not registered')
-        }
-      })
+        // Get player email
+        let self = this
+        this.getPlayerEmail(this.playerAddress).then(function (response) {
+          console.log('Address registered: ', response)
+          self.playerEmail = response
+          self.registerStatus = 'registered'
+        }, function (error) {
+          if (error) {
+            console.log('Address not registered')
+            self.registerStatus = 'unregistered'
+          }
+        })
+      } else {
+        this.metamaskErrorDialog = true // command to show error dialog
+      }
     },
     // Register player
     registerPlayer () {
@@ -159,7 +187,8 @@ export default {
           // error
           console.log('error', response.body.status)
         })
-      this.contributionStatus = 'registered'
+
+      // this.contributionStatus = 'registered'
     },
     validEmail (email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
@@ -171,8 +200,15 @@ export default {
 
 <style scoped>
 
-.contribute-button {
-  font-size: 42px;
+.big-contribute-button {
+  font-size: 36px;
+  height: 75px;
+  width: 40%;
+}
+
+.disabled-contribute-button {
+  background-color: grey !important;
+  height: 250px !important;
 }
 
 </style>
