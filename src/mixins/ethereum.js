@@ -1,5 +1,6 @@
 
 import Web3 from 'web3'
+import web3plus from 'web3-plus'
 import Units from 'ethereumjs-units'
 
 // var abi =
@@ -56,65 +57,38 @@ export default {
     // Check Metamask
     checkMetamask () {
       let self = this
-
-      // Dial node
-      self.dialJs()
-
-      // Check if installed
-      if (typeof web3 === 'undefined') {
-        self.contribution.enable = false
-        self.contribution.status = 'not_installed'
-        self.$store.state.metamaskEnabled = false
-        return
-      }
-
-      // Check if installed
-      if (!self.web3js.currentProvider.isMetaMask) {
-        self.contribution.enable = false
-        self.contribution.status = 'not_installed'
-        self.$store.state.metamaskEnabled = false
-        return
-      }
-
-      // Get accounts
-      self.web3js.eth.getAccounts()
-        .then(function (accounts) {
-          if (accounts.length === 0) {
+      // Check metamask status
+      web3plus.metamask.checkNetwork().then(response => {
+        if (response.status === 'error') {
+          if (response.message === 'NOT_INSTALLED') {
+            self.contribution.enable = false
+            self.contribution.status = 'not_installed'
+            self.$store.state.metamaskEnabled = false
+          } else if (response.message === 'NOT_LOGGED_IN') {
             self.contribution.enable = false
             self.contribution.status = 'locked'
             self.$store.state.metamaskEnabled = false
-          } else {
-            // Check if on good network
-            self.web3js.eth.net.getId().then(
-              function (netId) {
-                if (netId === 1) {
-                  if (process.env.ETHEREUM_NODE_ENV === 'development') {
-                    self.contribution.enable = false
-                    self.contribution.status = 'wrong_network'
-                    self.$store.state.metamaskEnabled = false
-                  } else {
-                    self.contribution.enable = true
-                    self.$store.state.metamaskEnabled = true
-                    self.checkPlayer(accounts[0])
-                  }
-                } else if (netId === 3) {
-                  if (process.env.ETHEREUM_NODE_ENV === 'production') {
-                    self.contribution.enable = false
-                    self.contribution.status = 'wrong_network'
-                    self.$store.state.metamaskEnabled = false
-                  } else {
-                    self.contribution.enable = true
-                    self.$store.state.metamaskEnabled = true
-                    self.checkPlayer(accounts[0])
-                  }
-                } else {
-                  self.contribution.enable = false
-                  self.contribution.status = 'wrong_network'
-                  self.$store.state.metamaskEnabled = false
-                }
-              })
           }
-        })
+        } else if (response.status === 'success') {
+          if (response.networkId !== 1 && response.networkId !== 3) {
+            self.contribution.enable = false
+            self.contribution.status = 'wrong_network'
+            self.$store.state.metamaskEnabled = false
+          } else if (response.networkId === 1 && process.env.ETHEREUM_NODE_ENV === 'development') {
+            self.contribution.enable = false
+            self.contribution.status = 'wrong_network'
+            self.$store.state.metamaskEnabled = false
+          } else if (response.networkId === 3 && process.env.ETHEREUM_NODE_ENV === 'production') {
+            self.contribution.enable = false
+            self.contribution.status = 'wrong_network'
+            self.$store.state.metamaskEnabled = false
+          } else {
+            self.contribution.enable = true
+            self.$store.state.metamaskEnabled = true
+            self.checkPlayer(response.address)
+          }
+        }
+      })
     },
     checkPlayer (newAddress) {
       if (newAddress !== this.player.address) {
