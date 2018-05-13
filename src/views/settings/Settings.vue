@@ -15,10 +15,10 @@
           <!-- Submit -->
           <v-text-field v-model="playerSettings.login" v-show="editField.login" type="text" :rules="loginRules" class="field-value form-control" single-line></v-text-field>
           <v-btn v-show="editField.login" small flat fab  @click="submitLogin()">
-            <v-icon>check_circle</v-icon>
+            <v-icon color="green">check_circle</v-icon>
           </v-btn>
           <v-btn v-show="editField.login" small flat fab  @click="editField.login = false">
-            <v-icon>cancel</v-icon>
+            <v-icon color="red">cancel</v-icon>
           </v-btn>
           <p>
             {{ this.playerSettings.address }}
@@ -36,10 +36,10 @@
             type="email"
             :rules="emailRules" class="field-value form-control"></v-text-field>
             <v-btn v-show="editField.email" small flat fab @click="submitEmail()">
-              <v-icon>check_circle</v-icon>
+              <v-icon color="green">check_circle</v-icon>
             </v-btn>
             <v-btn v-show="editField.email" small flat fab @click="editField.email = false">
-              <v-icon>cancel</v-icon>
+              <v-icon color="red">cancel</v-icon>
             </v-btn>
           </p>
         </v-flex>
