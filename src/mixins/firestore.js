@@ -134,7 +134,7 @@ export default {
         id: gameItem.data().id,
         value: Units.convert(piggyValue, 'wei', 'eth'),
         nbContributions: gameItem.data().nb_contributions,
-        minContribution: gameItem.data().min_contribution,
+        minContribution: Units.convert(gameItem.data().min_contribution, 'wei', 'eth'),
         open: gameItem.data().open,
         winner: gameItem.data().winner,
         createdAt: createdAt,
