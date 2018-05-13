@@ -34,7 +34,7 @@
                     <v-card>
                       <v-card-text class="white grey--text pad">
                         Piggy Breaker is the next biggest lottery in the world!<br /><br />
-                        The game is centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.<br />
+                        The game is centered around Billy, a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.<br />
                         Someday the Piggy bank will break and make one of the players rich...<br /><br />
                         <img style="max-width: 100%" src="/static/img/faq/2-three-pigs.png" />
                       </v-card-text>

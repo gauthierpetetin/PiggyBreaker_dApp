@@ -10,40 +10,45 @@
           style="background-color: white"
           >
           <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong>{{ currentGame.value }} ETH</strong></h1>
-          <img src="/static/img/picto/big-piggy.png" alt="big piggy" height="350" style="margin-top: 15px">
+          <v-tooltip right>
+            <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 15px" slot="activator">
+            <span> {{ piggyMessage1 }} <br /> {{ piggyMessage2 }}</span>
+          </v-tooltip>
           <!-- Player contribution amount -->
           <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
             <h1 class="mb-2 headline text-xs-center contribution">
-              <span class="grey--text">Your current contribution:</span>
-              <template v-if="loading.contribution">
-                <v-tooltip right>
-                  <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
-                  <span>Your contribution has been submitted successfully.<br />
-                  It will require 50-60 seconds until it gets validated by the whole network.</span>
-                </v-tooltip>
-              </template>
-              <template v-else>
-                <span class="grey--text">{{ player.contributionBalance }} ETH</span>
-                <v-progress-linear :value="percentage" height="20" color="grey"></v-progress-linear>
-              </template>
+                <template v-if="loading.contribution">
+                  <v-flex class="my-3">
+                    <span class="grey--text">Your current contribution:</span>
+                  </v-flex>
+                  <v-flex class="my-3">
+                    <v-tooltip right>
+                      <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
+                      <span>Your contribution has been submitted successfully.<br />
+                      It will require 50-60 seconds until it gets validated by the whole network.</span>
+                    </v-tooltip>
+                  </v-flex>
+                </template>
+                <template v-else>
+                  <v-flex class="my-3">
+                    <span class="grey--text">Your current contribution:</span>
+                    <span class="grey--text">{{ player.contributionBalance }} ETH</span>
+                  </v-flex>
+                  <v-flex class="my-3">
+                    <v-progress-linear :value="percentage" height="20" color="grey"></v-progress-linear>
+                  </v-flex>
+                </template>
             </h1>
           </section>
           <!-- /Player contribution amount -->
 
         </v-layout>
-        <v-layout v-if="contribution.enable" row wrap class="white--text" style="background-color: white">
+        <v-layout v-if="contribution.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
             <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" @contribution="onContributionChild"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
-          <!-- <v-flex md12 class="text-xs-center grey--text minimum-contribution">
-            Min contribution: <span>{{ ethGame.minContribution }} ETH</span>
-            <v-tooltip right>
-              <v-icon slot="activator" color="grey">info_outline</v-icon>
-              <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
-            </v-tooltip>
-          </v-flex> -->
         </v-layout>
         <v-layout v-else row wrap class="white--text">
           <app-locked :lockstatus="contribution.status"></app-locked>
@@ -63,7 +68,7 @@
           <div class="headline mb-3 text-xs-center title">
             <p>
               <!-- <span class="pink--text">Piggy Breaker is the next world lottery!</span><br /> -->
-              The game is centered around a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.
+              The game is centered around Billy, a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.
             </p>
             <img src="/static/img/picto/piggy-growth.png" alt="piggy growth" height="120" style="margin-top: 15px; margin-bottom: 15px">
             <p><br>
@@ -101,7 +106,15 @@
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <!-- Dialog -->
-                    <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance"></app-dialog-contribute>
+                    <template v-if="loading.contribution">
+                      <v-tooltip right>
+                        <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
+                        <span>{{ transactionMessage1 }}<br />{{ transactionMessage2 }}</span>
+                      </v-tooltip>
+                    </template>
+                    <template v-else>
+                      <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance"></app-dialog-contribute>
+                    </template>
                     <!-- /Dialog -->
                   </v-card-text>
                 </v-card>
@@ -120,8 +133,7 @@
                       <template v-if="loading.break">
                         <v-tooltip right>
                           <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
-                          <span>Your transaction has been submitted successfully.<br />It will require
-                          50-60 seconds until it gets validated by the whole network.</span>
+                          <span>{{ transactionMessage1 }}<br />{{ transactionMessage2 }}</span>
                         </v-tooltip>
                       </template>
                       <template v-else>
@@ -150,8 +162,7 @@
                     <template v-if="loading.withdraw">
                       <v-tooltip right>
                         <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
-                        <span>Your transaction has been submitted successfully.<br />It will require
-                        50-60 seconds until it gets validated by the whole network.</span>
+                        <span>{{ transactionMessage1 }}<br />{{ transactionMessage2 }}</span>
                       </v-tooltip>
                     </template>
                     <template v-else>
@@ -196,7 +207,9 @@ export default {
         contribution: false,
         break: false,
         withdraw: false
-      }
+      },
+      transactionMessage1: 'Your transaction has been submitted successfully.',
+      transactionMessage2: 'It will require 50-60 seconds until it gets validated by the whole network.'
     }
   },
   computed: {
@@ -211,6 +224,27 @@ export default {
       }
 
       return res
+    },
+    piggyImage: function () {
+      if (this.player.contributionBalance > 0) {
+        return "/static/img/picto/big-piggy-happy.png"
+      } else {
+        return "/static/img/picto/big-piggy.png"
+      }
+    },
+    piggyMessage1: function () {
+      if (this.player.contributionBalance > 0) {
+        return "Billy is happy since you contributed."
+      } else {
+        return "Billy is sad.."
+      }
+    },
+    piggyMessage2: function () {
+      if (this.player.contributionBalance > 0) {
+        return "Contribute more to get more chances to win the lottery!"
+      } else {
+        return "Contribute to make him happy ;)"
+      }
     }
   },
   mounted () {

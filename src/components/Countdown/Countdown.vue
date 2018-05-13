@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="grey--text">
     * feature available in:
       {{ minutes | two_digits }}
       mins,
