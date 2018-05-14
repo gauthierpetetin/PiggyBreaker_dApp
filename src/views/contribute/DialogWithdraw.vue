@@ -6,7 +6,7 @@
       large
       slot="activator"
       @click.native="withdrawAction()"
-      :class="[dialogPlayer.withdrawEnable ? 'blue' : 'grey']"
+      :class="[(buttonEnable) ? 'blue' : 'grey']"
     >
       Withdraw
     </v-btn>
@@ -38,7 +38,8 @@
       </v-card>
     </v-dialog>
 
-    <app-metamask-error :errorDialog="metamaskErrorDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskErrorDialog"></app-metamask-error>
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
 
@@ -62,7 +63,18 @@ export default {
     buttonLarge: true,
     dialogPlayer: null,
     playEnable: true,
-    lockstatus: null
+    lockstatus: null,
+    loading: null
+  },
+  computed: {
+    buttonEnable: function () {
+      console.log('Withdraw buttonEnable : ', this.loading)
+      if (this.playEnable && this.dialogPlayer.withdrawEnable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        return true
+      } else {
+        return false
+      }
+    }
   },
   methods: {
     // Show dialog
@@ -71,11 +83,14 @@ export default {
         if (!this.dialogPlayer.withdrawEnable) {
           this.withdrawDialog = true
         } else {
-          // this.$emit('withdraw', true)
-          this.withdrawPiggy()
+          if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+            this.withdrawPiggy()
+          } else {
+            this.waitDialog = true
+          }
         }
       } else {
-        this.metamaskErrorDialog = true // command to show error dialog
+        this.metamaskDialog = true // command to show error dialog
       }
     }
   },

@@ -106,7 +106,6 @@ export default {
   background-size: 426px 201px;
 }
 
-
 .remaining-time {
   color: #a2a2a2;
   font-weight: bold;

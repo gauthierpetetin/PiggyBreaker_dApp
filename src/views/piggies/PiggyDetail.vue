@@ -6,7 +6,7 @@
           <v-card-text>
             <div class="text-md-center">
               <img v-if="detailGame.open === true" src="/static/img/picto/piggy.png" width="100" max-height="100">
-              <img v-else src="/static/img/picto/broken-piggy.png" width="100" max-height="100">
+              <img v-else src="/static/img/picto/2-break-piggy.png" width="100" max-height="100">
               <h1 class="pink--text">{{ detailGame.value }} ETH</h1>
               <v-progress-linear :value="percentage" height="4" color="pink" background-color="transparent"></v-progress-linear>
             </div>

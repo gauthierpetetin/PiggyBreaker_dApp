@@ -3,7 +3,7 @@
      <!-- contribution.enable -->
     <v-btn
       class="mt-3"
-      :class="[playEnable ? 'warning' : 'grey', sizeButton]"
+      :class="[buttonEnable ? 'warning' : 'grey', sizeButton]"
       style="margin-bottom: 50px"
       dark
       large
@@ -89,8 +89,8 @@
       </v-card>
     </v-dialog>
 
-    <app-metamask-error :errorDialog="metamaskErrorDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskErrorDialog"></app-metamask-error>
-
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
 
@@ -111,7 +111,8 @@ export default {
     lockstatus: null,
     dialogGame: null,
     playerAddress: null,
-    playerContribution: null
+    playerContribution: null,
+    loading: null
   },
   components: {
     AppMetamaskError: MetamaskError
@@ -134,6 +135,13 @@ export default {
     }
   },
   computed: {
+    buttonEnable: function () {
+      if (this.playEnable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        return true
+      } else {
+        return false
+      }
+    },
     sizeButton: function () {
       return {
         'big-contribute-button': this.buttonLarge
@@ -152,22 +160,26 @@ export default {
     // Show dialog
     contributeAction () {
       if (this.playEnable) {
-        this.dialog = true // command to show dialog
+        if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+          this.dialog = true // command to show dialog
 
-        // Get player email
-        let self = this
-        this.getPlayerEmail(this.playerAddress).then(function (response) {
-          console.log('Address registered: ', response)
-          self.playerEmail = response
-          self.registerStatus = 'registered'
-        }, function (error) {
-          if (error) {
-            console.log('Address not registered')
-            self.registerStatus = 'unregistered'
-          }
-        })
+          // Get player email
+          let self = this
+          this.getPlayerEmail(this.playerAddress).then(function (response) {
+            console.log('Address registered: ', response)
+            self.playerEmail = response
+            self.registerStatus = 'registered'
+          }, function (error) {
+            if (error) {
+              console.log('Address not registered')
+              self.registerStatus = 'unregistered'
+            }
+          })
+        } else {
+          this.waitDialog = true
+        }
       } else {
-        this.metamaskErrorDialog = true // command to show error dialog
+        this.metamaskDialog = true // command to show error dialog
       }
     },
     // Register player

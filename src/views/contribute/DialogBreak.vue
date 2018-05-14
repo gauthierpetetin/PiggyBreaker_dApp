@@ -5,7 +5,7 @@
       dark
       large
       @click.native="breakAction()"
-      :class="[breakEnable ? 'pink' : 'grey']"
+      :class="[buttonEnable ? 'pink' : 'grey']"
     >
       Break the Piggy
     </v-btn>
@@ -37,7 +37,8 @@
       </v-card>
     </v-dialog>
 
-    <app-metamask-error :errorDialog="metamaskErrorDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskErrorDialog"></app-metamask-error>
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
 
@@ -60,7 +61,8 @@ export default {
     dialogGame: null,
     playerBreakEnable: false,
     playEnable: true,
-    lockstatus: null
+    lockstatus: null,
+    loading: null
   },
   data () {
     return {
@@ -71,6 +73,13 @@ export default {
     }
   },
   computed: {
+    buttonEnable: function () {
+      if (this.playEnable && this.breakEnable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        return true
+      } else {
+        return false
+      }
+    },
     dialogMessage: function () {
       if (this.playerBreakEnable) {
         return "Sorry, the Piggy can't be broken if a contribution occured within the last 3 minutes ;)"
@@ -94,10 +103,14 @@ export default {
         if (!this.breakEnable) {
           this.breakDialog = true
         } else {
-          this.breakPiggy()
+          if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+            this.breakPiggy()
+          } else {
+            this.waitDialog = true
+          }
         }
       } else {
-        this.metamaskErrorDialog = true // command to show error dialog
+        this.metamaskDialog = true // command to show error dialog
       }
     },
     // Check break

@@ -12,7 +12,7 @@
           <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong>{{ currentGame.value }} ETH</strong></h1>
           <v-tooltip right>
             <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 15px" slot="activator">
-            <span> {{ piggyMessage1 }} <br /> {{ piggyMessage2 }}</span>
+            <span> {{piggyMessage1}} <br /> {{piggyMessage2}}</span>
           </v-tooltip>
           <!-- Player contribution amount -->
           <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
@@ -46,7 +46,7 @@
         <v-layout v-if="contribution.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
-            <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" @contribution="onContributionChild"></app-dialog-contribute>
+            <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" :loading="loading" @contribution="onContributionChild"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
         </v-layout>
@@ -113,7 +113,7 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance"></app-dialog-contribute>
+                      <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" :loading="loading"></app-dialog-contribute>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>
@@ -137,7 +137,7 @@
                         </v-tooltip>
                       </template>
                       <template v-else>
-                        <app-dialog-break :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerBreakEnable="player.breakEnable" @break="onBreakChild"></app-dialog-break>
+                        <app-dialog-break :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerBreakEnable="player.breakEnable" :loading="loading" @break="onBreakChild"></app-dialog-break>
                       </template>
                       <!-- /Dialog -->
                     </template>
@@ -166,7 +166,7 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-withdraw :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogPlayer="player" @withdraw="onWithdrawChild"></app-dialog-withdraw>
+                      <app-dialog-withdraw :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogPlayer="player" :loading="loading" @withdraw="onWithdrawChild"></app-dialog-withdraw>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>
@@ -227,23 +227,23 @@ export default {
     },
     piggyImage: function () {
       if (this.player.contributionBalance > 0) {
-        return "/static/img/picto/big-piggy-happy.png"
+        return '/static/img/picto/big-piggy-happy.png'
       } else {
-        return "/static/img/picto/big-piggy.png"
+        return '/static/img/picto/big-piggy.png'
       }
     },
     piggyMessage1: function () {
       if (this.player.contributionBalance > 0) {
-        return "Billy is happy since you contributed."
+        return 'Billy is happy since you contributed.'
       } else {
-        return "Billy is sad.."
+        return 'Billy is sad..'
       }
     },
     piggyMessage2: function () {
       if (this.player.contributionBalance > 0) {
-        return "Contribute more to get more chances to win the lottery!"
+        return 'Contribute more to get more chances to win the lottery!'
       } else {
-        return "Contribute to make him happy ;)"
+        return 'Contribute to make him happy ;)'
       }
     }
   },

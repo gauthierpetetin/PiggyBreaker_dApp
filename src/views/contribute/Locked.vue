@@ -73,9 +73,6 @@ export default {
   components: {
     appGettingStarted: GettingStarted
   },
-  mounted() {
-    //do something after mounting vue instance
-  },
   computed: {
     networkMessage () {
       if (process.env.ETHEREUM_NODE_ENV === 'development') {

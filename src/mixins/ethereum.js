@@ -31,7 +31,8 @@ export default {
         enable: false,
         status: null
       },
-      metamaskErrorDialog: false
+      metamaskDialog: false,
+      waitDialog: false
     }
   },
   methods: {
@@ -331,8 +332,11 @@ export default {
             })
         })
     },
-    closeMetamaskErrorDialog () {
-      this.metamaskErrorDialog = false
+    closeMetamaskDialog () {
+      this.metamaskDialog = false
+    },
+    closeWaitDialog () {
+      this.waitDialog = false
     }
   }
 }
