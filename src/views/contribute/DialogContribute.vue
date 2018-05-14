@@ -88,14 +88,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-
     <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskDialog"></app-metamask-error>
     <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
 
 <script>
-
 import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
 import MetamaskError from '@/views/error/MetamaskError.vue'
@@ -159,6 +157,11 @@ export default {
   methods: {
     // Show dialog
     contributeAction () {
+      // Reset contribution
+      this.contributionStatus = 'contributing'
+      this.contributionError = false
+
+      // If able to play
       if (this.playEnable) {
         if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
           this.dialog = true // command to show dialog

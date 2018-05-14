@@ -69,7 +69,7 @@ export default {
   computed: {
     buttonEnable: function () {
       console.log('Withdraw buttonEnable : ', this.loading)
-      if (this.playEnable && this.dialogPlayer.withdrawEnable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+      if (this.playEnable && this.dialogPlayer.withdrawEnable && (!this.loading.contribution) && (!this.$store.state.loading.break) && (!this.$store.state.loading.withdraw)) {
         return true
       } else {
         return false
@@ -83,7 +83,7 @@ export default {
         if (!this.dialogPlayer.withdrawEnable) {
           this.withdrawDialog = true
         } else {
-          if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+          if ((!this.loading.contribution) && (!this.$store.state.loading.break) && (!this.$store.state.loading.withdraw)) {
             this.withdrawPiggy()
           } else {
             this.waitDialog = true

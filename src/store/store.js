@@ -9,6 +9,11 @@ export const store = new Vuex.Store({
     contract: {
       address: null,
       abi: null
+    },
+    loading: {
+      contribution: false,
+      break: false,
+      withdraw: false
     }
   }
 })

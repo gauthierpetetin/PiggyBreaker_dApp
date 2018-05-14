@@ -233,15 +233,15 @@ export default {
           contract.methods.contribute().send({value: Units.convert(playerContribution, 'eth', 'wei'), from: currentAddress})
             .on('transactionHash', function (hash) {
               console.log('as contributed', hash)
-
               // Alert DialogContribute.vue (self is DialogContribute.vue)
               self.contributionStatus = 'contributed'
-
               // Alert HomePage.vue (the event is catched by HomePage.vue)
-              self.$emit('contribution', true)
+              self.$store.state.loading.contribution = true
+              // self.$emit('contribution', true)
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)
+              self.$store.state.loading.contribution = false
             })
             .on('confirmation', function (confirmationNumber, receipt) {
               // console.log('confirmation:', confirmationNumber, receipt)
@@ -270,11 +270,11 @@ export default {
             .on('transactionHash', function (hash) {
               console.log('transactionHash:', hash)
               self.contributeStatus = 'contributed'
-              // self.loading.break = true
-              self.$emit('break', true)
+              self.$store.state.loading.break = true
             })
             .on('receipt', function (receipt) {
               console.log('receipt:', receipt)
+              self.$store.state.loading.break = false
             })
             .on('confirmation', function (confirmationNumber, receipt) {
               // console.log('confirmation:', confirmationNumber, receipt)

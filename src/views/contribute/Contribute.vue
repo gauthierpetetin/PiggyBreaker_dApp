@@ -3,59 +3,58 @@
     <!-- Contribute -->
     <section>
       <!-- <v-parallax class="parallax-background"> -->
-        <v-layout
-          column
-          align-center
-          justify-center
-          style="background-color: white"
-          >
-          <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong>{{ currentGame.value }} ETH</strong></h1>
-          <v-tooltip right>
-            <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 15px" slot="activator">
-            <span> {{piggyMessage1}} <br /> {{piggyMessage2}} </span>
-          </v-tooltip>
-          <!-- Player contribution amount -->
-          <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
-            <h1 class="mb-2 headline text-xs-center contribution">
-                <template v-if="loading.contribution">
-                  <v-flex class="my-3">
-                    <span class="grey--text">Your current contribution:</span>
-                  </v-flex>
-                  <v-flex class="my-3">
-                    <v-tooltip right>
-                      <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
-                      <span>Your contribution has been submitted successfully.<br />
-                      It will require 50-60 seconds until it gets validated by the whole network.</span>
-                    </v-tooltip>
-                  </v-flex>
-                </template>
-                <template v-else>
-                  <v-flex class="my-3">
-                    <span class="grey--text">Your current contribution:</span>
-                    <span class="grey--text">{{ player.contributionBalance }} ETH</span>
-                  </v-flex>
-                  <v-flex class="my-3">
-                    <v-progress-linear :value="percentage" height="20" color="grey"></v-progress-linear>
-                  </v-flex>
-                </template>
-            </h1>
-          </section>
-          <section v-else>
-            <v-progress-circular :size="80" indeterminate color="amber"></v-progress-circular>
-          </section>
-          <!-- /Player contribution amount -->
-
-        </v-layout>
-        <v-layout v-if="contribution.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
-          <!-- Player contribute -->
-          <v-flex md12 class="text-xs-center">
-            <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" :loading="loading" @contribution="onContributionChild"></app-dialog-contribute>
-          </v-flex>
-          <!-- /Player contribute -->
-        </v-layout>
-        <v-layout v-else row wrap class="white--text">
-          <app-locked :lockstatus="contribution.status"></app-locked>
-        </v-layout>
+      <v-layout
+        column
+        align-center
+        justify-center
+        style="background-color: white"
+        >
+        <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong>{{ currentGame.value }} ETH</strong></h1>
+        <v-tooltip right>
+          <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 15px" slot="activator">
+          <span> {{piggyMessage1}} <br /> {{piggyMessage2}} </span>
+        </v-tooltip>
+        <!-- Player contribution amount -->
+        <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
+          <h1 class="mb-2 headline text-xs-center contribution">
+              <template v-if="$store.state.loading.contribution">
+                <v-flex class="my-3">
+                  <span class="grey--text">Your current contribution:</span>
+                </v-flex>
+                <v-flex class="my-3">
+                  <v-tooltip right>
+                    <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
+                    <span>Your contribution has been submitted successfully.<br />
+                    It will require 50-60 seconds until it gets validated by the whole network.</span>
+                  </v-tooltip>
+                </v-flex>
+              </template>
+              <template v-else>
+                <v-flex class="my-3">
+                  <span class="grey--text">Your current contribution:</span>
+                  <span class="grey--text">{{ player.contributionBalance }} ETH</span>
+                </v-flex>
+                <v-flex class="my-3">
+                  <v-progress-linear :value="percentage" height="20" color="grey"></v-progress-linear>
+                </v-flex>
+              </template>
+          </h1>
+        </section>
+        <section v-else>
+          <v-progress-circular :size="80" indeterminate color="amber"></v-progress-circular>
+        </section>
+        <!-- /Player contribution amount -->
+      </v-layout>
+      <v-layout v-if="contribution.enable && (!$store.state.loading.contribution)" row wrap class="white--text" style="background-color: white">
+        <!-- Player contribute -->
+        <v-flex md12 class="text-xs-center">
+          <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" :loading="loading" @contribution="onContributionChild"></app-dialog-contribute>
+        </v-flex>
+        <!-- /Player contribute -->
+      </v-layout>
+      <v-layout v-else row wrap class="white--text">
+        <app-locked :lockstatus="contribution.status"></app-locked>
+      </v-layout>
       <!-- </v-parallax> -->
     </section>
     <!-- What is Piggy Breaker -->
@@ -109,7 +108,7 @@
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <!-- Dialog -->
-                    <template v-if="loading.contribution">
+                    <template v-if="$store.state.loading.contribution">
                       <v-tooltip right>
                         <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
                         <span>{{ transactionMessage1 }}<br />{{ transactionMessage2 }}</span>
@@ -272,17 +271,25 @@ export default {
   methods: {
     // Contribution
     onContributionChild (value) {
-      this.loading.contribution = true
+      // this.loading.contribution = true
+      // console.log('Uaimec 1')
+    },
+    // Contribution
+    onMinedChild (value) {
+      // console.log('::::Uaimec 11XXXX', value)
+      // this.loading.contribution = false
     },
     // Break
     onBreakChild () {
-      this.player.breakEnable = false
-      this.loading.break = true
+      // this.player.breakEnable = false
+      // this.loading.break = true
+      // console.log('Uaimec 2')
     },
     // Withdraw
     onWithdrawChild () {
       this.player.withdrawEnable = false
       this.loading.withdraw = true
+      console.log('Uaimec 3')
     }
   }
 }
