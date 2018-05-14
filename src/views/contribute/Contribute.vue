@@ -48,7 +48,7 @@
       <v-layout v-if="contribution.enable && (!$store.state.loading.contribution)" row wrap class="white--text" style="background-color: white">
         <!-- Player contribute -->
         <v-flex md12 class="text-xs-center">
-          <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" :loading="loading" @contribution="onContributionChild"></app-dialog-contribute>
+          <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" :loading="loading"></app-dialog-contribute>
         </v-flex>
         <!-- /Player contribute -->
       </v-layout>
@@ -139,7 +139,7 @@
                         </v-tooltip>
                       </template>
                       <template v-else>
-                        <app-dialog-break :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerBreakEnable="player.breakEnable" :loading="loading" @break="onBreakChild"></app-dialog-break>
+                        <app-dialog-break :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerBreakEnable="player.breakEnable" :loading="loading"></app-dialog-break>
                       </template>
                       <!-- /Dialog -->
                     </template>
@@ -168,7 +168,7 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-withdraw :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogPlayer="player" :loading="loading" @withdraw="onWithdrawChild"></app-dialog-withdraw>
+                      <app-dialog-withdraw :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogPlayer="player" :loading="loading"></app-dialog-withdraw>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>
@@ -267,30 +267,6 @@ export default {
     this.getGame('current')
     // Get current game on ethereum
     // this.getEthPlayerData()
-  },
-  methods: {
-    // Contribution
-    onContributionChild (value) {
-      // this.loading.contribution = true
-      // console.log('Uaimec 1')
-    },
-    // Contribution
-    onMinedChild (value) {
-      // console.log('::::Uaimec 11XXXX', value)
-      // this.loading.contribution = false
-    },
-    // Break
-    onBreakChild () {
-      // this.player.breakEnable = false
-      // this.loading.break = true
-      // console.log('Uaimec 2')
-    },
-    // Withdraw
-    onWithdrawChild () {
-      this.player.withdrawEnable = false
-      this.loading.withdraw = true
-      console.log('Uaimec 3')
-    }
   }
 }
 </script>
