@@ -40,6 +40,9 @@
                 </template>
             </h1>
           </section>
+          <section v-else>
+            <v-progress-circular :size="80" indeterminate color="amber"></v-progress-circular>
+          </section>
           <!-- /Player contribution amount -->
 
         </v-layout>
