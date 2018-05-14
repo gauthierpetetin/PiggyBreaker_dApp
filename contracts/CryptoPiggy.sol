@@ -108,7 +108,7 @@ contract Piggies is Pausable {
   uint256 public rateNext = rateLimit;
 
   uint256 public updatePeriod = 15 * 60;                      // Every 15 minutes, the minimum contribution rate is updated
-  uint256 public percentage = 100;                            // The growth percentage of the minimum contribution rate is 100%
+  uint256 public percentage = 50;                             // The growth percentage of the minimum contribution rate is 100%
                                                               // Example :
                                                               //   - If the contribution frequency increases, the minimum contribution rate will increase by 100% every 15 minutes
                                                               //   - If the contribution frequency decreases, the minimum contribution rate will decrease by 50% every 15 minutes
@@ -185,6 +185,9 @@ contract Piggies is Pausable {
       winner: _winner
     });
 
+    rateCurrent = rateLimit;
+    rateNext = rateLimit;
+
     emit PiggyCreated(_piggyID);
   }
 
@@ -214,15 +217,13 @@ contract Piggies is Pausable {
 
   function updateRate() private {
     uint256 timeSinceLastUpdate = now.sub(lastUpdateDate);
-    if ( timeSinceLastUpdate > updatePeriod) {
-      if (rateNext >= rateLimit) {
-        rateCurrent = rateNext;
-      }
-      else {
-        rateCurrent = rateLimit;
-        rateNext = rateLimit;
-      }
+    require(rateNext >= rateLimit);
 
+    if ( timeSinceLastUpdate > updatePeriod) {
+      // Update current rate (minimum contribution for the current period)
+      rateCurrent = rateNext;
+
+      // Calculate next rate (minimum contribution for the next period)
       uint256 decimals = 1000000000;
       uint256 currentContributionFrequency = localContributionsCounter.mul(decimals).div(timeSinceLastUpdate);
       if(currentContributionFrequency >= lastContributionFrequency) {
@@ -230,6 +231,10 @@ contract Piggies is Pausable {
       }
       else {
         rateNext = rateCurrent.mul(100).div( percentage.add(100) );
+      }
+
+      if (rateNext < rateLimit) {
+        rateNext = rateLimit;
       }
 
       localContributionsCounter = 0;
