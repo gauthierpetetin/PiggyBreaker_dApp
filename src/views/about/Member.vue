@@ -1,16 +1,10 @@
 <template>
   <v-card class="member-card">
-    <v-card-text>
-      <v-avatar
-          :tile="true"
-          :size="140"
-          class="grey lighten-4"
-        >
-          <!-- <div> -->
-            <img :src="member.img" alt="avatar" style="overflow: hidden">
-          <!-- </div> -->
-      </v-avatar>
-    </v-card-text>
+    <v-card-media>
+      <div class="grey lighten-4 member-content">
+        <img :src="member.img" alt="avatar" class="member-image">
+      </div>
+    </v-card-media>
 
     <v-card-title>
       <div>
@@ -36,6 +30,14 @@ export default {
 
 .member-card {
   min-height: 270px !important;
+}
+
+.member-content {
+  margin: 15px 15px 0 15px
+}
+
+.member-image {
+  overflow: hidden;width: 100%;height: auto;
 }
 
 </style>

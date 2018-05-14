@@ -38,19 +38,19 @@
             </v-layout>
 
             <v-layout row wrap>
-            <v-flex md10 offset-md1>
-              <h2 class="grey-text headline">Team</h2>
-            </v-flex>
-            <v-flex md10 offset-md1>
-              <p>
-                We are a team passionated about blockchain technology. We are there to answer your questions and improve your experience every day. You can contact us on <a href="mailto:contact@piggybreaker.com">contact@piggybreaker.com</a>.
-              </p>
-            </v-flex>
+              <v-flex md10 offset-md1>
+                <h2 class="grey-text headline">Team</h2>
+              </v-flex>
+              <v-flex md10 offset-md1>
+                <p>
+                  We are a team passionated about blockchain technology. We are there to answer your questions and improve your experience every day. You can contact us on <a href="mailto:contact@piggybreaker.com">contact@piggybreaker.com</a>.
+                </p>
+              </v-flex>
+            </v-layout>
+
+            <v-layout row wrap justify-center>
               <template v-for="(member, index) in team">
-                <v-flex v-if="index === 0" md2  offset-xs1 :key="index">
-                  <app-member :member="member"></app-member>
-                </v-flex>
-                <v-flex v-else md2 :key="index">
+                <v-flex xs4 sm3 md2 :key="index">
                   <app-member :member="member"></app-member>
                 </v-flex>
               </template>
@@ -67,7 +67,9 @@
                 <p>
                   Thus you can securely play with Ether and get a chance to win the lottery!
                 </p>
-                <img center src="/static/img/picto/piggy-chained.png" alt="big piggy" height="100">
+                <v-layout row wrap justify-center>
+                  <img center src="/static/img/picto/piggy-chained.png" alt="big piggy" height="100">
+                </v-layout>
                 <br /><br />
                 <p>
                   PS: the game code is public and can accessed <a href="https://etherscan.io/address/0x06012c8cf97bead5deae237070f9587f8e7a266d#code">here</a>.
