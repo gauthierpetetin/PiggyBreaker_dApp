@@ -5,6 +5,10 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    metamaskEnabled: false
+    metamaskEnabled: false,
+    contract: {
+      address: null,
+      abi: null
+    }
   }
 })

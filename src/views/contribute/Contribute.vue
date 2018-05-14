@@ -248,6 +248,15 @@ export default {
     }
   },
   mounted () {
+    let self = this
+
+    // Check contract config
+    if (self.$store.state.contract.address === null && self.$store.state.contract.abi === null) {
+      this.getContractConfig().then(function (contract) {
+        self.$store.state.contract.address = contract.address
+        self.$store.state.contract.abi = JSON.parse(contract.abi)
+      })
+    }
     // Check if metamask is enabled
     this.loopMetamask()
     // this.checkMetamask()

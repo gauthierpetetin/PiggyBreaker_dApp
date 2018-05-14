@@ -8,8 +8,10 @@ export default {
   data () {
     return {
       // Contract
-      abi: JSON.parse(process.env.ETHEREUM_ABI),
-      contractAddress: process.env.ETHEREUM_CONTRACT,
+      // abi: JSON.parse(process.env.ETHEREUM_ABI),
+      // contractAddress: null,
+      // abi: this.$store.state.contract.abi,
+      // contractAddress: this.$store.state.contract.address,
       // Metamask
       web3js: window.web3,
       // Game
@@ -33,6 +35,14 @@ export default {
         status: null
       },
       metamaskErrorDialog: false
+    }
+  },
+  computed: {
+    contractAddress () {
+      return this.$store.state.contract.address
+    },
+    abi () {
+      return this.$store.state.contract.abi
     }
   },
   methods: {
@@ -117,9 +127,8 @@ export default {
       if (self.web3js) {
         // Dial node
         self.dialJs()
-
         // Get contract
-        var contract = new self.web3js.eth.Contract(this.abi, this.contractAddress)
+        var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
 
         // Get current Piggy
         contract.methods.nbPiggies().call().then(
