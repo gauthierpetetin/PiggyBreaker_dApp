@@ -12,7 +12,7 @@
           <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong>{{ currentGame.value }} ETH</strong></h1>
           <v-tooltip right>
             <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 15px" slot="activator">
-            <span> {{piggyMessage1}} <br /> {{piggyMessage2}}</span>
+            <span> {{piggyMessage1}} <br /> {{piggyMessage2}} </span>
           </v-tooltip>
           <!-- Player contribution amount -->
           <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
@@ -39,6 +39,9 @@
                   </v-flex>
                 </template>
             </h1>
+          </section>
+          <section v-else>
+            <v-progress-circular :size="80" indeterminate color="amber"></v-progress-circular>
           </section>
           <!-- /Player contribution amount -->
 
@@ -248,6 +251,15 @@ export default {
     }
   },
   mounted () {
+    let self = this
+
+    // Check contract config
+    if (self.$store.state.contract.address === null && self.$store.state.contract.abi === null) {
+      this.getContractConfig().then(function (contract) {
+        self.$store.state.contract.address = contract.address
+        self.$store.state.contract.abi = JSON.parse(contract.abi)
+      })
+    }
     // Check if metamask is enabled
     this.loopMetamask()
     // this.checkMetamask()

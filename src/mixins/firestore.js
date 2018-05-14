@@ -57,6 +57,23 @@ export default {
   },
   methods: {
     // Get current game
+    getContractConfig () {
+      // Return a new promise.
+      return new Promise(function (resolve, reject) {
+        var docRef = db.collection('config').doc('contract')
+        docRef.get().then(function (contractItem) {
+          if (contractItem.exists) {
+            resolve({address: contractItem.data().address, abi: contractItem.data().abi})
+          } else {
+            // No player email
+            reject(Error('No contract config'))
+          }
+        // }).catch(function (error) {
+        //   reject(Error('Error getting player:'))
+        })
+      })
+    },
+    // Get current game
     getGame (gameType) {
       let self = this
       // Get current game
@@ -71,9 +88,7 @@ export default {
           firebase.database().ref('/.info/serverTimeOffset').on('value', function (offset) {
             var offsetVal = offset.val() || 0
             var serverTime = Date.now() + offsetVal
-
-            // console.log('GameVar: ', self.prepareGame(gameItem))
-
+            // If current game
             if (gameType === 'current') {
               self.currentGame = self.prepareGame(gameItem, serverTime)
             } else if (gameType === 'previous') {
@@ -81,7 +96,7 @@ export default {
             } else {
               console.log('Invalid gameType: ', gameType)
             }
-            self.getEthPlayerData()
+            // self.getEthPlayerData()
           })
         })
     },
@@ -129,12 +144,18 @@ export default {
         this.biggestPiggyValue = piggyValue
       }
 
+      // Calc min contribution
+      let minContribution
+      if (gameItem.data().min_contribution) {
+        minContribution = Units.convert(gameItem.data().min_contribution, 'wei', 'eth')
+      }
+
       // Set game data
       return {
         id: gameItem.data().id,
         value: Units.convert(piggyValue, 'wei', 'eth'),
         nbContributions: gameItem.data().nb_contributions,
-        minContribution: Units.convert(gameItem.data().min_contribution, 'wei', 'eth'),
+        minContribution: minContribution,
         open: gameItem.data().open,
         winner: gameItem.data().winner,
         createdAt: createdAt,
@@ -148,7 +169,6 @@ export default {
     // Get player email
     getPlayerEmail (address) {
       // Return a new promise.
-      console.log('getPlayerEmail===')
       return new Promise(function (resolve, reject) {
         if (address) {
           var docRef = db.collection('players_accounts').doc(address)
