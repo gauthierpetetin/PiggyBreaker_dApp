@@ -61,8 +61,9 @@ export default {
     // Loop check Metamask
     loopMetamask () {
       // Loop to check Metamask status
+      let self = this
       self.$store.state.metamaskInterval = setInterval(function () {
-        this.checkMetamask()
+        self.checkMetamask()
       }, 3000)
     },
     // Check Metamask
