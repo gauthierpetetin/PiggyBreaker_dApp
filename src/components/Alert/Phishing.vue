@@ -1,6 +1,6 @@
 <template>
   <v-alert v-model="alert" type="info" dismissible>
-    DON'T GET PHISHED, please! Thank you!
+    IMPORTANT! DON'T GET PHISHED, please check that you are visiting the right url https://piggybreaker.com/
   </v-alert>
 </template>
 

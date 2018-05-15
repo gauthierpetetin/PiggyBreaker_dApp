@@ -81,7 +81,7 @@
                       <v-card-text class="white grey--text pad">
                         Anyone who contributed can decide to break the Piggy.<br /><br />
                         <img style="max-width: 100%" src="/static/img/faq/5-break-piggy.png" /><br /><br />
-                        Protection rule: the Piggy can't be broken if a contribution occured within the last 3 minutes*.<br />
+                        Protection rule: the Piggy can't be broken if a contribution occured within the last 5 minutes*.<br />
                         <span class="caption">*After 3 months of existence, the Piggy is not protected by this rule anymore.</span>
                       </v-card-text>
                     </v-card>
@@ -129,7 +129,7 @@
                       <v-card-text class="white grey--text pad">
                         Press the big “Break the Piggy” button. This will open the Metamask plugin. Confirm the transaction and that’s it.<br /><br />
                         <img style="max-width: 100%" src="/static/img/faq/8-break-button.png" /><br /><br />
-                        You need to be a contributor to access this feature. Furthermore, the Piggy can't be broken if a contribution occured within the last 3 minutes.
+                        You need to be a contributor to access this feature. Furthermore, the Piggy can't be broken if a contribution occured within the last 5 minutes.
                       </v-card-text>
                     </v-card>
                   </v-expansion-panel-content>

@@ -69,7 +69,7 @@ export default {
       breakDialog: false,
       breakEnable: false,
       countdownEnabled: false,
-      infoMessage: "You need to be a contributor to access this feature.<br/>Furthermore, the Piggy can't be broken if a contribution occured within the last 3 minutes."
+      infoMessage: "You need to be a contributor to access this feature.<br/>Furthermore, the Piggy can't be broken if a contribution occured within the last 5 minutes."
     }
   },
   computed: {
@@ -82,7 +82,7 @@ export default {
     },
     dialogMessage: function () {
       if (this.playerBreakEnable) {
-        return "Sorry, the Piggy can't be broken if a contribution occured within the last 3 minutes ;)"
+        return "Sorry, the Piggy can't be broken if a contribution occured within the last 5 minutes ;)"
       } else {
         return 'Sorry, you need to contribute to the lottery first, to get access to this feature ;)'
       }
