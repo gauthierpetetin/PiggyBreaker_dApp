@@ -29,7 +29,7 @@
     <v-toolbar-items>
       <v-btn class="grey-text" to="invite" flat>Invite</v-btn>
       <v-btn class="grey-text" to="piggies" flat>History</v-btn>
-      <v-btn class="grey-text" to="settings" flat>Settings</v-btn>
+      <v-btn class="grey-text" to="settings" flat v-show="metamaskEnabled">Settings</v-btn>
       <v-btn class="grey-text" to="faq" flat>FAQ</v-btn>
       <v-btn class="grey-text" to="about" flat>About</v-btn>
     </v-toolbar-items>

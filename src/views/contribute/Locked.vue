@@ -17,6 +17,7 @@
             dark
             large
             href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
+            target="_blank"
           >
             Install Metamask
           </v-btn>
