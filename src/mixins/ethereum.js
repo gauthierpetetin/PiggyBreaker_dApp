@@ -1,4 +1,3 @@
-
 import Web3 from 'web3'
 import web3plus from 'web3-plus'
 import Units from 'ethereumjs-units'
@@ -71,7 +70,7 @@ export default {
       let self = this
       // Check metamask status
       web3plus.metamask.checkNetwork().then(response => {
-        console.log(response)
+        // console.log(response)
         self.contribution.checked = true
         if (response.status === 'error') {
           if (response.message === 'NOT_INSTALLED') {

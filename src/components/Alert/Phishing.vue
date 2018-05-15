@@ -1,5 +1,5 @@
 <template>
-  <v-alert v-model="alert" type="error" dismissible>
+  <v-alert v-model="alert" type="info" dismissible>
     DON'T GET PHISHED, please! Thank you!
   </v-alert>
 </template>
