@@ -74,16 +74,32 @@ export default {
       })
     },
     // Get current game
+    subscribeGame (gameType) {
+      let self = this
+      // Get current game
+      db.collection('game').doc(gameType)
+        .onSnapshot(function (gameItem) {
+          // Get current time
+          firebase.database().ref('/.info/serverTimeOffset').on('value', function (offset) {
+            var offsetVal = offset.val() || 0
+            var serverTime = Date.now() + offsetVal
+            // If current game
+            if (gameType === 'current') {
+              self.currentGame = self.prepareGame(gameItem, serverTime)
+            } else if (gameType === 'previous') {
+              self.previousGame = self.prepareGame(gameItem, serverTime)
+            } else {
+              console.log('Invalid gameType: ', gameType)
+            }
+          })
+        })
+    },
+    // Get current game
     getGame (gameType) {
       let self = this
       // Get current game
       db.collection('game').doc(gameType)
         .onSnapshot(function (gameItem) {
-          // Reset contribution
-          // self.loading.contribution = false
-          // self.loading.break = false
-          // self.loading.withdraw = false
-
           // Get current time
           firebase.database().ref('/.info/serverTimeOffset').on('value', function (offset) {
             var offsetVal = offset.val() || 0

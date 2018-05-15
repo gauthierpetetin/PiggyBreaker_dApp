@@ -6,16 +6,14 @@
       large
       @click.native="breakAction()"
       :class="[buttonEnable ? 'pink' : 'grey']"
-    >
-      Break the Piggy
+      >
+      <div v-bind:style="buttonStyle" class="breakButton">
+      </div>
+      <span style="z-index:10">
+        Break the Piggy
+      </span>
     </v-btn>
-    <v-tooltip right style="top: 5px;">
-      <v-icon slot="activator">info_outline</v-icon>
-      <span v-html="infoMessage"></span>
-    </v-tooltip>
-    <!-- Countdown -->
-    <app-countdown v-if="countdownEnabled" :serverTimestamp="dialogGame.serverTimestamp" :breakDatetime="dialogGame.breakableAt" @enablebreak="onEnableBreakChild"></app-countdown>
-    <!-- /Countdown -->
+
     <v-dialog v-model="breakDialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
@@ -46,15 +44,17 @@
 
 import ethereumMixin from '@/mixins/ethereum'
 import MetamaskError from '@/views/error/MetamaskError.vue'
-import Countdown from '@/components/Countdown/Countdown.vue'
+
+// Timer vars
+let timerDuration = 300
+let timerBackgroundColor = '#727272'
 
 export default {
   mixins: [
     ethereumMixin
   ],
   components: {
-    AppMetamaskError: MetamaskError,
-    AppCountdown: Countdown
+    AppMetamaskError: MetamaskError
   },
   props: {
     buttonLarge: true,
@@ -66,11 +66,21 @@ export default {
   },
   data () {
     return {
+      countdownInterval: null,
+      buttonWidth: 0,
+      buttonStyle: {
+        width: '0%'
+        // backgroundColor: '#727272'
+      },
       breakDialog: false,
       breakEnable: false,
       countdownEnabled: false,
       infoMessage: "You need to be a contributor to access this feature.<br/>Furthermore, the Piggy can't be broken if a contribution occured within the last 5 minutes."
     }
+  },
+  beforeDestroy () {
+    // Cancel interval
+    clearInterval(this.countdownInterval)
   },
   computed: {
     buttonEnable: function () {
@@ -89,8 +99,37 @@ export default {
     }
   },
   watch: {
-    game: function (val) {
-      this.checkBreak()
+    dialogGame: function (game) {
+      // Cancel interval
+      clearInterval(this.countdownInterval)
+
+      let limit = timerDuration
+      // Calc seconds left
+      let secondsLeft = game.breakableAt - this.dialogGame.serverTimestamp
+      // If seconds left
+      if (secondsLeft > 0) {
+        this.breakEnable = false
+        this.buttonStyle.backgroundColor = timerBackgroundColor
+        this.countdownInterval = window.setInterval(() => {
+          // Calc percents
+          let percents = 100 - Math.floor(secondsLeft / limit * 100)
+          if (percents > 0) {
+            this.buttonStyle.width = percents + '%'
+          }
+          // Reduce seconds
+          secondsLeft -= 1
+          // Clear interval
+          if (secondsLeft < 0) {
+            this.buttonStyle.backgroundColor = null
+            if (this.playerBreakEnable) {
+              this.breakEnable = true
+            }
+            clearInterval(this.countdownInterval)
+          }
+        }, 1000)
+      } else if (this.playerBreakEnable) {
+        this.breakEnable = true
+      }
     },
     playerBreakEnable: function (val) {
       this.checkBreak()
@@ -130,14 +169,6 @@ export default {
         this.breakEnable = false
         this.countdownEnabled = false
       }
-    },
-    // Break available
-    onEnableBreakChild () {
-      // If is breakable
-      if (this.playerBreakEnable) {
-        this.breakEnable = true
-        this.countdownEnabled = false
-      }
     }
   }
 }
@@ -145,5 +176,11 @@ export default {
 </script>
 
 <style scoped>
-
+  .breakButton {
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+  }
 </style>

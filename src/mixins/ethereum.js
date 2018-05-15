@@ -13,6 +13,7 @@ export default {
       // contractAddress: this.$store.state.contract.address,
       // Metamask
       web3js: window.web3,
+      metamaskInterval: null,
       // Game
       ethGame: {
         id: null,
@@ -60,9 +61,8 @@ export default {
     // Loop check Metamask
     loopMetamask () {
       // Loop to check Metamask status
-      let self = this
-      setInterval(function () {
-        self.checkMetamask()
+      self.$store.state.metamaskInterval = setInterval(function () {
+        this.checkMetamask()
       }, 3000)
     },
     // Check Metamask

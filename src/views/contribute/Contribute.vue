@@ -232,7 +232,6 @@ export default {
       } else {
         res = min
       }
-
       return res
     },
     piggyImage: function () {
