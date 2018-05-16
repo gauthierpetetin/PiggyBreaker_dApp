@@ -13,6 +13,10 @@
         Break the Piggy
       </span>
     </v-btn>
+    <v-tooltip right style="top: 5px;">
+      <v-icon slot="activator">info_outline</v-icon>
+      <span v-html="dialogMessage"></span>
+    </v-tooltip>
 
     <v-dialog v-model="breakDialog" persistent max-width="800px">
       <v-card>
@@ -91,10 +95,11 @@ export default {
       }
     },
     dialogMessage: function () {
-      if (this.playerBreakEnable) {
-        return "Sorry, the Piggy can't be broken if a contribution occured within the last 5 minutes ;)"
-      } else {
+      if (!this.playerBreakEnable) {
         return 'Sorry, you need to contribute to the lottery first, to get access to this feature ;)'
+      } else {
+
+        return "The Piggy can't be broken if a contribution occured within the last 5 minutes ;)"
       }
     }
   },
