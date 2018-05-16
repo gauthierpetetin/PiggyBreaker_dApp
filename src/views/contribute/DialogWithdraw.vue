@@ -10,12 +10,12 @@
     >
       Withdraw
     </v-btn>
-    <v-tooltip right style="top: 5px;">
+    <v-tooltip right style="top: 5px; z-index: 999">
       <v-icon slot="activator">info_outline</v-icon>
       <span v-html="infoMessage"></span>
     </v-tooltip>
     <div class="grey--text">
-      Your balance: {{ dialogPlayer.withdrawBalance }} Eth
+      Your balance: {{ player.withdrawBalance }} Eth
     </div>
     <v-dialog v-model="withdrawDialog" persistent max-width="800px">
       <v-card>
@@ -38,7 +38,7 @@
       </v-card>
     </v-dialog>
 
-    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="contribution.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
     <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
@@ -56,20 +56,15 @@ export default {
     return {
       withdrawDialog: false,
       dialogMessage: "You have no funds to withdraw for now.<br />Press 'Contribute' to get a chance to win the next lottery ;)",
-      infoMessage: 'The more you contribute, the more chances you have to win.<br/>Indeed, your chances to win the lottery are proportional to the total amount of your contributions.'
+      infoMessage: 'The more you contribute, the more chances you have to win:<br/>Your chances to win the lottery are proportional to the total amount of your contributions.'
     }
   },
-  props: {
-    buttonLarge: true,
-    dialogPlayer: null,
-    playEnable: true,
-    lockstatus: null,
-    loading: null
-  },
   computed: {
+    currentGame () {
+      return this.$store.state.fbCurrentGame
+    },
     buttonEnable: function () {
-      console.log('Withdraw buttonEnable : ', this.loading)
-      if (this.playEnable && this.dialogPlayer.withdrawEnable && (!this.loading.contribution) && (!this.$store.state.loading.break) && (!this.$store.state.loading.withdraw)) {
+      if (this.contribution.enable && this.player.withdrawEnable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         return true
       } else {
         return false
@@ -79,18 +74,18 @@ export default {
   methods: {
     // Show dialog
     withdrawAction () {
-      if (this.playEnable) {
-        if (!this.dialogPlayer.withdrawEnable) {
-          this.withdrawDialog = true
-        } else {
-          if ((!this.loading.contribution) && (!this.$store.state.loading.break) && (!this.$store.state.loading.withdraw)) {
-            this.withdrawPiggy()
+      if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        if (this.contribution.enable) {
+          if (!this.player.withdrawEnable) {
+            this.withdrawDialog = true
           } else {
-            this.waitDialog = true
+            this.withdrawPiggy()
           }
+        } else {
+          this.metamaskDialog = true // command to show error dialog
         }
       } else {
-        this.metamaskDialog = true // command to show error dialog
+        this.waitDialog = true
       }
     }
   },

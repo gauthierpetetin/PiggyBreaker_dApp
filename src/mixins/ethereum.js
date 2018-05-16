@@ -6,35 +6,10 @@ import Units from 'ethereumjs-units'
 export default {
   data () {
     return {
-      // Contract
-      // abi: JSON.parse(process.env.ETHEREUM_ABI),
-      // contractAddress: null,
-      // abi: this.$store.state.contract.abi,
-      // contractAddress: this.$store.state.contract.address,
+      // ALL OTHER VARIABLES ARE GLOBAL (Cf. store.js)
+      //
       // Metamask
       web3js: window.web3,
-      metamaskInterval: null,
-      // Game
-      ethGame: {
-        id: null,
-        value: null
-      },
-      // Player
-      player: {
-        address: null,
-        email: null,
-        contributionValue: null,
-        contributionBalance: 0,
-        withdrawBalance: 0,
-        breakEnable: false,
-        withdrawEnable: false
-      },
-      // Contribution
-      contribution: {
-        checked: false,
-        enable: false,
-        status: null
-      },
       metamaskDialog: false,
       waitDialog: false
     }
@@ -45,6 +20,18 @@ export default {
     },
     abi () {
       return this.$store.state.contract.abi
+    },
+    player () {
+      return this.$store.state.ethPlayer
+    },
+    contribution () {
+      return this.$store.state.contribution
+    },
+    ethGame () {
+      return this.$store.state.ethGame
+    },
+    loading () {
+      return this.$store.state.loading
     }
   },
   methods: {
@@ -68,36 +55,37 @@ export default {
     },
     // Check Metamask
     checkMetamask () {
+      // console.log('CHECKMETAMASK')
       let self = this
       // Check metamask status
       web3plus.metamask.checkNetwork().then(response => {
-        // console.log(response)
-        self.contribution.checked = true
+        // console.log('checkMetamask response: ', response)
+        self.$store.state.contribution.checked = true
         if (response.status === 'error') {
           if (response.message === 'NOT_INSTALLED') {
-            self.contribution.enable = false
-            self.contribution.status = 'not_installed'
+            self.$store.state.contribution.enable = false
+            self.$store.state.contribution.status = 'not_installed'
             self.$store.state.metamaskEnabled = false
           } else if (response.message === 'NOT_LOGGED_IN') {
-            self.contribution.enable = false
-            self.contribution.status = 'locked'
+            self.$store.state.contribution.enable = false
+            self.$store.state.contribution.status = 'locked'
             self.$store.state.metamaskEnabled = false
           }
         } else if (response.status === 'success') {
           if (response.networkId !== 1 && response.networkId !== 3) {
-            self.contribution.enable = false
-            self.contribution.status = 'wrong_network'
+            self.$store.state.contribution.enable = false
+            self.$store.state.contribution.status = 'wrong_network'
             self.$store.state.metamaskEnabled = false
           } else if (response.networkId === 1 && process.env.ETHEREUM_NODE_ENV === 'development') {
-            self.contribution.enable = false
-            self.contribution.status = 'wrong_network'
+            self.$store.state.contribution.enable = false
+            self.$store.state.contribution.status = 'wrong_network'
             self.$store.state.metamaskEnabled = false
           } else if (response.networkId === 3 && process.env.ETHEREUM_NODE_ENV === 'production') {
-            self.contribution.enable = false
-            self.contribution.status = 'wrong_network'
+            self.$store.state.contribution.enable = false
+            self.$store.state.contribution.status = 'wrong_network'
             self.$store.state.metamaskEnabled = false
           } else {
-            self.contribution.enable = true
+            self.$store.state.contribution.enable = true
             self.$store.state.metamaskEnabled = true
             self.checkPlayer(response.address)
           }
@@ -105,8 +93,9 @@ export default {
       })
     },
     checkPlayer (newAddress) {
+      // console.log('CHECKPLAYER: ', newAddress)
       if (newAddress !== this.player.address) {
-        this.getEthPlayerData()
+        this.getEthGameData()
       }
     },
     // Get player email
@@ -119,85 +108,82 @@ export default {
         // Get accounts
         self.web3js.eth.getAccounts()
           .then(function (accounts) {
-            console.log(accounts[0])
+            console.log('getPlayerAddress', accounts[0])
+            if (self.player.address !== accounts[0]) {
+              self.$store.state.ethPlayer.address = accounts[0]
+            }
+            // Get player ethData
+            self.getEthPlayerBreakEnable(self.ethGame, self.player.address)
+            self.getEthPlayerWithdrawEnable(self.player.address)
             resolve(accounts[0])
           })
       })
     },
     // Get player
-    getEthPlayerData () {
+    getEthGameData () {
+      console.log('getEthGameData')
       let self = this
-
       if (self.web3js) {
         // Dial node
         self.dialJs()
+
+        if (self.abi && self.contractAddress) {
+          // Get contract
+          var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
+
+          // Get current Piggy
+          contract.methods.nbPiggies().call().then(
+            function (piggyId) {
+              contract.methods.piggies(piggyId).call().then(
+                function (ethGame) {
+                  // Set game id
+                  self.$store.state.ethGame.id = ethGame.piggyID
+                  // Set piggy value
+                  self.$store.state.ethGame.value = Units.convert(ethGame.value, 'wei', 'eth')
+                  // Get accounts
+                  self.getPlayerAddress()
+                })
+            })
+        }
+      }
+    },
+    //  Get player break allowance
+    getEthPlayerBreakEnable (ethGame, currentAccount) {
+      let self = this
+      if (this.abi && this.contractAddress) {
         // Get contract
         var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-
-        // Get current Piggy
-        contract.methods.nbPiggies().call().then(
-          function (piggyId) {
-            // console.log('PIGGGGGGY: ', piggyId)
-            contract.methods.piggies(piggyId).call().then(
-              function (ethGame) {
-                // console.log('ETHGAAAME: ', ethGame)
-                // Set game id
-                self.ethGame.id = ethGame.piggyID
-                // Set piggy value
-                self.ethGame.value = Units.convert(ethGame.value, 'wei', 'eth')
-                // Get accounts
-                self.web3js.eth.getAccounts()
-                  .then(function (accounts) {
-                    console.log(accounts)
-                    self.player.address = accounts[0]
-                    console.log(self.player)
-                    // Get player data
-                    self.getPlayerContributionBalance(self.ethGame, self.player.address)
-                    self.getPlayerBreakEnable(self.ethGame, self.player.address)
-                    self.getPlayerWithdrawEnable(self.player.address)
-                  })
-              })
+        // Get contribution amount
+        contract.methods.getContributionAmount(ethGame.id, currentAccount).call().then(
+          function (contributionAmount) {
+            self.$store.state.ethPlayer.contributionBalance = Units.convert(contributionAmount, 'wei', 'eth')
+            // Check if break enable
+            if (contributionAmount > 0) {
+              self.$store.state.ethPlayer.breakEnable = true
+            } else {
+              self.$store.state.ethPlayer.breakEnable = false
+            }
           })
       }
     },
-    // Get player contribution amount
-    getPlayerContributionBalance (ethGame, playerAddress) {
-      let self = this
-      // Get contract
-      var contract = new self.web3js.eth.Contract(this.abi, this.contractAddress)
-      // Get contribution amount
-      contract.methods.getContributionAmount(ethGame.id, playerAddress).call().then(
-        function (amount) {
-          self.player.contributionBalance = Units.convert(amount, 'wei', 'eth')
-        })
-    },
-    //  Get player break allowance
-    getPlayerBreakEnable (ethGame, currentAccount) {
-      let self = this
-      // Get contract
-      var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-      // Get contribution status
-      contract.methods.getContributionAmount(ethGame.id, currentAccount).call().then(
-        function (contributionAmount) {
-          if (contributionAmount > 0) {
-            self.player.breakEnable = true
-          }
-        })
-    },
     // Get player withdraw amount
-    getPlayerWithdrawEnable (playerAddress) {
+    getEthPlayerWithdrawEnable (playerAddress) {
       let self = this
-      // Get contract
-      var contract = new self.web3js.eth.Contract(this.abi, this.contractAddress)
-      // Get withdraw amount
-      contract.methods.pendingReturnValues(playerAddress).call().then(
-        function (amount) {
-          self.player.withdrawBalance = Units.convert(amount, 'wei', 'eth')
-          // Check if withdraw enable
-          if (amount > 0) {
-            self.player.withdrawEnable = true
-          }
-        })
+      if (this.abi && this.contractAddress) {
+        // Get contract
+        var contract = new self.web3js.eth.Contract(this.abi, this.contractAddress)
+        // Get withdraw amount
+        contract.methods.pendingReturnValues(playerAddress).call().then(
+          function (amount) {
+            self.$store.state.ethPlayer.withdrawBalance = Units.convert(amount, 'wei', 'eth')
+            // Check if withdraw enable
+            if (amount > 0) {
+              self.$store.state.ethPlayer.withdrawEnable = true
+            } else {
+              self.$store.state.ethPlayer.withdrawEnable = false
+            }
+          })
+      }
     },
     /*************
       Contribution
@@ -230,33 +216,36 @@ export default {
           console.log(accounts)
           let currentAddress = accounts[0]
 
-          // Get contract
-          var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-          // Send contribution
-          contract.methods.contribute().send({value: Units.convert(playerContribution, 'eth', 'wei'), from: currentAddress})
-            .on('transactionHash', function (hash) {
-              console.log('as contributed', hash)
-              // Alert DialogContribute.vue (self is DialogContribute.vue)
-              self.contributionStatus = 'contributed'
-              // Alert HomePage.vue (the event is catched by HomePage.vue)
-              self.$store.state.loading.contribution = true
-              // self.$emit('contribution', true)
-            })
-            .on('receipt', function (receipt) {
-              console.log('receipt:', receipt)
-              self.$store.state.loading.contribution = false
-            })
-            .on('confirmation', function (confirmationNumber, receipt) {
-              // console.log('confirmation:', confirmationNumber, receipt)
-            })
-            .on('error', function (error) {
-              console.log('error:', error)
-            })
+          if (self.abi && self.contractAddress) {
+            // Get contract
+            var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
+            // Send contribution
+            contract.methods.contribute().send({value: Units.convert(playerContribution, 'eth', 'wei'), from: currentAddress})
+              .on('transactionHash', function (hash) {
+                console.log('as contributed', hash)
+                // Alert DialogContribute.vue (self is DialogContribute.vue)
+                self.contributionStatus = 'contributed'
+                // Alert HomePage.vue (the event is catched by HomePage.vue)
+                self.$store.state.loading.contribution = true
+                // self.$emit('contribution', true)
+              })
+              .on('receipt', function (receipt) {
+                console.log('receipt:', receipt)
+                self.$store.state.loading.contribution = false
+                self.getEthGameData()
+              })
+              .on('confirmation', function (confirmationNumber, receipt) {
+                // console.log('confirmation:', confirmationNumber, receipt)
+              })
+              .on('error', function (error) {
+                console.log('error:', error)
+              })
+          }
         })
     },
     // Break the piggy
     breakPiggy () {
-      console.log('Break!')
+      console.log('breakPiggy')
       let self = this
       // Dial node
       self.dialJs()
@@ -266,25 +255,28 @@ export default {
           console.log(accounts)
           let currentAddress = accounts[0]
 
-          // Get contract
-          var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-          // Break piggy
-          contract.methods.breakPiggy().send({from: currentAddress})
-            .on('transactionHash', function (hash) {
-              console.log('transactionHash:', hash)
-              self.contributeStatus = 'contributed'
-              self.$store.state.loading.break = true
-            })
-            .on('receipt', function (receipt) {
-              console.log('receipt:', receipt)
-              self.$store.state.loading.break = false
-            })
-            .on('confirmation', function (confirmationNumber, receipt) {
-              // console.log('confirmation:', confirmationNumber, receipt)
-            })
-            .on('error', function (error) {
-              console.log('error:', error)
-            })
+          if (self.abi && self.contractAddress) {
+            // Get contract
+            var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
+            // Break piggy
+            contract.methods.breakPiggy().send({from: currentAddress})
+              .on('transactionHash', function (hash) {
+                console.log('transactionHash:', hash)
+                self.contributeStatus = 'contributed'
+                self.$store.state.loading.break = true
+              })
+              .on('receipt', function (receipt) {
+                console.log('receipt:', receipt)
+                self.$store.state.loading.break = false
+                self.getEthGameData()
+              })
+              .on('confirmation', function (confirmationNumber, receipt) {
+                // console.log('confirmation:', confirmationNumber, receipt)
+              })
+              .on('error', function (error) {
+                console.log('error:', error)
+              })
+          }
         })
     },
     // Withdraw
@@ -299,23 +291,27 @@ export default {
           console.log(accounts)
           let currentAddress = accounts[0]
 
-          // Exec contract
-          var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-          contract.methods.withdraw(currentAddress).send({from: currentAddress})
-            .on('transactionHash', function (hash) {
-              console.log('transactionHash:', hash)
-              // self.loading.withdraw = true
-              self.$emit('withdraw', true)
-            })
-            .on('receipt', function (receipt) {
-              console.log('receipt:', receipt)
-            })
-            .on('confirmation', function (confirmationNumber, receipt) {
-              // console.log('confirmation:', confirmationNumber, receipt)
-            })
-            .on('error', function (error) {
-              console.log('error:', error)
-            })
+          if (self.abi && self.contractAddress) {
+            // Exec contract
+            var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
+            contract.methods.withdraw(currentAddress).send({from: currentAddress})
+              .on('transactionHash', function (hash) {
+                console.log('transactionHash:', hash)
+                self.$store.state.loading.withdraw = true
+                // self.$emit('withdraw', true)
+              })
+              .on('receipt', function (receipt) {
+                console.log('receipt:', receipt)
+                self.$store.state.loading.withdraw = false
+                self.getEthGameData()
+              })
+              .on('confirmation', function (confirmationNumber, receipt) {
+                // console.log('confirmation:', confirmationNumber, receipt)
+              })
+              .on('error', function (error) {
+                console.log('error:', error)
+              })
+          }
         })
     },
     closeMetamaskDialog () {

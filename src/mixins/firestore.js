@@ -14,20 +14,6 @@ require('firebase/firestore')
 export default {
   data () {
     return {
-      currentGame: {
-        id: null,
-        value: 0,
-        nbContributions: 0,
-        minContribution: 0,
-        open: false,
-        winner: null,
-        createdAt: null,
-        updatedAt: null,
-        brokenAt: null,
-        breakable: null,
-        breakableAt: null,
-        serverTimestamp: null
-      },
       previousGame: {
         id: null,
         value: 0,
@@ -51,8 +37,12 @@ export default {
         notify_victory: null,
         withdraw_alert: null
       },
-      serverTimestamp: null,
       biggestPiggyValue: 0
+    }
+  },
+  computed: {
+    currentGame () {
+      return this.$store.state.fbCurrentGame
     }
   },
   methods: {
@@ -74,27 +64,6 @@ export default {
       })
     },
     // Get current game
-    subscribeGame (gameType) {
-      let self = this
-      // Get current game
-      db.collection('game').doc(gameType)
-        .onSnapshot(function (gameItem) {
-          // Get current time
-          firebase.database().ref('/.info/serverTimeOffset').on('value', function (offset) {
-            var offsetVal = offset.val() || 0
-            var serverTime = Date.now() + offsetVal
-            // If current game
-            if (gameType === 'current') {
-              self.currentGame = self.prepareGame(gameItem, serverTime)
-            } else if (gameType === 'previous') {
-              self.previousGame = self.prepareGame(gameItem, serverTime)
-            } else {
-              console.log('Invalid gameType: ', gameType)
-            }
-          })
-        })
-    },
-    // Get current game
     getGame (gameType) {
       let self = this
       // Get current game
@@ -106,13 +75,12 @@ export default {
             var serverTime = Date.now() + offsetVal
             // If current game
             if (gameType === 'current') {
-              self.currentGame = self.prepareGame(gameItem, serverTime)
+              self.$store.state.fbCurrentGame = self.prepareGame(gameItem, serverTime)
             } else if (gameType === 'previous') {
               self.previousGame = self.prepareGame(gameItem, serverTime)
             } else {
               console.log('Invalid gameType: ', gameType)
             }
-            // self.getEthPlayerData()
           })
         })
     },

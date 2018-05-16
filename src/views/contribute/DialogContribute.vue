@@ -27,7 +27,7 @@
               <!-- Ether contribution -->
               <v-flex xs12 sm6>
                 <span class="headline grey-text">Your ETH contribution*:</span><br />
-                <span class="caption" style="color: grey">Minimum contribution: {{ dialogGame.minContribution }} ETH</span>
+                <span class="caption" style="color: grey">Minimum contribution: {{ currentGame.minContribution }} ETH</span>
                 <v-tooltip right>
                   <v-icon small slot="activator" color="grey">info_outline</v-icon>
                   <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
@@ -46,7 +46,7 @@
                 <span style="color: grey">*Your chances to win the lottery are directly proportional to the amount your contribution(s).</span>
               </v-flex>
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="contributePiggy(dialogGame.minContribution)">Contribute</v-btn>
+                <v-btn block color="warning" dark @click.native="contributePiggy(currentGame.minContribution)">Contribute</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -88,7 +88,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="contribution.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
     <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
@@ -104,13 +104,7 @@ export default {
     ethereumMixin
   ],
   props: {
-    buttonLarge: true,
-    playEnable: true,
-    lockstatus: null,
-    dialogGame: null,
-    playerAddress: null,
-    playerContribution: null,
-    loading: null
+    buttonLarge: true
   },
   components: {
     AppMetamaskError: MetamaskError
@@ -133,8 +127,11 @@ export default {
     }
   },
   computed: {
+    currentGame () {
+      return this.$store.state.fbCurrentGame
+    },
     buttonEnable: function () {
-      if (this.playEnable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+      if (this.contribution.enable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         return true
       } else {
         return false
@@ -146,8 +143,8 @@ export default {
       }
     },
     positiveContribution: function () {
-      console.log('Positive contribution ? ', this.playerContribution)
-      if (this.playerContribution > 0) {
+      console.log('Positive contribution ? ', this.player.contributionBalance)
+      if (this.player.contributionBalance > 0) {
         return true
       } else {
         return false
@@ -162,13 +159,13 @@ export default {
       this.contributionError = false
 
       // If able to play
-      if (this.playEnable) {
-        if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
-          this.dialog = true // command to show dialog
 
+      if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        if (this.contribution.enable) {
+          this.dialog = true // command to show dialog
           // Get player email
           let self = this
-          this.getPlayerEmail(this.playerAddress).then(function (response) {
+          this.getPlayerEmail(this.player.address).then(function (response) {
             console.log('Address registered: ', response)
             self.playerEmail = response
             self.registerStatus = 'registered'
@@ -179,10 +176,10 @@ export default {
             }
           })
         } else {
-          this.waitDialog = true
+          this.metamaskDialog = true // command to show error dialog
         }
       } else {
-        this.metamaskDialog = true // command to show error dialog
+        this.waitDialog = true
       }
     },
     // Register player

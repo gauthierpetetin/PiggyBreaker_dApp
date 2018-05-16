@@ -12,8 +12,8 @@
       </v-layout>
       <!-- Loading -->
       <section v-if="contribution.checked == false">
-        <v-layout column align-center justify-center style="background-color: white" >
-          <v-progress-circular :size="80" indeterminate color="amber"></v-progress-circular>
+        <v-layout column align-center justify-center style="background-color: white; padding-top: 30px; padding-bottom: 30px" >
+          <v-progress-circular :size="60" indeterminate color="warning"></v-progress-circular>
         </v-layout>
       </section>
       <!-- /Loading -->
@@ -28,7 +28,7 @@
           <!-- Player contribution amount -->
           <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
             <h1 class="mb-2 headline text-xs-center contribution">
-                <template v-if="$store.state.loading.contribution">
+                <template v-if="loading.contribution">
                   <v-flex class="my-3">
                     <span class="grey--text">Your current contribution:</span>
                   </v-flex>
@@ -55,10 +55,10 @@
         </v-layout>
         <!-- /Contribution -->
 
-        <v-layout v-if="contribution.enable && (!$store.state.loading.contribution)" row wrap class="white--text" style="background-color: white">
+        <v-layout v-if="contribution.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
-            <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" button-large="true" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" :loading="loading"></app-dialog-contribute>
+            <app-dialog-contribute button-large="true"></app-dialog-contribute>
           </v-flex>
           <!-- /Player contribute -->
         </v-layout>
@@ -116,14 +116,14 @@
                   </v-card-text>
                   <v-card-text class="text-xs-center">
                     <!-- Dialog -->
-                    <template v-if="$store.state.loading.contribution">
+                    <template v-if="loading.contribution">
                       <v-tooltip right>
                         <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
                         <span>{{ transactionMessage1 }}<br />{{ transactionMessage2 }}</span>
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-contribute :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerAddress="player.address" :playerContribution="player.contributionBalance" :loading="loading"></app-dialog-contribute>
+                      <app-dialog-contribute></app-dialog-contribute>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>
@@ -147,7 +147,7 @@
                         </v-tooltip>
                       </template>
                       <template v-else>
-                        <app-dialog-break :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogGame="currentGame" :playerBreakEnable="player.breakEnable" :loading="loading"></app-dialog-break>
+                        <app-dialog-break></app-dialog-break>
                       </template>
                       <!-- /Dialog -->
                     </template>
@@ -176,7 +176,7 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-withdraw :playEnable="contribution.enable" :lockstatus="contribution.status" :dialogPlayer="player" :loading="loading"></app-dialog-withdraw>
+                      <app-dialog-withdraw></app-dialog-withdraw>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>
@@ -213,11 +213,6 @@ export default {
   },
   data () {
     return {
-      loading: {
-        contribution: false,
-        break: false,
-        withdraw: false
-      },
       transactionMessage1: 'Your transaction has been submitted successfully.',
       transactionMessage2: 'It will require 50-60 seconds until it gets validated by the whole network.'
     }
@@ -226,7 +221,6 @@ export default {
     percentage: function () {
       let res
       let min = 0.5
-      // console.log("COMPUTED: ", this.ethGame)
       if (!isNaN(this.player.contributionBalance) && !isNaN(this.currentGame.value) && (this.currentGame.value !== 0)) {
         res = Math.max(100 * this.player.contributionBalance / this.currentGame.value, min)
       } else {
@@ -255,25 +249,6 @@ export default {
         return 'Contribute to make him happy ;)'
       }
     }
-  },
-  mounted () {
-    let self = this
-
-    // Check contract config
-    if (self.$store.state.contract.address === null && self.$store.state.contract.abi === null) {
-      this.getContractConfig().then(function (contract) {
-        self.$store.state.contract.address = contract.address
-        self.$store.state.contract.abi = JSON.parse(contract.abi)
-      })
-    }
-    // Check if metamask is enabled
-    this.loopMetamask()
-    // this.checkMetamask()
-
-    // Get current game on firestore
-    this.getGame('current')
-    // Get current game on ethereum
-    // this.getEthPlayerData()
   }
 }
 </script>

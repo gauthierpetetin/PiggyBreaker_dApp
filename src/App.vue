@@ -19,6 +19,9 @@ import Header from './components/Header/Header.vue'
 import Footer from './components/Footer/Footer.vue'
 import Discord from './components/Discord/Discord.vue'
 
+import firestoreMixin from '@/mixins/firestore'
+import ethereumMixin from '@/mixins/ethereum'
+
 export default {
   name: 'App',
   components: {
@@ -26,6 +29,26 @@ export default {
     appHeader: Header,
     appFooter: Footer,
     appDiscord: Discord
+  },
+  mixins: [
+    firestoreMixin,
+    ethereumMixin
+  ],
+  mounted () {
+    let self = this
+    // Check contract config
+    if (self.$store.state.contract.address === null && self.$store.state.contract.abi === null) {
+      this.getContractConfig().then(function (contract) {
+        console.log('Contract config obtained: ', contract.address)
+        self.$store.state.contract.address = contract.address
+        self.$store.state.contract.abi = JSON.parse(contract.abi)
+      })
+    }
+    // Check if metamask is enabled
+    this.loopMetamask()
+
+    // Get current game on firestore
+    this.getGame('current')
   }
 }
 </script>

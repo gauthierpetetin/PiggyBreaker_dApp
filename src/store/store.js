@@ -11,10 +11,42 @@ export const store = new Vuex.Store({
       address: null,
       abi: null
     },
+    ethPlayer: {
+      address: null,
+      email: null,
+      contributionValue: null,
+      contributionBalance: 0,
+      withdrawBalance: 0,
+      breakEnable: false,
+      withdrawEnable: false
+    },
+    contribution: {
+      checked: false,
+      enable: false,
+      status: null
+    },
+    ethGame: {
+      id: null,
+      value: null
+    },
     loading: {
       contribution: false,
       break: false,
       withdraw: false
+    },
+    fbCurrentGame: {
+      id: null,
+      value: 0,
+      nbContributions: 0,
+      minContribution: 0,
+      open: false,
+      winner: null,
+      createdAt: null,
+      updatedAt: null,
+      brokenAt: null,
+      breakable: null,
+      breakableAt: null,
+      serverTimestamp: null
     }
   }
 })

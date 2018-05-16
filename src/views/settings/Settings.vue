@@ -5,29 +5,25 @@
         <v-flex md4 class="text-xs-center">
           <img src="/static/img/picto/piggy-eye.png" width="160">
         </v-flex>
-        <v-flex md8 class="grey--text" style="margin-top: 20px">
+        <v-flex md8 class="blue--text" style="margin-top: 20px">
           <!-- Display -->
-          <span v-if="this.playerSettings.login == ''" v-show="!editField.login"><i>Enter your login</i></span>
-          <span v-show="!editField.login" class="display-1 pink--text" style="float: left;">{{ this.playerSettings.login }}</span>
+          <span v-if="this.playerSettings.login === null || this.playerSettings.login === ''" v-show="!editField.login" class="headline pink--text"><i>Enter nickname</i></span>
+          <span v-show="!editField.login" class="display-1" style="float: left;">{{ this.playerSettings.login }}</span>
           <v-btn v-show="!editField.login" small flat fab style="bottom: 10px;" @click="editField.login = true">
             <v-icon>edit</v-icon>
           </v-btn>
           <!-- Submit -->
           <v-text-field v-model="playerSettings.login" v-show="editField.login" type="text" :rules="loginRules" class="field-value form-control" single-line></v-text-field>
-          <v-btn v-show="editField.login" small flat fab  @click="submitLogin()">
+          <v-btn v-show="editField.login" small flat fab @click="submitLogin()">
             <v-icon color="green">check_circle</v-icon>
           </v-btn>
           <v-btn v-show="editField.login" small flat fab  @click="editField.login = false">
             <v-icon color="red">cancel</v-icon>
           </v-btn>
           <p>
-            {{ this.playerSettings.address }}
-          </p>
-          <p>
-
             <!-- Display -->
-            <span v-if="this.playerSettings.email == ''" v-show="!editField.email"><i>Enter your email</i></span>
-            <span v-show="!editField.email" class="title">{{ this.playerSettings.email }}</span>
+            <span v-if="this.playerSettings.email === null || this.playerSettings.email === ''" v-show="!editField.email" class="title pink--text"><i>Enter email</i></span>
+            <span v-show="!editField.email" class="headline">{{ this.playerSettings.email }}</span>
             <v-btn v-show="!editField.email" small flat fab @click="editField.email = true">
               <v-icon>edit</v-icon>
             </v-btn>
@@ -41,6 +37,9 @@
             <v-btn v-show="editField.email" small flat fab @click="editField.email = false">
               <v-icon color="red">cancel</v-icon>
             </v-btn>
+          </p>
+          <p class="grey--text">
+            {{ player.address }}
           </p>
         </v-flex>
       </v-layout>
@@ -134,19 +133,7 @@ export default {
     }
   },
   mounted () {
-    let self = this
-    // Get player info
-    /*
-    this.getPlayerInfo('0xb5747835141b46f7C472393B31F8F5A57F74A44f').then(function (response) {
-      self.playerSettings = response
-    })
-    */
-    this.getPlayerAddress().then(function (response) {
-      let address = response
-      self.getPlayerInfo(address).then(function (response) {
-        self.playerSettings = response
-      })
-    })
+    this.initSettings()
   },
   watch: {
     'playerSettings.notify_start': function (val) {
@@ -157,6 +144,9 @@ export default {
     },
     'playerSettings.notify_victory': function (val) {
       this.updateSettings()
+    },
+    'player.address': function (val) {
+      this.initSettings()
     }
   },
   methods: {
@@ -169,6 +159,25 @@ export default {
     submitEmail () {
       this.editField.email = false
       this.updateSettings()
+    },
+    // Init settings
+    initSettings () {
+      let self = this
+      this.playerSettings = {
+        address: null,
+        email: null,
+        login: null,
+        notify_start: null,
+        notify_stop: null,
+        notify_victory: null,
+        withdraw_alert: null
+      }
+      this.getPlayerAddress().then(function (response) {
+        let address = response
+        self.getPlayerInfo(address).then(function (response) {
+          self.playerSettings = response
+        })
+      })
     },
     // Update settings
     updateSettings () {

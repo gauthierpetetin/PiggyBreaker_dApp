@@ -39,7 +39,7 @@
       </v-card>
     </v-dialog>
 
-    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="lockstatus" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="contribution.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
     <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
@@ -50,7 +50,7 @@ import ethereumMixin from '@/mixins/ethereum'
 import MetamaskError from '@/views/error/MetamaskError.vue'
 
 // Timer vars
-let timerDuration = 300
+let timerDuration = 5 * 60 // 5 minutes
 let timerBackgroundColor = '#727272'
 
 export default {
@@ -61,12 +61,7 @@ export default {
     AppMetamaskError: MetamaskError
   },
   props: {
-    buttonLarge: true,
-    dialogGame: null,
-    playerBreakEnable: false,
-    playEnable: true,
-    lockstatus: null,
-    loading: null
+    buttonLarge: true
   },
   data () {
     return {
@@ -78,7 +73,6 @@ export default {
       },
       breakDialog: false,
       breakEnable: false,
-      countdownEnabled: false,
       infoMessage: "You need to be a contributor to access this feature.<br/>Furthermore, the Piggy can't be broken if a contribution occured within the last 5 minutes."
     }
   },
@@ -87,30 +81,71 @@ export default {
     clearInterval(this.countdownInterval)
   },
   computed: {
+    currentGame () {
+      return this.$store.state.fbCurrentGame
+    },
     buttonEnable: function () {
-      if (this.playEnable && this.breakEnable && (!this.loading.contribution) && (!this.$store.state.loading.break) && (!this.$store.state.loading.withdraw)) {
+      if (this.breakEnable && this.contribution.enable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         return true
       } else {
         return false
       }
     },
     dialogMessage: function () {
-      if (!this.playerBreakEnable) {
+      if (!this.player.breakEnable) {
         return 'Sorry, you need to contribute to the lottery first, to get access to this feature ;)'
       } else {
-
         return "The Piggy can't be broken if a contribution occured within the last 5 minutes ;)"
       }
     }
   },
   watch: {
-    dialogGame: function (game) {
+    'player.breakEnable': function (val) {
+      this.checkBreak()
+    },
+    'currentGame.serverTimestamp': function (val) {
+      this.checkBreak()
+    },
+    'currentGame.breakableAt': function (val) {
+      this.checkBreak()
+    }
+  },
+  methods: {
+    // Show dialog
+    breakAction () {
+      if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        if (this.contribution.enable) {
+          if (!this.breakEnable) {
+            this.breakDialog = true
+          } else {
+            this.breakPiggy()
+          }
+        } else {
+          this.metamaskDialog = true // command to show error dialog
+        }
+      } else {
+        this.waitDialog = true
+      }
+    },
+    // Check break
+    checkBreak () {
+      console.log('CHECKBREAK')
+      // If is breakable
+      if (this.player.breakEnable && this.currentGame.serverTimestamp && this.currentGame.breakableAt) {
+        this.checkTime()
+      } else {
+        // Not breakable
+        this.breakEnable = false
+      }
+    },
+    checkTime () {
+      console.log('CHECKTIME')
       // Cancel interval
       clearInterval(this.countdownInterval)
 
       let limit = timerDuration
       // Calc seconds left
-      let secondsLeft = game.breakableAt - this.dialogGame.serverTimestamp
+      let secondsLeft = this.currentGame.breakableAt - this.currentGame.serverTimestamp
       // If seconds left
       if (secondsLeft > 0) {
         this.breakEnable = false
@@ -126,53 +161,14 @@ export default {
           // Clear interval
           if (secondsLeft < 0) {
             this.buttonStyle.backgroundColor = null
-            if (this.playerBreakEnable) {
+            if (this.player.breakEnable) {
               this.breakEnable = true
             }
             clearInterval(this.countdownInterval)
           }
         }, 1000)
-      } else if (this.playerBreakEnable) {
+      } else if (this.player.breakEnable) {
         this.breakEnable = true
-      }
-    },
-    playerBreakEnable: function (val) {
-      this.checkBreak()
-    }
-  },
-  methods: {
-    // Show dialog
-    breakAction () {
-      if (this.playEnable) {
-        if (!this.breakEnable) {
-          this.breakDialog = true
-        } else {
-          if ((!this.loading.contribution) && (!this.$store.state.loading.break) && (!this.$store.state.loading.withdraw)) {
-            this.breakPiggy()
-          } else {
-            this.waitDialog = true
-          }
-        }
-      } else {
-        this.metamaskDialog = true // command to show error dialog
-      }
-    },
-    // Check break
-    checkBreak () {
-      // If is breakable
-      if (this.playerBreakEnable && this.dialogGame.serverTimestamp && this.dialogGame.breakableAt) {
-        // If time ok
-        if (this.dialogGame.serverTimestamp > this.dialogGame.breakableAt) {
-          this.breakEnable = true
-          this.countdownEnabled = false
-        } else {
-          this.breakEnable = false
-          this.countdownEnabled = true
-        }
-      } else {
-        // Not breakable
-        this.breakEnable = false
-        this.countdownEnabled = false
       }
     }
   }
