@@ -20,7 +20,7 @@ export const store = new Vuex.Store({
       breakEnable: false,
       withdrawEnable: false
     },
-    contribution: {
+    ethTransaction: {
       checked: false,
       enable: false,
       status: null
@@ -29,7 +29,7 @@ export const store = new Vuex.Store({
       id: null,
       value: null
     },
-    loading: {
+    ethLoading: {
       contribution: false,
       break: false,
       withdraw: false

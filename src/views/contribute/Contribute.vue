@@ -11,7 +11,7 @@
         </v-tooltip>
       </v-layout>
       <!-- Loading -->
-      <section v-if="contribution.checked == false">
+      <section v-if="transaction.checked == false">
         <v-layout column align-center justify-center style="background-color: white; padding-top: 30px; padding-bottom: 30px" >
           <v-progress-circular :size="60" indeterminate color="warning"></v-progress-circular>
         </v-layout>
@@ -19,14 +19,14 @@
       <!-- /Loading -->
       <section v-else>
         <!-- Locked -->
-        <v-layout v-if="contribution.enable == false" row wrap class="white--text">
-          <app-locked :lockstatus="contribution.status"></app-locked>
+        <v-layout v-if="transaction.enable == false" row wrap class="white--text">
+          <app-locked :lockstatus="transaction.status"></app-locked>
         </v-layout>
         <!-- /Locked -->
         <!-- Contribution -->
-        <v-layout v-if="contribution.enable == true" column align-center justify-center style="background-color: white" >
+        <v-layout v-if="transaction.enable == true" column align-center justify-center style="background-color: white" >
           <!-- Player contribution amount -->
-          <section v-if="contribution.enable" style="margin-top: 15px; min-width: 40%">
+          <section v-if="transaction.enable" style="margin-top: 15px; min-width: 40%">
             <h1 class="mb-2 headline text-xs-center contribution">
                 <template v-if="loading.contribution">
                   <v-flex class="my-3">
@@ -55,7 +55,7 @@
         </v-layout>
         <!-- /Contribution -->
 
-        <v-layout v-if="contribution.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
+        <v-layout v-if="transaction.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
             <app-dialog-contribute button-large="true"></app-dialog-contribute>

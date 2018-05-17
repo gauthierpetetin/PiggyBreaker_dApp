@@ -24,14 +24,14 @@ export default {
     player () {
       return this.$store.state.ethPlayer
     },
-    contribution () {
-      return this.$store.state.contribution
+    transaction () {
+      return this.$store.state.ethTransaction
     },
     ethGame () {
       return this.$store.state.ethGame
     },
     loading () {
-      return this.$store.state.loading
+      return this.$store.state.ethLoading
     }
   },
   methods: {
@@ -60,32 +60,32 @@ export default {
       // Check metamask status
       web3plus.metamask.checkNetwork().then(response => {
         // console.log('checkMetamask response: ', response)
-        self.$store.state.contribution.checked = true
+        self.$store.state.ethTransaction.checked = true
         if (response.status === 'error') {
           if (response.message === 'NOT_INSTALLED') {
-            self.$store.state.contribution.enable = false
-            self.$store.state.contribution.status = 'not_installed'
+            self.$store.state.ethTransaction.enable = false
+            self.$store.state.ethTransaction.status = 'not_installed'
             self.$store.state.metamaskEnabled = false
           } else if (response.message === 'NOT_LOGGED_IN') {
-            self.$store.state.contribution.enable = false
-            self.$store.state.contribution.status = 'locked'
+            self.$store.state.ethTransaction.enable = false
+            self.$store.state.ethTransaction.status = 'locked'
             self.$store.state.metamaskEnabled = false
           }
         } else if (response.status === 'success') {
           if (response.networkId !== 1 && response.networkId !== 3) {
-            self.$store.state.contribution.enable = false
-            self.$store.state.contribution.status = 'wrong_network'
+            self.$store.state.ethTransaction.enable = false
+            self.$store.state.ethTransaction.status = 'wrong_network'
             self.$store.state.metamaskEnabled = false
           } else if (response.networkId === 1 && process.env.ETHEREUM_NODE_ENV === 'development') {
-            self.$store.state.contribution.enable = false
-            self.$store.state.contribution.status = 'wrong_network'
+            self.$store.state.ethTransaction.enable = false
+            self.$store.state.ethTransaction.status = 'wrong_network'
             self.$store.state.metamaskEnabled = false
           } else if (response.networkId === 3 && process.env.ETHEREUM_NODE_ENV === 'production') {
-            self.$store.state.contribution.enable = false
-            self.$store.state.contribution.status = 'wrong_network'
+            self.$store.state.ethTransaction.enable = false
+            self.$store.state.ethTransaction.status = 'wrong_network'
             self.$store.state.metamaskEnabled = false
           } else {
-            self.$store.state.contribution.enable = true
+            self.$store.state.ethTransaction.enable = true
             self.$store.state.metamaskEnabled = true
             self.checkPlayer(response.address)
           }
@@ -226,12 +226,12 @@ export default {
                 // Alert DialogContribute.vue (self is DialogContribute.vue)
                 self.contributionStatus = 'contributed'
                 // Alert HomePage.vue (the event is catched by HomePage.vue)
-                self.$store.state.loading.contribution = true
+                self.$store.state.ethLoading.contribution = true
                 // self.$emit('contribution', true)
               })
               .on('receipt', function (receipt) {
                 console.log('receipt:', receipt)
-                self.$store.state.loading.contribution = false
+                self.$store.state.ethLoading.contribution = false
                 self.getEthGameData()
               })
               .on('confirmation', function (confirmationNumber, receipt) {
@@ -263,11 +263,11 @@ export default {
               .on('transactionHash', function (hash) {
                 console.log('transactionHash:', hash)
                 self.contributeStatus = 'contributed'
-                self.$store.state.loading.break = true
+                self.$store.state.ethLoading.break = true
               })
               .on('receipt', function (receipt) {
                 console.log('receipt:', receipt)
-                self.$store.state.loading.break = false
+                self.$store.state.ethLoading.break = false
                 self.getEthGameData()
               })
               .on('confirmation', function (confirmationNumber, receipt) {
@@ -297,12 +297,12 @@ export default {
             contract.methods.withdraw(currentAddress).send({from: currentAddress})
               .on('transactionHash', function (hash) {
                 console.log('transactionHash:', hash)
-                self.$store.state.loading.withdraw = true
+                self.$store.state.ethLoading.withdraw = true
                 // self.$emit('withdraw', true)
               })
               .on('receipt', function (receipt) {
                 console.log('receipt:', receipt)
-                self.$store.state.loading.withdraw = false
+                self.$store.state.ethLoading.withdraw = false
                 self.getEthGameData()
               })
               .on('confirmation', function (confirmationNumber, receipt) {

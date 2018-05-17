@@ -10,7 +10,7 @@
     >
       Withdraw
     </v-btn>
-    <v-tooltip right style="top: 5px; z-index: 999">
+    <v-tooltip right style="top: 5px; z-index: 3">
       <v-icon slot="activator">info_outline</v-icon>
       <span v-html="infoMessage"></span>
     </v-tooltip>
@@ -38,7 +38,7 @@
       </v-card>
     </v-dialog>
 
-    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="contribution.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="transaction.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
     <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
@@ -64,7 +64,7 @@ export default {
       return this.$store.state.fbCurrentGame
     },
     buttonEnable: function () {
-      if (this.contribution.enable && this.player.withdrawEnable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+      if (this.transaction.enable && this.player.withdrawEnable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         return true
       } else {
         return false
@@ -75,7 +75,7 @@ export default {
     // Show dialog
     withdrawAction () {
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
-        if (this.contribution.enable) {
+        if (this.transaction.enable) {
           if (!this.player.withdrawEnable) {
             this.withdrawDialog = true
           } else {

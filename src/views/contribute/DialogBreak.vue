@@ -9,7 +9,7 @@
       >
       <div v-bind:style="buttonStyle" class="breakButton">
       </div>
-      <span style="z-index:10">
+      <span style="z-index:2">
         Break the Piggy
       </span>
     </v-btn>
@@ -39,7 +39,7 @@
       </v-card>
     </v-dialog>
 
-    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="contribution.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="transaction.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
     <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
@@ -85,7 +85,7 @@ export default {
       return this.$store.state.fbCurrentGame
     },
     buttonEnable: function () {
-      if (this.breakEnable && this.contribution.enable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+      if (this.breakEnable && this.transaction.enable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         return true
       } else {
         return false
@@ -114,7 +114,7 @@ export default {
     // Show dialog
     breakAction () {
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
-        if (this.contribution.enable) {
+        if (this.transaction.enable) {
           if (!this.breakEnable) {
             this.breakDialog = true
           } else {

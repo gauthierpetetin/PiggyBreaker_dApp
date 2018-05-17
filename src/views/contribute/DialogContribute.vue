@@ -28,7 +28,7 @@
               <v-flex xs12 sm6>
                 <span class="headline grey-text">Your ETH contribution*:</span><br />
                 <span class="caption" style="color: grey">Minimum contribution: {{ currentGame.minContribution }} ETH</span>
-                <v-tooltip right>
+                <v-tooltip right style="z-index: 3">
                   <v-icon small slot="activator" color="grey">info_outline</v-icon>
                   <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
                 </v-tooltip>
@@ -88,7 +88,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="contribution.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
+    <app-metamask-error :metaDialog="metamaskDialog" :lockstatus="transaction.status" @metaerror="closeMetamaskDialog"></app-metamask-error>
     <app-metamask-error :waitDialog="waitDialog" @wait="closeWaitDialog"></app-metamask-error>
   </div>
 </template>
@@ -131,7 +131,7 @@ export default {
       return this.$store.state.fbCurrentGame
     },
     buttonEnable: function () {
-      if (this.contribution.enable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+      if (this.transaction.enable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         return true
       } else {
         return false
@@ -161,7 +161,7 @@ export default {
       // If able to play
 
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
-        if (this.contribution.enable) {
+        if (this.transaction.enable) {
           this.dialog = true // command to show dialog
           // Get player email
           let self = this
