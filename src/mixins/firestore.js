@@ -123,7 +123,7 @@ export default {
       }
 
       // Collect Piggy value
-      let piggyValue = gameItem.data().value
+      let piggyValue = parseFloat(gameItem.data().value)
       if (piggyValue > this.biggestPiggyValue) {
         this.biggestPiggyValue = piggyValue
       }

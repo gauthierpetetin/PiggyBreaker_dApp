@@ -217,14 +217,34 @@ export default {
       transactionMessage2: 'It will require 50-60 seconds until it gets validated by the whole network.'
     }
   },
+  methods: {
+    isNumber (n) {
+      return !isNaN(parseFloat(n)) && !isNaN(n - 0)
+    }
+  },
   computed: {
     percentage: function () {
       let res
       let min = 0.5
-      if (!isNaN(this.player.contributionBalance) && !isNaN(this.currentGame.value) && (this.currentGame.value !== 0)) {
-        res = Math.max(100 * this.player.contributionBalance / this.currentGame.value, min)
-      } else {
+      console.log('percentage - this.player.contributionBalance', this.player.contributionBalance)
+      console.log('percentage - this.currentGame.value', this.currentGame.value)
+      if (this.isNumber(this.player.contributionBalance)) {
+        console.log('isNumber1')
+      }
+      if (this.isNumber(this.currentGame.value)) {
+        console.log('isNumber2')
+      }
+      if ((!this.isNumber(this.player.contributionBalance)) || (!this.isNumber(this.currentGame.value))) {
         res = min
+        console.log('res1', res)
+      } else {
+        if (parseFloat(this.currentGame.value) === 0) {
+          res = min
+          console.log('res2', res)
+        } else {
+          res = Math.max(100 * this.player.contributionBalance / this.currentGame.value, min)
+          console.log('res3', res)
+        }
       }
       return res
     },
