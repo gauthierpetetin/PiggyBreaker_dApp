@@ -17,15 +17,13 @@
 
           <v-layout row wrap>
             <v-flex md12>
-              <h1 class="headline grey-text titles">Previous Piggy</h1>
-              <app-piggy-detail :detailGame="previousGame" :maxValue="biggestPiggyValue" class="boxes"></app-piggy-detail>
-            </v-flex>
-          </v-layout>
-
-          <v-layout row wrap>
-            <v-flex md12>
               <h1 class="headline grey-text titles">Past Piggies</h1>
             </v-flex>
+            <v-layout row wrap>
+              <v-flex md12>
+                <app-piggy-detail :detailGame="previousGame" :maxValue="biggestPiggyValue" class="boxes"></app-piggy-detail>
+              </v-flex>
+            </v-layout>
             <v-flex v-for="(game, index) in games" :key="index" md12 style="margin-bottom: 10px;">
               <app-piggy-detail :detailGame="game" :maxValue="biggestPiggyValue" class="boxes"></app-piggy-detail>
             </v-flex>

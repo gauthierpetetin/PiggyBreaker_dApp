@@ -17,8 +17,8 @@
             <div style="width: 90%">
               <span class="grey--text headline">Piggy #{{ detailGame.id }}</span><br /><br />
               <h1 v-if="detailGame.open === true" class="blue--text title"><strong>Game still on-going..</strong></h1>
-              <h1 v-if="(detailGame.open === false) && detailGame.winner" class="warning--text title"><strong>Winner</strong>: {{ detailGame.winner }}</h1>
-              <h1 v-if="(detailGame.open === false) && (!detailGame.winner)" class="warning--text title">
+              <h1 v-if="(detailGame.open === false) && detailGame.winner && (detailGame.winner !== '0x0000000000000000000000000000000000000000')" class="warning--text title"><strong>Winner</strong>: {{ detailGame.winner }}</h1>
+              <h1 v-if="(detailGame.open === false) && ((!detailGame.winner) || (detailGame.winner === '0x0000000000000000000000000000000000000000'))" class="warning--text title">
                 <strong>Winner</strong>:
                 <v-tooltip right>
                   <v-icon slot="activator" class="warning--text">fas fa-crosshairs fa-pulse</v-icon>
