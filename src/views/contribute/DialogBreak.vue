@@ -76,6 +76,9 @@ export default {
       infoMessage: "You need to be a contributor to access this feature.<br/>Furthermore, the Piggy can't be broken if a contribution occured within the last 5 minutes."
     }
   },
+  mounted () {
+    this.checkBreak()
+  },
   beforeDestroy () {
     // Cancel interval
     clearInterval(this.countdownInterval)
@@ -147,7 +150,11 @@ export default {
       // Calc seconds left
       let secondsLeft = this.currentGame.breakableAt - this.currentGame.serverTimestamp
       // If seconds left
+      console.log('this.currentGame.breakableAt: ', this.currentGame.breakableAt)
+      console.log('this.currentGame.serverTimestamp', this.currentGame.serverTimestamp)
+      console.log('secondsLeft: ', secondsLeft)
       if (secondsLeft > 0) {
+        console.log('br false')
         this.breakEnable = false
         this.buttonStyle.backgroundColor = timerBackgroundColor
         this.countdownInterval = window.setInterval(() => {
@@ -168,6 +175,7 @@ export default {
           }
         }, 1000)
       } else if (this.player.breakEnable) {
+        console.log('br true')
         this.breakEnable = true
       }
     }

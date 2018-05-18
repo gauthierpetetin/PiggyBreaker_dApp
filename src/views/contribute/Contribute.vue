@@ -226,24 +226,24 @@ export default {
     percentage: function () {
       let res
       let min = 0.5
-      console.log('percentage - this.player.contributionBalance', this.player.contributionBalance)
-      console.log('percentage - this.currentGame.value', this.currentGame.value)
-      if (this.isNumber(this.player.contributionBalance)) {
-        console.log('isNumber1')
-      }
-      if (this.isNumber(this.currentGame.value)) {
-        console.log('isNumber2')
-      }
+      // console.log('percentage - this.player.contributionBalance', this.player.contributionBalance)
+      // console.log('percentage - this.currentGame.value', this.currentGame.value)
+      // if (this.isNumber(this.player.contributionBalance)) {
+      //   console.log('isNumber1')
+      // }
+      // if (this.isNumber(this.currentGame.value)) {
+      //   console.log('isNumber2')
+      // }
       if ((!this.isNumber(this.player.contributionBalance)) || (!this.isNumber(this.currentGame.value))) {
         res = min
-        console.log('res1', res)
+        // console.log('res1', res)
       } else {
         if (parseFloat(this.currentGame.value) === 0) {
           res = min
-          console.log('res2', res)
+          // console.log('res2', res)
         } else {
           res = Math.max(100 * this.player.contributionBalance / this.currentGame.value, min)
-          console.log('res3', res)
+          // console.log('res3', res)
         }
       }
       return res
