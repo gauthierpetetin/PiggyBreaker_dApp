@@ -10,6 +10,14 @@
     </section> -->
 
     <section>
+      <v-layout column wrap align-center style="background-color: white; padding-top: 40px; padding-bottom: 40px">
+        <v-flex md12>
+          <img src="/static/img/picto/PIGGY_StillConfused_512.png" alt="avatar" width="200">
+        </v-flex>
+      </v-layout>
+    </section>
+
+    <section>
       <v-layout
         column
         wrap

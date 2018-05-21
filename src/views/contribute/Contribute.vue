@@ -250,7 +250,7 @@ export default {
     },
     piggyImage: function () {
       if (this.player.contributionBalance > 0) {
-        return '/static/img/picto/big-piggy-happy.png'
+        return '/static/img/picto/big-piggy_Smiley-1.png'
       } else {
         return '/static/img/picto/big-piggy.png'
       }
