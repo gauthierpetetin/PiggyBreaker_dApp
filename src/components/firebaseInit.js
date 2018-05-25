@@ -1,5 +1,6 @@
 import firebase from 'firebase'
 import 'firebase/firestore'
-import firebaseConfig from './firebaseConfig'
+// Initialize Firebase
+let firebaseConfig = process.env.FIRESTORE_APIKEY
 const firebaseApp = firebase.initializeApp(firebaseConfig)
 export default firebaseApp.firestore()

@@ -155,7 +155,7 @@ export default {
       // Return a new promise.
       return new Promise(function (resolve, reject) {
         if (address) {
-          var docRef = db.collection('players_accounts').doc(address)
+          var docRef = db.collection('players').doc(address)
           docRef.get().then(function (playerItem) {
             if (playerItem.exists) {
               resolve(playerItem.data().email)
@@ -174,7 +174,7 @@ export default {
       // Return a new promise.
       return new Promise(function (resolve, reject) {
         if (address) {
-          var docRef = db.collection('players_accounts').doc(address)
+          var docRef = db.collection('players').doc(address)
           docRef.get().then(function (playerAccountItem) {
             if (playerAccountItem.exists) {
               // Set game data
