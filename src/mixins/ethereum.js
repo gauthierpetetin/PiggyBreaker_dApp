@@ -194,9 +194,11 @@ export default {
 
       // Get contribution
       let playerContribution = self.player.contributionValue
+      console.log('PlayerContribution1', playerContribution)
       // Format contribution
       playerContribution = playerContribution.replace(/,/g, '.')
       playerContribution = playerContribution.replace(/^\./g, '0.')
+      console.log('PlayerContribution2', playerContribution)
 
       // Check user contribution
       if (playerContribution === '') {

@@ -36,13 +36,15 @@ export default {
         notify_stop: null,
         notify_victory: null,
         withdraw_alert: null
-      },
-      biggestPiggyValue: 0
+      }
     }
   },
   computed: {
     currentGame () {
       return this.$store.state.fbCurrentGame
+    },
+    biggestPiggyValue () {
+      return this.$store.state.fbBiggestPiggyValue
     }
   },
   methods: {
@@ -123,21 +125,21 @@ export default {
       }
 
       // Collect Piggy value
-      let piggyValue = parseFloat(gameItem.data().value)
-      if (piggyValue > this.biggestPiggyValue) {
-        this.biggestPiggyValue = piggyValue
+      let piggyValue = Units.convert(parseFloat(gameItem.data().value), 'wei', 'eth')
+      if (parseFloat(piggyValue) > parseFloat(this.biggestPiggyValue)) {
+        this.$store.state.fbBiggestPiggyValue = parseFloat(piggyValue)
       }
 
       // Calc min contribution
       let minContribution
       if (gameItem.data().min_contribution) {
-        minContribution = Units.convert(gameItem.data().min_contribution, 'wei', 'eth')
+        minContribution = Units.convert(parseFloat(gameItem.data().min_contribution), 'wei', 'eth')
       }
 
       // Set game data
       return {
         id: gameItem.data().id,
-        value: Units.convert(piggyValue, 'wei', 'eth'),
+        value: piggyValue,
         nbContributions: gameItem.data().nb_contributions,
         minContribution: minContribution,
         open: gameItem.data().open,

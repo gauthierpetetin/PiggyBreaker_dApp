@@ -47,6 +47,7 @@ export const store = new Vuex.Store({
       breakable: null,
       breakableAt: null,
       serverTimestamp: null
-    }
+    },
+    fbBiggestPiggyValue: 0
   }
 })
