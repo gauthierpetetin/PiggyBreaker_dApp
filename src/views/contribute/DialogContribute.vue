@@ -35,7 +35,7 @@
               </v-flex>
               <v-flex xs12 sm2>
                 <v-text-field type="number" number
-                  v-model="player.contributionValue" required></v-text-field>
+                  v-model="$store.state.ethPlayer.contributionValue" required></v-text-field>
               </v-flex>
               <v-flex v-if="contributionError" xs12 sm12>
                 <v-alert outline color="error" icon="warning" :value="true">
@@ -111,6 +111,7 @@ export default {
   },
   data () {
     return {
+      contrib: 0,
       apiUrl: process.env.API_URL,
       dialog: false,
       contributionStatus: 'contributing',
