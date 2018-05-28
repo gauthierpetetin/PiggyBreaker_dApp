@@ -95,11 +95,13 @@ export default {
       }
     },
     dialogMessage: function () {
+      let message = null
       if (!this.player.breakEnable) {
-        return 'Sorry, you need to contribute to the lottery first, to get access to this feature ;)'
+        message = 'Sorry, you need to contribute to the lottery first, to get access to this feature ;)'
       } else {
-        return "The Piggy can't be broken if a contribution occured within the last 5 minutes ;)"
+        message = 'The Piggy can\'t be broken if a contribution occured within the last 5 minutes ;)'
       }
+      return message
     }
   },
   watch: {
@@ -132,7 +134,6 @@ export default {
     },
     // Check break
     checkBreak () {
-      console.log('CHECKBREAK')
       // If is breakable
       if (this.player.breakEnable && this.currentGame.serverTimestamp && this.currentGame.breakableAt) {
         this.checkTime()

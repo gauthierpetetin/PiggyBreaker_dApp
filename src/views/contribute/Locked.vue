@@ -10,17 +10,22 @@
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
           <img src="/static/img/picto/metamask.png" alt="no metamask" style="max-width: 150px; margin-top: 20px; margin-bottom: 10px">
         </v-flex>
-        <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
+        <v-flex v-if="metamaskUrl" md12 class="text-xs-center grey-text" style="font-size:28px">
           <v-btn
             class="mt-3"
             style="background-color: #2196f3; margin-bottom: 100px"
             dark
             large
-            href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en"
+            :href="metamaskUrl"
             target="_blank"
           >
             Install Metamask
           </v-btn>
+        </v-flex>
+        <v-flex v-else md6 offset-md3 class="text-xs-center grey-text" style="font-size:28px;margin-bottom: 100px;">
+          <v-alert :value="true" outline color="error" icon="warning">
+            Sorry, your browser does not support MetaMask.
+          </v-alert>
         </v-flex>
         <v-flex md12 class="text-xs-center black--text">
           <!-- Getting Started -->
@@ -66,6 +71,8 @@
 <script>
 
 import GettingStarted from '@/views/faq/GettingStarted'
+const { detect } = require('detect-browser')
+const browser = detect()
 
 export default {
   props: {
@@ -75,19 +82,43 @@ export default {
     appGettingStarted: GettingStarted
   },
   computed: {
+    // Set network message
     networkMessage () {
+      let message = null
       if (process.env.ETHEREUM_NODE_ENV === 'development') {
-        return 'Ropsten Test Network'
+        message = 'Ropsten Test Network'
       } else {
-        return 'Main Ethereum Network'
+        message = 'Main Ethereum Network'
       }
+      return message
     },
+    // Set network image
     networkImage () {
+      let image = null
       if (process.env.ETHEREUM_NODE_ENV === 'development') {
-        return '/static/img/picto/network-ropsten.png'
+        image = '/static/img/picto/network-ropsten.png'
       } else {
-        return '/static/img/picto/network-main.png'
+        image = '/static/img/picto/network-main.png'
       }
+      return image
+    },
+    // Set MetaMask Url
+    metamaskUrl () {
+      let metamaskUrl = null
+      switch (browser && browser.name) {
+        case 'chrome':
+          metamaskUrl = 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en'
+          break
+        case 'firefox':
+          metamaskUrl = 'https://addons.mozilla.org/en-US/firefox/addon/ether-metamask/'
+          break
+        case 'opera':
+          metamaskUrl = 'https://addons.opera.com/fr/extensions/details/metamask/'
+          break
+        default:
+          metamaskUrl = null
+      }
+      return metamaskUrl
     }
   }
 }
