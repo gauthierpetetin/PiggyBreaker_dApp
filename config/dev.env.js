@@ -4,7 +4,7 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  API_URL: '"https://piggy:cochon@staging.piggybreaker.com/api/"',
+  API_URL: '"https://piggy:cochon@staging.piggybreaker.com/api"',
   ETHEREUM_NODE_ENV: '"development"',
   ETHEREUM_NODE_URL: '"wss://ropsten.eth.6120.eu/ws"',
   FIRESTORE_APIKEY: JSON.stringify({
