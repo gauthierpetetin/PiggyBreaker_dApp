@@ -193,12 +193,11 @@ export default {
       let self = this
 
       // Get contribution
-      let playerContribution = self.player.contributionValue
-      console.log('PlayerContribution1', playerContribution)
+      let playerContribution = this.$store.state.ethPlayer.contributionValue
+
       // Format contribution
       playerContribution = playerContribution.replace(/,/g, '.')
       playerContribution = playerContribution.replace(/^\./g, '0.')
-      console.log('PlayerContribution2', playerContribution)
 
       // Check user contribution
       if (playerContribution === '') {
