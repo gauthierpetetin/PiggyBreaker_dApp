@@ -14,7 +14,7 @@ export const store = new Vuex.Store({
     ethPlayer: {
       address: null,
       email: null,
-      contributionValue: null,
+      // contributionValue: null,
       contributionBalance: 0,
       withdrawBalance: 0,
       breakEnable: false,

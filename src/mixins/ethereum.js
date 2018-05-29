@@ -189,12 +189,13 @@ export default {
       Contribution
     *************/
     // Contribute to the piggy
-    contributePiggy (minContribution) {
+    contributePiggy (playerContribution, minContribution) {
       let self = this
 
       // Get contribution
-      let playerContribution = this.$store.state.ethPlayer.contributionValue
+      // let playerContribution = this.$store.state.ethPlayer.contributionValue
 
+      console.log('XXXplayerContribution', playerContribution)
       // Format contribution
       playerContribution = playerContribution.replace(/,/g, '.')
       playerContribution = playerContribution.replace(/^\./g, '0.')

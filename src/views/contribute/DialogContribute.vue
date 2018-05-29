@@ -35,7 +35,7 @@
               </v-flex>
               <v-flex xs12 sm2>
                 <v-text-field type="number" number
-                  v-model="$store.state.ethPlayer.contributionValue" required></v-text-field>
+                  v-model="localContributionValue" required></v-text-field>
               </v-flex>
               <v-flex v-if="contributionError" xs12 sm12>
                 <v-alert outline color="error" icon="warning" :value="true">
@@ -46,7 +46,7 @@
                 <span style="color: grey">*Your chances to win the lottery are directly proportional to the amount your contribution(s).</span>
               </v-flex>
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="contributePiggy(currentGame.minContribution)">Contribute</v-btn>
+                <v-btn block color="warning" dark @click.native="contributePiggy(localContributionValue, currentGame.minContribution)">Contribute</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -119,6 +119,7 @@ export default {
       contributionError: false,
       emailError: false,
       playerEmail: null,
+      localContributionValue: 0,
       emailRules: [
         v => {
           return !!v || 'E-mail is required'
