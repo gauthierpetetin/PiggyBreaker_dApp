@@ -96,6 +96,8 @@ export default {
   },
   methods: {
     invite () {
+      console.log('this.apiUrl', this.apiUrl)
+
       if (!this.emailValid) {
         return false
       }
