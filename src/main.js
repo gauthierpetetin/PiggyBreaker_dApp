@@ -19,9 +19,20 @@ Vue.use(Vuetify)
 //   router
 // })
 
+Vue.filter('round', function (value, accuracy) {
+  let factor = Math.pow(10, accuracy)
+  return Math.round(parseFloat(value) * factor) / factor
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
+  // filters: {
+  //   round(value, accuracy) {
+  //     let factor = Math.pow(10, accuracy)
+  //     return Math.round(parseFloat(value) * factor) / factor
+  //   }
+  // },
   router,
   store,
   components: { App },
