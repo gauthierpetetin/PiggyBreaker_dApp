@@ -4,7 +4,10 @@
     <section>
       <!-- <v-parallax class="parallax-background"> -->
       <v-layout column align-center justify-center style="background-color: white" >
-        <h1 class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong><span>{{ currentGame.value | round(2) }}</span> ETH</strong></h1>
+        <v-tooltip right>
+          <h1 slot="activator" class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong><span>{{ currentGame.value | round(2) }}</span> ETH</strong></h1>
+          <span> {{ currentGame.value }} ETH </span>
+        </v-tooltip>
         <v-tooltip right>
           <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 15px" slot="activator">
           <span> {{piggyMessage1}} <br /> {{piggyMessage2}} </span>
@@ -42,8 +45,13 @@
                 </template>
                 <template v-else>
                   <v-flex class="my-3">
-                    <span class="grey--text">Your current contribution:</span>
-                    <span class="grey--text">{{ player.contributionBalance }} ETH</span>
+                    <v-tooltip right>
+                      <div slot="activator" class="grey--text">
+                        <span>Your current contribution:</span>
+                        <span>{{ player.contributionBalance | round(2) }} ETH</span>
+                      </div>
+                      <span>{{ player.contributionBalance }} ETH</span>
+                    </v-tooltip>
                   </v-flex>
                   <v-flex class="my-3">
                     <v-progress-linear :value="percentage" height="20" color="grey"></v-progress-linear>

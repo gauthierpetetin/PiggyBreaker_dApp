@@ -7,7 +7,10 @@
             <div class="text-md-center">
               <img v-if="detailGame.open === true" src="/static/img/picto/piggy.png" width="100" max-height="100">
               <img v-else src="/static/img/picto/2-break-piggy.png" width="100" max-height="100">
-              <h1 class="pink--text">{{ detailGame.value | round(2) }} ETH</h1>
+              <v-tooltip bottom>
+                <h1 slot="activator" class="pink--text">{{ detailGame.value | round(2) }} ETH</h1>
+                <span>{{ detailGame.value }} ETH</span>
+              </v-tooltip>
               <v-progress-linear :value="percentage" height="4" color="pink" background-color="transparent"></v-progress-linear>
             </div>
           </v-card-text>

@@ -112,9 +112,9 @@ export default {
           self.dialogConfirm = !self.dialogConfirm
           // success
           if (response.body.status === 'success') {
-            self.dialogMessage = 'An email have been sent to your friend!'
+            self.dialogMessage = 'Great, an email has been sent to your friend!'
           } else if (response.body.status === 'error') {
-            self.dialogMessage = 'An invitation have already been sent.'
+            self.dialogMessage = 'An invitation has already been sent.'
           }
         }, function (response) {
           self.dialogConfirm = !self.dialogConfirm
