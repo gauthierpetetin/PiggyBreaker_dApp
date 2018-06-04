@@ -51,7 +51,9 @@ export default {
       let self = this
       self.$store.state.metamaskInterval = setInterval(function () {
         self.checkMetamask()
+        // console.log("WINDOW STATUS: ", self.$store.state.contribute.dialog)
       }, 3000)
+
     },
     // Check Metamask
     checkMetamask () {
@@ -192,10 +194,6 @@ export default {
     contributePiggy (playerContribution, minContribution) {
       let self = this
 
-      // Get contribution
-      // let playerContribution = this.$store.state.ethPlayer.contributionValue
-
-      console.log('XXXplayerContribution', playerContribution)
       // Format contribution
       playerContribution = playerContribution.replace(/,/g, '.')
       playerContribution = playerContribution.replace(/^\./g, '0.')
@@ -225,11 +223,9 @@ export default {
             contract.methods.contribute().send({value: Units.convert(playerContribution, 'eth', 'wei'), from: currentAddress})
               .on('transactionHash', function (hash) {
                 console.log('as contributed', hash)
-                // Alert DialogContribute.vue (self is DialogContribute.vue)
-                self.contributionStatus = 'contributed'
-                // Alert HomePage.vue (the event is catched by HomePage.vue)
+                self.$store.state.contribute.contributionStatus = 'contributed'
                 self.$store.state.ethLoading.contribution = true
-                // self.$emit('contribution', true)
+                self.$store.state.contribute.dialog = true
               })
               .on('receipt', function (receipt) {
                 console.log('receipt:', receipt)
@@ -264,7 +260,7 @@ export default {
             contract.methods.breakPiggy().send({from: currentAddress})
               .on('transactionHash', function (hash) {
                 console.log('transactionHash:', hash)
-                self.contributeStatus = 'contributed'
+                // self.contributeStatus = 'contributed'
                 self.$store.state.ethLoading.break = true
               })
               .on('receipt', function (receipt) {

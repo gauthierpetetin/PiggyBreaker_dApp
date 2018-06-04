@@ -14,15 +14,15 @@
       <span v-else>Contribute</span>
     </v-btn>
 
-    <v-dialog v-model="dialog" persistent max-width="800px">
+    <v-dialog v-model="$store.state.contribute.dialog" persistent max-width="800px">
 
       <v-card>
         <v-card-title>
-          <span v-if="contributionStatus === 'contributing'" class="headline grey-text">Contribute</span>
-          <span v-if="contributionStatus === 'contributed'" class="headline grey-text">Transation submitted successfully!</span>
+          <span v-if="(contributionStatus === 'waitingForContribute') || (contributionStatus === 'contributing')" class="headline grey-text">Contribute</span>
+          <span v-if="contributionStatus === 'contributed'" class="headline grey-text">Transaction submitted successfully!</span>
         </v-card-title>
         <v-card-text>
-          <v-container grid-list-md v-if="contributionStatus === 'contributing'">
+          <v-container grid-list-md v-if="(contributionStatus === 'waitingForContribute') || (contributionStatus === 'contributing')">
             <v-layout wrap>
               <!-- Ether contribution -->
               <v-flex xs12 sm6>
@@ -46,10 +46,11 @@
                 <span style="color: grey">*Your chances to win the lottery are directly proportional to the amount your contribution(s).</span>
               </v-flex>
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="contributePiggy(localContributionValue, currentGame.minContribution)">Contribute</v-btn>
+                <v-btn block color="warning" dark @click.native="next()">Contribute</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
+
           <v-container grid-list-md v-if="contributionStatus === 'contributed'">
             <v-layout wrap>
               <v-flex xs12 sm12 class="grey--text">
@@ -57,7 +58,7 @@
                 <br />
               </v-flex>
             </v-layout>
-            <v-layout wrap v-if="registerStatus === 'unregistered' ">
+            <v-layout wrap v-if="(registerStatus === 'waitingForRegister') || (registerStatus === 'unregistered')">
               <!-- Email -->
               <v-flex xs12 sm12 class="title grey-text">
                 Your email (optional):
@@ -66,14 +67,14 @@
                 Let us inform you per email in case of victory.
               </v-flex>
               <v-flex xs12 sm4>
-                <v-text-field type="text" email :rules="emailRules"
-                  v-model="playerEmail"></v-text-field>
+                <v-text-field type="text" email :rules="emailRules" label="Your email"
+                  v-model="playerEmail" @focus="$event.target.select()"></v-text-field>
               </v-flex>
               <v-flex xs12 sm12>
                 <v-btn block color="warning" dark @click.native="registerPlayer()">Register email</v-btn>
               </v-flex>
             </v-layout>
-            <v-layout wrap v-if="registerStatus === 'registered' ">
+            <v-layout wrap v-if="registerStatus === 'registered'">
               <v-flex xs12 sm12 class="grey--text">
                 You will be informed per email in case of victory.
               </v-flex>
@@ -82,9 +83,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn v-if="contributionStatus === 'contributing'" color="blue darken-1" flat @click.native="dialog = false">Cancel</v-btn>
-          <v-btn v-if="contributionStatus === 'contributed' && registerStatus === 'unregistered'" color="blue darken-1" flat @click.native="dialog = false">Skip</v-btn>
-          <v-btn v-if="contributionStatus === 'contributed' && registerStatus === 'registered'" color="blue darken-1" flat @click.native="dialog = false">Ok</v-btn>
+          <v-btn v-if="(contributionStatus === 'waitingForContribute') || (contributionStatus === 'contributing')" color="blue darken-1" flat @click.native="closeDialog()">Cancel</v-btn>
+          <v-btn v-if="contributionStatus === 'contributed' && ((registerStatus === 'waitingForRegister') || (registerStatus === 'unregistered'))" color="blue darken-1" flat @click.native="closeDialog()">Skip</v-btn>
+          <v-btn v-if="contributionStatus === 'contributed' && registerStatus === 'registered'" color="blue darken-1" flat @click.native="closeDialog()">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -113,9 +114,6 @@ export default {
     return {
       contrib: 0,
       apiUrl: process.env.API_URL,
-      dialog: false,
-      contributionStatus: 'contributing',
-      registerStatus: 'unregistered',
       contributionError: false,
       emailError: false,
       playerEmail: null,
@@ -124,7 +122,7 @@ export default {
         v => {
           return !!v || 'E-mail is required'
         },
-        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        v => this.validEmail(v) || 'E-mail must be valid'
       ]
     }
   },
@@ -151,30 +149,37 @@ export default {
       } else {
         return false
       }
+    },
+    contributionStatus: function () {
+      return this.$store.state.contribute.contributionStatus
+    },
+    registerStatus: function () {
+      return this.$store.state.contribute.registerStatus
     }
   },
   methods: {
     // Show dialog
     contributeAction () {
-      // Reset contribution
-      this.contributionStatus = 'contributing'
-      this.contributionError = false
-
       // If able to play
 
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         if (this.transaction.enable) {
-          this.dialog = true // command to show dialog
+          // Reset contribution
+          this.$store.state.contribute.contributionStatus = 'waitingForContribute'
+
+          this.contributionError = false
+
+          this.$store.state.contribute.dialog = true // command to show dialog
           // Get player email
           let self = this
           this.getPlayerEmail(this.player.address).then(function (response) {
             console.log('Address registered: ', response)
             self.playerEmail = response
-            self.registerStatus = 'registered'
+            self.$store.state.contribute.registerStatus = 'registered'
           }, function (error) {
             if (error) {
               console.log('Address not registered')
-              self.registerStatus = 'unregistered'
+              self.$store.state.contribute.registerStatus = 'unregistered'
             }
           })
         } else {
@@ -184,12 +189,28 @@ export default {
         this.waitDialog = true
       }
     },
+    next () {
+      console.log('NEEEEXT')
+      if (this.contributionStatus === 'waitingForContribute') {
+        this.contributePiggy(this.localContributionValue, this.currentGame.minContribution)
+        this.$store.state.contribute.contributionStatus = 'contributing'
+      }
+    },
+    closeDialog () {
+      this.$store.state.contribute.dialog = false
+    },
     // Register player
     registerPlayer () {
-      let email = this.player.email
+      let email = this.playerEmail
+      console.log('registerPlayer', email)
+
+      let self = this
       if (!this.validEmail(email)) {
         return false
+      } else {
+        self.$store.state.contribute.registerStatus = 'registering'
       }
+
       // Call API
       let data = {
         email: email
@@ -197,12 +218,13 @@ export default {
       this.$http.post(this.apiUrl + '/user/register', JSON.stringify(data))
         .then(function (response) {
           // success
+          self.$store.state.contribute.registerStatus = 'registered'
+          console.log('registered: ', response)
         }, function (response) {
           // error
+          self.$store.state.contribute.registerStatus = 'unregistered'
           console.log('error', response.body.status)
         })
-
-      // this.contributionStatus = 'registered'
     },
     validEmail (email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/

@@ -63,7 +63,7 @@
         </v-layout>
         <!-- /Contribution -->
 
-        <v-layout v-if="transaction.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
+        <v-layout v-if="transaction.enable" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
             <app-dialog-contribute button-large="true"></app-dialog-contribute>
@@ -130,7 +130,7 @@
                         <span>{{ transactionMessage1 }}<br />{{ transactionMessage2 }}</span>
                       </v-tooltip>
                     </template>
-                    <template v-else>
+                    <template>
                       <app-dialog-contribute></app-dialog-contribute>
                     </template>
                     <!-- /Dialog -->
@@ -267,7 +267,7 @@ export default {
       if (this.player.contributionBalance > 0) {
         return 'Billy is happy since you contributed.'
       } else {
-        return 'billy is sad..'
+        return 'Billy is sad..'
       }
     },
     piggyMessage2: function () {

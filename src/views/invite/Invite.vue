@@ -79,7 +79,7 @@ export default {
         v => {
           return !!v || 'E-mail is required'
         },
-        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        v => this.validEmail(v) || 'E-mail must be valid'
       ],
       dialogConfirm: null,
       dialogMessage: null
@@ -105,6 +105,7 @@ export default {
       let data = {
         email: this.email
       }
+      console.log('Invite: ', this.email)
 
       let self = this
       this.$http.post(this.apiUrl + '/user/invite', JSON.stringify(data))
