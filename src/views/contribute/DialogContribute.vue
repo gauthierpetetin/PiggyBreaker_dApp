@@ -22,7 +22,8 @@
           <span v-if="contributionStatus === 'contributed'" class="headline grey-text">Transaction submitted successfully!</span>
         </v-card-title>
         <v-card-text>
-          <v-container grid-list-md v-if="(contributionStatus === 'waitingForContribute') || (contributionStatus === 'contributing')">
+
+          <v-container grid-list-md v-if="(contributionStatus === 'waitingForContribute')">
             <v-layout wrap>
               <!-- Ether contribution -->
               <v-flex xs12 sm6>
@@ -51,13 +52,20 @@
             </v-layout>
           </v-container>
 
-          <v-container grid-list-md v-if="contributionStatus === 'contributed'">
+          <v-container grid-list-md v-if="(contributionStatus === 'contributing') || ((contributionStatus === 'contributed') && (registerStatus === 'registering'))">
+            <v-layout column align-center justify-center style="background-color: white; padding-top: 30px; padding-bottom: 30px" >
+              <v-progress-circular :size="60" indeterminate color="warning"></v-progress-circular>
+            </v-layout>
+          </v-container>
+
+          <v-container grid-list-md v-if="(contributionStatus === 'contributed') && (registerStatus !== 'registering')">
             <v-layout wrap>
               <v-flex xs12 sm12 class="grey--text">
                 Congratulations! Your contribution has been submitted successfully. It will require 50-60 seconds until it gets validated by the whole network.<br />
                 <br />
               </v-flex>
             </v-layout>
+
             <v-layout wrap v-if="(registerStatus === 'waitingForRegister') || (registerStatus === 'unregistered')">
               <!-- Email -->
               <v-flex xs12 sm12 class="title grey-text">
@@ -74,6 +82,7 @@
                 <v-btn block color="warning" dark @click.native="registerPlayer()">Register email</v-btn>
               </v-flex>
             </v-layout>
+
             <v-layout wrap v-if="registerStatus === 'registered'">
               <v-flex xs12 sm12 class="grey--text">
                 You will be informed per email in case of victory.
@@ -81,11 +90,14 @@
             </v-layout>
           </v-container>
         </v-card-text>
+
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn v-if="(contributionStatus === 'waitingForContribute') || (contributionStatus === 'contributing')" color="blue darken-1" flat @click.native="closeDialog()">Cancel</v-btn>
-          <v-btn v-if="contributionStatus === 'contributed' && ((registerStatus === 'waitingForRegister') || (registerStatus === 'unregistered'))" color="blue darken-1" flat @click.native="closeDialog()">Skip</v-btn>
-          <v-btn v-if="contributionStatus === 'contributed' && registerStatus === 'registered'" color="blue darken-1" flat @click.native="closeDialog()">Ok</v-btn>
+          <v-btn v-if="contributionStatus !== 'contributed'" color="blue darken-1" flat @click.native="closeDialog()">Cancel</v-btn>
+
+          <v-btn v-if="(contributionStatus === 'contributed') && (registerStatus !== 'registered')" color="blue darken-1" flat @click.native="closeDialog()">Skip</v-btn>
+
+          <v-btn v-if="(contributionStatus === 'contributed') && (registerStatus === 'registered')" color="blue darken-1" flat @click.native="closeDialog()">Ok</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -166,6 +178,9 @@ export default {
         if (this.transaction.enable) {
           // Reset contribution
           this.$store.state.contribute.contributionStatus = 'waitingForContribute'
+
+          // this.$store.state.contribute.contributionStatus = 'contributed'
+          // this.$store.state.contribute.registerStatus = 'registering'
 
           this.contributionError = false
 
