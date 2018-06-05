@@ -51,9 +51,7 @@ export default {
       let self = this
       self.$store.state.metamaskInterval = setInterval(function () {
         self.checkMetamask()
-        // console.log("WINDOW STATUS: ", self.$store.state.contribute.dialog)
       }, 3000)
-
     },
     // Check Metamask
     checkMetamask () {
@@ -132,7 +130,9 @@ export default {
         if (self.abi && self.contractAddress) {
           // Get contract
           var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-
+          console.log('abi', self.abi)
+          console.log('contractAddress', self.contractAddress)
+          console.log('contract', contract)
           // Get current Piggy
           contract.methods.nbPiggies().call().then(
             function (piggyId) {
@@ -223,9 +223,9 @@ export default {
             contract.methods.contribute().send({value: Units.convert(playerContribution, 'eth', 'wei'), from: currentAddress})
               .on('transactionHash', function (hash) {
                 console.log('as contributed', hash)
-                self.$store.state.contribute.contributionStatus = 'contributed'
+                self.contributionStatus = 'contributed'
                 self.$store.state.ethLoading.contribution = true
-                self.$store.state.contribute.dialog = true
+                self.dialog = true
               })
               .on('receipt', function (receipt) {
                 console.log('receipt:', receipt)

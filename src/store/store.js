@@ -48,11 +48,6 @@ export const store = new Vuex.Store({
       breakableAt: null,
       serverTimestamp: null
     },
-    fbBiggestPiggyValue: 0,
-    contribute: {
-      dialog: false,
-      registerStatus: 'waitingForRegister',
-      contributionStatus: 'waitingForContribute'
-    }
+    fbBiggestPiggyValue: 0
   }
 })

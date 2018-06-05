@@ -14,11 +14,12 @@
       <span v-else>Contribute</span>
     </v-btn>
 
-    <v-dialog v-model="$store.state.contribute.dialog" persistent max-width="800px">
+    <v-dialog v-model="dialog" persistent max-width="800px">
 
       <v-card>
         <v-card-title>
-          <span v-if="(contributionStatus === 'waitingForContribute') || (contributionStatus === 'contributing')" class="headline grey-text">Contribute</span>
+          <span v-if="contributionStatus === 'waitingForContribute'" class="headline grey-text">Contribute</span>
+          <span v-if="contributionStatus === 'contributing'" class="headline grey-text">Please confirm the transaction on Metamask..</span>
           <span v-if="contributionStatus === 'contributed'" class="headline grey-text">Transaction submitted successfully!</span>
         </v-card-title>
         <v-card-text>
@@ -53,6 +54,9 @@
           </v-container>
 
           <v-container grid-list-md v-if="(contributionStatus === 'contributing') || ((contributionStatus === 'contributed') && (registerStatus === 'registering'))">
+            <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
+              <img src="/static/img/picto/metamask.png" alt="no metamask" style="max-width: 80px; margin-bottom: 10px">
+            </v-flex>
             <v-layout column align-center justify-center style="background-color: white; padding-top: 30px; padding-bottom: 30px" >
               <v-progress-circular :size="60" indeterminate color="warning"></v-progress-circular>
             </v-layout>
@@ -130,6 +134,9 @@ export default {
       emailError: false,
       playerEmail: null,
       localContributionValue: 0,
+      dialog: false,
+      registerStatus: 'waitingForRegister',
+      contributionStatus: 'waitingForContribute',
       emailRules: [
         v => {
           return !!v || 'E-mail is required'
@@ -161,12 +168,6 @@ export default {
       } else {
         return false
       }
-    },
-    contributionStatus: function () {
-      return this.$store.state.contribute.contributionStatus
-    },
-    registerStatus: function () {
-      return this.$store.state.contribute.registerStatus
     }
   },
   methods: {
@@ -177,24 +178,22 @@ export default {
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         if (this.transaction.enable) {
           // Reset contribution
-          this.$store.state.contribute.contributionStatus = 'waitingForContribute'
-
-          // this.$store.state.contribute.contributionStatus = 'contributed'
-          // this.$store.state.contribute.registerStatus = 'registering'
+          this.contributionStatus = 'waitingForContribute'
+          // this.contributionStatus = 'contributing'
 
           this.contributionError = false
 
-          this.$store.state.contribute.dialog = true // command to show dialog
+          this.dialog = true // command to show dialog
           // Get player email
           let self = this
           this.getPlayerEmail(this.player.address).then(function (response) {
             console.log('Address registered: ', response)
             self.playerEmail = response
-            self.$store.state.contribute.registerStatus = 'registered'
+            self.registerStatus = 'registered'
           }, function (error) {
             if (error) {
               console.log('Address not registered')
-              self.$store.state.contribute.registerStatus = 'unregistered'
+              self.registerStatus = 'unregistered'
             }
           })
         } else {
@@ -208,11 +207,11 @@ export default {
       console.log('NEEEEXT')
       if (this.contributionStatus === 'waitingForContribute') {
         this.contributePiggy(this.localContributionValue, this.currentGame.minContribution)
-        this.$store.state.contribute.contributionStatus = 'contributing'
+        this.contributionStatus = 'contributing'
       }
     },
     closeDialog () {
-      this.$store.state.contribute.dialog = false
+      this.dialog = false
     },
     // Register player
     registerPlayer () {
@@ -223,7 +222,7 @@ export default {
       if (!this.validEmail(email)) {
         return false
       } else {
-        self.$store.state.contribute.registerStatus = 'registering'
+        self.registerStatus = 'registering'
       }
 
       // Call API
@@ -233,11 +232,11 @@ export default {
       this.$http.post(this.apiUrl + '/user/register', JSON.stringify(data))
         .then(function (response) {
           // success
-          self.$store.state.contribute.registerStatus = 'registered'
+          self.registerStatus = 'registered'
           console.log('registered: ', response)
         }, function (response) {
           // error
-          self.$store.state.contribute.registerStatus = 'unregistered'
+          self.registerStatus = 'unregistered'
           console.log('error', response.body.status)
         })
     },
