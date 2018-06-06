@@ -48,12 +48,12 @@
                 <span style="color: grey">*Your chances to win the lottery are directly proportional to the amount your contribution(s).</span>
               </v-flex>
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="next()">Contribute</v-btn>
+                <v-btn block color="warning" dark @click.native="contributePiggy(localContributionValue, currentGame.minContribution)">Contribute</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
 
-          <v-container grid-list-md v-if="(contributionStatus === 'contributing') || ((contributionStatus === 'contributed') && (registerStatus === 'registering'))">
+          <v-container grid-list-md v-if="contributionStatus === 'contributing'">
             <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
               <img src="/static/img/picto/metamask.png" alt="no metamask" style="max-width: 80px; margin-bottom: 10px">
             </v-flex>
@@ -62,7 +62,7 @@
             </v-layout>
           </v-container>
 
-          <v-container grid-list-md v-if="(contributionStatus === 'contributed') && (registerStatus !== 'registering')">
+          <v-container grid-list-md v-if="contributionStatus === 'contributed'">
             <v-layout wrap>
               <v-flex xs12 sm12 class="grey--text">
                 Congratulations! Your contribution has been submitted successfully. It will require 50-60 seconds until it gets validated by the whole network.<br />
@@ -82,9 +82,18 @@
                 <v-text-field type="text" email :rules="emailRules" label="Your email"
                   v-model="playerEmail" @focus="$event.target.select()"></v-text-field>
               </v-flex>
+              <v-flex v-if="registerError" xs12 sm12>
+                <v-alert outline color="error" icon="warning" :value="true">
+                  {{ contributionError }}
+                </v-alert>
+              </v-flex>
               <v-flex xs12 sm12>
                 <v-btn block color="warning" dark @click.native="registerPlayer()">Register email</v-btn>
               </v-flex>
+            </v-layout>
+
+            <v-layout v-if="registerStatus === 'registering'" column align-center justify-center style="background-color: white; padding-top: 30px; padding-bottom: 30px" >
+              <v-progress-circular :size="60" indeterminate color="warning"></v-progress-circular>
             </v-layout>
 
             <v-layout wrap v-if="registerStatus === 'registered'">
@@ -131,7 +140,7 @@ export default {
       contrib: 0,
       apiUrl: process.env.API_URL,
       contributionError: false,
-      emailError: false,
+      registerError: false,
       playerEmail: null,
       localContributionValue: 0,
       dialog: false,
@@ -203,13 +212,6 @@ export default {
         this.waitDialog = true
       }
     },
-    next () {
-      console.log('NEEEEXT')
-      if (this.contributionStatus === 'waitingForContribute') {
-        this.contributePiggy(this.localContributionValue, this.currentGame.minContribution)
-        this.contributionStatus = 'contributing'
-      }
-    },
     closeDialog () {
       this.dialog = false
     },
@@ -237,7 +239,8 @@ export default {
         }, function (response) {
           // error
           self.registerStatus = 'unregistered'
-          console.log('error', response.body.status)
+          self.registerError = response
+          console.log('error: ', response)
         })
     },
     validEmail (email) {

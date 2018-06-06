@@ -194,6 +194,8 @@ export default {
     contributePiggy (playerContribution, minContribution) {
       let self = this
 
+      self.contributionStatus = 'contributing'
+
       // Format contribution
       playerContribution = playerContribution.replace(/,/g, '.')
       playerContribution = playerContribution.replace(/^\./g, '0.')
