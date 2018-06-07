@@ -72,7 +72,7 @@
                 </v-layout>
                 <br /><br />
                 <p>
-                  PS: the game code is public and can accessed <a href="https://etherscan.io/address/0x06012c8cf97bead5deae237070f9587f8e7a266d#code">here</a>.
+                  PS: the game code is public and can accessed <a target="_blank" :href="explorerAddress">here</a>.
                 </p>
               </v-flex>
             </v-layout>
@@ -102,6 +102,19 @@ export default {
   },
   components: {
     appMember: Member
+  },
+  computed: {
+    explorerAddress () {
+      let expAddress = ''
+      if (this.$store.state.contract.address) {
+        if (process.env.ETHEREUM_NODE_ENV === 'development') {
+          expAddress = this.$store.state.explorer.contract.ropsten + this.$store.state.contract.address
+        } else {
+          expAddress = this.$store.state.explorer.contract.mainnet + this.$store.state.contract.address
+        }
+      }
+      return expAddress
+    }
   }
 }
 

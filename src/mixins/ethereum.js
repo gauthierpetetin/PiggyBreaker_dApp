@@ -227,6 +227,7 @@ export default {
                 console.log('as contributed', hash)
                 self.contributionStatus = 'contributed'
                 self.$store.state.ethLoading.contribution = true
+                self.$store.state.ethPendingTx = hash
                 self.dialog = true
               })
               .on('receipt', function (receipt) {
@@ -264,6 +265,7 @@ export default {
                 console.log('transactionHash:', hash)
                 // self.contributeStatus = 'contributed'
                 self.$store.state.ethLoading.break = true
+                self.$store.state.ethPendingTx = hash
               })
               .on('receipt', function (receipt) {
                 console.log('receipt:', receipt)
@@ -298,7 +300,7 @@ export default {
               .on('transactionHash', function (hash) {
                 console.log('transactionHash:', hash)
                 self.$store.state.ethLoading.withdraw = true
-                // self.$emit('withdraw', true)
+                self.$store.state.ethPendingTx = hash
               })
               .on('receipt', function (receipt) {
                 console.log('receipt:', receipt)

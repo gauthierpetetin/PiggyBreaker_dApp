@@ -71,3 +71,9 @@
 
 <script>
 </script>
+
+<style>
+p {
+  color: grey
+}
+</style>

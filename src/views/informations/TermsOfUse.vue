@@ -166,7 +166,7 @@
 
                 <h2 class="grey-text">15. Smart Contract</h2>
                 <p>
-                  The Piggy Breaker smart contract can be accessed on address xxx of the Ethereum main network. The whole smart contract code is public and can be accessed on Etherscan at the following link: <a href="https://etherscan.io/address/0x06012c8cf97bead5deae237070f9587f8e7a266d#code">https://etherscan.io/address/0x06012c8cf97bead5deae237070f9587f8e7a266d</a>
+                  The Piggy Breaker smart contract can be accessed on address xxx of the Ethereum main network. The whole smart contract code is public and can be accessed on Etherscan at the following link: <a target="_blank" :href="explorerAddress">{{ explorerAddress }}</a>
                 </p>
 
                 <h2 class="grey-text">16. General</h2>
@@ -183,4 +183,25 @@
 </template>
 
 <script>
+export default {
+  computed: {
+    explorerAddress () {
+      let expAddress = ''
+      if (this.$store.state.contract.address) {
+        if (process.env.ETHEREUM_NODE_ENV === 'development') {
+          expAddress = this.$store.state.explorer.contract.ropsten + this.$store.state.contract.address
+        } else {
+          expAddress = this.$store.state.explorer.contract.mainnet + this.$store.state.contract.address
+        }
+      }
+      return expAddress + '#code'
+    }
+  }
+}
 </script>
+
+<style>
+p {
+  color: grey
+}
+</style>

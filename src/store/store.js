@@ -34,6 +34,7 @@ export const store = new Vuex.Store({
       break: false,
       withdraw: false
     },
+    ethPendingTx: null,
     fbCurrentGame: {
       id: null,
       value: 0,
@@ -48,6 +49,16 @@ export const store = new Vuex.Store({
       breakableAt: null,
       serverTimestamp: null
     },
-    fbBiggestPiggyValue: 0
+    fbBiggestPiggyValue: 0,
+    explorer: {
+      contract: {
+        mainnet: 'https://etherscan.io/address/',
+        ropsten: 'https://ropsten.etherscan.io/address/'
+      },
+      transaction: {
+        mainnet: 'https://etherscan.io/tx/',
+        ropsten: 'https://ropsten.etherscan.io/tx/'
+      }
+    }
   }
 })

@@ -27,10 +27,11 @@
         </v-layout>
         <!-- /Locked -->
         <!-- Contribution -->
-        <v-layout v-if="transaction.enable == true" column align-center justify-center style="background-color: white" >
+        <v-layout v-if="transaction.enable" column align-center justify-center style="background-color: white" >
           <!-- Player contribution amount -->
           <section v-if="transaction.enable" style="margin-top: 15px; min-width: 40%">
             <h1 class="mb-2 headline text-xs-center contribution">
+
                 <template v-if="loading.contribution">
                   <v-flex class="my-3">
                     <span class="grey--text">Your current contribution:</span>
@@ -42,7 +43,14 @@
                       It will require 50-60 seconds until it gets validated by the whole network.</span>
                     </v-tooltip>
                   </v-flex>
+                  <!-- xxx view pending transaction-->
+                  <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-bottom: 50px">
+                    <v-btn class="mt-3 blue" dark large target="_blank" @click.native="viewPendingTx($store.state.ethPendingTx)">
+                      <span>View pending transaction on the network</span>
+                    </v-btn>
+                  </v-flex>
                 </template>
+
                 <template v-else>
                   <v-flex class="my-3">
                     <v-tooltip right>
@@ -63,7 +71,7 @@
         </v-layout>
         <!-- /Contribution -->
 
-        <v-layout v-if="transaction.enable" row wrap class="white--text" style="background-color: white">
+        <v-layout v-if="transaction.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
           <v-flex md12 class="text-xs-center">
             <app-dialog-contribute button-large="true"></app-dialog-contribute>
@@ -130,7 +138,7 @@
                         <span>{{ transactionMessage1 }}<br />{{ transactionMessage2 }}</span>
                       </v-tooltip>
                     </template>
-                    <template>
+                    <template v-else>
                       <app-dialog-contribute></app-dialog-contribute>
                     </template>
                     <!-- /Dialog -->
@@ -228,9 +236,25 @@ export default {
   methods: {
     isNumber (n) {
       return !isNaN(parseFloat(n)) && !isNaN(n - 0)
+    },
+    viewPendingTx (txHash) {
+      let txLink = this.explorerAddress + txHash
+      console.log("OPEN : ", txLink)
+      window.open(txLink, "_blank")
     }
   },
   computed: {
+    explorerAddress () {
+      let expAddress = ''
+      if (this.$store.state.contract.address) {
+        if (process.env.ETHEREUM_NODE_ENV === 'development') {
+          expAddress = this.$store.state.explorer.transaction.ropsten
+        } else {
+          expAddress = this.$store.state.explorer.transaction.mainnet
+        }
+      }
+      return expAddress
+    },
     percentage: function () {
       let res
       let min = 0.5
