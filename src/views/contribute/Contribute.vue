@@ -43,12 +43,6 @@
                       It will require 50-60 seconds until it gets validated by the whole network.</span>
                     </v-tooltip>
                   </v-flex>
-                  <!-- xxx view pending transaction-->
-                  <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-bottom: 50px">
-                    <v-btn class="mt-3 blue" dark large target="_blank" @click.native="viewPendingTx($store.state.ethPendingTx)">
-                      <span>View pending transaction on the network</span>
-                    </v-btn>
-                  </v-flex>
                 </template>
 
                 <template v-else>
@@ -71,10 +65,16 @@
         </v-layout>
         <!-- /Contribution -->
 
-        <v-layout v-if="transaction.enable && (!loading.contribution)" row wrap class="white--text" style="background-color: white">
+        <v-layout v-if="transaction.enable" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
-          <v-flex md12 class="text-xs-center">
+          <v-flex v-if="(!loading.contribution) && (!loading.break) && (!loading.withdraw)" md12 class="text-xs-center">
             <app-dialog-contribute button-large="true"></app-dialog-contribute>
+          </v-flex>
+          <!-- xxx view pending transaction-->
+          <v-flex v-else md12 class="text-xs-center grey-text" style="font-size:28px; margin-bottom: 50px">
+            <v-btn class="mt-3 blue" dark large target="_blank" @click.native="viewPendingTx($store.state.ethPendingTx)">
+              <span>View pending transaction on the network</span>
+            </v-btn>
           </v-flex>
           <!-- /Player contribute -->
         </v-layout>
@@ -239,8 +239,7 @@ export default {
     },
     viewPendingTx (txHash) {
       let txLink = this.explorerAddress + txHash
-      console.log("OPEN : ", txLink)
-      window.open(txLink, "_blank")
+      window.open(txLink, '_blank')
     }
   },
   computed: {

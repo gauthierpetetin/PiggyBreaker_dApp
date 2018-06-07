@@ -234,6 +234,7 @@ export default {
                 console.log('receipt:', receipt)
                 self.$store.state.ethLoading.contribution = false
                 self.getEthGameData()
+                self.notify ('Piggy contribution!', 'Congratulations, your transaction has been validated.')
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)
@@ -271,6 +272,7 @@ export default {
                 console.log('receipt:', receipt)
                 self.$store.state.ethLoading.break = false
                 self.getEthGameData()
+                self.notify ('Broken Piggy!', 'The Piggy has been broken successfully.')
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)
@@ -306,6 +308,7 @@ export default {
                 console.log('receipt:', receipt)
                 self.$store.state.ethLoading.withdraw = false
                 self.getEthGameData()
+                self.notify ('Withdrawal success!', 'You withdrew your Ethers successfully.')
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)
@@ -321,6 +324,12 @@ export default {
     },
     closeWaitDialog () {
       this.waitDialog = false
+    },
+    notify (notifTitle, notifMessage) {
+      // https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification#Parameters
+      this.$notification.show(notifTitle, {
+        body: notifMessage
+      }, {})
     }
   }
 }

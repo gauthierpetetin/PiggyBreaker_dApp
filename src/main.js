@@ -7,6 +7,7 @@ import router from './router'
 // import VueAnalytics from 'vue-analytics'
 import VueResource from 'vue-resource'
 import { store } from './store/store'
+import VueNativeNotification from 'vue-native-notification'
 
 import('../node_modules/vuetify/dist/vuetify.min.css')
 
@@ -14,10 +15,11 @@ Vue.config.productionTip = false
 
 Vue.use(VueResource)
 Vue.use(Vuetify)
-// Vue.use(VueAnalytics, {
-//   id: 'UA-117489719-1',
-//   router
-// })
+Vue.use(VueNativeNotification, {
+  // Automatic permission request before
+  // showing notification (default: true)
+  requestOnNotify: true
+})
 
 Vue.filter('round', function (value, accuracy) {
   let factor = Math.pow(10, accuracy)
