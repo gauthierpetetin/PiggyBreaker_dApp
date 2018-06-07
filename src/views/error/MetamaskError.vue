@@ -10,8 +10,7 @@
             <v-layout wrap>
               <v-flex sm12>
                 <span class="grey--text">
-                  Your previous transaction has been submitted successfully.<br />
-                  Please wait 50-60 seconds until it gets validated by the whole network.
+                  {{ waitMessage }}
                 </span>
               </v-flex>
             </v-layout>
@@ -49,11 +48,16 @@
 
 <script>
 
+import errorMessagesMixin from '@/mixins/errorMessages'
+
 export default {
   data () {
     return {
     }
   },
+  mixins: [
+    errorMessagesMixin
+  ],
   methods: {
     closeMetaDialog () {
       this.$emit('metaerror')
@@ -69,26 +73,10 @@ export default {
   },
   computed: {
     metaTitle: function () {
-      let errT = 'Unknown error, please contact support.'
-      if (this.lockstatus === 'not_installed') {
-        errT = 'No Metamask installed'
-      } else if (this.lockstatus === 'locked') {
-        errT = 'Metamask locked'
-      } else if (this.lockstatus === 'wrong_network') {
-        errT = 'Wrong Metamask network'
-      }
-      return errT
+      return this.metamaskTitle(this.lockstatus)
     },
     metaMessage: function () {
-      let errM = 'Unknown error, please contact support.'
-      if (this.lockstatus === 'not_installed') {
-        errM = 'Please install Metamask to play Piggy Breaker!'
-      } else if (this.lockstatus === 'locked') {
-        errM = 'Please unlock your Metamask to play Piggy Breaker!'
-      } else if (this.lockstatus === 'wrong_network') {
-        errM = 'Please open Metamask and update the network to play Piggy Breaker!'
-      }
-      return errM
+      return this.metamaskMessage(this.lockstatus)
     }
   }
 }

@@ -1,18 +1,21 @@
 <template>
   <div>
      <!-- contribution.enable -->
-    <v-btn
-      class="mt-3"
-      :class="[buttonEnable ? 'warning' : 'grey', sizeButton]"
-      style="margin-bottom: 50px"
-      dark
-      large
-      slot="activator"
-      @click.native="contributeAction()"
-    >
-      <span v-if="positiveContribution">Contribute more</span>
-      <span v-else>Contribute</span>
-    </v-btn>
+    <v-tooltip bottom>
+     <v-btn
+       class="mt-3"
+       :class="[buttonEnable ? 'warning' : 'grey', sizeButton]"
+       style="margin-bottom: 50px"
+       dark
+       large
+       slot="activator"
+       @click.native="contributeAction()"
+     >
+       <span v-if="positiveContribution">Contribute more</span>
+       <span v-else>Contribute</span>
+     </v-btn>
+     <span>{{ hoverMessage }}</span>
+    </v-tooltip>
 
     <v-dialog v-model="dialog" persistent max-width="800px">
 
@@ -122,12 +125,14 @@
 <script>
 import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
+import errorMessagesMixin from '@/mixins/errorMessages'
 import MetamaskError from '@/views/error/MetamaskError.vue'
 
 export default {
   mixins: [
     firestoreMixin,
-    ethereumMixin
+    ethereumMixin,
+    errorMessagesMixin
   ],
   props: {
     buttonLarge: true
@@ -177,6 +182,19 @@ export default {
       } else {
         return false
       }
+    },
+    hoverMessage: function () {
+      let message = null
+      if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        if (this.transaction.enable) {
+          message = 'Click to contribute!'
+        } else {
+          message = 'Unavailable: ' + this.metamaskTitle(this.transaction.status)
+        }
+      } else {
+        message = this.waitMessage
+      }
+      return message
     }
   },
   methods: {

@@ -1,19 +1,23 @@
 <template>
   <div>
-    <v-btn
-      class="mt-3"
-      dark
-      large
-      slot="activator"
-      @click.native="withdrawAction()"
-      :class="[(buttonEnable) ? 'blue' : 'grey']"
-    >
-      Withdraw
-    </v-btn>
-    <v-tooltip right style="top: 5px; z-index: 3">
+    <v-tooltip bottom>
+      <v-btn
+        class="mt-3"
+        dark
+        large
+        slot="activator"
+        @click.native="withdrawAction()"
+        :class="[(buttonEnable) ? 'blue' : 'grey']"
+      >
+        Withdraw
+      </v-btn>
+      <span>{{ hoverMessage }}</span>
+    </v-tooltip>
+
+    <!-- <v-tooltip right style="top: 5px; z-index: 3">
       <v-icon slot="activator">info_outline</v-icon>
       <span v-html="infoMessage"></span>
-    </v-tooltip>
+    </v-tooltip> -->
     <div class="grey--text">
       Your balance: {{ player.withdrawBalance }} Eth
     </div>
@@ -46,11 +50,13 @@
 <script>
 
 import ethereumMixin from '@/mixins/ethereum'
+import errorMessagesMixin from '@/mixins/errorMessages'
 import MetamaskError from '@/views/error/MetamaskError.vue'
 
 export default {
   mixins: [
-    ethereumMixin
+    ethereumMixin,
+    errorMessagesMixin
   ],
   data () {
     return {
@@ -69,6 +75,23 @@ export default {
       } else {
         return false
       }
+    },
+    hoverMessage: function () {
+      let message = null
+      if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        if (this.transaction.enable) {
+          if (!this.player.withdrawEnable) {
+            message = 'You have no funds to withdraw for now.'
+          } else {
+            message = 'Click to withdraw your Ethers now!'
+          }
+        } else {
+          message = 'Unavailable: ' + this.metamaskTitle(this.transaction.status)
+        }
+      } else {
+        message = this.waitMessage
+      }
+      return message
     }
   },
   methods: {

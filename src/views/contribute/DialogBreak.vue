@@ -1,21 +1,29 @@
 <template>
   <div>
-    <v-btn
-      class="mt-3"
-      dark
-      large
-      @click.native="breakAction()"
-      :class="[buttonEnable ? 'pink' : 'grey']"
-      >
-      <div v-bind:style="buttonStyle" class="breakButton">
-      </div>
-      <span style="z-index:2">
-        Break the Piggy
-      </span>
-    </v-btn>
+    <v-tooltip bottom>
+      <v-btn
+        class="mt-3"
+        dark
+        large
+        slot="activator"
+        @click.native="breakAction()"
+        :class="[buttonEnable ? 'pink' : 'grey']"
+        >
+        <div v-bind:style="buttonStyle" class="breakButton">
+        </div>
+        <span style="z-index:2">
+          Break the Piggy
+        </span>
+      </v-btn>
+     <span>{{ hoverMessage }}</span>
+    </v-tooltip>
     <v-tooltip right style="top: 5px;">
       <v-icon slot="activator">info_outline</v-icon>
-      <span v-html="dialogMessage"></span>
+      <span v-html="dialogMessage1"></span><br />
+      <ul>
+        <li class="padli"><span v-html="dialogMessage2"></span></li>
+        <li class="padli"><span v-html="dialogMessage3"></span><br /></li>
+      </ul>
     </v-tooltip>
 
     <v-dialog v-model="breakDialog" persistent max-width="800px">
@@ -47,6 +55,7 @@
 <script>
 
 import ethereumMixin from '@/mixins/ethereum'
+import errorMessagesMixin from '@/mixins/errorMessages'
 import MetamaskError from '@/views/error/MetamaskError.vue'
 
 // Timer vars
@@ -55,7 +64,8 @@ let timerBackgroundColor = '#727272'
 
 export default {
   mixins: [
-    ethereumMixin
+    ethereumMixin,
+    errorMessagesMixin
   ],
   components: {
     AppMetamaskError: MetamaskError
@@ -73,7 +83,9 @@ export default {
       },
       breakDialog: false,
       breakEnable: false,
-      infoMessage: "You need to be a contributor to access this feature.<br/>Furthermore, the Piggy can't be broken if a contribution occured within the last 5 minutes."
+      dialogMessage1: 'TWO RULES protect the Piggy:',
+      dialogMessage2: ' 1) Only a contributor can break it.',
+      dialogMessage3: ' 2) The Piggy is protected for 5 minutes after each contribution.',
     }
   },
   mounted () {
@@ -94,12 +106,24 @@ export default {
         return false
       }
     },
-    dialogMessage: function () {
+    hoverMessage: function () {
       let message = null
-      if (!this.player.breakEnable) {
-        message = 'Sorry, you need to contribute to the lottery first, to get access to this feature ;)'
+      if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+        if (this.transaction.enable) {
+          if (!this.breakEnable) {
+            if (!this.player.breakEnable) {
+              message = 'Unavailable: you need to contribute first.'
+            } else {
+              message = 'Unavailable: a contribution occured within the last 5 minutes.'
+            }
+          } else {
+            message = 'Click to break the Piggy!'
+          }
+        } else {
+          message = 'Unavailable: ' + this.metamaskTitle(this.transaction.status)
+        }
       } else {
-        message = 'The Piggy can\'t be broken if a contribution occured within the last 5 minutes ;)'
+        message = this.waitMessage
       }
       return message
     }
