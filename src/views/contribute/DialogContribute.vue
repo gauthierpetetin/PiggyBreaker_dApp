@@ -1,20 +1,22 @@
 <template>
   <div>
      <!-- contribution.enable -->
-    <v-tooltip bottom>
-     <v-btn
-       class="mt-3"
-       :class="[buttonEnable ? 'warning' : 'grey', sizeButton]"
-       style="margin-bottom: 50px"
-       dark
-       large
-       slot="activator"
-       @click.native="contributeAction()"
-     >
-       <span>{{ contributeTitle }}</span>
-     </v-btn>
-     <span>{{ hoverMessage }}</span>
-    </v-tooltip>
+    <v-flex v-if="(!buttonLarge) || ((!loading.contribution) && (!loading.break) && (!loading.withdraw))">
+      <v-tooltip bottom>
+       <v-btn
+         class="mt-3"
+         :class="[buttonEnable ? 'warning' : 'grey', sizeButton]"
+         style="margin-bottom: 50px"
+         dark
+         large
+         slot="activator"
+         @click.native="contributeAction()"
+       >
+         <span>{{ contributeTitle }}</span>
+       </v-btn>
+       <span>{{ hoverMessage }}</span>
+      </v-tooltip>
+    </v-flex>
 
     <v-dialog v-model="dialog" persistent max-width="800px">
 
@@ -103,7 +105,9 @@
                 You will be informed per email in case of victory.
               </v-flex>
             </v-layout>
+
           </v-container>
+
         </v-card-text>
 
         <v-card-actions>
@@ -212,9 +216,14 @@ export default {
           // Get player email
           let self = this
           this.getPlayerEmail(this.player.address).then(function (response) {
-            console.log('Address registered: ', response)
-            self.playerEmail = response
-            self.registerStatus = 'registered'
+            if (self.validEmail(response)) {
+              console.log('Valid email registered: ', response)
+              self.playerEmail = response
+              self.registerStatus = 'registered'
+            } else {
+              console.log('Invalid email registered: ', response)
+              self.registerStatus = 'unregistered'
+            }
           }, function (error) {
             if (error) {
               console.log('Address not registered')
@@ -229,6 +238,7 @@ export default {
       }
     },
     closeDialog () {
+      console.log('Close contribute dialog')
       this.dialog = false
     },
     // Register player

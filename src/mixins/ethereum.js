@@ -50,7 +50,6 @@ export default {
       let self = this
       self.$store.state.metamaskInterval = setInterval(function () {
         self.checkMetamask()
-        console.log('Break enable: ', self.$store.state.ethPlayer.breakEnable)
       }, 3000)
     },
     // Check Metamask

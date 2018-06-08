@@ -22,14 +22,14 @@
       <!-- /Loading -->
       <section v-else>
         <!-- Locked -->
-        <v-layout v-if="transaction.enable == false" row wrap class="white--text">
+        <v-layout v-if="!transaction.enable" row wrap class="white--text">
           <app-locked :lockstatus="transaction.status"></app-locked>
         </v-layout>
         <!-- /Locked -->
         <!-- Contribution -->
         <v-layout v-if="transaction.enable" column align-center justify-center style="background-color: white" >
           <!-- Player contribution amount -->
-          <section v-if="transaction.enable" style="margin-top: 15px; min-width: 40%">
+          <section style="margin-top: 15px; min-width: 40%">
             <h1 class="mb-2 headline text-xs-center contribution">
 
                 <template v-if="loading.contribution">
@@ -67,11 +67,11 @@
 
         <v-layout v-if="transaction.enable" row wrap class="white--text" style="background-color: white">
           <!-- Player contribute -->
-          <v-flex v-if="(!loading.contribution) && (!loading.break) && (!loading.withdraw)" md12 class="text-xs-center">
+          <v-flex md12 class="text-xs-center">
             <app-dialog-contribute button-large="true"></app-dialog-contribute>
           </v-flex>
           <!-- xxx view pending transaction-->
-          <v-flex v-else md12 class="text-xs-center grey-text" style="font-size:28px; margin-bottom: 50px">
+          <v-flex v-if="(loading.contribution) || (loading.break) || (loading.withdraw)" md12 class="text-xs-center grey-text" style="font-size:28px; margin-bottom: 50px">
             <v-btn class="mt-3 blue" dark large target="_blank" @click.native="viewPendingTx($store.state.ethPendingTx)">
               <span>View pending transaction on the network</span>
             </v-btn>
