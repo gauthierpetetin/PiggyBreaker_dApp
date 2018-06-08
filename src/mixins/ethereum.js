@@ -7,7 +7,6 @@ export default {
   data () {
     return {
       // ALL OTHER VARIABLES ARE GLOBAL (Cf. store.js)
-      //
       // Metamask
       web3js: window.web3,
       metamaskDialog: false,
@@ -51,6 +50,7 @@ export default {
       let self = this
       self.$store.state.metamaskInterval = setInterval(function () {
         self.checkMetamask()
+        console.log('Break enable: ', self.$store.state.ethPlayer.breakEnable)
       }, 3000)
     },
     // Check Metamask
@@ -136,8 +136,10 @@ export default {
           // Get current Piggy
           contract.methods.nbPiggies().call().then(
             function (piggyId) {
+              console.log('Piggy ID : ', piggyId);
               contract.methods.piggies(piggyId).call().then(
                 function (ethGame) {
+                  console.log('Ethgame : ', ethGame)
                   // Set game id
                   self.$store.state.ethGame.id = ethGame.piggyID
                   // Set piggy value
@@ -151,6 +153,7 @@ export default {
     },
     //  Get player break allowance
     getEthPlayerBreakEnable (ethGame, currentAccount) {
+      console.log('getEthPlayerBreakEnable : ', ethGame, 'currentAccount : ', currentAccount)
       let self = this
       if (this.abi && this.contractAddress) {
         // Get contract
@@ -160,6 +163,7 @@ export default {
           function (contributionAmount) {
             self.$store.state.ethPlayer.contributionBalance = Units.convert(contributionAmount, 'wei', 'eth')
             // Check if break enable
+            console.log('Check if break enable : ', contributionAmount)
             if (contributionAmount > 0) {
               self.$store.state.ethPlayer.breakEnable = true
             } else {
@@ -231,7 +235,7 @@ export default {
                 self.dialog = true
               })
               .on('receipt', function (receipt) {
-                console.log('receipt:', receipt)
+                console.log('Contribution receipt:', receipt)
                 self.$store.state.ethLoading.contribution = false
                 self.getEthGameData()
                 self.notify('Piggy contribution!', 'Congratulations, your transaction has been validated.')
@@ -269,7 +273,7 @@ export default {
                 self.$store.state.ethPendingTx = hash
               })
               .on('receipt', function (receipt) {
-                console.log('receipt:', receipt)
+                console.log('Broken Piggy receipt:', receipt)
                 self.$store.state.ethLoading.break = false
                 self.getEthGameData()
                 self.notify('Broken Piggy!', 'The Piggy has been broken successfully.')
@@ -305,7 +309,7 @@ export default {
                 self.$store.state.ethPendingTx = hash
               })
               .on('receipt', function (receipt) {
-                console.log('receipt:', receipt)
+                console.log('Withdrawal receipt:', receipt)
                 self.$store.state.ethLoading.withdraw = false
                 self.getEthGameData()
                 self.notify('Withdrawal success!', 'You withdrew your Ethers successfully.')

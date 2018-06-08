@@ -35,7 +35,7 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex sm12>
-                <span class="grey--text" v-html="dialogMessage0"></span>
+                <span class="grey--text" v-html="hoverMessage"></span>
               </v-flex>
             </v-layout>
           </v-container>
@@ -159,13 +159,18 @@ export default {
     },
     // Check break
     checkBreak () {
+      console.log('CHECKBREAK : ', this.player.breakEnable)
       // If is breakable
       if (this.player.breakEnable && this.currentGame.serverTimestamp && this.currentGame.breakableAt) {
         this.checkTime()
       } else {
         // Not breakable
         this.breakEnable = false
+        this.initButton()
       }
+    },
+    initButton () {
+      this.buttonStyle.width = 0 + '%'
     },
     checkTime () {
       console.log('CHECKTIME')
