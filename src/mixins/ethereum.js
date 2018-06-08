@@ -136,7 +136,7 @@ export default {
           // Get current Piggy
           contract.methods.nbPiggies().call().then(
             function (piggyId) {
-              console.log('Piggy ID : ', piggyId);
+              console.log('Piggy ID : ', piggyId)
               contract.methods.piggies(piggyId).call().then(
                 function (ethGame) {
                   console.log('Ethgame : ', ethGame)

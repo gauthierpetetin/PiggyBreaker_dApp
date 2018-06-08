@@ -170,7 +170,8 @@ export default {
       }
     },
     initButton () {
-      this.buttonStyle.width = 0 + '%'
+      clearInterval(this.countdownInterval)
+      this.buttonStyle.width = 0
     },
     checkTime () {
       console.log('CHECKTIME')
