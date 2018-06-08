@@ -11,8 +11,7 @@
        slot="activator"
        @click.native="contributeAction()"
      >
-       <span v-if="positiveContribution">Contribute more</span>
-       <span v-else>Contribute</span>
+       <span>{{ contributeTitle }}</span>
      </v-btn>
      <span>{{ hoverMessage }}</span>
     </v-tooltip>
@@ -175,21 +174,20 @@ export default {
         'big-contribute-button': this.buttonLarge
       }
     },
-    positiveContribution: function () {
-      console.log('Positive contribution ? ', this.player.contributionBalance)
+    contributeTitle: function () {
       if (this.player.contributionBalance > 0) {
-        return true
+        return 'contribute more'
       } else {
-        return false
+        return 'contribute'
       }
     },
     hoverMessage: function () {
       let message = null
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         if (this.transaction.enable) {
-          message = 'Click to contribute!'
+          message = 'Click to ' + this.contributeTitle + '!'
         } else {
-          message = 'Unavailable: ' + this.metamaskTitle(this.transaction.status)
+          message = this.metamaskMessage(this.transaction.status) + ' first.'
         }
       } else {
         message = this.waitMessage

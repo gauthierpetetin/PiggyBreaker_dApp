@@ -81,12 +81,12 @@ export default {
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         if (this.transaction.enable) {
           if (!this.player.withdrawEnable) {
-            message = 'You have no funds to withdraw for now.'
+            message = 'Sorry, you have no funds to withdraw for now..'
           } else {
             message = 'Click to withdraw your Ethers now!'
           }
         } else {
-          message = 'Unavailable: ' + this.metamaskTitle(this.transaction.status)
+          message = this.metamaskMessage(this.transaction.status) + ' first.'
         }
       } else {
         message = this.waitMessage

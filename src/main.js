@@ -21,6 +21,9 @@ Vue.use(VueNativeNotification, {
   requestOnNotify: true
 })
 
+Vue.notification.requestPermission()
+  .then(console.log('Request notification permission.'))
+
 Vue.filter('round', function (value, accuracy) {
   let factor = Math.pow(10, accuracy)
   return Math.round(parseFloat(value) * factor) / factor

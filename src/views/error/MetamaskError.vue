@@ -76,7 +76,7 @@ export default {
       return this.metamaskTitle(this.lockstatus)
     },
     metaMessage: function () {
-      return this.metamaskMessage(this.lockstatus)
+      return this.metamaskMessage(this.lockstatus) + ' to play Piggy Breaker!'
     }
   }
 }

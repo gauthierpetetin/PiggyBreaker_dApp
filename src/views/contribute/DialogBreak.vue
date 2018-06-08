@@ -35,7 +35,7 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex sm12>
-                <span class="grey--text" v-html="dialogMessage"></span>
+                <span class="grey--text" v-html="dialogMessage0"></span>
               </v-flex>
             </v-layout>
           </v-container>
@@ -83,9 +83,10 @@ export default {
       },
       breakDialog: false,
       breakEnable: false,
+      dialogMessage0: 'Be patient.. ;) The Piggy is protected for 5 minutes after someone contributes.',
       dialogMessage1: 'TWO RULES protect the Piggy:',
       dialogMessage2: ' 1) Only a contributor can break it.',
-      dialogMessage3: ' 2) The Piggy is protected for 5 minutes after each contribution.',
+      dialogMessage3: ' 2) The Piggy is protected for 5 minutes after each contribution.'
     }
   },
   mounted () {
@@ -112,15 +113,15 @@ export default {
         if (this.transaction.enable) {
           if (!this.breakEnable) {
             if (!this.player.breakEnable) {
-              message = 'Unavailable: you need to contribute first.'
+              message = 'Sorry, you need to contribute first.'
             } else {
-              message = 'Unavailable: a contribution occured within the last 5 minutes.'
+              message = this.dialogMessage0
             }
           } else {
             message = 'Click to break the Piggy!'
           }
         } else {
-          message = 'Unavailable: ' + this.metamaskTitle(this.transaction.status)
+          message = this.metamaskMessage(this.transaction.status) + ' first.'
         }
       } else {
         message = this.waitMessage

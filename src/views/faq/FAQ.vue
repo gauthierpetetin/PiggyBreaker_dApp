@@ -260,7 +260,7 @@ export default {
   data () {
     return {
       dialogMessage2: 'Only a contributor can break it.',
-      dialogMessage3: 'The Piggy is protected for 5 minutes after each contribution. *',
+      dialogMessage3: 'The Piggy is protected for 5 minutes after each contribution. *'
     }
   },
   components: {
