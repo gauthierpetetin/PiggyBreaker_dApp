@@ -15,7 +15,7 @@
     </v-tooltip>
 
     <div class="grey--text">
-      Your balance: {{ player.withdrawBalance }} Eth
+      Your balance: {{ player.withdrawBalance }} ETH
     </div>
     <v-dialog v-model="withdrawDialog" persistent max-width="800px">
       <v-card>
@@ -79,7 +79,7 @@ export default {
           if (!this.player.withdrawEnable) {
             message = 'Sorry, you have no funds to withdraw for now..'
           } else {
-            message = 'Click to withdraw your Ethers now!'
+            message = 'Click to withdraw your ethers now!'
           }
         } else {
           message = this.metamaskMessage(this.transaction.status) + ' first.'

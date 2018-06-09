@@ -315,7 +315,7 @@ export default {
                 console.log('Withdrawal receipt:', receipt)
                 self.$store.state.ethLoading.withdraw = false
                 self.getEthGameData()
-                self.notify('Withdrawal success!', 'You withdrew your Ethers successfully.')
+                self.notify('Withdrawal success!', 'You withdrew your ethers successfully.')
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)

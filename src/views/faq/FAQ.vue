@@ -74,10 +74,10 @@
                   </v-expansion-panel-content>
 
                   <v-expansion-panel-content>
-                    <div slot="header" class="grey-text subheading padTitle">What are my chances to win?</div>
+                    <div slot="header" class="grey-text subheading padTitle">What are my chances of winning?</div>
                     <v-card>
                       <v-card-text class="white grey--text pad">
-                        You’re the one who decides. The more you contribute, the more chances you have to win. Indeed, your chances to win the lottery are proportional to the total amount of your contributions.<br /><br />
+                        You’re the one who decides. The more you contribute, the more your chances are of winning. Indeed, your chances of winning the lottery are proportional to the total amount of your contributions.<br /><br />
                         <img style="max-width: 100%" src="/static/img/faq/4-piggy-contribute.png" />
                       </v-card-text>
                     </v-card>

@@ -25,14 +25,14 @@
                   Piggy Breaker is the simplest blockchain game ever seen:
                 </p>
                 <ol>
-                  <li>You contribute with ether (ETH) to fill the piggy bank and get a chance to win the lottery.</li><br />
+                  <li>You contribute ether (ETH) to fill the piggy bank and get a chance to win the lottery.</li><br />
                   <li>The lottery is launched when the piggy gets broken.</li><br />
                   <li>The winner is chosen “randomly” between all contributors.</li><br />
                 </ol>
                 <p>
-                  Furthermore, Piggy Breaker introduces a new concept in regard of traditional lotteries : YOU are the one who decides your chances to win.
-                  The more you contribute, the more chances you have to win.
-                  Indeed, an algorithm sets chances to win proportional to player’s individual contributions.
+                  Furthermore, Piggy Breaker is different from traditional lotteries : YOU are the one who decides your chances of winning.
+                  The more you contribute, the higher your chances are of winning.
+                  Indeed, an algorithm makes the player's chances of winning proportionnal to his individual contributions.
                 </p>
               </v-flex>
             </v-layout>
@@ -43,7 +43,7 @@
               </v-flex>
               <v-flex md10 offset-md1>
                 <p>
-                  We are a team passionated about blockchain technology. We are there to answer your questions and improve your experience every day. You can contact us on <a href="mailto:contact@piggybreaker.com">contact@piggybreaker.com</a>.
+                  We are a team passionate about blockchain technology. We are here to answer your questions and improve your experience every day. You can contact us on <a href="mailto:contact@piggybreaker.com">contact@piggybreaker.com</a>.
                 </p>
               </v-flex>
             </v-layout>

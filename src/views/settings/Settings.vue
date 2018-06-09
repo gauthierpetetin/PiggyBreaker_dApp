@@ -52,13 +52,13 @@
           <div style="width: 80%; height: 400px; padding: 2% 2%; background-color: white;">
             <v-flex class="my-3">
               <div class="text-xs-center">
-                <h4 class="display-1 small-text blue--text">Email infos</h4>
+                <h4 class="display-1 small-text blue--text">Email info</h4>
               </div>
             </v-flex>
             <v-flex class="my-3">
               <div class="text-xs-center grey--text title">
                 <p>
-                  You can be informed about important Piggy Breaker events<br /> by subscribing the following features:
+                  You can be informed about important Piggy Breaker events<br /> by subscribing to the following features:
                 </p>
               </div>
             </v-flex>
@@ -70,7 +70,7 @@
                     <v-form v-model="valid" ref="form" lazy-validation>
                       <v-checkbox
                       color="info"
-                      label="I want to be informed in case of victory."
+                      label="I want to be informed if I win."
                       v-model="playerSettings.notify_victory"
                       ></v-checkbox>
                       <v-checkbox

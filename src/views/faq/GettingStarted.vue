@@ -79,7 +79,7 @@
           <v-card>
             <v-card-text class="white grey--text pad">
               <p>
-                <strong>For U.S. citizens only:</strong> you are able to purchase ETH directly from the Metamask wallet using the Coinbase widget. This is more convenient and doesn’t require you to create two accounts.
+                <strong>For U.S. citizens only:</strong> you can purchase ETH directly from the Metamask wallet using the Coinbase widget. This is more convenient and doesn’t require you to create two accounts.
               </p>
               <p>
                 <strong>For everyone else:</strong> you need to buy ETH from an exchange using normal fiat currency. Copy your Metamask address by clicking on the large '...' next to your account, then select 'Copy Address to clipboard'. Go to your exchange, click 'Accounts', and select your ETH Wallet and click 'send'. Paste the Metamask address in the box with the amount you'd like to transfer.

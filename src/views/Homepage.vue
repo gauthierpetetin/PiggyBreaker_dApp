@@ -9,7 +9,7 @@
           <div style="width: 80%; height: 400px; padding: 2% 5%; background-color: white">
             <v-flex class="my-3">
               <div class="text-xs-center">
-                <h4 class="display-1 blue-text">The most simple blockchain game ever built!</h4>
+                <h4 class="display-1 blue-text">The simplest blockchain game ever built!</h4>
               </div>
             </v-flex>
             <div class="headline mb-3 text-xs-center title">
@@ -31,11 +31,11 @@
         <v-layout row wrap justify-center class="my-5" style="margin-top: 0px !important;">
           <v-flex sm12 class="my-3" style="margin-bottom: 0 !important">
             <div class="text-xs-center">
-              <h4 class="display-1 grey-text">Increase your victory chances by contributing more!</h4><br />
+              <h4 class="display-1 grey-text">Increase your chances of winning by contributing more!</h4><br />
             </div>
             <div class="headline mb-3 text-xs-center title">
               <p>
-                Your chances to win the lottery are proportional to the total amount of your contributions.
+                Your chances of winning the lottery are proportional to the total amount of your contributions.
               </p>
             </div>
           </v-flex>

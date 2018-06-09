@@ -14,14 +14,14 @@
           <div style="width: 80%; height: 400px; padding: 2% 2%; background-color: white">
             <v-flex class="my-3">
               <div class="text-xs-center">
-                <h4 class="display-1 blue--text small-text" style="padding: 1% 0">Invite your  friends to play Piggy Breaker!</h4>
+                <h4 class="display-1 blue--text small-text" style="padding: 1% 0">Invite your friends to play Piggy Breaker!</h4>
               </div>
             </v-flex>
             <v-flex class="my-3">
               <div class="text-xs-center grey--text title">
                 <p>
-                  You enjoy Piggy Breaker? Your friends could enjoy it too.<br />
-                  Give them a chance to win the lottery by inviting them on Piggy Breker.
+                  Do you enjoy Piggy Breaker? Your friends could enjoy it too.<br />
+                  Give them a chance to win the lottery by inviting them on Piggy Breaker.
                 </p>
               </div>
             </v-flex>
@@ -39,7 +39,7 @@
                 </v-flex>
 
                 <v-flex xs12 sm12>
-                  <v-btn block dark :class="[emailValid ? 'blue' : 'grey']" @click.native="invite()">Invite friend per email</v-btn>
+                  <v-btn block dark :class="[emailValid ? 'blue' : 'grey']" @click.native="invite()">Invite your friend by email</v-btn>
                   <v-dialog v-model="dialogConfirm" max-width="500px">
                     <v-card>
                       <v-card-title>
