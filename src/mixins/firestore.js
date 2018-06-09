@@ -2,6 +2,7 @@ import db from '@/components/firebaseInit'
 import firebase from 'firebase'
 import moment from 'moment'
 import Units from 'ethereumjs-units'
+import { eventBus } from '../main'
 
 const settings = {
   timestampsInSnapshots: true
@@ -98,6 +99,13 @@ export default {
         })
     },
     prepareGame (gameItem, serverTime) {
+      // Get game ID
+      let gameID = gameItem.data().id
+      if (gameID !== this.currentGame.id) {
+        console.log('NEW PIGGY : ', gameID)
+        eventBus.$emit('new_piggy')
+      }
+
       // Format dates
       let createdAt = null
       if (gameItem.data().created_at) {
@@ -138,7 +146,7 @@ export default {
 
       // Set game data
       return {
-        id: gameItem.data().id,
+        id: gameID,
         value: piggyValue,
         nbContributions: gameItem.data().nb_contributions,
         minContribution: minContribution,

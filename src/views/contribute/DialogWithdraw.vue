@@ -14,10 +14,6 @@
       <span>{{ hoverMessage }}</span>
     </v-tooltip>
 
-    <!-- <v-tooltip right style="top: 5px; z-index: 3">
-      <v-icon slot="activator">info_outline</v-icon>
-      <span v-html="infoMessage"></span>
-    </v-tooltip> -->
     <div class="grey--text">
       Your balance: {{ player.withdrawBalance }} Eth
     </div>

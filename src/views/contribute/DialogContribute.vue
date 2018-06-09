@@ -32,9 +32,9 @@
             <v-layout wrap>
               <!-- Ether contribution -->
               <v-flex xs12 sm6>
-                <span class="headline grey-text">Your ETH contribution*:</span><br />
+                <span class="headline grey-text">Your ETH contribution:</span><br />
                 <span class="caption" style="color: grey">Minimum contribution: {{ currentGame.minContribution }} ETH</span>
-                <v-tooltip right style="z-index: 3">
+                <v-tooltip right>
                   <v-icon small slot="activator" color="grey">info_outline</v-icon>
                   <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
                 </v-tooltip>
@@ -48,9 +48,9 @@
                   {{ contributionError }}
                 </v-alert>
               </v-flex>
-              <v-flex xs12 sm12 class="caption">
+              <!-- <v-flex xs12 sm12 class="caption">
                 <span style="color: grey">*Your chances to win the lottery are directly proportional to the amount your contribution(s).</span>
-              </v-flex>
+              </v-flex> -->
               <v-flex xs12 sm12>
                 <v-btn block color="warning" dark @click.native="contributePiggy(localContributionValue, currentGame.minContribution)">Contribute</v-btn>
               </v-flex>

@@ -11,6 +11,8 @@ import VueNativeNotification from 'vue-native-notification'
 
 import('../node_modules/vuetify/dist/vuetify.min.css')
 
+export const eventBus = new Vue()
+
 Vue.config.productionTip = false
 
 Vue.use(VueResource)

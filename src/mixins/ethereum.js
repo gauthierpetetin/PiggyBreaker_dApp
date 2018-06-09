@@ -1,6 +1,7 @@
 import Web3 from 'web3'
 import web3plus from 'web3-plus'
 import Units from 'ethereumjs-units'
+import { eventBus } from '../main'
 
 // var abi =
 export default {
@@ -12,6 +13,9 @@ export default {
       metamaskDialog: false,
       waitDialog: false
     }
+  },
+  created () {
+    eventBus.$on('new_piggy', this.getEthGameData)
   },
   computed: {
     contractAddress () {
