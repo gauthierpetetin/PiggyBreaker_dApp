@@ -53,7 +53,7 @@
                       <span class="grey--text">20 ETH</span>
                       <v-progress-linear :value="50" height="20" color="grey"></v-progress-linear>
                       <br />
-                      <span class="title blue--text">In this example, your chances <br />to win the lottery are: 50%</span>
+                      <span class="title blue--text">In this example, your chances <br />of winning the lottery are: 50%</span>
                     </h1>
                   </v-flex>
 
@@ -75,7 +75,7 @@
                       <span class="grey--text">25 ETH</span>
                       <v-progress-linear :value="25" height="20" color="grey"></v-progress-linear>
                       <br />
-                      <span class="title blue--text">In this example, your chances <br />to win the lottery are: 25%</span>
+                      <span class="title blue--text">In this example, your chances <br />of winning the lottery are: 25%</span>
                     </h1>
                   </v-flex>
 
