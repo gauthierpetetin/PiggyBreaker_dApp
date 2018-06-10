@@ -43,6 +43,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 ```
 # switch to master branch
 git checkout master
+
 # publish staging
 git push
 ```
@@ -51,8 +52,10 @@ git push
 ```
 # get production branch
 git checkout -b production origin/production
+
 # synchronize production branch with master branch
 git pull origin master
+
 # publish production
 git push
 ```
