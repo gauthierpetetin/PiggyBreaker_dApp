@@ -6,7 +6,7 @@
        <v-btn
          class="mt-3"
          :class="[buttonEnable ? 'warning' : 'grey', sizeButton]"
-         style="margin-bottom: 50px"
+         style="width: 220px; margin-bottom: 50px"
          dark
          large
          slot="activator"
@@ -253,7 +253,6 @@ export default {
       } else {
         self.registerStatus = 'registering'
       }
-
       // Call API
       let data = {
         address,
@@ -262,7 +261,7 @@ export default {
         notify_start: true,
         notify_stop: true
       }
-      
+
       this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
         .then(function (response) {
           // success
@@ -288,12 +287,12 @@ export default {
 .big-contribute-button {
   font-size: 36px;
   height: 75px;
-  width: 40%;
+  width: 40% !important;
 }
 
 .disabled-contribute-button {
   background-color: grey !important;
-  height: 250px !important;
+  height: 220px !important;
 }
 
 </style>

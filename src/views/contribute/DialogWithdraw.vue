@@ -1,21 +1,24 @@
 <template>
   <div>
-    <v-tooltip bottom>
-      <v-btn
+    <v-flex>
+      <v-tooltip bottom>
+        <v-btn
         class="mt-3"
         dark
         large
+        style="width: 220px"
         slot="activator"
         @click.native="withdrawAction()"
         :class="[(buttonEnable) ? 'blue' : 'grey']"
-      >
-        Withdraw
+        >
+        Withdraw earnings
       </v-btn>
       <span>{{ hoverMessage }}</span>
     </v-tooltip>
+  </v-flex>
 
-    <div class="grey--text">
-      Your balance: {{ player.withdrawBalance }} ETH
+    <div :class="[(buttonEnable) ? 'blue--text' : 'grey--text']" class="title">
+      {{ balanceText }}
     </div>
     <v-dialog v-model="withdrawDialog" persistent max-width="800px">
       <v-card>
@@ -62,6 +65,11 @@ export default {
     }
   },
   computed: {
+    balanceText () {
+      if (this.buttonEnable) {
+        return "Your earnings: " + this.player.withdrawBalance + " ETH"
+      }
+    },
     currentGame () {
       return this.$store.state.fbCurrentGame
     },

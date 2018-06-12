@@ -31,7 +31,7 @@ export default {
     appAlertWinner: AlertWinner,
     appHeader: Header,
     appFooter: Footer,
-    appDiscord: Discord
+    appDiscord: Discord,
   },
   mixins: [
     firestoreMixin,

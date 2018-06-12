@@ -5,7 +5,7 @@
       <!-- <v-parallax class="parallax-background"> -->
       <v-layout column align-center justify-center style="background-color: white" >
         <v-tooltip right>
-          <h1 slot="activator" class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Total Piggy value: <strong><span>{{ currentGame.value | round(2) }}</span> ETH</strong></h1>
+          <h1 slot="activator" class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Current Piggy value: <strong><span>{{ currentGame.value | round(2) }}</span> ETH</strong></h1>
           <span> {{ currentGame.value }} ETH </span>
         </v-tooltip>
         <v-tooltip right>
@@ -125,7 +125,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title grey-text title">1. You contribute with Ethers.</div>
+                  <div class="headline text-xs-center howitworks-title grey-text title" height="50">1. You contribute with Ethers.</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/1-contribute.png" height="150">
@@ -148,7 +148,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title grey-text title">2. Any contributor can decide to break the Piggy.</div>
+                  <div class="headline text-xs-center howitworks-title grey-text title" height="50">2. Any contributor can decide to break the Piggy.</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/2-break-piggy.png" height="150">
@@ -173,7 +173,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center howitworks-title grey-text title">3. A winner is chosen randomly between the contributors.
+                    <div class="headline text-xs-center howitworks-title grey-text title" height="50">3. A winner is chosen randomly between the contributors.
                       <!-- <v-tooltip right>
                         <v-icon slot="activator">info_outline</v-icon>
                         <span></span>
