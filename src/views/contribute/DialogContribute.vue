@@ -256,8 +256,8 @@ export default {
 
       // Call API
       let data = {
-        address: address,
-        email: email
+        address,
+        email
       }
       this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
         .then(function (response) {
