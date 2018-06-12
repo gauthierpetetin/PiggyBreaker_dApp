@@ -262,6 +262,7 @@ export default {
         notify_start: true,
         notify_stop: true
       }
+      
       this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
         .then(function (response) {
           // success
