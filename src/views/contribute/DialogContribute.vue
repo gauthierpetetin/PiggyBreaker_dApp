@@ -257,7 +257,10 @@ export default {
       // Call API
       let data = {
         address,
-        email
+        email,
+        notify_victory: true,
+        notify_start: true,
+        notify_stop: true
       }
       this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
         .then(function (response) {
