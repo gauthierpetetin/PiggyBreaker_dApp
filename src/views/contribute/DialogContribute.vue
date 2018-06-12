@@ -244,7 +244,8 @@ export default {
     // Register player
     registerPlayer () {
       let email = this.playerEmail
-      console.log('registerPlayer', email)
+      let address = this.player.address
+      console.log('registerPlayer', email, address)
 
       let self = this
       if (!this.validEmail(email)) {
@@ -255,6 +256,7 @@ export default {
 
       // Call API
       let data = {
+        address: address,
         email: email
       }
       this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
