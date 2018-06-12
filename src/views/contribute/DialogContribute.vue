@@ -257,7 +257,7 @@ export default {
       let data = {
         email: email
       }
-      this.$http.post(this.apiUrl + '/user/register', JSON.stringify(data))
+      this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
         .then(function (response) {
           // success
           self.registerStatus = 'registered'
