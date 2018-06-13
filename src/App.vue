@@ -6,6 +6,7 @@
         <app-alert-winner></app-alert-winner>
         <app-header></app-header>
         <router-view/>
+        <app-countdown></app-countdown>
         <app-discord></app-discord>
         <app-footer></app-footer>
       </v-content>
@@ -19,6 +20,7 @@ import AlertPhishing from './components/Alert/Phishing.vue'
 import AlertWinner from './components/Alert/Winner.vue'
 import Header from './components/Header/Header.vue'
 import Footer from './components/Footer/Footer.vue'
+import Countdown from './components/Countdown/Countdown.vue'
 import Discord from './components/Discord/Discord.vue'
 
 import firestoreMixin from '@/mixins/firestore'
@@ -31,6 +33,7 @@ export default {
     appAlertWinner: AlertWinner,
     appHeader: Header,
     appFooter: Footer,
+    appCountdown: Countdown,
     appDiscord: Discord
   },
   mixins: [

@@ -9,34 +9,46 @@
           <!-- Display -->
           <span v-if="this.playerSettings.login === null || this.playerSettings.login === ''" v-show="!editField.login" class="headline pink--text"><i>Enter nickname</i></span>
           <span v-show="!editField.login" class="display-1" style="float: left;">{{ this.playerSettings.login }}</span>
-          <v-btn v-show="!editField.login" small flat fab style="bottom: 10px;" @click="editField.login = true">
+          <v-btn v-show="!editField.login" small flat fab style="bottom: 5px;" @click="editField.login = true">
             <v-icon>edit</v-icon>
           </v-btn>
           <!-- Submit -->
-          <v-text-field v-model="playerSettings.login" v-show="editField.login" type="text" :rules="loginRules" class="field-value form-control" single-line></v-text-field>
-          <v-btn v-show="editField.login" small flat fab @click="submitLogin()">
-            <v-icon color="green">check_circle</v-icon>
-          </v-btn>
-          <v-btn v-show="editField.login" small flat fab  @click="editField.login = false">
-            <v-icon color="red">cancel</v-icon>
-          </v-btn>
+          <v-flex class="my-3">
+            <div style="float:left">
+              <v-text-field v-model="playerSettings.login" v-show="editField.login" type="text" :rules="loginRules" class="field-value form-control" single-line></v-text-field>
+            </div>
+            <div>
+              <v-btn v-show="editField.login"  flat fab @click="submitLogin()">
+                <v-icon color="green">check</v-icon>
+              </v-btn>
+              <v-btn v-show="editField.login"  flat fab @click="cancelLogin()">
+                <v-icon color="red">clear</v-icon>
+              </v-btn>
+            </div>
+          </v-flex>
           <p>
             <!-- Display -->
             <span v-if="this.playerSettings.email === null || this.playerSettings.email === ''" v-show="!editField.email" class="title pink--text"><i>Enter email</i></span>
             <span v-show="!editField.email" class="headline">{{ this.playerSettings.email }}</span>
-            <v-btn v-show="!editField.email" small flat fab @click="editField.email = true">
+            <v-btn v-show="!editField.email" small flat fab style="bottom: 3px;" @click="editField.email = true">
               <v-icon>edit</v-icon>
             </v-btn>
             <!-- Submit -->
-            <v-text-field v-model="playerSettings.email" v-show="editField.email"
-            type="email"
-            :rules="emailRules" class="field-value form-control"></v-text-field>
-            <v-btn v-show="editField.email" small flat fab @click="submitEmail()">
-              <v-icon color="green">check_circle</v-icon>
-            </v-btn>
-            <v-btn v-show="editField.email" small flat fab @click="editField.email = false">
-              <v-icon color="red">cancel</v-icon>
-            </v-btn>
+            <v-flex class="my-3">
+              <div style="float:left">
+                <v-text-field v-model="playerSettings.email" v-show="editField.email"
+                type="email"
+                :rules="emailRules" class="field-value form-control"></v-text-field>
+              </div>
+              <div>
+                <v-btn v-show="editField.email" flat fab @click="submitEmail()">
+                  <v-icon color="green">check</v-icon>
+                </v-btn>
+                <v-btn v-show="editField.email" flat fab @click="cancelEmail()">
+                  <v-icon color="red">clear</v-icon>
+                </v-btn>
+              </div>
+            </v-flex>
           </p>
           <p class="grey--text">
             {{ player.address }}
@@ -118,17 +130,19 @@ export default {
         login: false,
         email: false
       },
+      previousLogin: null,
+      previousEmail: null,
       loginRules: [
-        v => {
-          return !!v || 'Login is required'
-        },
-        v => /^\w+$/.test(v) || 'Login must be valid'
+        // v => {
+        //   return !!v || 'Login is required'
+        // },
+        v => /^$|^\w+$/.test(v) || 'Login must be empty or valid'
       ],
       emailRules: [
-        v => {
-          return !!v || 'E-mail is required'
-        },
-        v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
+        // v => {
+        //   return !!v || 'E-mail is required'
+        // },
+        v => /^$|^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be empty or valid'
       ]
     }
   },
@@ -150,6 +164,10 @@ export default {
     }
   },
   methods: {
+    validateEmail (email) {
+      var re = /^(([^<>()[\].,;:\s@"]+(.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+.)+[^<>()[\].,;:\s@"]{2,})$/i
+      return re.test(String(email).toLowerCase())
+    },
     // Submit login
     submitLogin () {
       this.editField.login = false
@@ -157,8 +175,24 @@ export default {
     },
     // Submit email
     submitEmail () {
+      if (this.playerSettings.email === '' || this.validateEmail(this.playerSettings.email)) {
+        this.editField.email = false
+        this.updateSettings()
+      }
+    },
+    // Cancel login
+    cancelLogin () {
+      // console.log(this.playerSettings.email)
+      // console.log(this.previousEmail)
+      this.playerSettings.login = this.previousLogin
+      this.editField.login = false
+    },
+    // Cancel email
+    cancelEmail () {
+      // console.log(this.playerSettings.email)
+      // console.log(this.previousEmail)
+      this.playerSettings.email = this.previousEmail
       this.editField.email = false
-      this.updateSettings()
     },
     // Init settings
     initSettings () {
@@ -176,6 +210,8 @@ export default {
         let address = response
         self.getPlayerInfo(address).then(function (response) {
           self.playerSettings = response
+          self.previousLogin = response.login
+          self.previousEmail = response.email
         })
       })
     },
@@ -190,20 +226,13 @@ export default {
         notify_stop: this.playerSettings.notify_stop,
         notify_victory: this.playerSettings.notify_victory
       }
-      console.log(data)
-
       this.$http.post(this.apiUrl + '/user/settings', JSON.stringify(data))
         .then(function (response) {
           this.editField.email = false
         }, function (response) {
           // error
           console.log('error', response)
-          console.log('error', response.body.status)
         })
-    },
-    validEmail (email) {
-      var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return re.test(email)
     }
   }
 }

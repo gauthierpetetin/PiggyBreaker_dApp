@@ -1,10 +1,12 @@
 <template>
   <div>
-    <v-tooltip bottom>
-      <v-btn
+    <v-flex>
+      <v-tooltip bottom>
+        <v-btn
         class="mt-3"
         dark
         large
+        style="width: 220px"
         slot="activator"
         @click.native="breakAction()"
         :class="[buttonEnable ? 'pink' : 'grey']"
@@ -12,12 +14,12 @@
         <div v-bind:style="buttonStyle" class="breakButton">
         </div>
         <span style="z-index:2">
-          Break the Piggy
+          Break current Piggy
         </span>
       </v-btn>
-     <span>{{ hoverMessage }}</span>
+      <span>{{ hoverMessage }}</span>
     </v-tooltip>
-    <v-tooltip right style="top: 5px;">
+    <v-tooltip v-if="infos" right style="top: 5px;">
       <v-icon slot="activator">info_outline</v-icon>
       <span v-html="dialogMessage1"></span><br />
       <ul>
@@ -25,6 +27,7 @@
         <li class="padli"><span v-html="dialogMessage3"></span><br /></li>
       </ul>
     </v-tooltip>
+  </v-flex>
 
     <v-dialog v-model="breakDialog" persistent max-width="800px">
       <v-card>
@@ -71,7 +74,8 @@ export default {
     AppMetamaskError: MetamaskError
   },
   props: {
-    buttonLarge: true
+    buttonLarge: true,
+    infos: false
   },
   data () {
     return {
