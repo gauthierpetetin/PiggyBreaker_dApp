@@ -19,7 +19,7 @@
       </v-btn>
       <span>{{ hoverMessage }}</span>
     </v-tooltip>
-    <v-tooltip right style="top: 5px;">
+    <v-tooltip v-if="infos" right style="top: 5px;">
       <v-icon slot="activator">info_outline</v-icon>
       <span v-html="dialogMessage1"></span><br />
       <ul>
@@ -74,7 +74,8 @@ export default {
     AppMetamaskError: MetamaskError
   },
   props: {
-    buttonLarge: true
+    buttonLarge: true,
+    infos: false
   },
   data () {
     return {

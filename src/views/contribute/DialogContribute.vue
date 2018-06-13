@@ -6,7 +6,7 @@
        <v-btn
          class="mt-3"
          :class="[buttonEnable ? 'warning' : 'grey', sizeButton]"
-         style="width: 220px; margin-bottom: 50px"
+         style="width: 220px;"
          dark
          large
          slot="activator"

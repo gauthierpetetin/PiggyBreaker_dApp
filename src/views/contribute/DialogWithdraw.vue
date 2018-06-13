@@ -67,7 +67,7 @@ export default {
   computed: {
     balanceText () {
       if (this.buttonEnable) {
-        return "Your earnings: " + this.player.withdrawBalance + " ETH"
+        return 'Your earnings: ' + this.player.withdrawBalance + ' ETH'
       }
     },
     currentGame () {
