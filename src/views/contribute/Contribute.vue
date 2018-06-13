@@ -163,7 +163,7 @@
                         </v-tooltip>
                       </template>
                       <template v-else>
-                        <app-dialog-break></app-dialog-break>
+                        <app-dialog-break infos="true"></app-dialog-break>
                       </template>
                       <!-- /Dialog -->
                     </template>
