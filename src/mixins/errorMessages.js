@@ -17,7 +17,7 @@ export default {
       return errT
     },
     metamaskMessage (lockStatus) {
-      let errM = 'Unknown error, please contact support.'
+      let errM = 'Unknown error, please contact support'
       if (lockStatus === 'not_installed') {
         errM = 'Please install Metamask'
       } else if (lockStatus === 'locked') {

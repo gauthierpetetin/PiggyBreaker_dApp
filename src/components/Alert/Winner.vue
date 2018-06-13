@@ -1,5 +1,5 @@
 <template>
-  <v-alert v-model="winnerAlert" type="warning" dismissible style="padding-top: 10px; padding-bottom: 10px">
+  <v-alert v-model="winnerAlert" type="info" dismissible style="padding-top: 10px; padding-bottom: 10px">
     <span>LUCKY GUY! You have ether to withdraw (see the <strong>"How does it work"</strong> section below).</span>
     <!-- <img src="/static/img/icon/arrow_bottom.png" height="20" style="margin-left: 15px;"> -->
   </v-alert>
