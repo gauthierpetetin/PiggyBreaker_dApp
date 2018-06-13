@@ -9,7 +9,7 @@
         style="width: 220px"
         slot="activator"
         @click.native="breakAction()"
-        :class="[buttonEnable ? 'pink' : 'grey']"
+        :class="[buttonEnable ? 'pink' : 'grey', sizeButton]"
         >
         <div v-bind:style="buttonStyle" class="breakButton">
         </div>
@@ -74,7 +74,9 @@ export default {
     AppMetamaskError: MetamaskError
   },
   props: {
-    buttonLarge: true,
+    buttonLarge: false,
+    buttonNormal: false,
+    buttonSmall: false,
     infos: false
   },
   data () {
@@ -109,6 +111,13 @@ export default {
         return true
       } else {
         return false
+      }
+    },
+    sizeButton: function () {
+      return {
+        'big-contribute-button': this.buttonLarge,
+        'normal-contribute-button': this.buttonNormal,
+        'small-contribute-button': this.buttonSmall
       }
     },
     hoverMessage: function () {
@@ -221,6 +230,17 @@ export default {
 </script>
 
 <style scoped>
+
+  .normal-contribute-button {
+    width: 200px;
+  }
+
+  .small-contribute-button {
+    font-size: 12px !important;
+    height: 30px;
+    width: 170px !important;
+  }
+
   .breakButton {
     left: 0px;
     top: 0px;

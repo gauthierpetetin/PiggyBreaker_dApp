@@ -1,8 +1,8 @@
 <template>
   <div id="countdown">
-    <app-dialog-contribute></app-dialog-contribute>
-    <app-dialog-break></app-dialog-break>
-    <app-dialog-withdraw></app-dialog-withdraw>
+    <app-dialog-contribute button-small="true"></app-dialog-contribute>
+    <app-dialog-break button-small="true"></app-dialog-break>
+    <app-dialog-withdraw button-small="true"></app-dialog-withdraw>
   </div>
 </template>
 
@@ -11,7 +11,6 @@
 import DialogContribute from '@/views/contribute/DialogContribute.vue'
 import DialogBreak from '@/views/contribute/DialogBreak.vue'
 import DialogWithdraw from '@/views/contribute/DialogWithdraw.vue'
-
 
 export default {
 

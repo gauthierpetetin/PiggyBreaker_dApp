@@ -139,7 +139,7 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-contribute></app-dialog-contribute>
+                      <app-dialog-contribute button-normal="true"></app-dialog-contribute>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>
@@ -163,7 +163,7 @@
                         </v-tooltip>
                       </template>
                       <template v-else>
-                        <app-dialog-break infos="true"></app-dialog-break>
+                        <app-dialog-break button-normal="true" infos="true"></app-dialog-break>
                       </template>
                       <!-- /Dialog -->
                     </template>
@@ -192,7 +192,7 @@
                       </v-tooltip>
                     </template>
                     <template v-else>
-                      <app-dialog-withdraw></app-dialog-withdraw>
+                      <app-dialog-withdraw button-normal="true" infos="true"></app-dialog-withdraw>
                     </template>
                     <!-- /Dialog -->
                   </v-card-text>

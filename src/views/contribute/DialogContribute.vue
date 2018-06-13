@@ -138,7 +138,10 @@ export default {
     errorMessagesMixin
   ],
   props: {
-    buttonLarge: true
+    buttonLarge: false,
+    buttonNormal: false,
+    buttonSmall: false,
+    infos: false
   },
   components: {
     AppMetamaskError: MetamaskError
@@ -175,7 +178,9 @@ export default {
     },
     sizeButton: function () {
       return {
-        'big-contribute-button': this.buttonLarge
+        'big-contribute-button': this.buttonLarge,
+        'normal-contribute-button': this.buttonNormal,
+        'small-contribute-button': this.buttonSmall
       }
     },
     contributeTitle: function () {
@@ -288,6 +293,17 @@ export default {
   font-size: 36px;
   height: 75px;
   width: 40% !important;
+  margin-bottom: 50px;
+}
+
+.normal-contribute-button {
+  width: 200px;
+}
+
+.small-contribute-button {
+  font-size: 12px !important;
+  height: 30px;
+  width: 170px !important;
 }
 
 .disabled-contribute-button {

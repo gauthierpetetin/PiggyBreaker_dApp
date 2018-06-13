@@ -9,7 +9,7 @@
         style="width: 220px"
         slot="activator"
         @click.native="withdrawAction()"
-        :class="[(buttonEnable) ? 'blue' : 'grey']"
+        :class="[(buttonEnable) ? 'blue' : 'grey', sizeButton]"
         >
         Withdraw earnings
       </v-btn>
@@ -17,7 +17,7 @@
     </v-tooltip>
   </v-flex>
 
-    <div :class="[(buttonEnable) ? 'blue--text' : 'grey--text']" class="title">
+    <div v-if="infos" :class="[(buttonEnable) ? 'blue--text' : 'grey--text']" class="title">
       {{ balanceText }}
     </div>
     <v-dialog v-model="withdrawDialog" persistent max-width="800px">
@@ -57,6 +57,12 @@ export default {
     ethereumMixin,
     errorMessagesMixin
   ],
+  props: {
+    buttonLarge: true,
+    buttonNormal: false,
+    buttonSmall: true,
+    infos: false
+  },
   data () {
     return {
       withdrawDialog: false,
@@ -78,6 +84,13 @@ export default {
         return true
       } else {
         return false
+      }
+    },
+    sizeButton: function () {
+      return {
+        'big-contribute-button': this.buttonLarge,
+        'normal-contribute-button': this.buttonNormal,
+        'small-contribute-button': this.buttonSmall
       }
     },
     hoverMessage: function () {
@@ -124,5 +137,15 @@ export default {
 </script>
 
 <style scoped>
+
+.normal-contribute-button {
+  width: 200px;
+}
+
+.small-contribute-button {
+  font-size: 12px !important;
+  height: 30px;
+  width: 170px !important;
+}
 
 </style>
