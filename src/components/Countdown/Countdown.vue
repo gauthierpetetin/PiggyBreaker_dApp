@@ -12,6 +12,7 @@ import DialogContribute from '@/views/contribute/DialogContribute.vue'
 import DialogBreak from '@/views/contribute/DialogBreak.vue'
 import DialogWithdraw from '@/views/contribute/DialogWithdraw.vue'
 
+
 export default {
 
   components: {
@@ -28,8 +29,8 @@ export default {
 
   #countdown {
     position: fixed;
-    bottom: 40px;
-    left: 40px;
+    bottom: 140px;
+    right: 40px;
   }
 
 </style>
