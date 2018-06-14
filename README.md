@@ -51,11 +51,5 @@ git push
 ## Production
 ```
 # get production branch
-git checkout -b production origin/production
-
-# synchronize production branch with master branch
-git pull origin master
-
-# publish production
-git push
+ssh -A piggy@piggybreaker.com "cd piggybreaker-prod; git pull; docker-compose -f ../piggybreaker-infra/docker-compose.yml exec caddy-proxy /repo/run_prod.sh prod"
 ```
