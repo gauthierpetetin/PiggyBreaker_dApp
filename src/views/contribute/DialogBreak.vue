@@ -63,7 +63,7 @@ import MetamaskError from '@/views/error/MetamaskError.vue'
 
 // Timer vars
 let timerDuration = 5 * 60 // 5 minutes
-let timerBackgroundColor = '#727272'
+let defaultBackgroundColor = '#727272'
 
 export default {
   mixins: [
@@ -77,7 +77,8 @@ export default {
     buttonLarge: false,
     buttonNormal: false,
     buttonSmall: false,
-    infos: false
+    infos: false,
+    masterTimerButton: false
   },
   data () {
     return {
@@ -88,7 +89,6 @@ export default {
         // backgroundColor: '#727272'
       },
       breakDialog: false,
-      breakEnable: false,
       dialogMessage0: 'Be patient.. ;) The Piggy is protected for 5 minutes after someone contributes.',
       dialogMessage1: 'TWO RULES protect the Piggy:',
       dialogMessage2: ' 1) Only a contributor can break it.',
@@ -97,6 +97,7 @@ export default {
   },
   mounted () {
     this.checkBreak()
+    this.refreshButton()
   },
   beforeDestroy () {
     // Cancel interval
@@ -106,8 +107,14 @@ export default {
     currentGame () {
       return this.$store.state.fbCurrentGame
     },
+    gameBreakEnable () {
+      return this.$store.state.gameBreakEnable
+    },
+    timerBackgroundColor () {
+      return this.$store.state.timerBackgroundColor
+    },
     buttonEnable: function () {
-      if (this.breakEnable && this.transaction.enable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
+      if (this.gameBreakEnable && this.transaction.enable && (!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         return true
       } else {
         return false
@@ -124,7 +131,7 @@ export default {
       let message = null
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         if (this.transaction.enable) {
-          if (!this.breakEnable) {
+          if (!this.gameBreakEnable) {
             if (!this.player.breakEnable) {
               message = 'Sorry, you need to contribute first.'
             } else {
@@ -151,14 +158,24 @@ export default {
     },
     'currentGame.breakableAt': function (val) {
       this.checkBreak()
+    },
+    '$store.state.percentage': function (val) {
+      this.refreshButton()
+    },
+    '$store.state.timerBackgroundColor': function (val) {
+      this.refreshButton()
     }
   },
   methods: {
     // Show dialog
+    refreshButton () {
+      this.buttonStyle.width = this.$store.state.percentage + '%'
+      this.buttonStyle.backgroundColor = this.$store.state.timerBackgroundColor
+    },
     breakAction () {
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         if (this.transaction.enable) {
-          if (!this.breakEnable) {
+          if (!this.gameBreakEnable) {
             this.breakDialog = true
           } else {
             this.breakPiggy()
@@ -171,57 +188,64 @@ export default {
       }
     },
     // Check break
-    checkBreak () {
-      console.log('CHECKBREAK : ', this.player.breakEnable)
-      // If is breakable
-      if (this.player.breakEnable && this.currentGame.serverTimestamp && this.currentGame.breakableAt) {
-        this.checkTime()
-      } else {
-        // Not breakable
-        this.breakEnable = false
-        this.initButton()
+    checkBreak () { // ONLY FOR MASTER BUTTON
+      console.log('CHECKBREAK (', this.buttonSmall, '): ', this.player.breakEnable)
+      if (this.masterTimerButton) {
+        // If is breakable
+        if (this.player.breakEnable && this.currentGame.serverTimestamp && this.currentGame.breakableAt) {
+          this.checkTime()
+        } else {
+          // Not breakable
+          this.$store.state.gameBreakEnable = false
+          this.initButton()
+        }
       }
     },
-    initButton () {
-      clearInterval(this.countdownInterval)
-      this.buttonStyle.width = 0
+    initButton () { // ONLY FOR MASTER BUTTON
+      if (this.masterTimerButton) {
+        clearInterval(this.countdownInterval)
+        // this.buttonStyle.width = 0
+        this.$store.state.percentage = 0
+      }
     },
     checkTime () {
-      console.log('CHECKTIME')
-      // Cancel interval
-      clearInterval(this.countdownInterval)
+      if (this.masterTimerButton) {
+        console.log('CHECKTIME')
+        // Cancel interval
+        clearInterval(this.countdownInterval)
 
-      let limit = timerDuration
-      // Calc seconds left
-      let secondsLeft = this.currentGame.breakableAt - this.currentGame.serverTimestamp
-      // If seconds left
-      console.log('this.currentGame.breakableAt: ', this.currentGame.breakableAt)
-      console.log('this.currentGame.serverTimestamp', this.currentGame.serverTimestamp)
-      console.log('secondsLeft: ', secondsLeft)
-      if (secondsLeft > 0) {
-        console.log('br false')
-        this.breakEnable = false
-        this.buttonStyle.backgroundColor = timerBackgroundColor
-        this.countdownInterval = window.setInterval(() => {
-          // Calc percents
-          let percents = 100 - Math.floor(secondsLeft / limit * 100)
-          if (percents > 0) {
-            this.buttonStyle.width = percents + '%'
-          }
-          // Reduce seconds
-          secondsLeft -= 1
-          // Clear interval
-          if (secondsLeft < 0) {
-            this.buttonStyle.backgroundColor = null
-            if (this.player.breakEnable) {
-              this.breakEnable = true
+        let limit = timerDuration
+        // Calc seconds left
+        let secondsLeft = this.currentGame.breakableAt - this.currentGame.serverTimestamp
+        // If seconds left
+        console.log('this.currentGame.breakableAt: ', this.currentGame.breakableAt)
+        console.log('this.currentGame.serverTimestamp', this.currentGame.serverTimestamp)
+        console.log('secondsLeft: ', secondsLeft)
+        if (secondsLeft > 0) {
+          console.log('br false')
+          this.$store.state.gameBreakEnable = false
+          this.$store.state.timerBackgroundColor = defaultBackgroundColor
+          this.countdownInterval = window.setInterval(() => {
+            // Calc percents
+            let percents = 100 - Math.floor(secondsLeft / limit * 100)
+            if (percents > 0) {
+              this.$store.state.percentage = percents
             }
-            clearInterval(this.countdownInterval)
-          }
-        }, 1000)
-      } else if (this.player.breakEnable) {
-        console.log('br true')
-        this.breakEnable = true
+            // Reduce seconds
+            secondsLeft -= 1
+            // Clear interval
+            if (secondsLeft < 0) {
+              this.$store.state.timerBackgroundColor = null
+              if (this.player.breakEnable) {
+                this.$store.state.gameBreakEnable = true
+              }
+              clearInterval(this.countdownInterval)
+            }
+          }, 1000)
+        } else if (this.player.breakEnable) {
+          console.log('br true')
+          this.$store.state.gameBreakEnable = true
+        }
       }
     }
   }

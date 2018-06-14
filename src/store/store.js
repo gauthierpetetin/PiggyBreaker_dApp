@@ -59,6 +59,9 @@ export const store = new Vuex.Store({
         mainnet: 'https://etherscan.io/tx/',
         ropsten: 'https://ropsten.etherscan.io/tx/'
       }
-    }
+    },
+    gameBreakEnable: false,
+    percentage: 0,
+    timerBackgroundColor: 'null'
   }
 })
