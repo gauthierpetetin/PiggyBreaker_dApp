@@ -22,9 +22,9 @@
 
       <v-card>
         <v-card-title>
-          <span v-if="contributionStatus === 'waitingForContribute'" class="headline grey-text">Contribute</span>
-          <span v-if="contributionStatus === 'contributing'" class="headline grey-text">Please confirm the transaction on Metamask..</span>
-          <span v-if="contributionStatus === 'contributed'" class="headline grey-text">Transaction submitted successfully!</span>
+          <span v-if="contributionStatus === 'waitingForContribute'" class="headline grey-text">{{ $t('lang.piggy.contribute.status.contribute') }}</span>
+          <span v-if="contributionStatus === 'contributing'" class="headline grey-text">{{ $t('lang.piggy.contribute.status.pleaseConfirmTheTransaction') }}</span>
+          <span v-if="contributionStatus === 'contributed'" class="headline grey-text">{{ $t('lang.piggy.contribute.status.transactionSubmittedSuccessfully') }}</span>
         </v-card-title>
         <v-card-text>
 
@@ -32,11 +32,11 @@
             <v-layout wrap>
               <!-- Ether contribution -->
               <v-flex xs12 sm6>
-                <span class="headline grey-text">Your ETH contribution:</span><br />
-                <span class="caption" style="color: grey">Minimum contribution: {{ currentGame.minContribution }} ETH</span>
+                <span class="headline grey-text">{{ $t('lang.piggy.contribute.contribution.yourETHContribution') }}</span><br />
+                <span class="caption" style="color: grey">{{ $t('lang.piggy.contribute.contribution.minimumContribution') }} {{ currentGame.minContribution }} ETH</span>
                 <v-tooltip right>
                   <v-icon small slot="activator" color="grey">info_outline</v-icon>
-                  <span>The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases.</span>
+                  <span v-html="$t('lang.piggy.contribute.contribution.theMinimumContributionCanGoUpOrDown')"></span>
                 </v-tooltip>
               </v-flex>
               <v-flex xs12 sm2>
@@ -52,7 +52,7 @@
                 <span style="color: grey">*Your chances to win the lottery are directly proportional to the amount your contribution(s).</span>
               </v-flex> -->
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="contributePiggy(localContributionValue, currentGame.minContribution)">Contribute</v-btn>
+                <v-btn block color="warning" dark @click.native="contributePiggy(localContributionValue, currentGame.minContribution)">{{ $t('lang.piggy.contribute.title.contribute') }}</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -69,7 +69,7 @@
           <v-container grid-list-md v-if="contributionStatus === 'contributed'">
             <v-layout wrap>
               <v-flex xs12 sm12 class="grey--text">
-                Congratulations! Your contribution has been submitted successfully. It will require 50-60 seconds until it gets validated by the whole network.<br />
+                {{ $t('lang.piggy.contribute.congratulationsYourContributionHasBeenSubmitted') }}
                 <br />
               </v-flex>
             </v-layout>
@@ -80,7 +80,7 @@
                 Your email (optional):
               </v-flex>
               <v-flex xs12 sm12 class="grey--text">
-                Let us inform you per email in case of victory.
+                {{ $t('lang.piggy.contribute.letUsInformYouPerEmailInCaseOfVictory') }}
               </v-flex>
               <v-flex xs12 sm4>
                 <v-text-field type="text" email :rules="emailRules" label="Your email"
@@ -92,7 +92,7 @@
                 </v-alert>
               </v-flex>
               <v-flex xs12 sm12>
-                <v-btn block color="warning" dark @click.native="registerPlayer()">Register email</v-btn>
+                <v-btn block color="warning" dark @click.native="registerPlayer()">{{ $t('lang.form.label.registerEmail') }}</v-btn>
               </v-flex>
             </v-layout>
 
@@ -102,21 +102,18 @@
 
             <v-layout wrap v-if="registerStatus === 'registered'">
               <v-flex xs12 sm12 class="grey--text">
-                You will be informed per email in case of victory.
+                {{ $t('lang.piggy.contribute.YouWillBeInformedPerEmailInCaseOfVictory') }}
               </v-flex>
             </v-layout>
-
           </v-container>
 
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn v-if="contributionStatus !== 'contributed'" color="blue darken-1" flat @click.native="closeDialog()">Cancel</v-btn>
-
-          <v-btn v-if="(contributionStatus === 'contributed') && (registerStatus !== 'registered')" color="blue darken-1" flat @click.native="closeDialog()">Skip</v-btn>
-
-          <v-btn v-if="(contributionStatus === 'contributed') && (registerStatus === 'registered')" color="blue darken-1" flat @click.native="closeDialog()">Ok</v-btn>
+          <v-btn v-if="contributionStatus !== 'contributed'" color="blue darken-1" flat @click.native="closeDialog()">{{ $t('lang.form.button.cancel') }}</v-btn>
+          <v-btn v-if="(contributionStatus === 'contributed') && (registerStatus !== 'registered')" color="blue darken-1" flat @click.native="closeDialog()">{{ $t('lang.form.button.skip') }}</v-btn>
+          <v-btn v-if="(contributionStatus === 'contributed') && (registerStatus === 'registered')" color="blue darken-1" flat @click.native="closeDialog()">{{ $t('lang.form.button.ok') }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -159,9 +156,9 @@ export default {
       contributionStatus: 'waitingForContribute',
       emailRules: [
         v => {
-          return !!v || 'E-mail is required'
+          return !!v || this.$t('lang.form.error.emailIsRequired')
         },
-        v => this.validEmail(v) || 'E-mail must be valid'
+        v => this.validEmail(v) || this.$t('lang.form.error.emailMustBeValid')
       ]
     }
   },
@@ -185,9 +182,9 @@ export default {
     },
     contributeTitle: function () {
       if (this.player.contributionBalance > 0) {
-        return 'contribute more'
+        return this.$t('lang.piggy.contribute.title.contributeMore')
       } else {
-        return 'contribute'
+        return this.$t('lang.piggy.contribute.title.contribute')
       }
     },
     hoverMessage: function () {
@@ -222,16 +219,16 @@ export default {
           let self = this
           this.getPlayerEmail(this.player.address).then(function (response) {
             if (self.validEmail(response)) {
-              console.log('Valid email registered: ', response)
+              // console.log('Valid email registered: ', response)
               self.playerEmail = response
               self.registerStatus = 'registered'
             } else {
-              console.log('Invalid email registered: ', response)
+              // console.log('Invalid email registered: ', response)
               self.registerStatus = 'unregistered'
             }
           }, function (error) {
             if (error) {
-              console.log('Address not registered')
+              // console.log('Address not registered')
               self.registerStatus = 'unregistered'
             }
           })
@@ -243,14 +240,14 @@ export default {
       }
     },
     closeDialog () {
-      console.log('Close contribute dialog')
+      // console.log('Close contribute dialog')
       this.dialog = false
     },
     // Register player
     registerPlayer () {
       let email = this.playerEmail
       let address = this.player.address
-      console.log('registerPlayer', email, address)
+      // console.log('registerPlayer', email, address)
 
       let self = this
       if (!this.validEmail(email)) {
@@ -271,12 +268,12 @@ export default {
         .then(function (response) {
           // success
           self.registerStatus = 'registered'
-          console.log('registered: ', response)
+          // console.log('registered: ', response)
         }, function (response) {
           // error
           self.registerStatus = 'unregistered'
           self.registerError = response
-          console.log('error: ', response)
+          // console.log('error: ', response)
         })
     },
     validEmail (email) {

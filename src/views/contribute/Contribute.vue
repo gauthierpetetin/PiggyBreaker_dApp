@@ -5,7 +5,7 @@
       <!-- <v-parallax class="parallax-background"> -->
       <v-layout column align-center justify-center style="background-color: white" >
         <v-tooltip right>
-          <h1 slot="activator" class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">Current Piggy value: <strong><span>{{ currentGame.value | round(2) }}</span> ETH</strong></h1>
+          <h1 slot="activator" class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">{{ $t('lang.piggy.currentPiggyValue') }} <strong><span>{{ currentGame.value | round(2) }}</span> ETH</strong></h1>
           <span> {{ currentGame.value }} ETH </span>
         </v-tooltip>
         <v-tooltip right>
@@ -34,13 +34,12 @@
 
                 <template v-if="loading.contribution">
                   <v-flex class="my-3">
-                    <span class="grey--text">Your current contribution:</span>
+                    <span class="grey--text">{{ $t('lang.piggy.yourCurrentContribution') }}</span>
                   </v-flex>
                   <v-flex class="my-3">
                     <v-tooltip right>
                       <img src="/static/img/icon/loading-blocks-200.svg" alt="loading" height="60" slot="activator">
-                      <span>Your contribution has been submitted successfully.<br />
-                      It will require 50-60 seconds until it gets validated by the whole network.</span>
+                      <span v-html="$t('lang.piggy.yourContributionHasBeenSubmittedItWillRequire5060Seconds')"></span>
                     </v-tooltip>
                   </v-flex>
                 </template>
@@ -49,7 +48,7 @@
                   <v-flex class="my-3">
                     <v-tooltip right>
                       <div slot="activator" class="grey--text">
-                        <span>Your current contribution:</span>
+                        <span>{{ $t('lang.piggy.yourCurrentContribution') }}</span>
                         <span>{{ player.contributionBalance | round(2) }} ETH</span>
                       </div>
                       <span>{{ player.contributionBalance }} ETH</span>
@@ -88,17 +87,16 @@
           <div style="width: 80%; height: 400px; padding: 1% 2%; background-color: white">
           <v-flex class="my-3">
             <div class="text-xs-center">
-              <h4 class="display-1 pink--text small-text" style="padding: 10px 0">Piggy Breaker is the next world lottery!</h4>
+              <h4 class="display-1 pink--text small-text" style="padding: 10px 0">{{ $t('lang.piggy.piggyIsTheNextWorldLottery.piggyBreakerIsTheNextWorldLottery') }}</h4>
             </div>
           </v-flex>
           <div class="headline mb-3 text-xs-center title">
             <p>
-              <!-- <span class="pink--text">Piggy Breaker is the next world lottery!</span><br /> -->
-              The game is centered around Billy, a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.
+              {{ $t('lang.piggy.piggyIsTheNextWorldLottery.theGameIsCenteredAroundBilly') }}
             </p>
             <img src="/static/img/picto/piggy-growth.png" alt="piggy growth" height="120" style="margin-top: 15px; margin-bottom: 15px">
             <p><br>
-              Someday the Piggy bank will break and make one of the players rich...
+              {{ $t('lang.piggy.piggyIsTheNextWorldLottery.somedayThePiggyBankWillBreak') }}
             </p>
           </div>
         </div>
@@ -116,7 +114,7 @@
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
-            <h2 class="display-1 grey-text" style="margin-top: 25px">How does it work?</h2>
+            <h2 class="display-1 grey-text" style="margin-top: 25px">{{ $t('lang.piggy.howDoesItWork.howDoesItWork') }}</h2>
           </div>
         </v-flex>
         <v-flex xs12>
@@ -125,7 +123,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title grey-text title" height="50">1. You contribute with Ethers.</div>
+                  <div class="headline text-xs-center howitworks-title grey-text title" height="50">{{ $t('lang.piggy.howDoesItWork.1YouContributeWithEthers') }}</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/1-contribute.png" height="150">
@@ -148,7 +146,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                 <v-card-title primary-title class="layout justify-center">
-                  <div class="headline text-xs-center howitworks-title grey-text title" height="50">2. Any contributor can decide to break the Piggy.</div>
+                  <div class="headline text-xs-center howitworks-title grey-text title" height="50">{{ $t('lang.piggy.howDoesItWork.2AnyContributorCanDecideToBreak') }}</div>
                 </v-card-title>
                   <v-card-text class="text-xs-center">
                     <img src="/static/img/picto/2-break-piggy.png" height="150">
@@ -173,7 +171,7 @@
               <v-flex xs12 md4>
                 <v-card class="elevation-0 transparent">
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline text-xs-center howitworks-title grey-text title" height="50">3. A winner is chosen randomly between the contributors.
+                    <div class="headline text-xs-center howitworks-title grey-text title" height="50">{{ $t('lang.piggy.howDoesItWork.3AWinnerIsChosenRandomly') }}
                       <!-- <v-tooltip right>
                         <v-icon slot="activator">info_outline</v-icon>
                         <span></span>
@@ -229,8 +227,8 @@ export default {
   },
   data () {
     return {
-      transactionMessage1: 'Your transaction has been submitted successfully.',
-      transactionMessage2: 'It will require 50-60 seconds until it gets validated by the whole network.'
+      transactionMessage1: this.$t('lang.piggy.transaction.message1'),
+      transactionMessage2: this.$t('lang.piggy.transaction.message2')
     }
   },
   methods: {
@@ -288,16 +286,20 @@ export default {
     },
     piggyMessage1: function () {
       if (this.player.contributionBalance > 0) {
-        return 'Billy is happy since you contributed.'
+        // return 'Billy is happy since you contributed.'
+        return this.$t('lang.piggy.message.billyIs.happy')
       } else {
-        return 'Billy is sad..'
+        // return 'Billy is sad...'
+        return this.$t('lang.piggy.message.billyIs.sad')
       }
     },
     piggyMessage2: function () {
       if (this.player.contributionBalance > 0) {
-        return 'Contribute more to get more chances to win the lottery!'
+        // return 'Contribute more to get more chances to win the lottery!'
+        return this.$t('lang.piggy.message.contribute.moreChance')
       } else {
-        return 'Contribute to make him happy ;)'
+        // return 'Contribute to make him happy ;)'
+        return this.$t('lang.piggy.message.contribute.makeHappy')
       }
     }
   }

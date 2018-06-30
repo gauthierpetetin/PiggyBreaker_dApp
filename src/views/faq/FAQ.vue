@@ -28,7 +28,7 @@
           <v-container grid-list-xl>
             <v-layout row wrap>
               <v-flex md10 offset-md1>
-                <h1 class="display-1 grey-text">FAQs</h1>
+                <h1 class="display-1 grey-text">{{ $t('lang.faq.title') }}</h1>
               </v-flex>
               <v-flex md10 offset-md1>
                 <!-- Getting Started -->

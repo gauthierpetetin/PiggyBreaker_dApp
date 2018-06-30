@@ -4,44 +4,39 @@
       <router-link to="/"  class="logo">
         <a class="nav-link" >
           <img src="/static/img/logo/logo-crypto-piggy.png" height="50">
-          <span style="color: #2196f3">Piggy Breaker</span>
+          <span style="color: #2196f3">{{ $t('lang.app.title') }}</span>
         </a></router-link>
     </v-toolbar-title>
     <v-toolbar-items v-if="networkStatus == 'good'">
       <v-tooltip bottom>
-        <v-btn flat slot="activator" class="metamask-status grey-text"><img src="/static/img/icon/circle-green.png"> Network good</v-btn>
-        <span>Network is good</span>
+        <v-btn flat slot="activator" class="metamask-status grey-text"><img src="/static/img/icon/circle-green.png"> {{ $t('lang.menu.network.status.good') }}</v-btn>
+        <span>{{ $t('lang.menu.network.status.goodTooltip') }}</span>
       </v-tooltip>
     </v-toolbar-items>
     <v-toolbar-items v-else-if="networkStatus == 'bad'">
       <v-tooltip bottom>
-        <v-btn flat slot="activator" class="metamask-status"><img src="/static/img/icon/circle-red.png"> Network bad</v-btn>
-        <span>No web3? You should consider trying Metamask!</span>
+        <v-btn flat slot="activator" class="metamask-status"><img src="/static/img/icon/circle-red.png"> {{ $t('lang.menu.network.status.bad') }}</v-btn>
+        <span>{{ $t('lang.menu.network.status.badTooltip') }}</span>
       </v-tooltip>
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <div v-if="ethereumEnv == 'development'">
       <v-toolbar-items>
-        <div class="white--text" style="background-color: #E91E63;margin:15px;padding: 5px 10px;">Beta version (Ropsten)</div>
+        <div class="white--text" style="background-color: #E91E63;margin:15px;padding: 5px 10px;">{{ $t('lang.menu.network.testnet') }}</div>
       </v-toolbar-items>
       <v-spacer></v-spacer>
     </div>
     <v-toolbar-items>
-      <v-btn class="grey-text" to="invite" flat>Invite</v-btn>
-      <v-btn class="grey-text" to="piggies" flat>History</v-btn>
-      <v-btn class="grey-text" to="settings" flat v-show="metamaskEnabled">Settings</v-btn>
-      <v-btn class="grey-text" to="faq" flat>FAQ</v-btn>
-      <v-btn class="grey-text" to="about" flat>About</v-btn>
+      <v-btn class="grey-text" to="invite" flat>{{ $t('lang.menu.invite') }}</v-btn>
+      <v-btn class="grey-text" to="piggies" flat>{{ $t('lang.menu.history') }}</v-btn>
+      <v-btn class="grey-text" to="settings" flat v-show="metamaskEnabled">{{ $t('lang.menu.settings') }}</v-btn>
+      <v-btn class="grey-text" to="faq" flat>{{ $t('lang.menu.faq') }}</v-btn>
+      <v-btn class="grey-text" to="about" flat>{{ $t('lang.menu.about') }}</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
 
 <script>
-
-// import Web3 from 'web3'
-
-// var web3js = window.web3
-// web3js = new Web3(web3js.currentProvider)
 
 export default {
   data () {

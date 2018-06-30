@@ -1,0 +1,225 @@
+{
+  "app": {
+    "title": "小豬斷路器"
+  },
+
+  "menu": {
+    "network": {
+      "status": {
+        "good": "網絡很好",
+        "goodTooltip": "網絡很好",
+        "bad": "網絡不好",
+        "badTooltip": "沒有web3？ 你應該考慮嘗試Metamask！"
+      },
+      "testnet": "測試版（Ropsten）"
+    },
+    "invite": "邀請",
+    "history": "歷史",
+    "settings": "設置",
+    "faq": "常問問題",
+    "about": "關於"
+  },
+
+  "alert": {
+    "importantPleaseCheck": "重要！ 請檢查您是否在正確的網址：https：//piggybreaker.com/",
+    "luckGuy": "幸運的人！ 您可以撤回（請參閱下面的<strong> \"它如何工作\"</ strong>部分）。"
+  },
+
+  "network": {
+    "type": {
+      "mainEthereumNetwork": "以太坊網絡",
+      "ropstenTestNetwork": "Ropsten測試網絡"
+    }
+  },
+
+  "piggy": {
+    "currentPiggyValue": "當前小豬值：",
+    "yourCurrentContribution": "您目前的貢獻：",
+    "yourContributionHasBeenSubmittedItWillRequire5060Seconds": "您的貢獻已成功提交。<br />需要50-60秒才能得到整個網絡的驗證。",
+    "piggyIsTheNextWorldLottery": {
+      "piggyBreakerIsTheNextWorldLottery": "小豬斷路器是下一個世界彩票！",
+      "theGameIsCenteredAroundBilly": "遊戲以比利為中心，比利是一個可愛的小儲錢罐，每個人都可以用乙醚（ETH）做出貢獻，讓它成長......並成長......並成長......直到它達到非常大的數量。",
+      "somedayThePiggyBankWillBreak": "有一天小豬銀行會破產並讓其中一個富人..."
+    },
+    "howDoesItWork": {
+      "howDoesItWork": "它是如何工作的？",
+      "1YouContributeWithEthers": "你用Ethers貢獻。",
+      "2AnyContributorCanDecideToBreak": "2.任何貢獻者都可以決定打破小豬。",
+      "3AWinnerIsChosenRandomly": "3.在貢獻者之間隨機選擇獲勝者。"
+    },
+    "transaction": {
+      "message1": "您的交易已成功提交。",
+      "message2": "它需要50-60秒，直到它被整個網絡驗證。"
+    },
+    "message": {
+      "billyIs": {
+        "happy": "比利很高興，因為你貢獻。",
+        "sad": "比利很傷心......"
+      },
+      "contribute": {
+        "moreChance": "貢獻更多，以獲得更多機會贏得彩票！",
+        "makeHappy": "有助於讓他開心;）"
+      }
+    },
+    "contribute": {
+      "title": {
+        "contribute": "有助於",
+        "contributeMore": "貢獻更多"
+      },
+      "status": {
+        "contribute": "有助於",
+        "pleaseConfirmTheTransaction": "請在Metamask上確認交易...",
+        "transactionSubmittedSuccessfully": "交易成功提交！"
+      },
+      "contribution": {
+        "yourETHContribution": "您的ETH貢獻：",
+        "minimumContribution": "最小貢獻：",
+        "theMinimumContributionCanGoUpOrDown": "隨著時間的推移，最小貢獻可以增加或減少。<br/>當玩家貢獻的頻率增加時，它會增加"
+      },
+      "congratulationsYourContributionHasBeenSubmitted": "恭喜！ 您的貢獻已成功提交。 它需要50-60秒才能通過整個網絡進行驗證。",
+      "letUsInformYouPerEmailInCaseOfVictory": "如果獲勝，請通過電子郵件通知您。",
+      "YouWillBeInformedPerEmailInCaseOfVictory": "如果獲勝，您將收到電子郵件通知。"
+    },
+    "break": {
+
+    },
+    "withdraw": {
+
+    },
+    "locked": {
+      "wannaPlay": "想玩？",
+      "youNeedAplaceToStore": "您需要一個將您的以太（ETH）存儲在Metamask等安全錢包中的地方。 這也將作為您登錄遊戲（無需額外密碼）。",
+      "installMetamask": "安裝Metamask",
+      "sorryYourBrowserNotSupport": "抱歉，您的瀏覽器不支持MetaMask。",
+      "yourMetamaskIsLocked": "您的元掩碼已被鎖定",
+      "simplyOpenMetamaskAndFollow": "只需打開MetaMask並按照說明解鎖即可。",
+      "sorryWrongNetwork": "對不起，你的網絡錯了",
+      "simplyOpenMetamaskAndSwitch": "只需打開MetaMask並切換到"
+    }
+  },
+
+  "form": {
+    "label": {
+      "registerEmail": "註冊郵件"
+    },
+    "button": {
+      "cancel": "取消",
+      "skip": "跳躍",
+      "ok": "好"
+    },
+    "error": {
+      "emailIsRequired": "電子郵件是必需的",
+      "emailMustBeValid": "電子郵件必須有效"
+    }
+  },
+
+  "faq": {
+    "title": "常見問題解答",
+    "gettingStarted": {
+      "title": "入門",
+      "whatDoIneedToPlay": {
+        "title": "我需要玩什麼小豬破碎機？",
+        "text": [
+          "以下是您需要開始的內容：",
+          "運行桌面版Chrome或Firefox的電腦或筆記本電腦",
+          "Metamask，專門用於網絡應用的數字錢包",
+          "以太網，一種支持Piggy Breaker的數字支付形式"
+        ]
+      },
+      "installingMetamaskYourWallet": {
+        "title": "安裝Metamask，您的數字錢包",
+        "text": [
+          "要使用Piggy Breaker，您需要安裝數字錢包Metamask。 您需要投入資金才能進行首次購買。",
+          "<strong>注意：</strong> 像Metamask這樣的數字錢包就像銀行賬戶 - 尊重對待它，並確保你不會忘記你的密碼或種子詞。"
+        ]
+      },
+      "whyMetamaskIsLocked": {
+        "title": "為什麼Metamask被鎖定？",
+        "text": [
+          "偶爾小豬斷路器主頁會顯示一個鎖定屏幕。 發生這種情況是因為在一段時間之後，Metamask會自動鎖定您的帳戶。 要解鎖，只需點擊Metamask擴展並輸入您的密碼即可。"
+        ]
+      },
+      "reinstallingMetamask": {
+        "title": "重新安裝MetaMask",
+        "text": [
+          "有些用戶需要卸載並重新安裝Metamask，因為他們遇到了錯誤。 如果你保留你的種子詞，這很容易！ 只要刪除擴展名，重新安裝它，然後導入你的十二個種子詞。 然後，您的帳戶信息將自動再次顯示在Piggy Breaker網站上。"
+        ]
+      },
+      "gettingEtherYourDigitalCurrency": {
+        "title": "獲得以太網，您的數字貨幣",
+        "text": [
+          "<strong>僅適用於美國公民：</strong> 你可以在Metamask購買乙醚（ETH）。 ETH是一種數字貨幣，可以讓我們的遊戲運行。",
+          "<strong>對於其他人：</strong> 你將需要從ETH購買 <a href=\"https://blockgeeks.com/guides/best-cryptocurrency-exchanges\" target=\"_blank\">交換</a>, 然後將ETH從交換錢包轉移到您的Metamask錢包。 不幸的是，你不能只用交換賬戶玩小豬。<br />您不能使用美元/加元來玩小豬 - 必須先將貨幣轉換成ETH。"
+        ]
+      },
+      "howToSendEtherToMetamask": {
+        "title": "如何發送ETH到Metamask",
+        "text": [
+          "<strong>僅適用於美國公民：</strong> 對於其他人：您可以使用Coinbase小部件從Metamask錢包直接購買ETH。 這樣更方便，不需要您創建兩個帳戶。...",
+          "<strong>對於其他人：</strong> 您需要使用普通法定貨幣從交易所購買ETH。 點擊帳戶旁邊的大“...”，然後選擇“將地址複製到剪貼板”，以復制您的Metamask地址。 轉到您的交易所，點擊“賬戶”，然後選擇您的ETH錢包並點擊“發送”。 將Metamask地址粘貼到您希望轉移的金額中。"
+        ]
+      }
+    },
+    "understandingPiggyBreaker": {
+      "title": ""
+    },
+    "Other": {
+      "title": ""
+    }
+
+  },
+
+
+
+	"errors": [
+		{
+			"code": "ER-0001",
+			"desc": "系统发生错误",
+			"fix": "请联络系统管理员"
+		},
+		{
+			"code": "ER-0002",
+			"desc": "伺服器发生错误",
+			"fix": "服务器遇到内部错误"
+		},
+		{
+			"code": "ER-0003",
+			"desc": "网路发生错误",
+			"fix": "软件导致连接中止"
+		}
+	],
+	"network": {
+		"error": [
+			{
+				"status": "错误 400",
+				"type": "错误的要求",
+				"desc": "由于明显的用户端错误，伺服器不能或不会处理该请求"
+			},
+			{
+				"status": "错误 401",
+				"type": "没授权",
+				"desc": "由于无效凭据，访问被拒绝"
+			},
+			{
+				"status": "错误 403",
+				"type": "拒绝或禁止存取",
+				"desc": "您没有权限访问"
+			},
+			{
+				"status": "错误 404",
+				"type": "找不到",
+				"desc": "您要查找的页面不存在"
+			},
+			{
+				"status": "错误 500",
+				"type": "服务器错误",
+				"desc": "内部服务器错误"
+			},
+			{
+				"status": "错误 503",
+				"type": "服务器无法使用",
+				"desc": "服务暂时不可用"
+			}
+		]
+	}
+}

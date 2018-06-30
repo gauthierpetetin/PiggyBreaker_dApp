@@ -8,6 +8,9 @@ import router from './router'
 import VueResource from 'vue-resource'
 import { store } from './store/store'
 import VueNativeNotification from 'vue-native-notification'
+// Translate
+// import VueI18n from 'vue-i18n'
+import i18n from './locales'
 
 import('../node_modules/vuetify/dist/vuetify.min.css')
 
@@ -26,10 +29,20 @@ Vue.use(VueNativeNotification, {
 Vue.notification.requestPermission()
   .then(console.log('Request notification permission.'))
 
+// Translate
+// Vue.use(VueI18n)
+
 Vue.filter('round', function (value, accuracy) {
   let factor = Math.pow(10, accuracy)
   return Math.round(parseFloat(value) * factor) / factor
 })
+
+// const lang = store.state.language
+const lang = 'cn'
+// const lang = 'en'
+if (lang) {
+  i18n.locale = lang
+}
 
 /* eslint-disable no-new */
 new Vue({
@@ -42,6 +55,7 @@ new Vue({
   // },
   router,
   store,
+  i18n,
   components: { App },
   template: '<App/>'
 })

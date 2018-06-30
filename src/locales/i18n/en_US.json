@@ -1,0 +1,225 @@
+{
+  "app": {
+    "title": "Piggy Breaker"
+  },
+
+  "menu": {
+    "network": {
+      "status": {
+        "good": "Network good",
+        "goodTooltip": "Network is good",
+        "bad": "Network bad",
+        "badTooltip": "No web3? You should consider trying Metamask!"
+      },
+      "testnet": "Beta version (Ropsten)"
+    },
+    "invite": "Invite",
+    "history": "History",
+    "settings": "Settings",
+    "faq": "FAQ",
+    "about": "About"
+  },
+
+  "alert": {
+    "importantPleaseCheck": "IMPORTANT! Please check you're on the right url: https://piggybreaker.com/",
+    "luckGuy": "LUCKY GUY! You have ether to withdraw (see the <strong>\"How does it work\"</strong> section below)."
+  },
+
+  "network": {
+    "type": {
+      "mainEthereumNetwork": "Main Ethereum Network",
+      "ropstenTestNetwork": "Ropsten Test Network"
+    }
+  },
+
+  "piggy": {
+    "currentPiggyValue": "Current Piggy value:",
+    "yourCurrentContribution": "Your current contribution:",
+    "yourContributionHasBeenSubmittedItWillRequire5060Seconds": "Your contribution has been submitted successfully.<br />It will require 50-60 seconds until it gets validated by the whole network.",
+    "piggyIsTheNextWorldLottery": {
+      "piggyBreakerIsTheNextWorldLottery": "Piggy Breaker is the next world lottery!",
+      "theGameIsCenteredAroundBilly": "The game is centered around Billy, a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.",
+      "somedayThePiggyBankWillBreak": "Someday the Piggy bank will break and make one of the players rich..."
+    },
+    "howDoesItWork": {
+      "howDoesItWork": "How does it work?",
+      "1YouContributeWithEthers": "1. You contribute with Ethers.",
+      "2AnyContributorCanDecideToBreak": "2. Any contributor can decide to break the Piggy.",
+      "3AWinnerIsChosenRandomly": "3. A winner is chosen randomly between the contributors."
+    },
+    "transaction": {
+      "message1": "Your transaction has been submitted successfully.",
+      "message2": "It will require 50-60 seconds until it gets validated by the whole network."
+    },
+    "message": {
+      "billyIs": {
+        "happy": "Billy is happy since you contributed.",
+        "sad": "Billy is sad..."
+      },
+      "contribute": {
+        "moreChance": "Contribute more to get more chances to win the lottery!",
+        "makeHappy": "Contribute to make him happy ;)"
+      }
+    },
+    "contribute": {
+      "title": {
+        "contribute": "Contribute",
+        "contributeMore": "Contribute more"
+      },
+      "status": {
+        "contribute": "Contribute",
+        "pleaseConfirmTheTransaction": "Please confirm the transaction on Metamask...",
+        "transactionSubmittedSuccessfully": "Transaction submitted successfully!"
+      },
+      "contribution": {
+        "yourETHContribution": "Your ETH contribution:",
+        "minimumContribution": "Minimum contribution:",
+        "theMinimumContributionCanGoUpOrDown": "The minimum contribution can go up or down with time.<br/>It increases when the frequency of player contributions increases"
+      },
+      "congratulationsYourContributionHasBeenSubmitted": "Congratulations! Your contribution has been submitted successfully. It will require 50-60 seconds until it gets validated by the whole network.",
+      "letUsInformYouPerEmailInCaseOfVictory": "Let us inform you per email in case of victory.",
+      "YouWillBeInformedPerEmailInCaseOfVictory": "You will be informed per email in case of victory."
+    },
+    "break": {
+
+    },
+    "withdraw": {
+
+    },
+    "locked": {
+      "wannaPlay": "Wanna play?",
+      "youNeedAplaceToStore": "You’ll need a place to store your ether (ETH) in a secure wallet like Metamask. This will also act as your login to the game (no extra password needed).",
+      "installMetamask": "Install Metamask",
+      "sorryYourBrowserNotSupport": "Sorry, your browser does not support MetaMask.",
+      "yourMetamaskIsLocked": "Your metamask is locked",
+      "simplyOpenMetamaskAndFollow": "Simply open MetaMask and follow the instruction to unlock it.",
+      "sorryWrongNetwork": "Sorry, you're on the wrong network",
+      "simplyOpenMetamaskAndSwitch": "Simply open MetaMask and switch over to the"
+    }
+  },
+
+  "form": {
+    "label": {
+      "registerEmail": "Register email"
+    },
+    "button": {
+      "cancel": "Cancel",
+      "skip": "Skip",
+      "ok": "Ok"
+    },
+    "error": {
+      "emailIsRequired": "E-mail is required",
+      "emailMustBeValid": "E-mail must be valid"
+    }
+  },
+
+  "faq": {
+    "title": "FAQs",
+    "gettingStarted": {
+      "title": "Getting started",
+      "whatDoIneedToPlay": {
+        "title": "What do I need to play Piggy Breaker?",
+        "text": [
+          "Here’s what you need to get started:",
+          "A computer or laptop running the desktop version of Chrome or Firefox",
+          "Metamask, a digital wallet used specifically with web apps",
+          "Ether, a form of digital payment that powers Piggy Breaker"
+        ]
+      },
+      "installingMetamaskYourWallet": {
+        "title": "Installing Metamask, your digital wallet",
+        "text": [
+          "To use Piggy Breaker, you will need to install Metamask, a digital wallet. You will need to put money in it to make your first purchase.",
+          "<strong>Note:</strong> A digital wallet like Metamask acts like a bank account—treat it with respect and make sure you don’t forget your password or the seed words."
+        ]
+      },
+      "whyMetamaskIsLocked": {
+        "title": "Why is Metamask locked?",
+        "text": [
+          "Occasionally the Piggy Breaker homepage displays a lock screen. This happens because Metamask automatically locks your account after a certain period of time. To unlock simply click on the Metamask extension and type in your password."
+        ]
+      },
+      "reinstallingMetamask": {
+        "title": "Reinstalling MetaMask",
+        "text": [
+          "Some users need to uninstall and reinstall Metamask because they’ve experienced a bug. If you kept your seed words, this is very easy! Just delete the extension, reinstall it, and import your twelve seed words. Then your account information will automatically display again on the Piggy Breaker website."
+        ]
+      },
+      "gettingEtherYourDigitalCurrency": {
+        "title": "Getting Ether, your digital currency",
+        "text": [
+          "<strong>For U.S. citizens only:</strong> you can buy ether (ETH) in Metamask. ETH is a digital currency that enables our game to run.",
+          "<strong>For everyone else:</strong> you will need to purchase ETH from <a href=\"https://blockgeeks.com/guides/best-cryptocurrency-exchanges\" target=\"_blank\">an exchange</a>, and then transfer the ETH from your exchange wallet to your Metamask wallet. Unfortunately, you cannot play Piggy Breaker with only an exchange account.<br />You cannot use USD/CAD to play Piggy Breaker — currencies need to be converted into ETH first."
+        ]
+      },
+      "howToSendEtherToMetamask": {
+        "title": "How to send ETH to Metamask",
+        "text": [
+          "<strong>For U.S. citizens only:</strong> you can purchase ETH directly from the Metamask wallet using the Coinbase widget. This is more convenient and doesn’t require you to create two accounts.",
+          "<strong>For everyone else:</strong> you need to buy ETH from an exchange using normal fiat currency. Copy your Metamask address by clicking on the large '...' next to your account, then select 'Copy Address to clipboard'. Go to your exchange, click 'Accounts', and select your ETH Wallet and click 'send'. Paste the Metamask address in the box with the amount you'd like to transfer."
+        ]
+      }
+    },
+    "understandingPiggyBreaker": {
+      "title": ""
+    },
+    "Other": {
+      "title": ""
+    }
+
+  },
+
+
+
+	"errors": [
+		{
+			"code": "ER-0001",
+			"desc": "System Error",
+			"fix": "Please contact system admin"
+		},
+		{
+			"code": "ER-0002",
+			"desc": "Server Error",
+			"fix": "Server has encountered an internal error"
+		},
+		{
+			"code": "ER-0003",
+			"desc": "Network Error",
+			"fix": "Software caused connection abort"
+		}
+	],
+	"network": {
+		"error": [
+			{
+				"status": "Error 400",
+				"type": "Bad Request",
+				"desc": "Your browser sent a request that this server could not understand"
+			},
+			{
+				"status": "Error 401",
+				"type": "Unauthorized",
+				"desc": "Access is denied due to invalid credentials"
+			},
+			{
+				"status": "Error 403",
+				"type": "Forbideen",
+				"desc": "You don't have permission to access"
+			},
+			{
+				"status": "Error 404",
+				"type": "Not Found",
+				"desc": "The page you are looking for does not exist"
+			},
+			{
+				"status": "Error 500",
+				"type": "Server Error",
+				"desc": "Http error 500 Internal Server Error"
+			},
+			{
+				"status": "Error 503",
+				"type": "Service Unavailable",
+				"desc": "Service temporarily unavailable"
+			}
+		]
+	}
+}

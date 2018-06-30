@@ -3,9 +3,9 @@
     class="white--text">
       <v-container v-if="lockstatus === 'not_installed'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
-          <h2 class="display-2 grey-text" style="margin-top: 35px">Wanna play?</h2>
+          <h2 class="display-2 grey-text" style="margin-top: 35px">{{ $t('lang.piggy.locked.wannaPlay') }}</h2>
           <br />
-          You’ll need a place to store your ether (ETH) in a secure wallet like Metamask. This will also act as your login to the game (no extra password needed).
+          {{ $t('lang.piggy.locked.youNeedAplaceToStore') }}
         </v-flex>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
           <img src="/static/img/picto/metamask.png" alt="no metamask" style="max-width: 150px; margin-top: 20px; margin-bottom: 10px">
@@ -19,12 +19,12 @@
             :href="metamaskUrl"
             target="_blank"
           >
-            Install Metamask
+            {{ $t('lang.piggy.locked.installMetamask') }}
           </v-btn>
         </v-flex>
         <v-flex v-else md6 offset-md3 class="text-xs-center grey-text" style="font-size:28px;margin-bottom: 100px;">
           <v-alert :value="true" outline color="error" icon="warning">
-            Sorry, your browser does not support MetaMask.
+            {{ $t('lang.piggy.locked.sorryYourBrowserNotSupport') }}
           </v-alert>
         </v-flex>
         <v-flex md12 class="text-xs-center black--text">
@@ -35,11 +35,11 @@
       </v-container>
       <v-container v-if="lockstatus === 'locked'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
-          <h2 class="grey-text display-2">Your metamask is locked</h2>
+          <h2 class="grey-text display-2">{{ $t('lang.piggy.locked.yourMetamaskIsLocked') }}</h2>
           <v-flex md12 class="text-xs-center">
             <img src="/static/img/picto/piggy-bank-cage.png" alt="piggy locked" style="margin: 20px 0; max-width: 200px">
           </v-flex>
-          Simply open MetaMask and follow the instruction to unlock it.
+          {{ $t('lang.piggy.locked.simplyOpenMetamaskAndFollow') }}
         </v-flex>
 
         <v-flex md12 class="text-xs-center black--text">
@@ -50,8 +50,8 @@
       </v-container>
       <v-container v-if="lockstatus === 'wrong_network'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
-          <h2 class=" display-2 grey-text" style="margin-bottom: 25px">Sorry, you're on the wrong network</h2>
-          <span class="grey--text" style="margin-bottom: 15px">Simply open MetaMask and switch over to the</span> {{ networkMessage }}.
+          <h2 class=" display-2 grey-text" style="margin-bottom: 25px">{{ $t('lang.piggy.locked.sorryWrongNetwork') }}</h2>
+          <span class="grey--text" style="margin-bottom: 15px">{{ $t('lang.piggy.locked.simplyOpenMetamaskAndSwitch') }}</span> {{ networkMessage }}.
           <v-flex md12 class="text-xs-center" style="margin-top: 25px;">
             <img :src="networkImage" alt="piggy locked" width="300">
           </v-flex>
@@ -86,9 +86,11 @@ export default {
     networkMessage () {
       let message = null
       if (process.env.ETHEREUM_NODE_ENV === 'development') {
-        message = 'Ropsten Test Network'
+        // message = 'Ropsten Test Network'
+        message = this.$t('lang.network.type.ropstenTestNetwork')
       } else {
-        message = 'Main Ethereum Network'
+        // message = 'Main Ethereum Network'
+        message = this.$t('lang.network.type.mainEthereumNetwork')
       }
       return message
     },
