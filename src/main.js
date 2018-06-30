@@ -38,8 +38,8 @@ Vue.filter('round', function (value, accuracy) {
 })
 
 // const lang = store.state.language
-const lang = 'cn'
-// const lang = 'en'
+// const lang = 'cn'
+const lang = 'en'
 if (lang) {
   i18n.locale = lang
 }
