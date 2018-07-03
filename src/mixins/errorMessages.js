@@ -6,24 +6,24 @@ export default {
   },
   methods: {
     metamaskTitle (lockStatus) {
-      let errT = 'Unknown error, please contact support.'
+      let errT = this.$t('lang.metamask.title.unknown')
       if (lockStatus === 'not_installed') {
-        errT = 'No Metamask installed'
+        errT = this.$t('lang.metamask.title.install')
       } else if (lockStatus === 'locked') {
-        errT = 'Metamask locked'
+        errT = this.$t('lang.metamask.title.locked')
       } else if (lockStatus === 'wrong_network') {
-        errT = 'Wrong Metamask network'
+        errT = this.$t('lang.metamask.title.network')
       }
       return errT
     },
     metamaskMessage (lockStatus) {
-      let errM = 'Unknown error, please contact support'
+      let errM = this.$t('lang.metamask.message.unknown')
       if (lockStatus === 'not_installed') {
-        errM = 'Please install Metamask'
+        errM = this.$t('lang.metamask.message.install')
       } else if (lockStatus === 'locked') {
-        errM = 'Please unlock your Metamask'
+        errM = this.$t('lang.metamask.message.locked')
       } else if (lockStatus === 'wrong_network') {
-        errM = 'Please open Metamask and update the network'
+        errM = this.$t('lang.metamask.message.network')
       }
       return errM
     }
