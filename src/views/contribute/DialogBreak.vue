@@ -14,7 +14,7 @@
         <div v-bind:style="buttonStyle" class="breakButton">
         </div>
         <span style="z-index:2">
-          Break current Piggy
+          {{$t('lang.piggy.break.title')}}
         </span>
       </v-btn>
       <span>{{ hoverMessage }}</span>
@@ -89,10 +89,10 @@ export default {
         // backgroundColor: '#727272'
       },
       breakDialog: false,
-      dialogMessage0: 'Be patient.. ;) The Piggy is protected for 5 minutes after someone contributes.',
-      dialogMessage1: 'TWO RULES protect the Piggy:',
-      dialogMessage2: ' 1) Only a contributor can break it.',
-      dialogMessage3: ' 2) The Piggy is protected for 5 minutes after each contribution.'
+      dialogMessage0: this.$t('lang.piggy.break.dialogMessage[0]'),
+      dialogMessage1: this.$t('lang.piggy.break.dialogMessage[1]'),
+      dialogMessage2: this.$t('lang.piggy.break.dialogMessage[2]'),
+      dialogMessage3: this.$t('lang.piggy.break.dialogMessage[3]')
     }
   },
   mounted () {
@@ -133,15 +133,15 @@ export default {
         if (this.transaction.enable) {
           if (!this.gameBreakEnable) {
             if (!this.player.breakEnable) {
-              message = 'Sorry, you need to contribute first.'
+              message = this.$t('lang.piggy.break.hoverMessage.contribute')
             } else {
               message = this.dialogMessage0
             }
           } else {
-            message = 'Click to break the Piggy!'
+            message = this.$t('lang.piggy.break.hoverMessage.click')
           }
         } else {
-          message = this.metamaskMessage(this.transaction.status) + ' first.'
+          message = this.metamaskMessage(this.transaction.status) + this.$t('lang.piggy.break.first')
         }
       } else {
         message = this.waitMessage
