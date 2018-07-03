@@ -191,9 +191,9 @@ export default {
       let message = null
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         if (this.transaction.enable) {
-          message = 'Click to ' + this.contributeTitle + '!'
+          message = this.$t('lang.piggy.contribute.clickTo') + this.contributeTitle + '!'
         } else {
-          message = this.metamaskMessage(this.transaction.status) + ' first.'
+          message = this.metamaskMessage(this.transaction.status) + this.$t('lang.piggy.contribute.first')
         }
       } else {
         message = this.waitMessage
