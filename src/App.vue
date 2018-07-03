@@ -2,13 +2,13 @@
   <div id="app">
     <v-app v-cloak light>
       <v-content>
-        <!-- HACKATHONUBI <app-alert-phishing></app-alert-phishing> -->
+        <app-alert-phishing></app-alert-phishing>
         <app-alert-winner></app-alert-winner>
         <app-header></app-header>
         <router-view/>
         <app-countdown></app-countdown>
-        <!-- HACKATHONUBI <app-discord></app-discord> -->
-        <!-- HACKATHONUBI <app-footer></app-footer> -->
+        <app-discord></app-discord>
+        <app-footer></app-footer>
       </v-content>
     </v-app>
   </div>

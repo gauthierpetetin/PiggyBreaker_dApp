@@ -75,7 +75,7 @@
             </v-layout>
 
             <!-- Email -->
-            <!-- HACKATHONUBI <v-layout wrap v-if="(registerStatus === 'waitingForRegister') || (registerStatus === 'unregistered')">
+            <v-layout wrap v-if="(registerStatus === 'waitingForRegister') || (registerStatus === 'unregistered')">
               <v-flex xs12 sm12 class="title grey-text">
                 Your email (optional):
               </v-flex>
@@ -94,7 +94,7 @@
               <v-flex xs12 sm12>
                 <v-btn block color="warning" dark @click.native="registerPlayer()">{{ $t('lang.form.label.registerEmail') }}</v-btn>
               </v-flex>
-            </v-layout> -->
+            </v-layout>
 
             <v-layout v-if="registerStatus === 'registering'" column align-center justify-center style="background-color: white; padding-top: 30px; padding-bottom: 30px" >
               <v-progress-circular :size="60" indeterminate color="warning"></v-progress-circular>

@@ -278,7 +278,7 @@ export default {
       return res
     },
     piggyImage: function () {
-      if (this.player.contributionBalance == 0) {
+      if (this.player.contributionBalance === 0) {
         return '/static/img/picto/big-piggy-empty.png'
       } else if (this.player.contributionBalance > 0) {
         return '/static/img/picto/big-piggy_Smiley-1.png'
