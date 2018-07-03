@@ -32,6 +32,22 @@
     }
   },
 
+  "metamask": {
+    "title": {
+      "unknown": "Unknown error",
+      "install": "No Metamask installed",
+      "locked": "Metamask locked",
+      "network": "Wrong Metamask network"
+    },
+    "message": {
+      "unknown": "Unknown error, please contact support.",
+      "install": "Please install Metamask",
+      "locked": "Please unlock your Metamask",
+      "network": "Please open Metamask and update the network"
+    },
+    "complement": " to play Piggy Breaker!"
+  },
+
   "piggy": {
     "currentPiggyValue": "Current Piggy value:",
     "yourCurrentContribution": "Your current contribution:",
@@ -66,6 +82,8 @@
         "contribute": "Contribute",
         "contributeMore": "Contribute more"
       },
+      "clickTo": "Click to ",
+      "first": " first.",
       "status": {
         "contribute": "Contribute",
         "pleaseConfirmTheTransaction": "Please confirm the transaction on Metamask...",
@@ -81,7 +99,19 @@
       "YouWillBeInformedPerEmailInCaseOfVictory": "You will be informed per email in case of victory."
     },
     "break": {
-
+      "title": "Break current Piggy",
+      "dialogMessage": [
+        "Be patient.. ;) The Piggy is protected for 5 minutes after someone contributes.",
+        "TWO RULES protect the Piggy:",
+        " 1) Only a contributor can break it.",
+        " 2) The Piggy is protected for 5 minutes after each contribution."
+      ],
+      "hoverMessage": {
+        "contribute": "Sorry, you need to contribute first.",
+        "click": "Click to break the Piggy!"
+      },
+      "clickTo": "Click to ",
+      "first": " first."
     },
     "withdraw": {
 
