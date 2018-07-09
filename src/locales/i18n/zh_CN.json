@@ -96,10 +96,12 @@
       },
       "congratulationsYourContributionHasBeenSubmitted": "恭喜！ 您的貢獻已成功提交。 它需要50-60秒才能通過整個網絡進行驗證。",
       "letUsInformYouPerEmailInCaseOfVictory": "如果獲勝，請通過電子郵件通知您。",
-      "YouWillBeInformedPerEmailInCaseOfVictory": "如果獲勝，您將收到電子郵件通知。"
+      "YouWillBeInformedPerEmailInCaseOfVictory": "如果獲勝，您將收到電子郵件通知。",
+      "viewPendingTransaction": "查看網絡上的待處理事務"
     },
     "break": {
       "title": "打破當前小豬",
+      "breakThePiggy": "打破小豬",
       "dialogMessage": [
         "請耐心等待;;）在有人捐款後，小豬會受到保護5分鐘。",
         "兩個規則保護小豬：",
@@ -114,7 +116,14 @@
       "first": " 第一"
     },
     "withdraw": {
-
+      "withdrawEarnings": "提取收益",
+      "yourEarnings": "您的收入：",
+      "withdrawEnable": {
+        "sorryNoFunds": "對不起，你現在沒有資金退出......",
+        "clickToWithdraw": "點擊即可立即撤回您的醚類!"
+      },
+      "dialogMessage": "你現在沒有資金退出。<br />按'Contribute'有機會贏得下一個彩票;）",
+      "infoMessage": "您貢獻的越多，您獲勝的機會就越多：您贏得彩票的機會與您的捐款總額成正比。"
     },
     "locked": {
       "wannaPlay": "想玩？",
@@ -125,6 +134,33 @@
       "simplyOpenMetamaskAndFollow": "只需打開MetaMask並按照說明解鎖即可。",
       "sorryWrongNetwork": "對不起，你的網絡錯了",
       "simplyOpenMetamaskAndSwitch": "只需打開MetaMask並切換到"
+    }
+  },
+
+  "piggies" : {
+    "piggy": "小豬",
+    "currentPiggy": "目前的小豬",
+    "pastPiggies": "過去的小豬",
+    "contributions": "捐款",
+    "gameStillOnGoing": "遊戲仍在進行中......",
+    "winner": "優勝者",
+    "createdAt": "創建於：",
+    "lastContribution": "最後貢獻：",
+    "brokenAt": "破碎了"
+  },
+
+  "homepage": {
+    "theSimplestBlockchainGameEver": "有史以來最簡單的區塊鏈遊戲！",
+    "blockchainIsTheTechnologyThatMakesThingsPossible": "區塊鍊是使比特幣成為可能的技術。 它提供了“按設計”的全面安全性，可確保小部件內容和您的貢獻不會被複製，帶走或破壞。",
+    "thusYouCanSecurelyPlayWithEther": "因此，您可以安全地玩以太，並有機會贏得彩票！",
+    "increaseYourChancesOfWinningByContributing": "通過貢獻更多來增加獲勝機會！",
+    "yourChancesOfWinningTheLotteryAreProportional": "您贏得彩票的機會與您的捐款總額成正比。",
+    "example": {
+      "totalPiggy40": "總豬崽值：40 ETH",
+      "totalPiggy100": "總豬崽值：100 ETH",
+      "yourContribution": "你的貢獻：",
+      "inThisExampleYourChancesAre50": "在這個例子中，你贏得彩票的機會是：50％",
+      "inThisExampleYourChancesAre25": "在這個例子中，你贏得彩票的機會是：25％"
     }
   },
 
@@ -143,8 +179,39 @@
     }
   },
 
+  "invite": {
+    "inviteYourFriendToPlay": "邀請你的朋友玩Piggy Breaker！",
+    "doYouEnjoyPiggyBreaker": "你喜歡Piggy Breaker嗎？ 你的朋友也可以享受它。<br />讓他們有機會通過邀請他們在Piggy Breaker上贏得彩票。",
+    "inviteYourFriendByEmail": "通過電子郵件邀請您的朋友",
+    "yourFriendsEmail": "你朋友的郵箱",
+    "close": "關",
+    "messages" : {
+      "greatAnEmailHasBeenSent": "好的，已經發送了一封電子郵件給你的朋友！",
+      "anInvitationHasAlreadyBeenSent": "已發送邀請。",
+      "anErrorHappendPleaseRetry": "發生錯誤，請稍後重試。"
+    }
+  },
+
+  "about": {
+    "about": "關於",
+    "game": "遊戲",
+    "team": "球隊",
+    "security": "安全",
+    "PiggyBreakerIsTheSimplestGame": "Piggy Breaker是有史以來最簡單的區塊鏈遊戲：",
+    "youContributeToFillThePiggy": "你貢獻以太（ETH）填補存錢罐，並有機會贏得彩票。",
+    "theLotteryIsLaunchedWhenBroken": "當小豬被打破時，彩票就會啟動。",
+    "thisWinnerIsChosenRandomly": "獲勝者在所有貢獻者之間“隨機”選擇。",
+    "furthermorePiggyBreakerIsDifferentFromTraditionalLotteries": "此外，Piggy Breaker與傳統彩票不同：你是決定獲勝機會的人。你貢獻的越多，獲勝的機會就越高。<br>的確，一個算法讓玩家有機會獲勝 與他的個人貢獻成比例。",
+    "weAreATeamPassionateAboutBlockchain": "我們是一個對區塊鏈技術充滿熱情的團隊。 我們每天都在回答您的問題並改善您的體驗。 您可以聯繫我們",
+    "piggyBreakerIsBuildOnBlockchain": "Piggy Breaker以區塊鏈技術為基礎。 區塊鍊是使比特幣成為可能的技術。 它提供了“按設計”的全面安全性，可確保小部件內容和您的貢獻不會被複製，帶走或破壞。",
+    "thusYouCanSecurelyPlay": "因此，您可以安全地玩以太，並有機會贏得彩票！",
+    "psGameCodeIsPublic": "因此，您可以安全地玩以太，並有機會贏得彩票！..."
+  },
+
   "faq": {
     "title": "常見問題解答",
+    "stillConfused": "仍然困惑？",
+    "viewFullFAQ": "查看完整常見問題",
     "gettingStarted": {
       "title": "入門",
       "whatDoIneedToPlay": {

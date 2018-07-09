@@ -32,7 +32,7 @@
     <v-dialog v-model="breakDialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
-          <span class="headline grey-text">Break the Piggy</span>
+          <span class="headline grey-text">{{$t('lang.piggy.break.breakThePiggy')}}</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
@@ -210,7 +210,7 @@ export default {
     },
     checkTime () {
       if (this.masterTimerButton) {
-        console.log('CHECKTIME')
+        console.log('Checktime')
         // Cancel interval
         clearInterval(this.countdownInterval)
 

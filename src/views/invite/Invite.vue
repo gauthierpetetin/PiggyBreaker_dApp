@@ -14,14 +14,12 @@
           <div style="width: 80%; height: 400px; padding: 2% 2%; background-color: white">
             <v-flex class="my-3">
               <div class="text-xs-center">
-                <h4 class="display-1 blue--text small-text" style="padding: 1% 0">Invite your friends to play Piggy Breaker!</h4>
+                <h4 class="display-1 blue--text small-text" style="padding: 1% 0">{{ $t('lang.invite.inviteYourFriendToPlay') }}</h4>
               </div>
             </v-flex>
             <v-flex class="my-3">
               <div class="text-xs-center grey--text title">
-                <p>
-                  Do you enjoy Piggy Breaker? Your friends could enjoy it too.<br />
-                  Give them a chance to win the lottery by inviting them on Piggy Breaker.
+                <p v-html="$t('lang.invite.doYouEnjoyPiggyBreaker')">
                 </p>
               </div>
             </v-flex>
@@ -31,7 +29,7 @@
 
                 <v-flex xs12 sm12 style="padding: 2% 0">
                   <v-text-field type="text" email
-                  label="Your friend’s email"
+                  :label="$t('lang.invite.yourFriendsEmail')"
                   :rules="emailRules"
                   v-model="email"
                   @focus="$event.target.select()"
@@ -39,7 +37,7 @@
                 </v-flex>
 
                 <v-flex xs12 sm12>
-                  <v-btn block dark :class="[emailValid ? 'blue' : 'grey']" @click.native="invite()">Invite your friend by email</v-btn>
+                  <v-btn block dark :class="[emailValid ? 'blue' : 'grey']" @click.native="invite()">{{ $t('lang.invite.inviteYourFriendByEmail') }}</v-btn>
                   <v-dialog v-model="dialogConfirm" max-width="500px">
                     <v-card>
                       <v-card-title>
@@ -49,7 +47,7 @@
                       </v-card-title>
                       <v-card-actions>
                         <v-btn color="primary" flat @click.stop="dialogConfirm=false">
-                          Close
+                          {{ $t('lang.invite.close') }}
                         </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -77,9 +75,9 @@ export default {
       email: null,
       emailRules: [
         v => {
-          return !!v || 'E-mail is required'
+          return !!v || this.$t('lang.form.error.emailIsRequired')
         },
-        v => this.validEmail(v) || 'E-mail must be valid'
+        v => this.validEmail(v) || this.$t('lang.form.error.emailMustBeValid')
       ],
       dialogConfirm: null,
       dialogMessage: null
@@ -113,15 +111,15 @@ export default {
           self.dialogConfirm = !self.dialogConfirm
           // success
           if (response.body.status === 'success') {
-            self.dialogMessage = 'Great, an email has been sent to your friend!'
+            self.dialogMessage = this.$t('lang.invite.messages.greatAnEmailHasBeenSent')
           } else if (response.body.status === 'error') {
-            self.dialogMessage = 'An invitation has already been sent.'
+            self.dialogMessage = this.$t('lang.invite.messages.anInvitationHasAlreadyBeenSent')
           }
         }, function (response) {
           self.dialogConfirm = !self.dialogConfirm
           // error
           console.log('error', response.body.status)
-          self.dialogMessage = 'An error happened, please retry later.'
+          self.dialogMessage = this.$t('lang.invite.messages.anErrorHappendPleaseRetry')
         })
     },
     validEmail (email) {

@@ -9,16 +9,17 @@
           <div style="width: 80%; height: 400px; padding: 2% 5%; background-color: white">
             <v-flex class="my-3">
               <div class="text-xs-center">
-                <h4 class="display-1 blue-text">The simplest blockchain game ever built!</h4>
+                <h4 class="display-1 blue-text">{{ $t('lang.homepage.theSimplestBlockchainGameEver') }}</h4>
               </div>
             </v-flex>
             <div class="headline mb-3 text-xs-center title">
               <p>
-                Blockchain is the technology that makes things like Bitcoin possible. It offers total security "by design", which ensures the piggy content and your contribution(s) cannot be replicated, taken away, or destroyed.
-              </p><br />
+                {{ $t('lang.homepage.blockchainIsTheTechnologyThatMakesThingsPossible') }}
+              </p>
+              <br />
               <img src="/static/img/picto/piggy-chained.png" alt="big piggy" height="100"><br /><br />
               <p>
-                Thus you can securely play with Ether and get a chance to win the lottery!
+                {{ $t('lang.homepage.thusYouCanSecurelyPlayWithEther') }}
               </p>
             </div>
           </div>
@@ -31,11 +32,11 @@
         <v-layout row wrap justify-center class="my-5" style="margin-top: 0px !important;">
           <v-flex sm12 class="my-3" style="margin-bottom: 0 !important">
             <div class="text-xs-center">
-              <h4 class="display-1 grey-text">Increase your chances of winning by contributing more!</h4><br />
+              <h4 class="display-1 grey-text">{{ $t('lang.homepage.increaseYourChancesOfWinningByContributing') }}</h4><br />
             </div>
             <div class="headline mb-3 text-xs-center title">
               <p>
-                Your chances of winning the lottery are proportional to the total amount of your contributions.
+                {{ $t('lang.homepage.yourChancesOfWinningTheLotteryAreProportional') }}
               </p>
             </div>
           </v-flex>
@@ -46,14 +47,14 @@
 
                   <v-flex xs12 class="text-md-center">
                     <img src="/static/img/picto/piggy.png" width="100">
-                    <h1 class="pink--text">Total Piggy value: 40 ETH</h1>
+                    <h1 class="pink--text">{{ $t('lang.homepage.example.totalPiggy40') }}</h1>
                     <br />
                     <h1 class="mb-2 subheading text-xs-center contribution">
-                      <span class="grey--text">Your contribution:</span>
+                      <span class="grey--text">{{ $t('lang.homepage.example.yourContribution') }}</span>
                       <span class="grey--text">20 ETH</span>
                       <v-progress-linear :value="50" height="20" color="grey"></v-progress-linear>
                       <br />
-                      <span class="title blue--text">In this example, your chances <br />of winning the lottery are: 50%</span>
+                      <span class="title blue--text" v-html="$t('lang.homepage.example.inThisExampleYourChancesAre50')"></span>
                     </h1>
                   </v-flex>
 
@@ -68,14 +69,14 @@
 
                   <v-flex xs12 class="text-md-center">
                     <img src="/static/img/picto/piggy.png" width="100">
-                    <h1 class="pink--text">Total Piggy value: 100 ETH</h1>
+                    <h1 class="pink--text">{{ $t('lang.homepage.example.totalPiggy100') }}</h1>
                     <br />
                     <h1 class="mb-2 subheading text-xs-center contribution">
-                      <span class="grey--text">Your contribution:</span>
+                      <span class="grey--text">{{ $t('lang.homepage.example.yourContribution') }}</span>
                       <span class="grey--text">25 ETH</span>
                       <v-progress-linear :value="25" height="20" color="grey"></v-progress-linear>
                       <br />
-                      <span class="title blue--text">In this example, your chances <br />of winning the lottery are: 25%</span>
+                      <span class="title blue--text" v-html="$t('lang.homepage.example.inThisExampleYourChancesAre25')"></span>
                     </h1>
                   </v-flex>
 

@@ -14,36 +14,33 @@
           <v-container grid-list-xl class="player-infos">
             <v-layout row wrap>
               <v-flex md10 offset-md1>
-                <h1 class="display-1 grey-text">About</h1>
+                <h1 class="display-1 grey-text">{{ $t('lang.about.about') }}</h1>
               </v-flex>
 
               <v-flex md10 offset-md1>
-                <h2 class="grey-text headline">Game</h2>
+                <h2 class="grey-text headline">{{ $t('lang.about.game') }}</h2>
               </v-flex>
               <v-flex md10 offset-md1>
                 <p>
-                  Piggy Breaker is the simplest blockchain game ever seen:
+                  {{ $t('lang.about.PiggyBreakerIsTheSimplestGame') }}
                 </p>
                 <ol>
-                  <li>You contribute ether (ETH) to fill the piggy bank and get a chance to win the lottery.</li><br />
-                  <li>The lottery is launched when the piggy gets broken.</li><br />
-                  <li>The winner is chosen “randomly” between all contributors.</li><br />
+                  <li>{{ $t('lang.about.youContributeToFillThePiggy') }}</li><br />
+                  <li>{{ $t('lang.about.theLotteryIsLaunchedWhenBroken') }}</li><br />
+                  <li>{{ $t('lang.about.thisWinnerIsChosenRandomly') }}</li><br />
                 </ol>
-                <p>
-                  Furthermore, Piggy Breaker is different from traditional lotteries : YOU are the one who decides your chances of winning.
-                  The more you contribute, the higher your chances are of winning.
-                  Indeed, an algorithm makes the player's chances of winning proportionnal to his individual contributions.
+                <p v-html="$t('lang.about.furthermorePiggyBreakerIsDifferentFromTraditionalLotteries')">
                 </p>
               </v-flex>
             </v-layout>
 
             <v-layout row wrap>
               <v-flex md10 offset-md1>
-                <h2 class="grey-text headline">Team</h2>
+                <h2 class="grey-text headline">{{ $t('lang.about.team') }}</h2>
               </v-flex>
               <v-flex md10 offset-md1>
                 <p>
-                  We are a team passionate about blockchain technology. We are here to answer your questions and improve your experience every day. You can contact us on <a href="mailto:contact@piggybreaker.com">contact@piggybreaker.com</a>.
+                  {{ $t('lang.about.weAreATeamPassionateAboutBlockchain') }} <a href="mailto:contact@piggybreaker.com">contact@piggybreaker.com</a>.
                 </p>
               </v-flex>
             </v-layout>
@@ -58,19 +55,21 @@
 
             <v-layout row wrap style="margin-top: 35px">
               <v-flex md10 offset-md1>
-                <h2 class="grey-text headline">Security</h2>
+                <h2 class="grey-text headline">{{ $t('lang.about.security') }}</h2>
               </v-flex>
               <v-flex md10 offset-md1>
                 <p>
-                  Piggy Breaker is built on blockchain technology. Blockchain is the technology that makes things like Bitcoin possible. It offers total security "by design", which ensures the piggy content and your contribution(s) cannot be replicated, taken away, or destroyed.
+                  {{ $t('lang.about.piggyBreakerIsBuildOnBlockchain') }}
                 </p>
                 <p>
-                  Thus you can securely play with Ether and get a chance to win the lottery!
+                  {{ $t('lang.about.psGameCodeIsPublic') }}
                 </p>
                 <v-layout row wrap justify-center>
                   <img center src="/static/img/picto/piggy-chained.png" alt="big piggy" height="100">
                 </v-layout>
                 <br /><br />
+                <p v-html="$t('lang.about.psGameCodeIsPublic')">
+                </p>
                 <p>
                   PS: the game code is public and can accessed <a target="_blank" :href="explorerAddress">here</a>.
                 </p>

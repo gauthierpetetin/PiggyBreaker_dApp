@@ -91,8 +91,11 @@ export default {
     getGamesList () {
       let self = this
       // Get games list
-      db.collection('games').orderBy('id', 'desc').limit(11).get()
-        .then(function (querySnapshot) {
+      //self.games = []
+      db.collection('games')
+        .onSnapshot(function(querySnapshot) {
+      // db.collection('games').orderBy('id', 'desc').limit(11).get()
+        // .then(function (querySnapshot) {
           querySnapshot.forEach((gameItem) => {
             // console.log("Prepare game : ", gameItem);
             self.games.push(self.prepareGame(gameItem))

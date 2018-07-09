@@ -96,10 +96,12 @@
       },
       "congratulationsYourContributionHasBeenSubmitted": "Congratulations! Your contribution has been submitted successfully. It will require 50-60 seconds until it gets validated by the whole network.",
       "letUsInformYouPerEmailInCaseOfVictory": "Let us inform you per email in case of victory.",
-      "YouWillBeInformedPerEmailInCaseOfVictory": "You will be informed per email in case of victory."
+      "YouWillBeInformedPerEmailInCaseOfVictory": "You will be informed per email in case of victory.",
+      "viewPendingTransaction": "View pending transaction on the network"
     },
     "break": {
       "title": "Break current Piggy",
+      "breakThePiggy": "Break the Piggy",
       "dialogMessage": [
         "Be patient.. ;) The Piggy is protected for 5 minutes after someone contributes.",
         "TWO RULES protect the Piggy:",
@@ -114,7 +116,14 @@
       "first": " first."
     },
     "withdraw": {
-
+      "withdrawEarnings": "Withdraw earnings",
+      "yourEarnings": "Your earnings:",
+      "withdrawEnable": {
+        "sorryNoFunds": "Sorry, you have no funds to withdraw for now...",
+        "clickToWithdraw": "Click to withdraw your ethers now!"
+      },
+      "dialogMessage": "You have no funds to withdraw for now.<br />Press 'Contribute' to get a chance to win the next lottery ;)",
+      "infoMessage": "The more you contribute, the more chances you have to win:<br/>Your chances to win the lottery are proportional to the total amount of your contributions."
     },
     "locked": {
       "wannaPlay": "Wanna play?",
@@ -125,6 +134,33 @@
       "simplyOpenMetamaskAndFollow": "Simply open MetaMask and follow the instruction to unlock it.",
       "sorryWrongNetwork": "Sorry, you're on the wrong network",
       "simplyOpenMetamaskAndSwitch": "Simply open MetaMask and switch over to the"
+    }
+  },
+
+  "piggies" : {
+    "piggy": "Piggy",
+    "currentPiggy": "Current Piggy",
+    "pastPiggies": "Past Piggies",
+    "contributions": "contribution(s)",
+    "gameStillOnGoing": "Game still on-going...",
+    "winner": "winner",
+    "createdAt": "Created at:",
+    "lastContribution": "Last contribution:",
+    "brokenAt": "Broken at"
+  },
+
+  "homepage": {
+    "theSimplestBlockchainGameEver": "The simplest blockchain game ever built!",
+    "blockchainIsTheTechnologyThatMakesThingsPossible": "Blockchain is the technology that makes things like Bitcoin possible. It offers total security \"by design\", which ensures the piggy content and your contribution(s) cannot be replicated, taken away, or destroyed.",
+    "thusYouCanSecurelyPlayWithEther": "Thus you can securely play with Ether and get a chance to win the lottery!",
+    "increaseYourChancesOfWinningByContributing": "Increase your chances of winning by contributing more!",
+    "yourChancesOfWinningTheLotteryAreProportional": "Your chances of winning the lottery are proportional to the total amount of your contributions.",
+    "example": {
+      "totalPiggy40": "Total Piggy value: 40 ETH",
+      "totalPiggy100": "Total Piggy value: 100 ETH",
+      "yourContribution": "Your contribution:",
+      "inThisExampleYourChancesAre50": "In this example, your chances <br />of winning the lottery are: 50%",
+      "inThisExampleYourChancesAre25": "In this example, your chances <br />of winning the lottery are: 25%"
     }
   },
 
@@ -143,8 +179,39 @@
     }
   },
 
+  "invite": {
+    "inviteYourFriendToPlay": "Invite your friends to play Piggy Breaker!",
+    "doYouEnjoyPiggyBreaker": "Do you enjoy Piggy Breaker? Your friends could enjoy it too.<br />Give them a chance to win the lottery by inviting them on Piggy Breaker.",
+    "inviteYourFriendByEmail": "Invite your friend by email",
+    "yourFriendsEmail": "Your friend’s email",
+    "close": "Close",
+    "messages" : {
+      "greatAnEmailHasBeenSent": "Great, an email has been sent to your friend!",
+      "anInvitationHasAlreadyBeenSent": "An invitation has already been sent.",
+      "anErrorHappendPleaseRetry": "An error happened, please retry later."
+    }
+  },
+
+  "about": {
+    "about": "About",
+    "game": "Game",
+    "team": "Team",
+    "security": "Security",
+    "PiggyBreakerIsTheSimplestGame": "Piggy Breaker is the simplest blockchain game ever seen:",
+    "youContributeToFillThePiggy": "You contribute ether (ETH) to fill the piggy bank and get a chance to win the lottery.",
+    "theLotteryIsLaunchedWhenBroken": "The lottery is launched when the piggy gets broken.",
+    "thisWinnerIsChosenRandomly": "The winner is chosen \"randomly\" between all contributors.",
+    "furthermorePiggyBreakerIsDifferentFromTraditionalLotteries": "Furthermore, Piggy Breaker is different from traditional lotteries : YOU are the one who decides your chances of winning.<br>The more you contribute, the higher your chances are of winning.<br>Indeed, an algorithm makes the player's chances of winning proportionnal to his individual contributions.",
+    "weAreATeamPassionateAboutBlockchain": "We are a team passionate about blockchain technology. We are here to answer your questions and improve your experience every day. You can contact us on",
+    "piggyBreakerIsBuildOnBlockchain": "Piggy Breaker is built on blockchain technology. Blockchain is the technology that makes things like Bitcoin possible. It offers total security \"by design\", which ensures the piggy content and your contribution(s) cannot be replicated, taken away, or destroyed.",
+    "thusYouCanSecurelyPlay": "Thus you can securely play with Ether and get a chance to win the lottery!",
+    "psGameCodeIsPublic": "PS: the game code is public and can accessed <a target=\"_blank\" :href=\"explorerAddress\">here</a>."
+  },
+
   "faq": {
     "title": "FAQs",
+    "stillConfused": "Still confused?",
+    "viewFullFAQ": "View full FAQ",
     "gettingStarted": {
       "title": "Getting started",
       "whatDoIneedToPlay": {

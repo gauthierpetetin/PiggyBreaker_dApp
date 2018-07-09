@@ -11,7 +11,7 @@
         @click.native="withdrawAction()"
         :class="[(buttonEnable) ? 'blue' : 'grey', sizeButton]"
         >
-        Withdraw earnings
+        {{ $t('lang.piggy.withdraw.withdrawEarnings') }}
       </v-btn>
       <span>{{ hoverMessage }}</span>
     </v-tooltip>
@@ -66,14 +66,14 @@ export default {
   data () {
     return {
       withdrawDialog: false,
-      dialogMessage: "You have no funds to withdraw for now.<br />Press 'Contribute' to get a chance to win the next lottery ;)",
-      infoMessage: 'The more you contribute, the more chances you have to win:<br/>Your chances to win the lottery are proportional to the total amount of your contributions.'
+      dialogMessage: this.$t('lang.piggy.withdraw.dialogMessage'),
+      infoMessage: this.$t('lang.piggy.withdraw.infoMessage'),
     }
   },
   computed: {
     balanceText () {
       if (this.buttonEnable) {
-        return 'Your earnings: ' + this.player.withdrawBalance + ' ETH'
+        return this.$t('lang.piggy.withdraw.yourEarnings') + this.player.withdrawBalance + ' ETH'
       }
     },
     currentGame () {
@@ -98,9 +98,9 @@ export default {
       if ((!this.loading.contribution) && (!this.loading.break) && (!this.loading.withdraw)) {
         if (this.transaction.enable) {
           if (!this.player.withdrawEnable) {
-            message = 'Sorry, you have no funds to withdraw for now..'
+            message = this.$t('lang.piggy.withdraw.withdrawEnable.sorryNoFunds')
           } else {
-            message = 'Click to withdraw your ethers now!'
+            message = this.$t('lang.piggy.withdraw.withdrawEnable.clickToWithdraw')
           }
         } else {
           message = this.metamaskMessage(this.transaction.status) + ' first.'

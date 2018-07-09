@@ -72,7 +72,7 @@
           <!-- xxx view pending transaction-->
           <v-flex v-if="(loading.contribution) || (loading.break) || (loading.withdraw)" md12 class="text-xs-center grey-text" style="font-size:28px; margin-bottom: 50px">
             <v-btn class="mt-3 blue" dark large target="_blank" @click.native="viewPendingTx($store.state.ethPendingTx)">
-              <span>View pending transaction on the network</span>
+              <span>{{ $t('lang.piggy.contribute.viewPendingTransaction') }}</span>
             </v-btn>
           </v-flex>
           <!-- /Player contribute -->

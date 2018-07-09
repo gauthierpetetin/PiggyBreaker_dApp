@@ -84,7 +84,7 @@
           <v-flex md12 class="text-xs-center" style="margin: 0 0 !important">
             <img src="/static/img/picto/piggy-lost.png" alt="piggy locked" style="margin: 0 0; max-width: 200px">
           </v-flex>
-          <h2 class="grey-text display-2" style="margin: 0 0 !important">Still confused?</h2>
+          <h2 class="grey-text display-2" style="margin: 0 0 !important">{{ $t('lang.faq.stillConfused') }}</h2>
         </v-flex>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin: 0 0 !important">
           <v-btn
@@ -93,7 +93,7 @@
           large
           to="/FAQ"
           >
-          View full FAQ
+          {{ $t('lang.faq.viewFullFAQ') }}
         </v-btn>
       </v-flex>
     </div>

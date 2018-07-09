@@ -18,21 +18,21 @@
         <v-flex sm9>
           <v-card-title>
             <div style="width: 90%">
-              <span class="grey--text headline">Piggy #{{ detailGame.id }}</span><br /><br />
-              <h1 v-if="detailGame.open === true" class="blue--text title"><strong>Game still on-going..</strong></h1>
-              <h1 v-if="(detailGame.open === false) && detailGame.winner && (detailGame.winner !== '0x0000000000000000000000000000000000000000')" class="warning--text title"><strong>Winner</strong>: {{ detailGame.winner }}</h1>
+              <span class="grey--text headline">{{ $t('lang.piggies.piggy') }} #{{ detailGame.id }}</span><br /><br />
+              <h1 v-if="detailGame.open === true" class="blue--text title"><strong>{{ $t('lang.piggies.gameStillOnGoing') }}</strong></h1>
+              <h1 v-if="(detailGame.open === false) && detailGame.winner && (detailGame.winner !== '0x0000000000000000000000000000000000000000')" class="warning--text title"><strong>{{ $t('lang.piggies.winner') }}</strong>: {{ detailGame.winner }}</h1>
               <h1 v-if="(detailGame.open === false) && ((!detailGame.winner) || (detailGame.winner === '0x0000000000000000000000000000000000000000'))" class="warning--text title">
-                <strong>Winner</strong>:
+                <strong>{{ $t('lang.piggies.winner') }}</strong>:
                 <v-tooltip right>
                   <v-icon slot="activator" class="warning--text">fas fa-crosshairs fa-pulse</v-icon>
                   <span>The previous winner becomes public once the next lottery has started,<br />e.g. once Piggy#{{ detailGame.id + 1 }} contains at least one contribution.</span>
                 </v-tooltip>
               </h1>
               <br />
-              <span><strong>{{ detailGame.nbContributions }}</strong> contribution(s)</span><br />
-              <span class="grey--text">Created at: {{ detailGame.createdAt }}</span><br />
-              <span v-if="detailGame.open" class="grey--text">Last contribution: {{ detailGame.updatedAt }}</span>
-              <span v-else class="grey--text">Broken at: {{ detailGame.brokenAt }}</span>
+              <span><strong>{{ detailGame.nbContributions }}</strong> {{ $t('lang.piggies.contributions') }}</span><br />
+              <span class="grey--text">{{ $t('lang.piggies.createdAt') }} {{ detailGame.createdAt }}</span><br />
+              <span v-if="detailGame.open" class="grey--text">{{ $t('lang.piggies.lastContribution') }} {{ detailGame.updatedAt }}</span>
+              <span v-else class="grey--text">{{ $t('lang.piggies.brokenAt') }} {{ detailGame.brokenAt }}</span>
             </div>
           </v-card-title>
         </v-flex>
