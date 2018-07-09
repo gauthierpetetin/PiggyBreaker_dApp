@@ -32,6 +32,8 @@
       <v-btn class="grey-text" to="settings" flat v-show="metamaskEnabled">{{ $t('lang.menu.settings') }}</v-btn>
       <v-btn class="grey-text" to="faq" flat>{{ $t('lang.menu.faq') }}</v-btn>
       <v-btn class="grey-text" to="about" flat>{{ $t('lang.menu.about') }}</v-btn>
+      <v-btn class="grey-text" v-if="$i18n.locale != 'en'" @click="translateTo('en')" flat>en</v-btn>
+      <v-btn class="grey-text" v-if="$i18n.locale != 'cn'" @click="translateTo('cn')" flat>cn</v-btn>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -60,6 +62,9 @@ export default {
       } else {
         console.log('Please install / unlock Metamask first. See below for more details.')
       }
+    },
+    translateTo(lang) {
+      this.$i18n.locale = lang
     }
   }
 }
