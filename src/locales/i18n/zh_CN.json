@@ -1,23 +1,23 @@
 {
   "app": {
-    "title": "小豬斷路器"
+    "title": "Piggy Breaker"
   },
 
   "menu": {
-    "network": {
-      "status": {
-        "good": "網絡很好",
-        "goodTooltip": "網絡很好",
-        "bad": "網絡不好",
-        "badTooltip": "沒有web3？ 你應該考慮嘗試Metamask！"
+      "network": {
+        "status": {
+          "good": "网络好",
+          "goodTooltip": "网络好",
+          "bad": "网络不好",
+          "badTooltip": "没有Web3 ? 你可以安装 Metamask!"
+        },
+        "testnet": "测试版 (Ropsten)"
       },
-      "testnet": "測試版（Ropsten）"
-    },
-    "invite": "邀請",
-    "history": "歷史",
-    "settings": "設置",
-    "faq": "常問問題",
-    "about": "關於"
+      "invite": "邀请",
+      "history": "历史",
+      "settings": "设置",
+      "faq": "FAQ",
+      "about": "关于"
   },
 
   "alert": {
@@ -180,7 +180,9 @@
     },
     "error": {
       "emailIsRequired": "電子郵件是必需的",
-      "emailMustBeValid": "電子郵件必須有效"
+      "emailMustBeValid": "電子郵件必須有效",
+      "loginMustBeEmptyOrValid": "Login must be empty or valid",
+      "emailMustBeEmptyOrValid": "E-mail must be empty or valid"
     }
   },
 
@@ -212,6 +214,15 @@
     "thusYouCanSecurelyPlay": "因此，您可以安全地玩以太，並有機會贏得彩票！",
     "psGameCodeIsPublic1": "PS：遊戲代碼是公開的，可以訪問",
     "psGameCodeIsPublic2": "這裡。"
+  },
+
+  "settings": {
+    "title": "Email info",
+    "message": ["You can be informed about important Piggy Breaker events", "by subscribing to the following features:"],
+    "option1": "I want to be informed if I win.",
+    "option2": "I want to be informed when the game I played is over.",
+    "option3": "I want to be informed when a new game starts.",
+    "enterNickname": "Enter nickname"
   },
 
   "faq": {
@@ -263,11 +274,83 @@
         ]
       }
     },
-    "understandingPiggyBreaker": {
-      "title": ""
+    "understanding": {
+      "title": "Understanding Piggy Breaker",
+      "whatisPiggyBreaker": {
+        "title": "What is Piggy Breaker?",
+        "text": ["Piggy Breaker is the next world lottery!", "The game is centered around Billy, a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.", "Someday the Piggy bank will break and make one of the players rich..."]
+      },
+      "whocanplayPiggyBreaker": {
+        "title": "Who can play Piggy Breaker?",
+        "text": ["Anyone.*", "*Nevertheless, the App is not intended for children under 13."]
+      },
+      "whydoineedtoplay": {
+        "title": "Why do I need to play Piggy Breaker?",
+        "text": ["The Piggy contains (or will contain) a lot of ether (ETH). You can follow its value, it is indicated in the middle of the homepage.", "Some day, the Piggy will be broken. A winner will then be chosen “randomly” between all contributors to win content of the Piggy.", "Get a chance to be this winner by playing Piggy Breaker!"]
+      },
+      "whataremychancesofwinning": {
+        "title": "What are my chances of winning?",
+        "text": ["You’re the one who decides. The more you contribute, the more your chances are of winning. Indeed, your chances of winning the lottery are proportional to the total amount of your contributions."]
+      },
+      "whodecidestobreak": {
+        "title": "Who decides to break the Piggy?",
+        "text": ["Anyone can potentially break the Piggy. But it is protected by TWO RULES:", "*After 3 months of existence, the Piggy is not protected by this rule anymore."]
+      },
+      "whatistheprerequisite": {
+        "title": "What is the prerequisite to play Piggy Breaker?",
+        "text": ["You need to have the Metamask plugin installed on your web browser.", "Your Metamask account needs to contain ether (ETH).", "NB: If you don’t have ether (ETH) on a Metamask account, please report to the first section of the FAQ."]
+      },
+      "howdoiplay": {
+        "title": "How do I play Piggy Breaker?",
+        "text": ["Just press the big yellow “Contribute” button, indicate the amount of your contribution and click “Confirm”.", "This will open the Metamask plugin. Confirm the ether transaction and that’s it.", "NB: If you don’t have ether (ETH) on Metamask, please report to the first section of the FAQ."]
+      },
+      "whatistheminimumtoplay": {
+        "title": "What is the minimum amount to play Piggy Breaker?",
+        "text": ["The value of the minimum contribution to play Piggy Breaker is indicated below the 'Contribute' button.", "The minimum contribution can go up or down with time. It increases when the frequency of player contributions increases."]
+      },
+      "howdoibreak": {
+        "title": "How do I break the Piggy?",
+        "text": ["Press the big 'Break the Piggy' button. This will open the Metamask plugin. Confirm the transaction and that’s it.", "PS: the Piggy is protected by TWO RULES:", "Only a contributor can break it.", "The Piggy is protected for 5 minutes after each contribution. *", "*After 3 months of existence, the Piggy is not protected by this rule anymore."]
+      },
+      "whathappenswhenbroken": {
+        "title": "What happens once the Piggy is broken?",
+        "text": ["A Piggy reparation fee is paid to the programmer at the end of the game. The broken Piggy is replaced by a new empty Piggy."]
+      },
+      "howdoiknowwhowon": {
+        "title": "How do I know who won the lottery?",
+        "text": ["The winner is kept secret for a short time once the Piggy gets broken. Due to security reasons we can't detail here, the winner becomes public once the next lottery has really started e.g. once the next lottery contains at least one contribution."]
+      }
     },
-    "Other": {
-      "title": ""
+    "other": {
+      "title": "Other",
+      "whysocomplicated": {
+        "title": "Why is it so complicated to get started with Piggy Breaker?",
+        "text": ["Piggy Breaker is built on blockchain technology, which is relatively new stuff. It’s safe and secure, but it’s going to be a little complicated until the rest of the world catches up."]
+      },
+      "whatisether": {
+        "title": "What’s ether (ETH)? Why do I need it to play Piggy Breaker?",
+        "text": ["Ether powers the Ethereum network, which is what Piggy Breaker is built on. Ether acts like any other currency; the value fluctuates with the market.", "You need to convert your currency (e.g. USD, CAD, GBP, etc.) into ether to pay for things on our network."]
+      },
+      "whatisgas": {
+        "title": "What is 'gas'?",
+        "text": ["'Gas' is a shorthand used to describe the cost of powering a transaction or contract in Ethereum, which is the blockchain network that Piggy Breaker is built on.", "Because blockchain is decentralized, every transaction is distributed through multiple computers, not a central server. This ensures each transaction—is secure and one-of-a-kind. However, it also takes more computational power, which is covered by the cost of gas. Ethereum typically communicates this cost in gwei (1 million gwei = 1 ether/ETH). You can get a more detailed explanation here."]
+      },
+      "caniuseacard": {
+        "title": "Can I use a Credit Card to play Piggy Breaker?",
+        "text": ["Not directly; the technology simply isn’t there yet. As soon as it is, we plan to support it.", "However, most exchanges do let you buy ether with a credit card."]
+      },
+      "caniplaywithphone": {
+        "title": "Can I play Piggy Breaker with my phone?",
+        "text": ["Not yet. Piggy Breaker relies on technologies that simply don’t function on mobile devices, like Metamask.", "We are developing a mobile app, but you will need a laptop, desktop, or tablet browser to complete transactions for the foreseeable future."]
+      },
+      "howareyoumakingmoney": {
+        "title": "How are you making money with Piggy Breaker?",
+        "text": ["We take 3.75% of the Piggy value when the Piggy gets broken. Note that we are working hard to make your game as easy as possible to use and to prepare you a mobile version."]
+      },
+      "howdoireach": {
+        "title": "How do I reach the Piggy Breaker team regarding a project, partnership, or investment opportunity?",
+        "text": ["Give us the details here and we’ll be in touch.", "If none of the above has been helpful, please contact us with the details of your issue at", "Please include any relevant tx hashes, links, and Piggy IDs so we can support you as quickly as possible."]
+      }
     }
 
   },

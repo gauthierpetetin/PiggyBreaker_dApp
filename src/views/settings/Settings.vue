@@ -7,7 +7,7 @@
         </v-flex>
         <v-flex md8 class="blue--text" style="margin-top: 20px">
           <!-- Display -->
-          <span v-if="this.playerSettings.login === null || this.playerSettings.login === ''" v-show="!editField.login" class="headline pink--text"><i>Enter nickname</i></span>
+          <span v-if="this.playerSettings.login === null || this.playerSettings.login === ''" v-show="!editField.login" class="headline pink--text"><i>{{ $t('lang.settings.enterNickname')}}</i></span>
           <span v-show="!editField.login" class="display-1" style="float: left;">{{ this.playerSettings.login }}</span>
           <v-btn v-show="!editField.login" small flat fab style="bottom: 5px;" @click="editField.login = true">
             <v-icon>edit</v-icon>
@@ -64,13 +64,13 @@
           <div style="width: 80%; height: 400px; padding: 2% 2%; background-color: white;">
             <v-flex class="my-3">
               <div class="text-xs-center">
-                <h4 class="display-1 small-text blue--text">Email info</h4>
+                <h4 class="display-1 small-text blue--text">{{ $t('lang.settings.title')}}</h4>
               </div>
             </v-flex>
             <v-flex class="my-3">
               <div class="text-xs-center grey--text title">
                 <p>
-                  You can be informed about important Piggy Breaker events<br /> by subscribing to the following features:
+                  {{ $t('lang.settings.message[0]')}}<br />{{ $t('lang.settings.message[1]')}}
                 </p>
               </div>
             </v-flex>
@@ -82,17 +82,17 @@
                     <v-form v-model="valid" ref="form" lazy-validation>
                       <v-checkbox
                       color="info"
-                      label="I want to be informed if I win."
+                      :label="option1"
                       v-model="playerSettings.notify_victory"
                       ></v-checkbox>
                       <v-checkbox
                       color="info"
-                      label="I want to be informed when the game I played is over."
+                      :label="option2"
                       v-model="playerSettings.notify_stop"
                       ></v-checkbox>
                       <v-checkbox
                       color="info"
-                      label="I want to be informed when a new game starts."
+                      :label="option3"
                       v-model="playerSettings.notify_start"
                       ></v-checkbox>
                     </v-form>
@@ -119,6 +119,17 @@ export default {
     firestoreMixin,
     ethereumMixin
   ],
+  computed: {
+    option1 () {
+      return this.$t('lang.settings.option1')
+    },
+    option2 () {
+      return this.$t('lang.settings.option2')
+    },
+    option3 () {
+      return this.$t('lang.settings.option3')
+    }
+  },
   data () {
     return {
       apiUrl: process.env.API_URL,
@@ -136,13 +147,13 @@ export default {
         // v => {
         //   return !!v || 'Login is required'
         // },
-        v => /^$|^\w+$/.test(v) || 'Login must be empty or valid'
+        v => /^$|^\w+$/.test(v) || this.$t('lang.form.error.loginMustBeEmptyOrValid')
       ],
       emailRules: [
         // v => {
         //   return !!v || 'E-mail is required'
         // },
-        v => /^$|^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be empty or valid'
+        v => /^$|^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || this.$t('lang.form.error.emailMustBeEmptyOrValid')
       ]
     }
   },
