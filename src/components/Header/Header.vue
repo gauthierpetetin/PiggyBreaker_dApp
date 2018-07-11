@@ -63,7 +63,7 @@ export default {
         console.log('Please install / unlock Metamask first. See below for more details.')
       }
     },
-    translateTo(lang) {
+    translateTo (lang) {
       this.$i18n.locale = lang
     }
   }

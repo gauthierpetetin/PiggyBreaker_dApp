@@ -59,7 +59,6 @@ export default {
   // mixins: [piggy],
   mounted () {
     this.initialize()
-
   },
   methods: {
     initialize () {
@@ -68,12 +67,12 @@ export default {
       this.getGamesList()
       this.blink()
     },
-    blink() {
+    blink () {
       let _this = this
       _this.blinkClass.blink = true
-      setTimeout(function() {
+      setTimeout(function () {
         _this.blinkClass.blink = false
-      }, 2000);
+      }, 2000)
     }
   }
 }

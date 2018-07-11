@@ -3,7 +3,7 @@
     <v-dialog v-model="waitDialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
-          <span class="headline grey-text">On-going transaction validation</span>
+          <span class="headline grey-text">{{ $t('lang.metamask.ongoing') }}</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>

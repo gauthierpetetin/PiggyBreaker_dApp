@@ -23,7 +23,7 @@
     <v-dialog v-model="withdrawDialog" persistent max-width="800px">
       <v-card>
         <v-card-title>
-          <span class="headline grey-text">Withdraw</span>
+          <span class="headline grey-text">{{ $t('lang.piggy.withdraw.dialogTitle') }}</span>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
@@ -67,7 +67,7 @@ export default {
     return {
       withdrawDialog: false,
       dialogMessage: this.$t('lang.piggy.withdraw.dialogMessage'),
-      infoMessage: this.$t('lang.piggy.withdraw.infoMessage'),
+      infoMessage: this.$t('lang.piggy.withdraw.infoMessage')
     }
   },
   computed: {

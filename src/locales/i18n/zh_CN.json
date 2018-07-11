@@ -45,7 +45,8 @@
       "locked": "Metamask鎖定",
       "network": "錯誤的Metamask網絡"
     },
-    "complement": " 玩Piggy Breaker！"
+    "complement": " 玩Piggy Breaker！",
+    "ongoing": "正在進行的交易驗證"
   },
 
   "piggy": {
@@ -122,6 +123,7 @@
         "sorryNoFunds": "對不起，你現在沒有資金退出......",
         "clickToWithdraw": "點擊即可立即撤回您的醚類!"
       },
+      "dialogTitle": "收回",
       "dialogMessage": "你現在沒有資金退出。<br />按'Contribute'有機會贏得下一個彩票;）",
       "infoMessage": "您貢獻的越多，您獲勝的機會就越多：您贏得彩票的機會與您的捐款總額成正比。"
     },
@@ -146,7 +148,10 @@
     "winner": "優勝者",
     "createdAt": "創建於：",
     "lastContribution": "最後貢獻：",
-    "brokenAt": "破碎了"
+    "brokenAt": "破碎了",
+    "hover1": "下一個彩票開始後，前一位獲勝者將公開",
+    "hover2": "例如一次小豬＃",
+    "hover3": "包含至少一個貢獻。"
   },
 
   "homepage": {
@@ -205,7 +210,8 @@
     "weAreATeamPassionateAboutBlockchain": "我們是一個對區塊鏈技術充滿熱情的團隊。 我們每天都在回答您的問題並改善您的體驗。 您可以聯繫我們",
     "piggyBreakerIsBuildOnBlockchain": "Piggy Breaker以區塊鏈技術為基礎。 區塊鍊是使比特幣成為可能的技術。 它提供了“按設計”的全面安全性，可確保小部件內容和您的貢獻不會被複製，帶走或破壞。",
     "thusYouCanSecurelyPlay": "因此，您可以安全地玩以太，並有機會贏得彩票！",
-    "psGameCodeIsPublic": "因此，您可以安全地玩以太，並有機會贏得彩票！..."
+    "psGameCodeIsPublic1": "PS：遊戲代碼是公開的，可以訪問",
+    "psGameCodeIsPublic2": "這裡。"
   },
 
   "faq": {

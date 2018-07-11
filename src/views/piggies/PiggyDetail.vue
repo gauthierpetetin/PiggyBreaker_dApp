@@ -25,7 +25,7 @@
                 <strong>{{ $t('lang.piggies.winner') }}</strong>:
                 <v-tooltip right>
                   <v-icon slot="activator" class="warning--text">fas fa-crosshairs fa-pulse</v-icon>
-                  <span>The previous winner becomes public once the next lottery has started,<br />e.g. once Piggy#{{ detailGame.id + 1 }} contains at least one contribution.</span>
+                  <span>{{ $t('lang.piggies.hover1') }}<br />{{ $t('lang.piggies.hover2') }}{{ detailGame.id + 1 }}{{ $t('lang.piggies.hover3') }}</span>
                 </v-tooltip>
               </h1>
               <br />

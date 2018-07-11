@@ -61,17 +61,12 @@
                 <p>
                   {{ $t('lang.about.piggyBreakerIsBuildOnBlockchain') }}
                 </p>
-                <p>
-                  {{ $t('lang.about.psGameCodeIsPublic') }}
-                </p>
                 <v-layout row wrap justify-center>
                   <img center src="/static/img/picto/piggy-chained.png" alt="big piggy" height="100">
                 </v-layout>
                 <br /><br />
-                <p v-html="$t('lang.about.psGameCodeIsPublic')">
-                </p>
                 <p>
-                  PS: the game code is public and can accessed <a target="_blank" :href="explorerAddress">here</a>.
+                  {{ $t('lang.about.psGameCodeIsPublic1') }} <a target="_blank" :href="explorerAddress">{{ $t('lang.about.psGameCodeIsPublic2') }}</a>
                 </p>
               </v-flex>
             </v-layout>

@@ -45,7 +45,8 @@
       "locked": "Please unlock your Metamask",
       "network": "Please open Metamask and update the network"
     },
-    "complement": " to play Piggy Breaker!"
+    "complement": " to play Piggy Breaker!",
+    "ongoing": "On-going transaction validation"
   },
 
   "piggy": {
@@ -122,6 +123,7 @@
         "sorryNoFunds": "Sorry, you have no funds to withdraw for now...",
         "clickToWithdraw": "Click to withdraw your ethers now!"
       },
+      "dialogTitle": "Withdraw",
       "dialogMessage": "You have no funds to withdraw for now.<br />Press 'Contribute' to get a chance to win the next lottery ;)",
       "infoMessage": "The more you contribute, the more chances you have to win:<br/>Your chances to win the lottery are proportional to the total amount of your contributions."
     },
@@ -146,7 +148,10 @@
     "winner": "winner",
     "createdAt": "Created at:",
     "lastContribution": "Last contribution:",
-    "brokenAt": "Broken at"
+    "brokenAt": "Broken at",
+    "hover1": "The previous winner becomes public once the next lottery has started,",
+    "hover2": "e.g. once Piggy#",
+    "hover3": " contains at least one contribution."
   },
 
   "homepage": {
@@ -205,7 +210,8 @@
     "weAreATeamPassionateAboutBlockchain": "We are a team passionate about blockchain technology. We are here to answer your questions and improve your experience every day. You can contact us on",
     "piggyBreakerIsBuildOnBlockchain": "Piggy Breaker is built on blockchain technology. Blockchain is the technology that makes things like Bitcoin possible. It offers total security \"by design\", which ensures the piggy content and your contribution(s) cannot be replicated, taken away, or destroyed.",
     "thusYouCanSecurelyPlay": "Thus you can securely play with Ether and get a chance to win the lottery!",
-    "psGameCodeIsPublic": "PS: the game code is public and can accessed <a target=\"_blank\" :href=\"explorerAddress\">here</a>."
+    "psGameCodeIsPublic1": "PS: the game code is public and can accessed ",
+    "psGameCodeIsPublic2": "here."
   },
 
   "faq": {
