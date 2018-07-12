@@ -193,7 +193,11 @@ export default {
         if (this.transaction.enable) {
           message = this.$t('lang.piggy.contribute.clickTo') + this.contributeTitle + '!'
         } else {
-          message = this.metamaskMessage(this.transaction.status) + this.$t('lang.piggy.contribute.first')
+          if (this.$i18n.locale === 'cn') { // Le first est à la fin de la phrase en anglais et au début de la phrase en chinois
+            message = this.$t('lang.piggy.contribute.first') + this.metamaskMessage(this.transaction.status)
+          } else {
+            message = this.metamaskMessage(this.transaction.status) + this.$t('lang.piggy.contribute.first')
+          }
         }
       } else {
         message = this.waitMessage

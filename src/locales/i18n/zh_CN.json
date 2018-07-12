@@ -21,100 +21,100 @@
   },
 
   "alert": {
-    "importantPleaseCheck": "重要！ 請檢查您是否在正確的網址：https//piggybreaker.com/",
-    "luckGuy": "幸運的人！ 您可以撤回（請參閱下面的<strong> \"它如何工作\"</ strong>部分）。"
-  },
-
-  "network": {
-    "type": {
-      "mainEthereumNetwork": "以太坊網絡",
-      "ropstenTestNetwork": "Ropsten測試網絡"
-    }
-  },
-
-  "metamask": {
-    "title": {
-      "unknown": "未知錯誤",
-      "install": "沒有安裝Metamask",
-      "locked": "Metamask鎖定",
-      "network": "錯誤的Metamask網絡"
+      "importantPleaseCheck": " 请注意，你在正确的网址: https://piggybreaker.com/",
+      "luckGuy": " 幸福的你 ! 你有 ether (ETH) 可以撤 (去看 <strong>\"怎么做\"</strong> 请看下面)."
     },
-    "message": {
-      "unknown": "未知錯誤，請聯繫支持。",
-      "install": "沒有安裝Metamask",
-      "locked": "Metamask鎖定",
-      "network": "錯誤的Metamask網絡"
+
+    "network": {
+      "type": {
+        "mainEthereumNetwork": "Main Ethereum Network",
+        "ropstenTestNetwork": "Ropsten Test Network"
+      }
     },
-    "complement": " 玩Piggy Breaker！",
-    "ongoing": "正在進行的交易驗證"
-  },
+
+    "metamask": {
+      "title": {
+        "unknown": "未知错误",
+        "install": "没安装Metamask",
+        "locked": "Metamask 锁之",
+        "network": "错网络Metamask"
+      },
+      "message": {
+        "unknown": "未知错误，请联系我们的 support .",
+        "install": "请安装 Metamask",
+        "locked": "请锁之 Metamask",
+        "network": "请打开Metamask 和安装更新的网络"
+      },
+      "complement": " 才可以玩 Piggy Breaker!",
+      "ongoing": "验证当前交易"
+    },
 
   "piggy": {
-    "currentPiggyValue": "當前小豬值：",
-    "yourCurrentContribution": "您目前的貢獻：",
-    "yourContributionHasBeenSubmittedItWillRequire5060Seconds": "您的貢獻已成功提交。<br />需要50-60秒才能得到整個網絡的驗證。",
+    "currentPiggyValue": "猪当前价值:",
+    "yourCurrentContribution": "你目前的贡献:",
+    "yourContributionHasBeenSubmittedItWillRequire5060Seconds": "你的贡献已成功发送<br />请等五十到六十秒，贡献才会验证",
     "piggyIsTheNextWorldLottery": {
-      "piggyBreakerIsTheNextWorldLottery": "小豬斷路器是下一個世界彩票！",
-      "theGameIsCenteredAroundBilly": "遊戲以比利為中心，比利是一個可愛的小儲錢罐，每個人都可以用乙醚（ETH）做出貢獻，讓它成長......並成長......並成長......直到它達到非常大的數量。",
-      "somedayThePiggyBankWillBreak": "有一天小豬銀行會破產並讓其中一個富人..."
+      "piggyBreakerIsTheNextWorldLottery": "Piggy Breaker是下歌世界彩票",
+      "theGameIsCenteredAroundBilly": "游戏以Billy为中心, 一个小储蓄罐猪每个人可以贡献跟 (ETH) 让它成长... 成长... 成长... 达到非常大的数量.",
+      "somedayThePiggyBankWillBreak": "一天，一个人会打破储蓄罐， 一个播放机会丰富"
     },
     "howDoesItWork": {
-      "howDoesItWork": "它是如何工作的？",
-      "1YouContributeWithEthers": "你用Ethers貢獻。",
-      "2AnyContributorCanDecideToBreak": "2.任何貢獻者都可以決定打破小豬。",
-      "3AWinnerIsChosenRandomly": "3.在貢獻者之間隨機選擇獲勝者。"
+      "howDoesItWork": "怎么做?",
+      "1YouContributeWithEthers": "1. 你用 ether 贡献",
+      "2AnyContributorCanDecideToBreak": "2. 每个贡献者都可以决定打破存钱罐.",
+      "3AWinnerIsChosenRandomly": "3. 在贡献者之间随机选择获胜者"
     },
     "transaction": {
-      "message1": "您的交易已成功提交。",
-      "message2": "它需要50-60秒，直到它被整個網絡驗證。"
+      "message1": "你的交易已成功提交.",
+      "message2": "请等五十到六十秒，贡献才会验证."
     },
     "message": {
       "billyIs": {
-        "happy": "比利很高興，因為你貢獻。",
-        "sad": "比利很傷心......"
+        "happy": "当你做出贡献时，Billy很高兴 .",
+        "sad": "Billy很伤心..."
       },
       "contribute": {
-        "moreChance": "貢獻更多，以獲得更多機會贏得彩票！",
-        "makeHappy": "有助於讓他開心;）"
+        "moreChance": "贡献更多，以增加获胜的机会!",
+        "makeHappy": " 贡献让他高兴;)"
       }
     },
     "contribute": {
       "title": {
-        "contribute": "有助於",
-        "contributeMore": "貢獻更多"
+        "contribute": "贡献",
+        "contributeMore": "贡献更多"
       },
-      "clickTo": "點擊進入 ",
-      "first": " 第一",
+      "clickTo": "点击 ",
+      "first": " 第一.",
       "status": {
-        "contribute": "有助於",
-        "pleaseConfirmTheTransaction": "請在Metamask上確認交易...",
-        "transactionSubmittedSuccessfully": "交易成功提交！"
+        "contribute": "贡献",
+        "pleaseConfirmTheTransaction": "请确认交易 Metamask...",
+        "transactionSubmittedSuccessfully": "交易成功提交!"
       },
       "contribution": {
-        "yourETHContribution": "您的ETH貢獻：",
-        "minimumContribution": "最小貢獻：",
-        "theMinimumContributionCanGoUpOrDown": "隨著時間的推移，最小貢獻可以增加或減少。<br/>當玩家貢獻的頻率增加時，它會增加"
+        "yourETHContribution": "你的 ETH 贡献 :",
+        "minimumContribution": "最低贡献:",
+        "theMinimumContributionCanGoUpOrDown": "最小贡献可随时间上升或下降.<br/>当玩家贡献的频率增加时，它会增加"
       },
-      "congratulationsYourContributionHasBeenSubmitted": "恭喜！ 您的貢獻已成功提交。 它需要50-60秒才能通過整個網絡進行驗證。",
-      "letUsInformYouPerEmailInCaseOfVictory": "如果獲勝，請通過電子郵件通知您。",
-      "YouWillBeInformedPerEmailInCaseOfVictory": "如果獲勝，您將收到電子郵件通知。",
-      "viewPendingTransaction": "查看網絡上的待處理事務"
+      "congratulationsYourContributionHasBeenSubmitted": "祝贺! 请等五十到六十秒，贡献才会验证 ",
+      "letUsInformYouPerEmailInCaseOfVictory": "如果获胜，请通过电子邮件通知我们.",
+      "YouWillBeInformedPerEmailInCaseOfVictory": "Y如果获胜，您将收到电子邮件通知",
+      "viewPendingTransaction": "查看网络上的待处理事务"
     },
     "break": {
-      "title": "打破當前小豬",
-      "breakThePiggy": "打破小豬",
+      "title": "打破当前的猪",
+      "breakThePiggy": "打破猪",
       "dialogMessage": [
-        "請耐心等待;;）在有人捐款後，小豬會受到保護5分鐘。",
-        "兩個規則保護小豬：",
-        "1）只有貢獻者可以打破它。",
-        "2）每次捐獻後，豬崽保護5分鐘。"
+        "耐心一点.. ;) 有人贡献之后,小猪被保护5分钟.",
+        "两个规则保护小猪:",
+        " 1) 只有贡献者可以打破它.",
+        " 2) 每次捐款后, 小猪被保护5分钟."
       ],
       "hoverMessage": {
-        "contribute": "對不起，您需要先做出貢獻。",
-        "click": "點擊打破小豬！"
+        "contribute": "对不起，你需要先做出贡献.",
+        "click": "点击打破小猪!"
       },
-      "clickTo": "點擊進入 ",
-      "first": " 第一"
+      "clickTo": "点击 ",
+      "first": "第一"
     },
     "withdraw": {
       "withdrawEarnings": "提取收益",
@@ -129,7 +129,7 @@
     },
     "locked": {
       "wannaPlay": "想玩？",
-      "youNeedAplaceToStore": "您需要一個將您的以太（ETH）存儲在Metamask等安全錢包中的地方。 這也將作為您登錄遊戲（無需額外密碼）。",
+      "youNeedAplaceToStore": "您需要一個將您的以太 ether（ETH）存儲在Metamask等安全錢包中的地方。 這也將作為您登錄遊戲（無需額外密碼）。",
       "installMetamask": "安裝Metamask",
       "sorryYourBrowserNotSupport": "抱歉，您的瀏覽器不支持MetaMask。",
       "yourMetamaskIsLocked": "您的元掩碼已被鎖定",
@@ -223,6 +223,25 @@
     "option2": "I want to be informed when the game I played is over.",
     "option3": "I want to be informed when a new game starts.",
     "enterNickname": "Enter nickname"
+  },
+
+  "ethereummixin": {
+    "contributionNotValid": "You must enter a valid contribution",
+    "contributionTooLow": "Your contribution is beyond the limit",
+    "notification": {
+      "contribute": {
+        "title": "Piggy contribution!",
+        "text": "Congratulations, your transaction has been validated."
+      },
+      "break": {
+        "title": "Broken Piggy!",
+        "text": "The Piggy has been broken successfully."
+      },
+      "withdraw": {
+        "title": "Withdrawal success!",
+        "text": "You withdrew your ethers successfully."
+      }
+    }
   },
 
   "faq": {

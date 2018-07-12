@@ -32,8 +32,16 @@
       <v-btn class="grey-text" to="settings" flat v-show="metamaskEnabled">{{ $t('lang.menu.settings') }}</v-btn>
       <v-btn class="grey-text" to="faq" flat>{{ $t('lang.menu.faq') }}</v-btn>
       <v-btn class="grey-text" to="about" flat>{{ $t('lang.menu.about') }}</v-btn>
-      <v-btn class="grey-text" v-if="$i18n.locale != 'en'" @click="translateTo('en')" flat>en</v-btn>
-      <v-btn class="grey-text" v-if="$i18n.locale != 'cn'" @click="translateTo('cn')" flat>cn</v-btn>
+      <!-- <v-btn class="grey-text" v-if="$i18n.locale != 'en'" @click="translateTo('en')" flat><flag iso="cn" /></v-btn>
+      <v-btn class="grey-text" v-if="$i18n.locale != 'cn'" @click="translateTo('cn')" flat><flag iso="gb" /></v-btn> -->
+      <v-menu>
+        <v-btn class="grey-text" slot="activator" flat><flag :iso="currentLanguage" /></v-btn>
+        <v-list>
+          <v-list-tile v-for="(language, index) in languages" :key="index" @click="translateTo(language.lang)">
+            <flag style="margin-right: 10px" :iso="language.flag" /><v-list-tile-title class="grey-text">{{ language.name }}</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar-items>
   </v-toolbar>
 </template>
@@ -44,12 +52,23 @@ export default {
   data () {
     return {
       networkStatus: 'bad',
-      ethereumEnv: process.env.ETHEREUM_NODE_ENV
+      ethereumEnv: process.env.ETHEREUM_NODE_ENV,
+      languages: [
+        {name: 'English', flag: 'gb', lang: 'en'},
+        {name: 'Chinese', flag: 'cn', lang: 'cn'}
+      ]
     }
   },
   computed: {
     metamaskEnabled () {
       return this.$store.state.metamaskEnabled
+    },
+    currentLanguage () {
+      if (this.$i18n.locale === 'en') {
+        return 'gb'
+      } else {
+        return this.$i18n.locale
+      }
     }
   },
   mounted () {
@@ -64,6 +83,7 @@ export default {
       }
     },
     translateTo (lang) {
+      console.log('translateTo !')
       this.$i18n.locale = lang
     }
   }

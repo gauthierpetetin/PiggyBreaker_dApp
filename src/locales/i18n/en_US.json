@@ -225,6 +225,25 @@
     "enterNickname": "Enter nickname"
   },
 
+  "ethereummixin": {
+    "contributionNotValid": "You must enter a valid contribution",
+    "contributionTooLow": "Your contribution is beyond the limit",
+    "notification": {
+      "contribute": {
+        "title": "Piggy contribution!",
+        "text": "Congratulations, your transaction has been validated."
+      },
+      "break": {
+        "title": "Broken Piggy!",
+        "text": "The Piggy has been broken successfully."
+      },
+      "withdraw": {
+        "title": "Withdrawal success!",
+        "text": "You withdrew your ethers successfully."
+      }
+    }
+  },
+
   "faq": {
     "title": "FAQs",
     "stillConfused": "Still confused?",

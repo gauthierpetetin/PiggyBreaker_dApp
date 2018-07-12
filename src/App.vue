@@ -42,6 +42,8 @@ export default {
   ],
   mounted () {
     let self = this
+    // console.log('MMM : ', this.$t('lang.ethereummixin.notification.withdraw.title'))
+
     // Check contract config
     if (self.$store.state.contract.address === null && self.$store.state.contract.abi === null) {
       this.getContractConfig().then(function (contract) {

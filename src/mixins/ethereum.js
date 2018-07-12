@@ -133,9 +133,9 @@ export default {
         if (self.abi && self.contractAddress) {
           // Get contract
           var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-          console.log('abi', self.abi)
-          console.log('contractAddress', self.contractAddress)
-          console.log('contract', contract)
+          // console.log('abi', self.abi)
+          // console.log('contractAddress', self.contractAddress)
+          // console.log('contract', contract)
           // Get current Piggy
           contract.methods.nbPiggies().call().then(
             function (piggyId) {
@@ -209,10 +209,10 @@ export default {
 
       // Check user contribution
       if (playerContribution === '') {
-        self.contributionError = 'You must enter a valid contribution'
+        self.contributionError = this.$t('lang.ethereummixin.contributionNotValid')
         return false
       } else if (playerContribution < minContribution) {
-        self.contributionError = 'Your contribution beyond the limit (' + minContribution + ')'
+        self.contributionError = this.$t('lang.ethereummixin.contributionTooLow') + ' (' + minContribution + ')'
         return false
       }
 
@@ -241,7 +241,7 @@ export default {
                 console.log('Contribution receipt:', receipt)
                 self.$store.state.ethLoading.contribution = false
                 self.getEthGameData()
-                self.notify('Piggy contribution!', 'Congratulations, your transaction has been validated.')
+                self.notify(this.$t('lang.ethereummixin.notification.contribute.title'), this.$t('lang.ethereummixin.notification.contribute.text'))
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)
@@ -279,7 +279,7 @@ export default {
                 console.log('Broken Piggy receipt:', receipt)
                 self.$store.state.ethLoading.break = false
                 self.getEthGameData()
-                self.notify('Broken Piggy!', 'The Piggy has been broken successfully.')
+                self.notify(this.$t('lang.ethereummixin.notification.break.title'), this.$t('lang.ethereummixin.notification.break.text'))
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)
@@ -315,7 +315,7 @@ export default {
                 console.log('Withdrawal receipt:', receipt)
                 self.$store.state.ethLoading.withdraw = false
                 self.getEthGameData()
-                self.notify('Withdrawal success!', 'You withdrew your ethers successfully.')
+                self.notify(this.$t('lang.ethereummixin.notification.withdraw.title'), this.$t('lang.ethereummixin.notification.withdraw.text'))
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)

@@ -11,6 +11,7 @@ import VueNativeNotification from 'vue-native-notification'
 // Translate
 // import VueI18n from 'vue-i18n'
 import i18n from './locales'
+import FlagIcon from 'vue-flag-icon'
 
 import('../node_modules/vuetify/dist/vuetify.min.css')
 
@@ -43,6 +44,8 @@ const lang = 'en'
 if (lang) {
   i18n.locale = lang
 }
+
+Vue.use(FlagIcon)
 
 /* eslint-disable no-new */
 new Vue({

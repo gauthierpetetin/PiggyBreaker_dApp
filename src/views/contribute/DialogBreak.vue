@@ -141,7 +141,11 @@ export default {
             message = this.$t('lang.piggy.break.hoverMessage.click')
           }
         } else {
-          message = this.metamaskMessage(this.transaction.status) + this.$t('lang.piggy.break.first')
+          if (this.$i18n.locale === 'cn') { // Le first est à la fin de la phrase en anglais et au début de la phrase en chinois
+            message = this.$t('lang.piggy.break.first') + this.metamaskMessage(this.transaction.status)
+          } else {
+            message = this.metamaskMessage(this.transaction.status) + this.$t('lang.piggy.break.first')
+          }
         }
       } else {
         message = this.waitMessage
