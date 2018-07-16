@@ -15,20 +15,20 @@ require('firebase/firestore')
 export default {
   data () {
     return {
-      previousGame: {
-        id: null,
-        value: 0,
-        nbContributions: 0,
-        minContribution: 0,
-        open: false,
-        winner: null,
-        createdAt: null,
-        updatedAt: null,
-        brokenAt: null,
-        breakable: null,
-        breakableAt: null,
-        serverTimestamp: null
-      },
+      // previousGame: {
+      //   id: null,
+      //   value: 0,
+      //   nbContributions: 0,
+      //   minContribution: 0,
+      //   open: false,
+      //   winner: null,
+      //   createdAt: null,
+      //   updatedAt: null,
+      //   brokenAt: null,
+      //   breakable: null,
+      //   breakableAt: null,
+      //   serverTimestamp: null
+      // },
       playerSettings: {
         address: null,
         email: null,
@@ -43,6 +43,9 @@ export default {
   computed: {
     currentGame () {
       return this.$store.state.fbCurrentGame
+    },
+    previousGame () {
+      return this.$store.state.fbPreviousGame
     },
     biggestPiggyValue () {
       return this.$store.state.fbBiggestPiggyValue
@@ -80,7 +83,8 @@ export default {
             if (gameType === 'current') {
               self.$store.state.fbCurrentGame = self.prepareGame(gameItem, serverTime)
             } else if (gameType === 'previous') {
-              self.previousGame = self.prepareGame(gameItem, serverTime)
+              self.$store.state.fbPreviousGame = self.prepareGame(gameItem, serverTime)
+              // self.previousGame = self.prepareGame(gameItem, serverTime)
             } else {
               console.log('Invalid gameType: ', gameType)
             }

@@ -95,7 +95,7 @@
         "minimumContribution": "最低贡献:",
         "theMinimumContributionCanGoUpOrDown": "最小贡献可随时间上升或下降.<br/>当玩家贡献的频率增加时，它会增加"
       },
-      "congratulationsYourContributionHasBeenSubmitted": "祝贺! 请等五十到六十秒，贡献才会验证 ",
+      "congratulationsYourContributionHasBeenSubmitted": "恭喜! 请等五十到六十秒，贡献才会验证 ",
       "letUsInformYouPerEmailInCaseOfVictory": "如果获胜，请通过电子邮件通知我们.",
       "YouWillBeInformedPerEmailInCaseOfVictory": "Y如果获胜，您将收到电子邮件通知",
       "viewPendingTransaction": "查看网络上的待处理事务"
@@ -155,275 +155,273 @@
   },
 
   "homepage": {
-    "theSimplestBlockchainGameEver": "有史以來最簡單的區塊鏈遊戲！",
-    "blockchainIsTheTechnologyThatMakesThingsPossible": "區塊鍊是使比特幣成為可能的技術。 它提供了“按設計”的全面安全性，可確保小部件內容和您的貢獻不會被複製，帶走或破壞。",
-    "thusYouCanSecurelyPlayWithEther": "因此，您可以安全地玩以太，並有機會贏得彩票！",
-    "increaseYourChancesOfWinningByContributing": "通過貢獻更多來增加獲勝機會！",
-    "yourChancesOfWinningTheLotteryAreProportional": "您贏得彩票的機會與您的捐款總額成正比。",
+    "theSimplestBlockchainGameEver": "以来最简单的区块链游戏！",
+    "blockchainIsTheTechnologyThatMakesThingsPossible": "区块链是使比特币成为可能的技术。它提供全面的安全性 按设计, 这可以确保小猪内容和您的贡献不会被复制，带走或破坏.",
+    "thusYouCanSecurelyPlayWithEther": "你可以安全地玩 ether(ETH)，并有机会赢得彩票!",
+    "increaseYourChancesOfWinningByContributing": "通过贡献更多来增加获胜机会!",
+    "yourChancesOfWinningTheLotteryAreProportional": "你赢得彩票的机会与您的捐款总额成正比.",
     "example": {
-      "totalPiggy40": "總豬崽值：40 ETH",
-      "totalPiggy100": "總豬崽值：100 ETH",
-      "yourContribution": "你的貢獻：",
-      "inThisExampleYourChancesAre50": "在這個例子中，你贏得彩票的機會是：50％",
-      "inThisExampleYourChancesAre25": "在這個例子中，你贏得彩票的機會是：25％"
+      "totalPiggy40": "总小猪价值: 40 ETH",
+      "totalPiggy100": "总小猪价值: 100 ETH",
+      "yourContribution": "你的贡献 :",
+      "inThisExampleYourChancesAre50": "在这个例子中，你的机会 <br />赢得彩票的是：50％",
+      "inThisExampleYourChancesAre25": "在这个例子中，你的机会 <br />赢得彩票的是：25％"
     }
   },
 
   "form": {
     "label": {
-      "registerEmail": "註冊郵件"
+      "registerEmail": "注册邮件"
     },
     "button": {
       "cancel": "取消",
-      "skip": "跳躍",
+      "skip": "跳跃",
       "ok": "好"
     },
     "error": {
-      "emailIsRequired": "電子郵件是必需的",
-      "emailMustBeValid": "電子郵件必須有效",
-      "loginMustBeEmptyOrValid": "Login must be empty or valid",
-      "emailMustBeEmptyOrValid": "E-mail must be empty or valid"
+      "emailIsRequired": "需要电子邮件",
+      "emailMustBeValid": "电子邮件必须有效",
+      "loginMustBeEmptyOrValid": "登录必须为空或有效",
+      "emailMustBeEmptyOrValid": "电子邮件必须为空或有效"
     }
   },
 
   "invite": {
-    "inviteYourFriendToPlay": "邀請你的朋友玩Piggy Breaker！",
-    "doYouEnjoyPiggyBreaker": "你喜歡Piggy Breaker嗎？ 你的朋友也可以享受它。<br />讓他們有機會通過邀請他們在Piggy Breaker上贏得彩票。",
-    "inviteYourFriendByEmail": "通過電子郵件邀請您的朋友",
-    "yourFriendsEmail": "你朋友的郵箱",
-    "close": "關",
+    "inviteYourFriendToPlay": "邀请你的朋友玩 Piggy Breaker!",
+    "doYouEnjoyPiggyBreaker": "你喜欢 Piggy Breaker 吗 ? 你的朋友也可以享受它.<br />通过邀请他们给他们一个赢得彩票的机会玩 Piggy Breaker.",
+    "inviteYourFriendByEmail": "通过电子邮件邀请您的朋友 ",
+    "yourFriendsEmail": "你朋友的邮箱",
+    "close": "关",
     "messages" : {
-      "greatAnEmailHasBeenSent": "好的，已經發送了一封電子郵件給你的朋友！",
-      "anInvitationHasAlreadyBeenSent": "已發送邀請。",
-      "anErrorHappendPleaseRetry": "發生錯誤，請稍後重試。"
+      "greatAnEmailHasBeenSent": "太棒了，已经发送了一封电子邮件给你的朋友!",
+      "anInvitationHasAlreadyBeenSent": "已发送邀请.",
+      "anErrorHappendPleaseRetry": "发生错误，请稍后重试."
     }
   },
 
   "about": {
-    "about": "關於",
-    "game": "遊戲",
-    "team": "球隊",
+    "about": "关于",
+    "game": "游戏",
+    "team": "球队",
     "security": "安全",
-    "PiggyBreakerIsTheSimplestGame": "Piggy Breaker是有史以來最簡單的區塊鏈遊戲：",
-    "youContributeToFillThePiggy": "你貢獻以太（ETH）填補存錢罐，並有機會贏得彩票。",
-    "theLotteryIsLaunchedWhenBroken": "當小豬被打破時，彩票就會啟動。",
-    "thisWinnerIsChosenRandomly": "獲勝者在所有貢獻者之間“隨機”選擇。",
-    "furthermorePiggyBreakerIsDifferentFromTraditionalLotteries": "此外，Piggy Breaker與傳統彩票不同：你是決定獲勝機會的人。你貢獻的越多，獲勝的機會就越高。<br>的確，一個算法讓玩家有機會獲勝 與他的個人貢獻成比例。",
-    "weAreATeamPassionateAboutBlockchain": "我們是一個對區塊鏈技術充滿熱情的團隊。 我們每天都在回答您的問題並改善您的體驗。 您可以聯繫我們",
-    "piggyBreakerIsBuildOnBlockchain": "Piggy Breaker以區塊鏈技術為基礎。 區塊鍊是使比特幣成為可能的技術。 它提供了“按設計”的全面安全性，可確保小部件內容和您的貢獻不會被複製，帶走或破壞。",
-    "thusYouCanSecurelyPlay": "因此，您可以安全地玩以太，並有機會贏得彩票！",
-    "psGameCodeIsPublic1": "PS：遊戲代碼是公開的，可以訪問",
-    "psGameCodeIsPublic2": "這裡。"
+    "PiggyBreakerIsTheSimplestGame": "Piggy Breaker 是有史以来最简单的区块链游戏:",
+    "youContributeToFillThePiggy": "你贡献 ether (ETH) 填补存钱罐，并有机会赢得彩票.",
+    "theLotteryIsLaunchedWhenBroken": "当小猪被打破时，彩票就会启动.",
+    "thisWinnerIsChosenRandomly": "获胜者被选中 \"随机\" 在所有贡献者之间.",
+    "furthermorePiggyBreakerIsDifferentFromTraditionalLotteries": "此外，Piggy Breaker 与传统彩票不同 : 你决定你获胜机会的人.<br>你贡献的越多, 获胜的机会越高.<br>实际上，一种算法使得玩家有可能与他的个人贡献成比例地获胜.",
+    "weAreATeamPassionateAboutBlockchain": "我们是一个对区块链技术充满热情的团队. 我们每天都在回答您的问题并改善您的体验。您可以联系我们",
+    "piggyBreakerIsBuildOnBlockchain": "Piggy Breaker 建立在区块链技术上. 区块链是使比特币成为可能的技术. 它提供全面的安全性 \"按设计\", 这确保了小猪内容和您的贡献不会被复制，带走或破坏.",
+    "thusYouCanSecurelyPlay": "因此，你可以安全地跟 ether (ETH) 玩和并有机会赢得彩票!",
+    "psGameCodeIsPublic1": "PS：游戏代码是公开的，可以访问 ",
+    "psGameCodeIsPublic2": "这里."
   },
 
   "settings": {
-    "title": "Email info",
-    "message": ["You can be informed about important Piggy Breaker events", "by subscribing to the following features:"],
-    "option1": "I want to be informed if I win.",
-    "option2": "I want to be informed when the game I played is over.",
-    "option3": "I want to be informed when a new game starts.",
-    "enterNickname": "Enter nickname"
+    "title": "电子邮件信息",
+    "message": ["你可以被告知重要 Piggy Breaker 信息事件", "订阅以下功能:"],
+    "option1": "如果我赢了，我想知道.",
+    "option2": "我希望在我玩的游戏结束时得到通知.",
+    "option3": "我想在新游戏开始时获得通知.",
+    "enterNickname": "输入昵称"
   },
 
   "ethereummixin": {
-    "contributionNotValid": "You must enter a valid contribution",
-    "contributionTooLow": "Your contribution is beyond the limit",
+    "contributionNotValid": "你必须输入有效的贡献",
+    "contributionTooLow": "你的贡献超出了限制",
     "notification": {
       "contribute": {
-        "title": "Piggy contribution!",
-        "text": "Congratulations, your transaction has been validated."
+        "title": "小猪的贡献!",
+        "text": "恭喜，您的交易已经过验证."
       },
       "break": {
-        "title": "Broken Piggy!",
-        "text": "The Piggy has been broken successfully."
+        "title": "破碎的猪!",
+        "text": "猪崽子已成功破碎."
       },
       "withdraw": {
-        "title": "Withdrawal success!",
-        "text": "You withdrew your ethers successfully."
+        "title": "退出成功!",
+        "text": "你成功撤回了你的 ETH."
       }
     }
   },
 
   "faq": {
-    "title": "常見問題解答",
-    "stillConfused": "仍然困惑？",
-    "viewFullFAQ": "查看完整常見問題",
+    "title": "FAQs",
+    "stillConfused": "仍然困惑?",
+    "viewFullFAQ": "查看完整 FAQ",
     "gettingStarted": {
-      "title": "入門",
+      "title": "入门",
       "whatDoIneedToPlay": {
-        "title": "我需要玩什麼小豬破碎機？",
+        "title": "我需要什么玩 Piggy Breaker?",
         "text": [
-          "以下是您需要開始的內容：",
-          "運行桌面版Chrome或Firefox的電腦或筆記本電腦",
-          "Metamask，專門用於網絡應用的數字錢包",
-          "以太網，一種支持Piggy Breaker的數字支付形式"
+         "这是你开始使用的内容:",
+          "运行桌面版的计算机或笔记本电脑 的 Chrome 或 Firefox",
+          "Metamask, 专门用于网络应用的数字钱包",
+          "Ether, 一种权力的数字支付形式 Piggy Breaker"
         ]
       },
       "installingMetamaskYourWallet": {
-        "title": "安裝Metamask，您的數字錢包",
+        "title": "安装 Metamask, 你的数字钱包",
         "text": [
-          "要使用Piggy Breaker，您需要安裝數字錢包Metamask。 您需要投入資金才能進行首次購買。",
-          "<strong>注意：</strong> 像Metamask這樣的數字錢包就像銀行賬戶 - 尊重對待它，並確保你不會忘記你的密碼或種子詞。"
+          "使用 Piggy Breaker, 你需要安装 Metamask, 一个数字钱包. 你需要在其中存入资金才能进行首次购买.",
+          "<strong>Note:</strong> 数字钱包像 Metamask 就像一个银行账户—你尊重它并确保您不会忘记密码或种子词."
         ]
       },
       "whyMetamaskIsLocked": {
-        "title": "為什麼Metamask被鎖定？",
+        "title": "为什么 Metamask 被锁定?",
         "text": [
-          "偶爾小豬斷路器主頁會顯示一個鎖定屏幕。 發生這種情況是因為在一段時間之後，Metamask會自動鎖定您的帳戶。 要解鎖，只需點擊Metamask擴展並輸入您的密碼即可。"
+          "偶尔的 Piggy Breaker 主页显示锁定屏幕. 这是因为 Metamask 在一段时间后自动锁你的帐户. 要解锁，只需单击 Metamask 扩展并输入密码即可."
         ]
       },
       "reinstallingMetamask": {
-        "title": "重新安裝MetaMask",
+        "title": "重新安装 MetaMask",
         "text": [
-          "有些用戶需要卸載並重新安裝Metamask，因為他們遇到了錯誤。 如果你保留你的種子詞，這很容易！ 只要刪除擴展名，重新安裝它，然後導入你的十二個種子詞。 然後，您的帳戶信息將自動再次顯示在Piggy Breaker網站上。"
+          "有些用户需要卸载并重新安装 Metamask 因为他们遇到了一个错误. 如果你保留了种子词，这很容易! 只需删除扩展程序，重新安装它，然后导入12个种子单词. 然后, 你的帐户信息将自动再次显示在 Piggy Breaker 网站上."
         ]
       },
       "gettingEtherYourDigitalCurrency": {
-        "title": "獲得以太網，您的數字貨幣",
+        "title": "入门 Ether , 你的数字货币",
         "text": [
-          "<strong>僅適用於美國公民：</strong> 你可以在Metamask購買乙醚（ETH）。 ETH是一種數字貨幣，可以讓我們的遊戲運行。",
-          "<strong>對於其他人：</strong> 你將需要從ETH購買 <a href=\"https://blockgeeks.com/guides/best-cryptocurrency-exchanges\" target=\"_blank\">交換</a>, 然後將ETH從交換錢包轉移到您的Metamask錢包。 不幸的是，你不能只用交換賬戶玩小豬。<br />您不能使用美元/加元來玩小豬 - 必須先將貨幣轉換成ETH。"
+          "<strong>仅限美国公民:</strong> 你可以买 ether (ETH) 在 Metamask. ETH 是一种数字货币，可以让我们的游戏运行.",
+          "<strong>对于其他人:</strong> 你需要购买 ETH 从 <a href=\"https://blockgeeks.com/guides/best-cryptocurrency-exchanges\" target=\"_blank\"> 交换</a>, 然后转移 ETH 从你的兑换钱包到你的Metamask钱包. 不幸的是, 你不能只玩一个交易账户玩 Piggy Breaker.<br />你不能使用USD / CAD来玩 Piggy Breaker — 货币需要先转换为ETH."
         ]
       },
       "howToSendEtherToMetamask": {
-        "title": "如何發送ETH到Metamask",
+        "title": "怎么将ETH发送到Metamask",
         "text": [
-          "<strong>僅適用於美國公民：</strong> 對於其他人：您可以使用Coinbase小部件從Metamask錢包直接購買ETH。 這樣更方便，不需要您創建兩個帳戶。...",
-          "<strong>對於其他人：</strong> 您需要使用普通法定貨幣從交易所購買ETH。 點擊帳戶旁邊的大“...”，然後選擇“將地址複製到剪貼板”，以復制您的Metamask地址。 轉到您的交易所，點擊“賬戶”，然後選擇您的ETH錢包並點擊“發送”。 將Metamask地址粘貼到您希望轉移的金額中。"
+          "<strong>仅限美国公民:</strong> 你可以购买 ETH 使用 Coinbase 小部件直接从 Metamask 钱包. 这样更方便，不需要您创建两个帐户. ",
+          "<strong>对于其他人:</strong> 你需要买 ETH 来自使用普通法定货币的交易所. 单击大号复制Metamask地址 '...' 在你的帐户旁边，然后选择 'Copy Address to clipboard'. 转到你的交易所，单击 'Accounts', 并选择您的ETH钱包并, 单击 'send'. 将 Metamask 地址粘贴到您要传输的金额框中."
         ]
       }
     },
     "understanding": {
-      "title": "Understanding Piggy Breaker",
+      "title": "理解 Piggy Breaker",
       "whatisPiggyBreaker": {
-        "title": "What is Piggy Breaker?",
-        "text": ["Piggy Breaker is the next world lottery!", "The game is centered around Billy, a nice little Piggy bank where everyone can contribute with ether (ETH) to let it grow... and grow... and grow... until it reaches very large amounts.", "Someday the Piggy bank will break and make one of the players rich..."]
+        "title": " Piggy Breaker 是什么?",
+        "text": ["Piggy Breaker 是下一个世界彩票!", "游戏以游戏为Billy中心 , 一个可爱的小猪存钱罐，每个人都可以用 ether (ETH) 贡献 让它成长......成长......成长......直到它达到非常大的数量.", "有一天，存钱罐会打破并让其中一名玩家变富..."]
       },
       "whocanplayPiggyBreaker": {
-        "title": "Who can play Piggy Breaker?",
-        "text": ["Anyone.*", "*Nevertheless, the App is not intended for children under 13."]
+        "title": "谁能玩 Piggy Breaker?",
+        "text": ["Anyone.*", "*尽管如此，该应用程序不适用于13岁以下的儿童."]
       },
       "whydoineedtoplay": {
-        "title": "Why do I need to play Piggy Breaker?",
-        "text": ["The Piggy contains (or will contain) a lot of ether (ETH). You can follow its value, it is indicated in the middle of the homepage.", "Some day, the Piggy will be broken. A winner will then be chosen “randomly” between all contributors to win content of the Piggy.", "Get a chance to be this winner by playing Piggy Breaker!"]
+        "title": "为什么我需要玩 Piggy Breaker?",
+        "text": ["猪包含 (或将包含) 很多的 ether (ETH). 你可以遵循它的价值, 它显示在主页的中间.", "S有一天，小猪会被打破. 然后将在所有贡献者之间\"随机\"选择获胜者以赢得猪的内容.", "通过比赛有机会成为这个赢家 Piggy Breaker!"]
       },
       "whataremychancesofwinning": {
-        "title": "What are my chances of winning?",
-        "text": ["You’re the one who decides. The more you contribute, the more your chances are of winning. Indeed, your chances of winning the lottery are proportional to the total amount of your contributions."]
+        "title": "我获胜的机会是什么?",
+        "text": ["你是那个决定的人. 你贡献的越多，获胜的机会就越多. 实际上，你赢得彩票的机会与你的捐款总额成正比."]
       },
       "whodecidestobreak": {
-        "title": "Who decides to break the Piggy?",
-        "text": ["Anyone can potentially break the Piggy. But it is protected by TWO RULES:", "*After 3 months of existence, the Piggy is not protected by this rule anymore."]
+        "title": "谁决定打破 Piggy?",
+        "text": ["任何人都可以打破猪崽子。但它受到两项规则的保护:", "*存在3个月后，猪不再受此规则的保护."]
       },
       "whatistheprerequisite": {
-        "title": "What is the prerequisite to play Piggy Breaker?",
-        "text": ["You need to have the Metamask plugin installed on your web browser.", "Your Metamask account needs to contain ether (ETH).", "NB: If you don’t have ether (ETH) on a Metamask account, please report to the first section of the FAQ."]
+        "title": "要玩 Piggy Breaker 的条件是什么?",
+        "text": ["你需要安装 Metamask 插件安装在网页浏览器.", "你的 Metamask 帐户需要包含 ether (ETH).", "NB: 如果你没有 ether (ETH) 在一个 Metamask 帐户, 请报告第一部分 FAQ."]
       },
       "howdoiplay": {
-        "title": "How do I play Piggy Breaker?",
-        "text": ["Just press the big yellow “Contribute” button, indicate the amount of your contribution and click “Confirm”.", "This will open the Metamask plugin. Confirm the ether transaction and that’s it.", "NB: If you don’t have ether (ETH) on Metamask, please report to the first section of the FAQ."]
+        "title": "我该怎么玩 Piggy Breaker?",
+        "text": ["只要按下大黄色 \"贡献\" 按键, 表明你的贡献金额并，点击 \"确认\".", "这将打开 Metamask 插入. 确认以太交易，就是这样.", "NB: 如果你没有 ether (ETH) 在 Metamask, 请报告第一部分 FAQ."]
       },
       "whatistheminimumtoplay": {
-        "title": "What is the minimum amount to play Piggy Breaker?",
-        "text": ["The value of the minimum contribution to play Piggy Breaker is indicated below the 'Contribute' button.", "The minimum contribution can go up or down with time. It increases when the frequency of player contributions increases."]
+        "title": "最低金额玩 Piggy Breaker 的是多少?",
+        "text": ["玩Piggy Breaker的最小贡献值显示在下方 \"贡献\" 按键.", "最小贡献可随时间上升或下降. 当玩家贡献的频率增加时，它会增加."]
       },
       "howdoibreak": {
-        "title": "How do I break the Piggy?",
-        "text": ["Press the big 'Break the Piggy' button. This will open the Metamask plugin. Confirm the transaction and that’s it.", "PS: the Piggy is protected by TWO RULES:", "Only a contributor can break it.", "The Piggy is protected for 5 minutes after each contribution. *", "*After 3 months of existence, the Piggy is not protected by this rule anymore."]
+        "title": "我怎么打破小猪?",
+        "text": ["按大 \"打破猪\" 按键. 这将打开 Metamask 插件. 确认交易，就是这样.", "PS: 猪受两个规则的保护 :", "只有贡献者可以打破它.", "每次捐款后，猪崽保护5分钟. *", "存在3个月后，猪不再受此规则的保护."]
       },
       "whathappenswhenbroken": {
-        "title": "What happens once the Piggy is broken?",
-        "text": ["A Piggy reparation fee is paid to the programmer at the end of the game. The broken Piggy is replaced by a new empty Piggy."]
+        "title": "小猪被打破了怎么办？",
+        "text": ["在游戏结束时向程序员支付小猪赔偿费. 破碎的小猪被一个新的空小猪取代。"]
       },
       "howdoiknowwhowon": {
-        "title": "How do I know who won the lottery?",
-        "text": ["The winner is kept secret for a short time once the Piggy gets broken. Due to security reasons we can't detail here, the winner becomes public once the next lottery has really started e.g. once the next lottery contains at least one contribution."]
+        "title": "我怎么知道谁赢了彩票?",
+        "text": ["一旦小猪被打破，获胜者将被保密一小段时间. 出于安全原因，我们无法在此详细说明，一旦下一个彩票真正开始，获胜者就会公开一旦下一个彩票包含至少一个贡献."]
       }
     },
     "other": {
-      "title": "Other",
+      "title": "其他",
       "whysocomplicated": {
-        "title": "Why is it so complicated to get started with Piggy Breaker?",
-        "text": ["Piggy Breaker is built on blockchain technology, which is relatively new stuff. It’s safe and secure, but it’s going to be a little complicated until the rest of the world catches up."]
+        "title": "为什么开始 Piggy Breaker 这么复杂?",
+        "text": ["Piggy Breaker 是基于区块链技术, 这是比较新的东西. I这是安全可靠的，但在世界其他地方赶上之前，它会变得有点复杂."]
       },
       "whatisether": {
-        "title": "What’s ether (ETH)? Why do I need it to play Piggy Breaker?",
-        "text": ["Ether powers the Ethereum network, which is what Piggy Breaker is built on. Ether acts like any other currency; the value fluctuates with the market.", "You need to convert your currency (e.g. USD, CAD, GBP, etc.) into ether to pay for things on our network."]
+        "title": " ether (ETH) 是什么? 为什么我需要玩 Piggy Breaker?",
+        "text": ["Ether 为以太坊网络提供动力，这就是 Piggy Breaker 的基础. Ether 像任何其他货币一样行事;价值随市场波动。", "你需要将你的货币（例如美元，加元，英镑等）转换为以太网以支付我们网络上的物品."]
       },
       "whatisgas": {
-        "title": "What is 'gas'?",
-        "text": ["'Gas' is a shorthand used to describe the cost of powering a transaction or contract in Ethereum, which is the blockchain network that Piggy Breaker is built on.", "Because blockchain is decentralized, every transaction is distributed through multiple computers, not a central server. This ensures each transaction—is secure and one-of-a-kind. However, it also takes more computational power, which is covered by the cost of gas. Ethereum typically communicates this cost in gwei (1 million gwei = 1 ether/ETH). You can get a more detailed explanation here."]
+        "title": " 'gas' 是什么 ?",
+        "text": ["'Gas' 是用于描述以太坊交易或合同供电成本的简写, 这是 Piggy Breaker 建立的区块链网络.", "由于区块链是分散的，因此每个事务都通过多台计算机进行分配, 不是中央服务器. 这确保了每笔交易—是安全的，独一无二的. 然而，它还需要更多的计算能力，这由气体成本所涵盖. 以太坊通常以gwei传达此成本 (100万gwei = 1醚 eth/ ETH). 你可以在此处获得更详细的说明."]
       },
       "caniuseacard": {
-        "title": "Can I use a Credit Card to play Piggy Breaker?",
-        "text": ["Not directly; the technology simply isn’t there yet. As soon as it is, we plan to support it.", "However, most exchanges do let you buy ether with a credit card."]
+        "title": "我可以用信用卡玩 Piggy Breaker 吗?",
+        "text": ["不直接;技术根本就不存在. 一旦它，我们计划支持它.", "但是，大多数交易所都会让您用信用卡购买以太币."]
       },
       "caniplaywithphone": {
-        "title": "Can I play Piggy Breaker with my phone?",
-        "text": ["Not yet. Piggy Breaker relies on technologies that simply don’t function on mobile devices, like Metamask.", "We are developing a mobile app, but you will need a laptop, desktop, or tablet browser to complete transactions for the foreseeable future."]
+        "title": "我可以用手机玩 Piggy Breaker 吗?",
+        "text": ["还没。 Piggy Breaker 依赖于那些根本无法在移动设备上运行的技术像 Metamask.", "我们正在开发移动应用程序，但你需要笔记本电脑，台式机或平板电脑浏览器才能在可预见的未来完成交易."]
       },
       "howareyoumakingmoney": {
-        "title": "How are you making money with Piggy Breaker?",
-        "text": ["We take 3.75% of the Piggy value when the Piggy gets broken. Note that we are working hard to make your game as easy as possible to use and to prepare you a mobile version."]
+        "title": "你怎么用 Piggy Breaker 赚钱的?",
+        "text": ["当猪被打破时，我们占猪值的 3.75％. 请注意，我们正在努力使您的游戏尽可能简单易用，并为您准备移动版本."]
       },
       "howdoireach": {
-        "title": "How do I reach the Piggy Breaker team regarding a project, partnership, or investment opportunity?",
-        "text": ["Give us the details here and we’ll be in touch.", "If none of the above has been helpful, please contact us with the details of your issue at", "Please include any relevant tx hashes, links, and Piggy IDs so we can support you as quickly as possible."]
+        "title": "如何与项目，合作伙伴关系或投资机会联系 Piggy Breaker 团队?",
+        "text": [".在这里向我们提供详细信息，我们会保持联系。", "如果上述任何内容都没有帮助，请通过", "与我们联系并提供您的问题的详细信息, 请包含任何相关的交易哈希，链接和小猪ID，以便我们尽快为您提供支持"]
       }
     }
 
   },
 
-
-
-	"errors": [
+  "errors": [
 		{
 			"code": "ER-0001",
-			"desc": "系统发生错误",
-			"fix": "请联络系统管理员"
+			"desc": "System Error",
+			"fix": "Please contact system admin"
 		},
 		{
 			"code": "ER-0002",
-			"desc": "伺服器发生错误",
-			"fix": "服务器遇到内部错误"
+			"desc": "Server Error",
+			"fix": "Server has encountered an internal error"
 		},
 		{
 			"code": "ER-0003",
-			"desc": "网路发生错误",
-			"fix": "软件导致连接中止"
+			"desc": "Network Error",
+			"fix": "Software caused connection abort"
 		}
 	],
 	"network": {
 		"error": [
 			{
-				"status": "错误 400",
-				"type": "错误的要求",
-				"desc": "由于明显的用户端错误，伺服器不能或不会处理该请求"
+				"status": "Error 400",
+				"type": "Bad Request",
+				"desc": "Your browser sent a request that this server could not understand"
 			},
 			{
-				"status": "错误 401",
-				"type": "没授权",
-				"desc": "由于无效凭据，访问被拒绝"
+				"status": "Error 401",
+				"type": "Unauthorized",
+				"desc": "Access is denied due to invalid credentials"
 			},
 			{
-				"status": "错误 403",
-				"type": "拒绝或禁止存取",
-				"desc": "您没有权限访问"
+				"status": "Error 403",
+				"type": "Forbideen",
+				"desc": "You don't have permission to access"
 			},
 			{
-				"status": "错误 404",
-				"type": "找不到",
-				"desc": "您要查找的页面不存在"
+				"status": "Error 404",
+				"type": "Not Found",
+				"desc": "The page you are looking for does not exist"
 			},
 			{
-				"status": "错误 500",
-				"type": "服务器错误",
-				"desc": "内部服务器错误"
+				"status": "Error 500",
+				"type": "Server Error",
+				"desc": "Http error 500 Internal Server Error"
 			},
 			{
-				"status": "错误 503",
-				"type": "服务器无法使用",
-				"desc": "服务暂时不可用"
+				"status": "Error 503",
+				"type": "Service Unavailable",
+				"desc": "Service temporarily unavailable"
 			}
 		]
 	}

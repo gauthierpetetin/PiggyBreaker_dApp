@@ -69,7 +69,7 @@
           <v-flex md12 class="text-xs-center">
             <app-dialog-contribute button-large="true"></app-dialog-contribute>
           </v-flex>
-          <!-- xxx view pending transaction-->
+          <!-- view pending transaction-->
           <v-flex v-if="(loading.contribution) || (loading.break) || (loading.withdraw)" md12 class="text-xs-center grey-text" style="font-size:28px; margin-bottom: 50px">
             <v-btn class="mt-3 blue" dark large target="_blank" @click.native="viewPendingTx($store.state.ethPendingTx)">
               <span>{{ $t('lang.piggy.contribute.viewPendingTransaction') }}</span>
@@ -278,7 +278,7 @@ export default {
       return res
     },
     piggyImage: function () {
-      if (this.player.contributionBalance === 0) {
+      if ((this.currentGame.value === 0) || (this.currentGame.value === '0')) {
         return '/static/img/picto/big-piggy-empty.png'
       } else if (this.player.contributionBalance > 0) {
         return '/static/img/picto/big-piggy_Smiley-1.png'

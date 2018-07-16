@@ -22,7 +22,7 @@
             </v-flex>
             <v-layout row wrap>
               <v-flex md12>
-                <app-piggy-detail :detailGame="previousGame" :maxValue="biggestPiggyValue" class="boxes"></app-piggy-detail>
+                <app-piggy-detail v-if="previousGame.value != 0" :detailGame="previousGame" :maxValue="biggestPiggyValue" class="boxes"></app-piggy-detail>
               </v-flex>
             </v-layout>
               <v-flex v-for="(game, index) in games" :key="index" md12 style="margin-bottom: 10px;">
@@ -73,6 +73,11 @@ export default {
       setTimeout(function () {
         _this.blinkClass.blink = false
       }, 2000)
+    }
+  },
+  watch: {
+    'fbCurrentGame.id': function (val) {
+      this.initialize()
     }
   }
 }

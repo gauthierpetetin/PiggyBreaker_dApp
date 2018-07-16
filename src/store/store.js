@@ -49,6 +49,20 @@ export const store = new Vuex.Store({
       breakableAt: null,
       serverTimestamp: null
     },
+    fbPreviousGame: {
+      id: null,
+      value: 0,
+      nbContributions: 0,
+      minContribution: 0,
+      open: false,
+      winner: null,
+      createdAt: null,
+      updatedAt: null,
+      brokenAt: null,
+      breakable: null,
+      breakableAt: null,
+      serverTimestamp: null
+    },
     fbBiggestPiggyValue: 0,
     explorer: {
       contract: {
