@@ -193,8 +193,8 @@ export default {
     },
     // Check break
     checkBreak () { // ONLY FOR MASTER BUTTON
-      console.log('CHECKBREAK (', this.buttonSmall, '): ', this.player.breakEnable)
       if (this.masterTimerButton) {
+        console.log('CHECKBREAK (', this.buttonSmall, '): ', this.player.breakEnable)
         // If is breakable
         if (this.player.breakEnable && this.currentGame.serverTimestamp && this.currentGame.breakableAt) {
           this.checkTime()

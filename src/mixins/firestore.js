@@ -107,7 +107,7 @@ export default {
     prepareGame (gameItem, serverTime) {
       // Get game ID
       let gameID = gameItem.data().id
-      if (gameID !== this.currentGame.id) {
+      if (gameID > this.currentGame.id) {
         console.log('NEW PIGGY : ', gameID)
         eventBus.$emit('new_piggy')
       }

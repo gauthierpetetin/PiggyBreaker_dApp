@@ -36,6 +36,11 @@ export default {
     appCountdown: Countdown,
     appDiscord: Discord
   },
+  data () {
+    return {
+      masterEthereumMixin: true
+    }
+  },
   mixins: [
     firestoreMixin,
     ethereumMixin

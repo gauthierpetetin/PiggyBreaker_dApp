@@ -15,7 +15,10 @@ export default {
     }
   },
   created () {
-    eventBus.$on('new_piggy', this.getEthGameData)
+    if (this.masterEthereumMixin) {
+      console.log('Event catcher created.')
+      eventBus.$on('new_piggy', this.getEthGameData)
+    }
   },
   computed: {
     contractAddress () {
@@ -96,8 +99,8 @@ export default {
       })
     },
     checkPlayer (newAddress) {
-      // console.log('CHECKPLAYER: ', newAddress)
       if (newAddress !== this.player.address) {
+        console.log('CHECKPLAYER: ', newAddress)
         this.getEthGameData()
       }
     },
@@ -241,7 +244,7 @@ export default {
                 console.log('Contribution receipt:', receipt)
                 self.$store.state.ethLoading.contribution = false
                 self.getEthGameData()
-                self.notify(this.$t('lang.ethereummixin.notification.contribute.title'), this.$t('lang.ethereummixin.notification.contribute.text'))
+                self.notify(self.$t('lang.ethereummixin.notification.contribute.title'), self.$t('lang.ethereummixin.notification.contribute.text'))
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)
@@ -279,7 +282,7 @@ export default {
                 console.log('Broken Piggy receipt:', receipt)
                 self.$store.state.ethLoading.break = false
                 self.getEthGameData()
-                self.notify(this.$t('lang.ethereummixin.notification.break.title'), this.$t('lang.ethereummixin.notification.break.text'))
+                self.notify(self.$t('lang.ethereummixin.notification.break.title'), self.$t('lang.ethereummixin.notification.break.text'))
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)
@@ -315,7 +318,7 @@ export default {
                 console.log('Withdrawal receipt:', receipt)
                 self.$store.state.ethLoading.withdraw = false
                 self.getEthGameData()
-                self.notify(this.$t('lang.ethereummixin.notification.withdraw.title'), this.$t('lang.ethereummixin.notification.withdraw.text'))
+                self.notify(self.$t('lang.ethereummixin.notification.withdraw.title'), self.$t('lang.ethereummixin.notification.withdraw.text'))
               })
               .on('confirmation', function (confirmationNumber, receipt) {
                 // console.log('confirmation:', confirmationNumber, receipt)

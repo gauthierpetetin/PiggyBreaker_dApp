@@ -73,7 +73,7 @@ export default {
   computed: {
     balanceText () {
       if (this.buttonEnable) {
-        return this.$t('lang.piggy.withdraw.yourEarnings') + this.player.withdrawBalance + ' ETH'
+        return this.$t('lang.piggy.withdraw.yourEarnings') + ' ' + this.player.withdrawBalance + ' ETH'
       }
     },
     currentGame () {
