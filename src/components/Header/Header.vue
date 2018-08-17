@@ -21,9 +21,9 @@
     </v-toolbar-items>
     <v-spacer></v-spacer>
     <div v-if="ethereumEnv == 'development'">
-      <v-toolbar-items>
+      <!-- <v-toolbar-items>
         <div class="white--text" style="background-color: #E91E63;margin:15px;padding: 5px 10px;">{{ $t('lang.menu.network.testnet') }}</div>
-      </v-toolbar-items>
+      </v-toolbar-items> -->
       <v-spacer></v-spacer>
     </div>
     <v-toolbar-items>

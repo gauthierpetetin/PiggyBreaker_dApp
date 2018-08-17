@@ -11,6 +11,10 @@
         "bad": "Network bad",
         "badTooltip": "No web3? You should consider trying Metamask!"
       },
+      "type": {
+        "mainEthereumNetwork": "Main Ethereum Network",
+        "ropstenTestNetwork": "Ropsten Test Network"
+      },
       "testnet": "Beta version (Ropsten)"
     },
     "invite": "Invite",
@@ -23,13 +27,6 @@
   "alert": {
     "importantPleaseCheck": "IMPORTANT! Please check you're on the right url: https://piggybreaker.com/",
     "luckGuy": "LUCKY GUY! You have ether to withdraw (see the <strong>\"How does it work\"</strong> section below)."
-  },
-
-  "network": {
-    "type": {
-      "mainEthereumNetwork": "Main Ethereum Network",
-      "ropstenTestNetwork": "Ropsten Test Network"
-    }
   },
 
   "metamask": {

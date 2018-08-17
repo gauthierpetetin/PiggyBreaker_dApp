@@ -80,29 +80,6 @@
       </section>
       <!-- </v-parallax> -->
     </section>
-    <!-- What is Piggy Breaker -->
-    <section>
-      <v-parallax  class="parallax-background" height="550">
-        <v-layout column align-center justify-center>
-          <div style="width: 80%; height: 400px; padding: 1% 2%; background-color: white">
-          <v-flex class="my-3">
-            <div class="text-xs-center">
-              <h4 class="display-1 pink--text small-text" style="padding: 10px 0">{{ $t('lang.piggy.piggyIsTheNextWorldLottery.piggyBreakerIsTheNextWorldLottery') }}</h4>
-            </div>
-          </v-flex>
-          <div class="headline mb-3 text-xs-center title">
-            <p>
-              {{ $t('lang.piggy.piggyIsTheNextWorldLottery.theGameIsCenteredAroundBilly') }}
-            </p>
-            <img src="/static/img/picto/piggy-growth.png" alt="piggy growth" height="120" style="margin-top: 15px; margin-bottom: 15px">
-            <p><br>
-              {{ $t('lang.piggy.piggyIsTheNextWorldLottery.somedayThePiggyBankWillBreak') }}
-            </p>
-          </div>
-        </div>
-        </v-layout>
-      </v-parallax>
-    </section>
 
     <!-- How does it work? -->
     <section style="background-color: white">

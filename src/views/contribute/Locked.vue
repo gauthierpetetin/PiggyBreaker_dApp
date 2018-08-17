@@ -87,10 +87,10 @@ export default {
       let message = null
       if (process.env.ETHEREUM_NODE_ENV === 'development') {
         // message = 'Ropsten Test Network'
-        message = this.$t('lang.network.type.ropstenTestNetwork')
+        message = this.$t('lang.menu.network.type.ropstenTestNetwork')
       } else {
         // message = 'Main Ethereum Network'
-        message = this.$t('lang.network.type.mainEthereumNetwork')
+        message = this.$t('lang.menu.network.type.mainEthereumNetwork')
       }
       return message
     },

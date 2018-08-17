@@ -4,50 +4,47 @@
   },
 
   "menu": {
-      "network": {
-        "status": {
-          "good": "网络好",
-          "goodTooltip": "网络好",
-          "bad": "网络不好",
-          "badTooltip": "没有Web3 ? 你可以安装 Metamask!"
-        },
-        "testnet": "测试版 (Ropsten)"
-      },
-      "invite": "邀请",
-      "history": "历史",
-      "settings": "设置",
-      "faq": "FAQ",
-      "about": "关于"
-  },
-
-  "alert": {
-      "importantPleaseCheck": " 请注意，你在正确的网址: https://piggybreaker.com/",
-      "luckGuy": " 幸福的你 ! 你有 ether (ETH) 可以撤 (去看 <strong>\"怎么做\"</strong> 请看下面)."
-    },
-
     "network": {
+      "status": {
+        "good": "网络好",
+        "goodTooltip": "网络好",
+        "bad": "网络不好",
+        "badTooltip": "没有Web3 ? 你可以安装 Metamask!"
+      },
       "type": {
         "mainEthereumNetwork": "Main Ethereum Network",
         "ropstenTestNetwork": "Ropsten Test Network"
-      }
+      },
+      "testnet": "测试版 (Ropsten)"
     },
+    "invite": "邀请",
+    "history": "历史",
+    "settings": "设置",
+    "faq": "FAQ",
+    "about": "关于"
+  },
 
-    "metamask": {
-      "title": {
-        "unknown": "未知错误",
-        "install": "没安装Metamask",
-        "locked": "Metamask 锁之",
-        "network": "错网络Metamask"
-      },
-      "message": {
-        "unknown": "未知错误，请联系我们的 support .",
-        "install": "请安装 Metamask",
-        "locked": "请锁之 Metamask",
-        "network": "请打开Metamask 和安装更新的网络"
-      },
-      "complement": " 才可以玩 Piggy Breaker!",
-      "ongoing": "验证当前交易"
+  "alert": {
+    "importantPleaseCheck": " 请注意，你在正确的网址: https://piggybreaker.com/",
+    "luckGuy": " 幸福的你 ! 你有 ether (ETH) 可以撤 (去看 <strong>\"怎么做\"</strong> 请看下面)."
+  },
+
+  "metamask": {
+    "title": {
+      "unknown": "未知错误",
+      "install": "没安装Metamask",
+      "locked": "Metamask 锁之",
+      "network": "错网络Metamask"
     },
+    "message": {
+      "unknown": "未知错误，请联系我们的 support .",
+      "install": "请安装 Metamask",
+      "locked": "请锁之 Metamask",
+      "network": "请打开Metamask 和安装更新的网络"
+    },
+    "complement": " 才可以玩 Piggy Breaker!",
+    "ongoing": "验证当前交易"
+  },
 
   "piggy": {
     "currentPiggyValue": "猪当前价值:",
@@ -253,7 +250,7 @@
       "whatDoIneedToPlay": {
         "title": "我需要什么玩 Piggy Breaker?",
         "text": [
-         "这是你开始使用的内容:",
+          "这是你开始使用的内容:",
           "运行桌面版的计算机或笔记本电脑 的 Chrome 或 Firefox",
           "Metamask, 专门用于网络应用的数字钱包",
           "Ether, 一种权力的数字支付形式 Piggy Breaker"
@@ -375,54 +372,54 @@
   },
 
   "errors": [
-		{
-			"code": "ER-0001",
-			"desc": "System Error",
-			"fix": "Please contact system admin"
-		},
-		{
-			"code": "ER-0002",
-			"desc": "Server Error",
-			"fix": "Server has encountered an internal error"
-		},
-		{
-			"code": "ER-0003",
-			"desc": "Network Error",
-			"fix": "Software caused connection abort"
-		}
-	],
-	"network": {
-		"error": [
-			{
-				"status": "Error 400",
-				"type": "Bad Request",
-				"desc": "Your browser sent a request that this server could not understand"
-			},
-			{
-				"status": "Error 401",
-				"type": "Unauthorized",
-				"desc": "Access is denied due to invalid credentials"
-			},
-			{
-				"status": "Error 403",
-				"type": "Forbideen",
-				"desc": "You don't have permission to access"
-			},
-			{
-				"status": "Error 404",
-				"type": "Not Found",
-				"desc": "The page you are looking for does not exist"
-			},
-			{
-				"status": "Error 500",
-				"type": "Server Error",
-				"desc": "Http error 500 Internal Server Error"
-			},
-			{
-				"status": "Error 503",
-				"type": "Service Unavailable",
-				"desc": "Service temporarily unavailable"
-			}
-		]
-	}
+    {
+      "code": "ER-0001",
+      "desc": "System Error",
+      "fix": "Please contact system admin"
+    },
+    {
+      "code": "ER-0002",
+      "desc": "Server Error",
+      "fix": "Server has encountered an internal error"
+    },
+    {
+      "code": "ER-0003",
+      "desc": "Network Error",
+      "fix": "Software caused connection abort"
+    }
+  ],
+  "network": {
+    "error": [
+      {
+        "status": "Error 400",
+        "type": "Bad Request",
+        "desc": "Your browser sent a request that this server could not understand"
+      },
+      {
+        "status": "Error 401",
+        "type": "Unauthorized",
+        "desc": "Access is denied due to invalid credentials"
+      },
+      {
+        "status": "Error 403",
+        "type": "Forbideen",
+        "desc": "You don't have permission to access"
+      },
+      {
+        "status": "Error 404",
+        "type": "Not Found",
+        "desc": "The page you are looking for does not exist"
+      },
+      {
+        "status": "Error 500",
+        "type": "Server Error",
+        "desc": "Http error 500 Internal Server Error"
+      },
+      {
+        "status": "Error 503",
+        "type": "Service Unavailable",
+        "desc": "Service temporarily unavailable"
+      }
+    ]
+  }
 }
