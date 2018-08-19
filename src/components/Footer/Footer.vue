@@ -1,5 +1,5 @@
 <template>
-  <v-footer style="background-color: #404040">
+  <v-footer style="height: 40px; background-color: #404040">
     <v-layout row wrap align-center>
       <v-flex xs1>
       </v-flex>

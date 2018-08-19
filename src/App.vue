@@ -6,8 +6,8 @@
         <app-alert-winner></app-alert-winner>
         <app-header></app-header>
         <router-view/>
-        <app-countdown></app-countdown>
-        <app-discord></app-discord>
+        <app-countdown v-if="gameStarted && metamaskEnabled"></app-countdown>
+        <app-discord v-if="gameStarted"></app-discord>
         <app-footer></app-footer>
       </v-content>
     </v-app>
@@ -45,6 +45,14 @@ export default {
     firestoreMixin,
     ethereumMixin
   ],
+  computed: {
+    metamaskEnabled () {
+      return this.$store.state.metamaskEnabled
+    },
+    gameStarted () {
+      return this.$store.state.gameStarted
+    }
+  },
   mounted () {
     let self = this
     // console.log('MMM : ', this.$t('lang.ethereummixin.notification.withdraw.title'))

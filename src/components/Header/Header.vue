@@ -1,11 +1,18 @@
 <template>
   <v-toolbar style="background-color: white;">
     <v-toolbar-title style="min-width: 250px">
-      <router-link to="/"  class="logo">
+      <router-link v-if="gameStarted" to="/home"  class="logo">
         <a class="nav-link" >
           <img src="/static/img/logo/logo-crypto-piggy.png" height="50">
           <span style="color: #2196f3">{{ $t('lang.app.title') }}</span>
-        </a></router-link>
+        </a>
+      </router-link>
+      <router-link v-else to="/"  class="logo">
+        <a class="nav-link" >
+          <img src="/static/img/logo/logo-crypto-piggy.png" height="50">
+          <span style="color: #2196f3">{{ $t('lang.app.title') }}</span>
+        </a>
+      </router-link>
     </v-toolbar-title>
     <v-toolbar-items v-if="networkStatus == 'good'">
       <v-tooltip bottom>
@@ -60,6 +67,9 @@ export default {
     }
   },
   computed: {
+    gameStarted () {
+      return this.$store.state.gameStarted
+    },
     metamaskEnabled () {
       return this.$store.state.metamaskEnabled
     },

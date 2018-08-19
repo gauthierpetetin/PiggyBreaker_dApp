@@ -1,6 +1,5 @@
 <template>
-    <v-layout row wrap
-    class="white--text">
+    <v-layout row wrap class="white--text" style="margin-top: 40px">
       <v-container v-if="lockstatus === 'not_installed'" grid-list-xl>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
           <h2 class="display-2 grey-text" style="margin-top: 35px">{{ $t('lang.piggy.locked.wannaPlay') }}</h2>
@@ -8,7 +7,7 @@
           {{ $t('lang.piggy.locked.youNeedAplaceToStore') }}
         </v-flex>
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px">
-          <img src="/static/img/picto/metamask.png" alt="no metamask" style="max-width: 150px; margin-top: 20px; margin-bottom: 10px">
+          <img src="/static/img/picto/metamask.png" alt="no metamask" style="max-width: 150px; margin-top: 35px; margin-bottom: 20px">
         </v-flex>
         <v-flex v-if="metamaskUrl" md12 class="text-xs-center grey-text" style="font-size:28px">
           <v-btn
@@ -27,7 +26,7 @@
             {{ $t('lang.piggy.locked.sorryYourBrowserNotSupport') }}
           </v-alert>
         </v-flex>
-        <v-flex md12 class="text-xs-center black--text">
+        <v-flex md12 class="text-xs-center black--text" style="margin-top: 40px">
           <!-- Getting Started -->
           <app-getting-started></app-getting-started>
           <!-- /Getting Started -->
@@ -52,7 +51,7 @@
         <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-top: 30px; margin-bottom: 100px">
           <h2 class=" display-2 grey-text" style="margin-bottom: 25px">{{ $t('lang.piggy.locked.sorryWrongNetwork') }}</h2>
           <span class="grey--text" style="margin-bottom: 15px">{{ $t('lang.piggy.locked.simplyOpenMetamaskAndSwitch') }}</span> {{ networkMessage }}.
-          <v-flex md12 class="text-xs-center" style="margin-top: 25px;">
+          <v-flex md12 class="text-xs-center" style="margin-top: 50px;">
             <img :src="networkImage" alt="piggy locked" width="300">
           </v-flex>
         </v-flex>

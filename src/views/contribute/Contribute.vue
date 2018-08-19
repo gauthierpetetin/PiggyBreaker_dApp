@@ -1,26 +1,26 @@
 <template>
   <div>
     <!-- Contribute -->
-    <section>
+    <section style="background-color: white; padding-top: 10px;">
       <!-- <v-parallax class="parallax-background"> -->
-      <v-layout column align-center justify-center style="background-color: white" >
+      <v-layout v-if="metamaskEnabled" column align-center justify-center style="background-color: white; padding-top: 30px; padding-bottom: 10px">
         <v-tooltip right>
           <h1 slot="activator" class="pink--text mb-2 display-2 text-xs-center current" style="margin-top: 35px">{{ $t('lang.piggy.currentPiggyValue') }} <strong><span>{{ currentGame.value | round(2) }}</span> ETH</strong></h1>
           <span> {{ currentGame.value }} ETH </span>
         </v-tooltip>
         <v-tooltip right>
-          <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 15px" slot="activator">
+          <img :src="piggyImage" alt="big piggy" height="350" style="margin-top: 25px" slot="activator">
           <span> {{piggyMessage1}} <br /> {{piggyMessage2}} </span>
         </v-tooltip>
       </v-layout>
       <!-- Loading -->
-      <section v-if="transaction.checked == false">
+      <section v-if="transaction.checked == false" style="padding-bottom: 30px;">
         <v-layout column align-center justify-center style="background-color: white; padding-top: 30px; padding-bottom: 30px" >
           <v-progress-circular :size="60" indeterminate color="warning"></v-progress-circular>
         </v-layout>
       </section>
       <!-- /Loading -->
-      <section v-else>
+      <section v-else style="padding-bottom: 30px;">
         <!-- Locked -->
         <v-layout v-if="!transaction.enable" row wrap class="white--text">
           <app-locked :lockstatus="transaction.status"></app-locked>
@@ -82,16 +82,15 @@
     </section>
 
     <!-- How does it work? -->
-    <section style="background-color: white">
+    <section v-if="metamaskEnabled">
       <v-layout
         column
         wrap
         class="my-5"
-        style="margin: 0 0 !important;"
       >
         <v-flex xs12 sm4 class="my-3">
           <div class="text-xs-center">
-            <h2 class="display-1 grey-text" style="margin-top: 25px">{{ $t('lang.piggy.howDoesItWork.howDoesItWork') }}</h2>
+            <h2 class="display-2 grey--text" style="margin-top: 25px">{{ $t('lang.piggy.howDoesItWork.howDoesItWork') }}</h2>
           </div>
         </v-flex>
         <v-flex xs12>
@@ -218,6 +217,9 @@ export default {
     }
   },
   computed: {
+    metamaskEnabled () {
+      return this.$store.state.metamaskEnabled
+    },
     explorerAddress () {
       let expAddress = ''
       if (this.$store.state.contract.address) {
