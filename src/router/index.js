@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Homepage from '@/views/Homepage'
+import Welcomepage from '@/views/welcome/Welcomepage'
+import Homepage from '@/views/home/Homepage'
 
 import Piggies from '@/views/piggies/Piggies'
 import Settings from '@/views/settings/Settings'
@@ -17,6 +18,11 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Welcomepage',
+      component: Welcomepage
+    },
+    {
+      path: '/home',
       name: 'Homepage',
       component: Homepage
     },

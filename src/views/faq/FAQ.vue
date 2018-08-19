@@ -28,13 +28,15 @@
           <v-container grid-list-xl>
             <v-layout row wrap>
               <v-flex md10 offset-md1>
-                <h1 class="display-1 grey-text">{{ $t('lang.faq.understanding.title')}}</h1>
+                <h1 class="display-1 grey-text">{{ $t('lang.faq.title')}}</h1>
               </v-flex>
               <v-flex md10 offset-md1>
                 <!-- Getting Started -->
                 <app-getting-started titleRequired="true"></app-getting-started>
                 <!-- /Getting Started -->
-                <h2 class="grey-text headline">{{ $t('lang.faq.understanding.title')}}</h2>
+
+                <!-- Understanding -->
+                <h2 class="grey-text headline" style="padding-top: 35px;">{{ $t('lang.faq.understanding.title')}}</h2>
                 <v-expansion-panel expand>
 
                   <v-expansion-panel-content>
@@ -169,9 +171,11 @@
                   </v-expansion-panel-content>
 
                 </v-expansion-panel>
+                <!-- /Understanding -->
 
-                <h2 class="grey-text headline">{{ $t('lang.faq.other.title')}}</h2>
-                <v-expansion-panel expand>
+                <!-- Other -->
+                <h2 class="grey-text headline" style="padding-top: 35px;">{{ $t('lang.faq.other.title')}}</h2>
+                <v-expansion-panel expand style="margin-bottom: 35px">
 
                   <v-expansion-panel-content>
                     <div slot="header" class="grey-text subheading padTitle">{{ $t('lang.faq.other.whysocomplicated.title')}}</div>
@@ -243,6 +247,7 @@
                   </v-expansion-panel-content>
 
                 </v-expansion-panel>
+                <!-- /Other -->
               </v-flex>
             </v-layout>
           </v-container>
