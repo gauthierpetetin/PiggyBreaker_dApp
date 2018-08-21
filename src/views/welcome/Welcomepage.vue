@@ -5,7 +5,7 @@
       <v-layout style="background-color: white; padding-top: 30px; padding-bottom: 30px">
         <v-flex xs4 align-center justify-space-around text-xs-center>
           <h1 slot="activator" class="grey--text mb-2 display-3 text-xs-center current" style="margin-top: 100px">Piggy Breaker.<br/>The next world<br/>lottery.</h1>
-          <v-btn style="margin-top: 50px !important" class="mt-3 blue" dark large target="_blank" to="/home" @click.native="startGame()">
+          <v-btn style="margin-top: 50px !important" class="mt-3 blue" dark large target="_blank" @click.native="startGame()">
             <span>Take your chance now!</span>
           </v-btn>
         </v-flex>
@@ -120,7 +120,7 @@
               </p>
             </div>
             <v-flex align-center justify-space-around text-xs-center>
-              <v-btn style="height: 50px; width: 400px" class="headline mt-3 blue" dark large target="_blank" to="/home" @click.native="startGame()">
+              <v-btn style="height: 50px; width: 400px" class="headline mt-3 blue" dark large target="_blank" @click.native="startGame()">
                 <span>Take your chance now!</span>
               </v-btn>
             </v-flex>
@@ -139,11 +139,13 @@
 
 <script>
 
+import router from '@/router'
+
 export default {
   methods: {
     startGame () {
       console.log('Start game')
-      this.$store.state.gameStarted = true
+      router.push('/home')
     }
   }
 }

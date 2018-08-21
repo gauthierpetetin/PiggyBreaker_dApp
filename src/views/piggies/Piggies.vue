@@ -39,7 +39,6 @@
 
 import firestoreMixin from '@/mixins/firestore'
 import PiggyDetail from '@/views/piggies/PiggyDetail.vue'
-// import piggy from '@/mixins/piggy'
 
 export default {
   components: {
@@ -56,7 +55,6 @@ export default {
   mixins: [
     firestoreMixin
   ],
-  // mixins: [piggy],
   mounted () {
     this.initialize()
   },

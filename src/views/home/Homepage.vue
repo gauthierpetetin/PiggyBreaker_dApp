@@ -72,10 +72,24 @@
 <script>
 
 import Contribute from '@/views/contribute/Contribute'
+import ethereumMixin from '@/mixins/ethereum'
 
 export default {
+  mixins: [
+    ethereumMixin
+  ],
   components: {
     appContribute: Contribute
+  },
+  mounted () {
+    this.$store.state.gameStarted = true
+    if (this.$store.state.ethTransaction.status === 'not_installed') {
+      // Please install Metamask
+    } else {
+      if (!this.$store.state.authenticated) {
+        this.identifyPlayer()
+      }
+    }
   },
   computed: {
     metamaskEnabled () {

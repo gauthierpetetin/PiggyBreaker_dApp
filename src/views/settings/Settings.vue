@@ -113,12 +113,21 @@
 
 import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
+import router from '@/router'
 
 export default {
   mixins: [
     firestoreMixin,
     ethereumMixin
   ],
+  mounted () {
+    if (!this.$store.state.authenticated) {
+      this.$store.state.gameStarted = false
+      router.push('/')
+    } else {
+      this.initSettings()
+    }
+  },
   computed: {
     option1 () {
       return this.$t('lang.settings.option1')
@@ -156,9 +165,6 @@ export default {
         v => /^$|^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || this.$t('lang.form.error.emailMustBeEmptyOrValid')
       ]
     }
-  },
-  mounted () {
-    this.initSettings()
   },
   watch: {
     'playerSettings.notify_start': function (val) {

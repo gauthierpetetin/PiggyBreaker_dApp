@@ -12,7 +12,7 @@
         <v-flex v-if="metamaskUrl" md12 class="text-xs-center grey-text" style="font-size:28px">
           <v-btn
             class="mt-3"
-            style="background-color: #2196f3; margin-bottom: 100px"
+            style="background-color: #2196f3; margin-bottom: 50px"
             dark
             large
             :href="metamaskUrl"
@@ -20,13 +20,16 @@
           >
             {{ $t('lang.piggy.locked.installMetamask') }}
           </v-btn>
+          <v-flex md12 class="text-xs-center grey-text" style="font-size:28px; margin-bottom: 50px">
+            {{ $t('lang.piggy.locked.refreshPage') }}
+          </v-flex>
         </v-flex>
         <v-flex v-else md6 offset-md3 class="text-xs-center grey-text" style="font-size:28px;margin-bottom: 100px;">
           <v-alert :value="true" outline color="error" icon="warning">
             {{ $t('lang.piggy.locked.sorryYourBrowserNotSupport') }}
           </v-alert>
         </v-flex>
-        <v-flex md12 class="text-xs-center black--text" style="margin-top: 40px">
+        <v-flex md12 class="text-xs-center black--text" style="margin-top: 70px">
           <!-- Getting Started -->
           <app-getting-started></app-getting-started>
           <!-- /Getting Started -->
@@ -79,6 +82,13 @@ export default {
   },
   components: {
     appGettingStarted: GettingStarted
+  },
+  mounted () {
+    // if(lockstatus === 'not_installed') {
+    //
+    // } else {
+    //
+    // }
   },
   computed: {
     // Set network message

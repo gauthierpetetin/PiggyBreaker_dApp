@@ -6,8 +6,9 @@
         <app-alert-winner></app-alert-winner>
         <app-header></app-header>
         <router-view/>
+        <app-dialog-sign-in></app-dialog-sign-in>
         <app-countdown v-if="gameStarted && metamaskEnabled"></app-countdown>
-        <app-discord v-if="gameStarted"></app-discord>
+        <app-discord></app-discord>
         <app-footer></app-footer>
       </v-content>
     </v-app>
@@ -22,6 +23,7 @@ import Header from './components/Header/Header.vue'
 import Footer from './components/Footer/Footer.vue'
 import Countdown from './components/Countdown/Countdown.vue'
 import Discord from './components/Discord/Discord.vue'
+import DialogSignIn from '@/views/contribute/Signin.vue'
 
 import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
@@ -34,7 +36,8 @@ export default {
     appHeader: Header,
     appFooter: Footer,
     appCountdown: Countdown,
-    appDiscord: Discord
+    appDiscord: Discord,
+    appDialogSignIn: DialogSignIn
   },
   data () {
     return {
@@ -56,6 +59,7 @@ export default {
   mounted () {
     let self = this
     // console.log('MMM : ', this.$t('lang.ethereummixin.notification.withdraw.title'))
+    // this.$store.state.authenticateDialog = true
 
     // Check contract config
     if (self.$store.state.contract.address === null && self.$store.state.contract.abi === null) {
@@ -70,6 +74,13 @@ export default {
 
     // Get current game on firestore
     this.getGame('current')
+  },
+  watch: {
+    '$store.state.ethPlayer.address': function (val) {
+      if (this.gameStarted) {
+        this.identifyPlayer()
+      }
+    }
   }
 }
 </script>
