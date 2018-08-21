@@ -12,6 +12,7 @@ import VueNativeNotification from 'vue-native-notification'
 // import VueI18n from 'vue-i18n'
 import i18n from './locales'
 import FlagIcon from 'vue-flag-icon'
+import VueLocalStorage from 'vue-localstorage'
 
 import('../node_modules/vuetify/dist/vuetify.min.css')
 
@@ -26,6 +27,7 @@ Vue.use(VueNativeNotification, {
   // showing notification (default: true)
   requestOnNotify: true
 })
+Vue.use(VueLocalStorage)
 
 Vue.notification.requestPermission()
   .then(console.log('Request notification permission.'))

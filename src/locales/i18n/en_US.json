@@ -24,6 +24,10 @@
     "about": "About"
   },
 
+  "welcome": {
+    "pleaseSignIn": "Please sign message on MetaMask to authenticate.."
+  },
+
   "alert": {
     "importantPleaseCheck": "IMPORTANT! Please check you're on the right url: https://piggybreaker.com/",
     "luckGuy": "LUCKY GUY! You have ether to withdraw (see the <strong>\"How does it work\"</strong> section below)."
@@ -132,7 +136,8 @@
       "yourMetamaskIsLocked": "Your metamask is locked",
       "simplyOpenMetamaskAndFollow": "Simply open MetaMask and follow the instruction to unlock it.",
       "sorryWrongNetwork": "Sorry, you're on the wrong network",
-      "simplyOpenMetamaskAndSwitch": "Simply open MetaMask and switch over to the"
+      "simplyOpenMetamaskAndSwitch": "Simply open MetaMask and switch over to the",
+      "refreshPage": "Please refresh the page once MetaMask is installed."
     }
   },
 

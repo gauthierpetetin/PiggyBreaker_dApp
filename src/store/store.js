@@ -6,6 +6,8 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     gameStarted: false,
+    authenticated: false,
+    authenticateDialog: false,
     metamaskInterval: null,
     metamaskEnabled: false,
     contract: {

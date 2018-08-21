@@ -36,7 +36,7 @@
     <v-toolbar-items>
       <v-btn class="grey-text" to="invite" flat>{{ $t('lang.menu.invite') }}</v-btn>
       <v-btn class="grey-text" to="piggies" flat>{{ $t('lang.menu.history') }}</v-btn>
-      <v-btn class="grey-text" to="settings" flat v-show="metamaskEnabled">{{ $t('lang.menu.settings') }}</v-btn>
+      <v-btn class="grey-text" to="settings" flat v-show="gameStarted && metamaskEnabled">{{ $t('lang.menu.settings') }}</v-btn>
       <v-btn class="grey-text" to="faq" flat>{{ $t('lang.menu.faq') }}</v-btn>
       <v-btn class="grey-text" to="about" flat>{{ $t('lang.menu.about') }}</v-btn>
       <!-- <v-btn class="grey-text" v-if="$i18n.locale != 'en'" @click="translateTo('en')" flat><flag iso="cn" /></v-btn>

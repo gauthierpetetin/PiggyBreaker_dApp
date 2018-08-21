@@ -24,6 +24,10 @@
     "about": "关于"
   },
 
+  "welcome": {
+    "pleaseSignIn": "Please sign message on MetaMask to authenticate.."
+  },
+
   "alert": {
     "importantPleaseCheck": " 请注意，你在正确的网址: https://piggybreaker.com/",
     "luckGuy": " 幸福的你 ! 你有 ether (ETH) 可以撤 (去看 <strong>\"怎么做\"</strong> 请看下面)."
@@ -132,7 +136,8 @@
       "yourMetamaskIsLocked": "您的元掩碼已被鎖定",
       "simplyOpenMetamaskAndFollow": "只需打開MetaMask並按照說明解鎖即可。",
       "sorryWrongNetwork": "對不起，你的網絡錯了",
-      "simplyOpenMetamaskAndSwitch": "只需打開MetaMask並切換到"
+      "simplyOpenMetamaskAndSwitch": "只需打開MetaMask並切換到",
+      "refreshPage": "Please refresh the page once MetaMask is installed."
     }
   },
 

@@ -2,6 +2,7 @@ import Web3 from 'web3'
 import web3plus from 'web3-plus'
 import Units from 'ethereumjs-units'
 import { eventBus } from '../main'
+import router from '@/router'
 
 // var abi =
 export default {
@@ -21,6 +22,9 @@ export default {
     }
   },
   computed: {
+    gameStarted () {
+      return this.$store.state.gameStarted
+    },
     contractAddress () {
       return this.$store.state.contract.address
     },
@@ -50,6 +54,53 @@ export default {
       if (typeof window.web3 !== 'undefined') {
         this.web3js = new Web3(this.web3js.currentProvider)
       }
+    },
+    // testSignature () {
+    //   let self = this
+    //   console.log('testSignature')
+    //   self.dialJs()
+    //   self.web3js.eth.getAccounts().then(function (accounts) {
+    //     let adr = accounts[0]
+    //     let messageToSign = self.web3js.utils.toHex('hello raph')
+    //     console.log('1.Message to sign : ', messageToSign)
+    //     self.web3js.eth.personal.sign(messageToSign, adr).then(playerSignature => {
+    //       console.log('2.Signature : ', playerSignature)
+    //       // self.web3js.eth.personal.ecRecover(messageToSign, response).then(initialAccount => {
+    //       //   console.log('INITIALACCOUNT: ', initialAccount)
+    //       // })
+    //     })
+    //   })
+    // },
+    identifyPlayer () {
+      let self = this
+      self.dialJs()
+      console.log('identifyPlayer')
+      self.web3js.eth.getAccounts().then(function (accounts) {
+        let adr = accounts[0]
+        let signature = self.$localStorage.get(adr)
+        if (!signature) {
+          self.$store.state.authenticated = false
+          self.$store.state.authenticateDialog = true
+          console.log('NEED TO SIGN MESSAGE TO AUTHENTICATE ADDRESS : ', adr)
+          let messageToSign = self.web3js.utils.toHex('Please sign below to authenticate with Piggy Breaker.')
+          self.web3js.eth.personal.sign(messageToSign, adr).then(playerSignature => {
+            self.$store.state.authenticated = true
+            self.$localStorage.set(adr, playerSignature)
+            console.log('Player authenticated : ', playerSignature)
+            // self.web3js.eth.personal.ecRecover(messageToSign, response).then(initialAccount => {
+            //   console.log('INITIALACCOUNT: ', initialAccount)
+            // })
+          }, refusalError => {
+            self.$store.state.gameStarted = false
+            self.$store.state.authenticated = false
+            self.$store.state.authenticateDialog = false
+            router.push('/')
+          })
+        } else {
+          self.$store.state.authenticated = true
+          console.log('Found signature : ', signature, 'for address : ', adr)
+        }
+      })
     },
     // Loop check Metamask
     loopMetamask () {
@@ -136,24 +187,22 @@ export default {
         if (self.abi && self.contractAddress) {
           // Get contract
           var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-          // console.log('abi', self.abi)
-          // console.log('contractAddress', self.contractAddress)
-          // console.log('contract', contract)
+          console.log('abi', self.abi)
+          console.log('contractAddress', self.contractAddress)
+          console.log('contract', contract)
           // Get current Piggy
-          contract.methods.nbPiggies().call().then(
-            function (piggyId) {
-              console.log('Piggy ID : ', piggyId)
-              contract.methods.piggies(piggyId).call().then(
-                function (ethGame) {
-                  console.log('Ethgame : ', ethGame)
-                  // Set game id
-                  self.$store.state.ethGame.id = ethGame.piggyID
-                  // Set piggy value
-                  self.$store.state.ethGame.value = Units.convert(ethGame.value, 'wei', 'eth')
-                  // Get accounts
-                  self.getPlayerAddress()
-                })
+          contract.methods.nbPiggies().call().then(function (piggyId) {
+            console.log('Piggy ID : ', piggyId)
+            contract.methods.piggies(piggyId).call().then(function (ethGame) {
+              console.log('Ethgame : ', ethGame)
+              // Set game id
+              self.$store.state.ethGame.id = ethGame.piggyID
+              // Set piggy value
+              self.$store.state.ethGame.value = Units.convert(ethGame.value, 'wei', 'eth')
+              // Get accounts
+              self.getPlayerAddress()
             })
+          })
         }
       }
     },
