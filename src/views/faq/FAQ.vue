@@ -262,7 +262,6 @@
 import GettingStarted from '@/views/faq/GettingStarted'
 
 export default {
-
   computed: {
     dialogMessage2 () {
       return this.$t('lang.faq.understanding.howdoibreak.text[2]')
