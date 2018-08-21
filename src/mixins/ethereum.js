@@ -2,7 +2,6 @@ import Web3 from 'web3'
 import web3plus from 'web3-plus'
 import Units from 'ethereumjs-units'
 import { eventBus } from '../main'
-import router from '@/router'
 
 // var abi =
 export default {
@@ -85,16 +84,14 @@ export default {
           let messageToSign = self.web3js.utils.toHex('Please sign below to authenticate with Piggy Breaker.')
           self.web3js.eth.personal.sign(messageToSign, adr).then(playerSignature => {
             self.$store.state.authenticated = true
+            self.$store.state.authenticateDialog = false
             self.$localStorage.set(adr, playerSignature)
             console.log('Player authenticated : ', playerSignature)
             // self.web3js.eth.personal.ecRecover(messageToSign, response).then(initialAccount => {
             //   console.log('INITIALACCOUNT: ', initialAccount)
             // })
           }, refusalError => {
-            self.$store.state.gameStarted = false
-            self.$store.state.authenticated = false
-            self.$store.state.authenticateDialog = false
-            router.push('/')
+            eventBus.$emit('goBackToWelcomePage')
           })
         } else {
           self.$store.state.authenticated = true
@@ -187,9 +184,9 @@ export default {
         if (self.abi && self.contractAddress) {
           // Get contract
           var contract = new self.web3js.eth.Contract(self.abi, self.contractAddress)
-          console.log('abi', self.abi)
-          console.log('contractAddress', self.contractAddress)
-          console.log('contract', contract)
+          // console.log('abi', self.abi)
+          // console.log('contractAddress', self.contractAddress)
+          // console.log('contract', contract)
           // Get current Piggy
           contract.methods.nbPiggies().call().then(function (piggyId) {
             console.log('Piggy ID : ', piggyId)

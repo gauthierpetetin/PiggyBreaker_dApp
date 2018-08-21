@@ -31,7 +31,7 @@
 <script>
 import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
-import router from '@/router'
+import { eventBus } from '@/main'
 
 export default {
   mixins: [
@@ -48,10 +48,11 @@ export default {
   },
   methods: {
     cancelSignature () {
-      this.$store.state.gameStarted = false
-      this.$store.state.authenticated = false
-      this.$store.state.authenticateDialog = false
-      router.push('/')
+      eventBus.$emit('goBackToWelcomePage')
+      // this.$store.state.gameStarted = false
+      // this.$store.state.authenticated = false
+      // this.$store.state.authenticateDialog = false
+      // router.push('/')
     }
   }
 }

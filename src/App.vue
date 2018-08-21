@@ -28,6 +28,11 @@ import DialogSignIn from '@/views/contribute/Signin.vue'
 import firestoreMixin from '@/mixins/firestore'
 import ethereumMixin from '@/mixins/ethereum'
 
+import router from '@/router'
+import { eventBus } from '@/main'
+
+// import router from '@/router'
+
 export default {
   name: 'App',
   components: {
@@ -61,6 +66,8 @@ export default {
     // console.log('MMM : ', this.$t('lang.ethereummixin.notification.withdraw.title'))
     // this.$store.state.authenticateDialog = true
 
+    eventBus.$on('goBackToWelcomePage', this.backToWelcomePage)
+
     // Check contract config
     if (self.$store.state.contract.address === null && self.$store.state.contract.abi === null) {
       this.getContractConfig().then(function (contract) {
@@ -75,9 +82,23 @@ export default {
     // Get current game on firestore
     this.getGame('current')
   },
+  methods: {
+    backToWelcomePage () {
+      console.log('BackToWelcomePage !')
+      this.$store.state.gameStarted = false
+      this.$store.state.authenticated = false
+      this.$store.state.authenticateDialog = false
+      router.push('/')
+    }
+  },
   watch: {
     '$store.state.ethPlayer.address': function (val) {
       if (this.gameStarted) {
+        this.identifyPlayer()
+      }
+    },
+    '$store.state.metamaskEnabled': function (val) {
+      if (val && this.gameStarted) {
         this.identifyPlayer()
       }
     }

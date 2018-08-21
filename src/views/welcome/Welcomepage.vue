@@ -142,6 +142,10 @@
 import router from '@/router'
 
 export default {
+  data () {
+    return {
+    }
+  },
   methods: {
     startGame () {
       console.log('Start game')
